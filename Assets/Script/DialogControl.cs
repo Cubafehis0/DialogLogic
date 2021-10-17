@@ -25,12 +25,8 @@ public class DialogControl : MonoBehaviour
     RoleImageControl roleImageControl;
     private void Awake()
     {
-        string name, content;
-        GetNameAndContent("男孩 ：  “你好，我是杰克。”",out name,out content);
-        Debug.Log(name);
-        Debug.Log(content);
-        //RemoveChildren();
-        //StartStory();
+        RemoveChildren();
+        StartStory();
     }
 
     void StartStory()
@@ -49,6 +45,10 @@ public class DialogControl : MonoBehaviour
             string text = story.Continue();
             text = text.Trim();
             string name, content;
+            if (GetNameAndContent(text,out name,out content));
+            {
+                CreateNarration(name, content);
+            }
         }
         //else if (story.currentChoices.Count > 0)
         //{
@@ -87,9 +87,7 @@ public class DialogControl : MonoBehaviour
         if (nameMatch.Count == 1)
         {
             name = nameMatch[0].Value;
-            name.Replace(':', ' ');
-            name.Replace('：', ' ');
-            name.Trim();
+            name= name.Replace(":", " ").Replace("：", " ").Trim();
         }
         else
         {
@@ -102,9 +100,7 @@ public class DialogControl : MonoBehaviour
         if (contentMatch.Count == 1)
         {
             content = contentMatch[0].Value;
-            content.Replace('“', ' ');
-            content.Replace('”', ' ');
-            content.Trim();
+            content=content.Replace('“', ' ').Replace('”', ' ').Trim();
         }
         else
         {
@@ -138,6 +134,7 @@ public class DialogControl : MonoBehaviour
         }
         var narration=Instantiate(narrationPrefab);
         narration.transform.SetParent(canvas.transform);
+        Button
     }
     void RemoveChildren()
     {
