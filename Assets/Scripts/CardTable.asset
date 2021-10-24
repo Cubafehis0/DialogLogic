@@ -1,0 +1,231 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdad64f3921d85940b654622100e1466, type: 3}
+  m_Name: CardTable
+  m_EditorClassIdentifier: 
+  Sheet1:
+  - id: 1000
+    hold_effect: lgcPlus
+    hold_effect_scale: 1
+    condition: NIL
+    condition_scale: 0
+    effect: lgcPlus
+    effect_scale: 3
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1001
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: NIL
+    condition_scale: 0
+    effect: lgcPlus
+    effect_scale: 4
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1002
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: lgcBiggerThan
+    condition_scale: 5
+    effect: NIL
+    effect_scale: 0
+    post_effect: persuadPlus
+    post_effect_scale: 1
+  - id: 1003
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: NIL
+    condition_scale: 0
+    effect: chooseTendencyPlus
+    effect_scale: 2
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1004
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: NIL
+    condition_scale: 0
+    effect: mrlPlus;agsPlus
+    effect_scale: 2;1
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1005
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: mrlBiggerThan
+    condition_scale: 1
+    effect: ags
+    effect_scale: 2
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1006
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: measureFrequencyOver
+    condition_scale: 2
+    effect: NIL
+    effect_scale: 0
+    post_effect: persuadPlus
+    post_effect_scale: 2
+  - id: 1007
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: lgcBiggerThan
+    condition_scale: 4
+    effect: NIL
+    effect_scale: 0
+    post_effect: lgcPlusThreeRound
+    post_effect_scale: 3
+  - id: 1008
+    hold_effect: lgcPlus
+    hold_effect_scale: 4
+    condition: lgcBiggerThan
+    condition_scale: 5
+    effect: NIL
+    effect_scale: 0
+    post_effect: cheatPlusTwoTimes
+    post_effect_scale: 1
+  - id: 1009
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: measureFrequencyLess
+    condition_scale: 1
+    effect: NIL
+    effect_scale: 0
+    post_effect: doubleNextCard
+    post_effect_scale: 1
+  - id: 1010
+    hold_effect: lgcPlus
+    hold_effect_scale: 5
+    condition: NIL
+    condition_scale: 0
+    effect: NIL
+    effect_scale: 0
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1011
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: inmBiggerThan
+    condition_scale: 1
+    effect: NIL
+    effect_scale: 0
+    post_effect: cheatPlus
+    post_effect_scale: 3
+  - id: 1012
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: NIL
+    condition_scale: 0
+    effect: lgcPlus
+    effect_scale: 3
+    post_effect: persuadPlus
+    post_effect_scale: 1
+  - id: 1013
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: lgcBiggerThan
+    condition_scale: 4
+    effect: chooseDraw
+    effect_scale: 2
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1014
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: NIL
+    condition_scale: 0
+    effect: twoEnergyCost;roundEnd
+    effect_scale: 1;1
+    post_effect: drawCardPlusThreeRound
+    post_effect_scale: 1
+  - id: 1015
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: measureFrequencyLess
+    condition_scale: 1
+    effect: roundEnd
+    effect_scale: 1
+    post_effect: holdEnergy
+    post_effect_scale: 1
+  - id: 1016
+    hold_effect: lgcPlus
+    hold_effect_scale: 5
+    condition: outBiggerThan;lgcBiggerThan
+    condition_scale: 5;10
+    effect: NIL
+    effect_scale: 0
+    post_effect: debuffInvalid
+    post_effect_scale: 1
+  - id: 1017
+    hold_effect: lgcPlus
+    hold_effect_scale: 1
+    condition: lgcBiggerThan
+    condition_scale: 7
+    effect: NIL
+    effect_scale: 0
+    post_effect: anySentencePlus
+    post_effect_scale: 2
+  - id: 1018
+    hold_effect: lgcPlus
+    hold_effect_scale: 1
+    condition: lgcBiggerThan
+    condition_scale: 4
+    effect: NIL
+    effect_scale: 0
+    post_effect: energyFreeNextCard
+    post_effect_scale: 1
+  - id: 1019
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: rbdBiggerThan
+    condition_scale: 0
+    effect: mrlChangeTo
+    effect_scale: 1
+    post_effect: NIL
+    post_effect_scale: 0
+  - id: 1020
+    hold_effect: lgcPlus
+    hold_effect_scale: 4
+    condition: lgcBiggerThan
+    condition_scale: 10
+    effect: NIL
+    effect_scale: 0
+    post_effect: lockCard
+    post_effect_scale: 1
+  - id: 1021
+    hold_effect: lgcPlus
+    hold_effect_scale: 5
+    condition: lgcBiggerThan
+    condition_scale: 5
+    effect: NIL
+    effect_scale: 0
+    post_effect: agsPlusThreeRound
+    post_effect_scale: 2
+  - id: 1022
+    hold_effect: lgcPlus
+    hold_effect_scale: 4
+    condition: lastCardIsLogic
+    condition_scale: 1
+    effect: onceOnly
+    effect_scale: 0
+    post_effect: persuadPlus
+    post_effect_scale: 30
+  - id: 1023
+    hold_effect: lgcPlus
+    hold_effect_scale: 4
+    condition: NIL
+    condition_scale: 0
+    effect: lockSentence;removeJudgement
+    effect_scale: 1;1
+    post_effect: lockPunishBelief
+    post_effect_scale: 1

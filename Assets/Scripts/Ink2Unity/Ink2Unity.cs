@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
-namespace zc
+namespace Ink2Unity
 {
     /// <summary>
     /// 工具类，封装了一些Ink提供的API
@@ -10,23 +10,44 @@ namespace zc
     public class Ink2Unity
     {
         Story story;
+        Player player;
+        List<Choice> choices;
         public Ink2Unity(TextAsset inkJSON)
         {
             story = new Story(inkJSON.text);
+            player = CardGameManager.Instance.player;
+            story.BindExternalFunction("logicPlus", (int a) => { player.Ration += a; });
+            story.BindExternalFunction("moralPlus", (int a) => { player.Moral += a; });
+            story.BindExternalFunction("strongPlus", (int a) => { player.Strong += a; });
+            story.BindExternalFunction("choiceCanUse", (int i, int l, int m, int d) =>
+            { return player.Inside >= i && player.Ration >= l && player.Moral >= m && player.Detour >= d; });
         }
         /// <summary>
         /// 故事是否可继续读取内容(Content)
         /// </summary>
-        public bool CanCoutinue()
+        public bool CanCoutinue
         {
-            return story.canContinue;
+            get
+            {
+                return story.canContinue;
+            }
         }
+        //public void Continue()
+        //{
+        //    if (CanCoutinue)
+        //        story.Continue();
+        //    else
+        //        Debug.LogError("当前故事");
+        //}
         /// <summary>
         /// 当前故事的内容
         /// </summary>
         public Content CurrentContent()
         {
-            string ct = story.Continue();
+            string ct;
+            //避免表达式的情况
+            while((ct = story.Continue())=="");
+
             Content rs = new Content(ct);
             List<string> tags = story.currentTags;
             if(tags!=null)
@@ -35,12 +56,12 @@ namespace zc
                 {
                     string name, value;
                     TagHandle.GetPropertyNameAndValue(tag,out name,out value);
-                    IdentifyValue(rs, name, value);
+                    ParseValue(rs, name, value);
                 }
             }
             return rs;
         }
-        void IdentifyValue(Content content,string name,string value)
+        void ParseValue(Content content,string name,string value)
         {
             switch (name)
             {
@@ -52,12 +73,20 @@ namespace zc
                     return;
             }
         }
-        void IdentifyValue(Choice choice, string name, string value)
+        void ParseValue(Choice choice, string name, string value)
         {
             switch (name)
             {
                 case "Speaker":
                     choice.content.speaker = TagHandle.ParseSpeaker(value);
+                    return;
+                case "Canuse":
+                    choice.CanUse = ;
+                    return;
+                
+                    return;
+                case "SpeechArt":
+                    choice.speechArt = TagHandle.ParseSpeechArt(value);
                     return;
                 default:
                     Debug.LogError("无法识别的标签类型：" + name + ":" + value);
@@ -70,10 +99,21 @@ namespace zc
         /// <returns>选项的集合</returns>
         public List<Choice> CurrentChoices()
         {
-            var choices = story.currentChoices;
-            foreach(var choice in choices)
+            List<Choice> rs = new List<Choice>();
+            var choicesContent = story.currentChoices;
+            for(int i=0;i<choicesContent.Count;i++)
             {
-
+                string c;
+                List<string> tags = TagHandle.ChoiceCurrentTags(choicesContent[i].text,out c);
+                Choice choice = new Choice();
+                choice.content = new Content(c);
+                foreach(var tag in tags)
+                {
+                    string name, value;
+                    TagHandle.GetPropertyNameAndValue(tag, out name, out value);
+                    ParseValue(choice, name, value);
+                }
+                rs.Add(choice);
             }
             return rs;
         }

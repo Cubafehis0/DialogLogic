@@ -5,6 +5,10 @@ using UnityEngine;
 public enum SpeechArt
 {
     /// <summary>
+    /// 普通对话
+    /// </summary>
+    Normal,
+    /// <summary>
     /// 欺骗的话术
     /// </summary>
     Cheat,

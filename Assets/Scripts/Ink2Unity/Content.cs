@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace zc
+namespace Ink2Unity
 {
     public class Content : MonoBehaviour
     {
