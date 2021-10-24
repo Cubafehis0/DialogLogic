@@ -67,14 +67,14 @@ public class BasicInkExample : MonoBehaviour {
 	void CreateContentView (string text) {
 		Text storyText = Instantiate (textPrefab) as Text;
 		storyText.text = text;
-		storyText.transform.SetParent (canvas.transform, false);
+		storyText.transform.SetParent (dialog.transform, false);
 	}
 
 	// Creates a button showing the choice text
 	Button CreateChoiceView (string text) {
 		// Creates the button from a prefab
 		Button choice = Instantiate (buttonPrefab) as Button;
-		choice.transform.SetParent (canvas.transform, false);
+		choice.transform.SetParent (dialog.transform, false);
 		
 		// Gets the text from the button prefab
 		Text choiceText = choice.GetComponentInChildren<Text> ();
@@ -89,9 +89,9 @@ public class BasicInkExample : MonoBehaviour {
 
 	// Destroys all the children of this gameobject (all the UI)
 	void RemoveChildren () {
-		int childCount = canvas.transform.childCount;
+		int childCount = dialog.transform.childCount;
 		for (int i = childCount - 1; i >= 0; --i) {
-			GameObject.Destroy (canvas.transform.GetChild (i).gameObject);
+			GameObject.Destroy (dialog.transform.GetChild (i).gameObject);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class BasicInkExample : MonoBehaviour {
 	public Story story;
 
 	[SerializeField]
-	private Canvas canvas = null;
+	private Canvas dialog = null;
 
 	// UI Prefabs
 	[SerializeField]
