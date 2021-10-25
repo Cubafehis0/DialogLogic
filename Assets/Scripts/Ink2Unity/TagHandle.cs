@@ -98,7 +98,7 @@ namespace Ink2Unity
                 return true;
             if (s == "false")
                 return false;
-            Debug.LogError("无法识别的布尔型");
+            Debug.LogError(s+"无法识别的布尔型");
             return true;
         }
         //翻译Condition生成一个Lambda表达式

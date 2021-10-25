@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
+/// <summary>
+/// 工具类，封装了一些Ink提供的API
+/// </summary>
 namespace Ink2Unity
 {
     /// <summary>
-    /// 工具类，封装了一些Ink提供的API
+    /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
     public class Ink2Unity
     {
@@ -73,7 +76,7 @@ namespace Ink2Unity
             UpdateInkVariable();
         }
         /// <summary>
-        /// 当前故事的内容
+        ///     
         /// </summary>
         public Content CurrentContent()
         {
@@ -94,7 +97,13 @@ namespace Ink2Unity
             }
             return rs;
         }
-
+        public bool IsFinished
+        {
+            get
+            {
+                return !story.canContinue && story.currentChoices.Count == 0;
+            }
+        }
         /// <summary>
         /// 获取当前所有的选项
         /// </summary>

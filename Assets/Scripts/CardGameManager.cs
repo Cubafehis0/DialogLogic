@@ -21,8 +21,7 @@ public class CardGameManager : MonoBehaviour
     }
     
     private Dictionary<uint, Card> cards = new Dictionary<uint, Card>();
-    //public Player player = new Player();
-    public Player player;
+    public Player player = new Player();
     public List<uint> deck = new List<uint>();
     public List<uint> garbageDeck = new List<uint>();
     public CardGameState gameState = CardGameState.GAME_START;

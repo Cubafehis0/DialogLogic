@@ -6,54 +6,17 @@ namespace Ink2Unity
 {
     public class FunctionTest : MonoBehaviour
     {
-        object TryCoerce<T>(object value)
-        {
-            if (value == null)
-                return null;
-
-            if (value is T)
-                return (T)value;
-
-            if (value is float && typeof(T) == typeof(int))
-            {
-                int intVal = (int)((float)value);
-                return intVal;
-            }
-
-            if (value is int && typeof(T) == typeof(float))
-            {
-                float floatVal = (float)(int)value;
-                return floatVal;
-            }
-
-            if (value is int && typeof(T) == typeof(bool))
-            {
-                int intVal = (int)value;
-                return intVal == 0 ? false : true;
-            }
-
-            if (value is bool && typeof(T) == typeof(int))
-            {
-                bool boolVal = (bool)value;
-                return boolVal ? 1 : 0;
-            }
-
-            if (typeof(T) == typeof(string))
-            {
-                return value.ToString();
-            }
-
-            return null;
-        }
+        
         public TextAsset asset;
         public int choose;
         public bool ctS;
         public bool waitC;
         Ink2Unity ink2Unity;
+        public int[] data;
         // Start is called before the first frame update
         void Start()
         {
-            bool a = (bool)TryCoerce<bool>(true);
+            data = CardGameManager.Instance.player.data;
             ink2Unity = new Ink2Unity(asset);
             choose = -1;
             ctS = false;
@@ -84,7 +47,7 @@ namespace Ink2Unity
                     var c = ink2Unity.CurrentContent();
                     Debug.Log(c);
                 }
-                else
+                else if(!ink2Unity.IsFinished)
                 {
                     var cs = ink2Unity.CurrentChoices();
                     foreach(var c in cs)
@@ -92,6 +55,10 @@ namespace Ink2Unity
                         Debug.Log(c);
                     }
                     waitC = true;
+                }
+                else
+                {
+                    Debug.Log("Finish");
                 }
                 ctS = false;
             }

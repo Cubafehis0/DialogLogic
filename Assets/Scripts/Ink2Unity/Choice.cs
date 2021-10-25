@@ -8,18 +8,10 @@ namespace Ink2Unity
         /// <summary>
         /// 当前选项的内容
         /// </summary>
-        public Content content;
+        public Content content;   
         /// <summary>
         /// 当前选项是否可用
         /// </summary>
-        public string UseCondition
-        {
-            set {   }
-        }
-        /// <summary>
-        /// 当前选项是否可用
-        /// </summary>
-        /// <returns></returns>
         public bool canUse;
         /// <summary>
         /// 选项框背景色，和选项类型有关
@@ -41,15 +33,12 @@ namespace Ink2Unity
                 }
             }
         }
-        
+
 
         /// <summary>
         /// 当前选项是否可见
         /// </summary>
-        public bool IsVisible()
-        {
-            return true;
-        }
+        public bool isVisible;
 
         /// <summary>
         /// 当前选项是否被锁定

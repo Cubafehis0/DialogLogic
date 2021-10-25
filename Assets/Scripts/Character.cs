@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-[Serializable]
 public class Character
 {
     public int[] data = new int[4];
@@ -100,7 +99,6 @@ public class Character
         }
     }
 }
-[Serializable]
 public class Player : Character
 {
     public int energy = 0;
