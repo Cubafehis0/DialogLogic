@@ -81,22 +81,15 @@ namespace Ink2Unity
         /// 当前选项的索引值
         /// </summary>
         public int index;
-
-
         public Choice()
         {
             speechArt = SpeechArt.Normal;
             canUse = true;
         }
-
-        public string StateChange
+        public override string ToString()
         {
-            set { }
-        }
-        //说话后产生的效果
-        public void Effect()
-        {
-
+            string s = "   ";
+            return index + s + content.ToString() + s + speechArt.ToString() + s + BgColor + s + canUse;
         }
     }
 

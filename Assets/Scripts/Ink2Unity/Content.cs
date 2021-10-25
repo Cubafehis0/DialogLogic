@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Ink2Unity
 {
-    public class Content : MonoBehaviour
+    public class Content
     {
 
         /// <summary>
@@ -19,6 +19,10 @@ namespace Ink2Unity
         {
             richText = content;
             pureText = TagHandle.GetPureText(richText);
+        }
+        public override string ToString()
+        {
+            return richText +"   "+ speaker.ToString();
         }
     }
 }

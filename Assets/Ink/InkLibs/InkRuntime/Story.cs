@@ -79,6 +79,7 @@ namespace Ink.Runtime
             } 
         }
 
+
         /// <summary>
         /// Any errors generated during evaluation of the Story.
         /// </summary>

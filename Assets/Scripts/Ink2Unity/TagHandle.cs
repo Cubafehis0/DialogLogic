@@ -7,7 +7,7 @@ namespace Ink2Unity
     public abstract class TagHandle
     {
         static string tagParttern = @"^([^:]+)(:)([^:]+)";
-        static string choiceTagParttern = @"([^@]+)(@)(.+)";
+        static string choiceTagParttern = @"([^@]*)(@)(.+)";
 
         static string conditionParttern;
         static string stateParrern;

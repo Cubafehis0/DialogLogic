@@ -26,7 +26,7 @@ namespace CardEffects
         /// </summary>
         public bool lgcPlus(int a)
         {
-            CardGameManager.Instance.player.Ration = CardGameManager.Instance.player.Ration + a;
+            CardGameManager.Instance.player.Logic = CardGameManager.Instance.player.Logic + a;
             return true;
         }
 
@@ -264,7 +264,7 @@ namespace CardEffects
         /// </summary>
         public bool lgcBiggerThan(int a)
         {
-            return CardGameManager.Instance.player.Ration > a;
+            return CardGameManager.Instance.player.Logic > a;
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ public class Character
         }
     }
     
-    public int Ration
+    public int Logic
     {
         get
         {
