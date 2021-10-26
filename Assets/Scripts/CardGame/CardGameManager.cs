@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 
 public class CardGameManager : MonoBehaviour
 {
-    public CardTable cardTable;
+    [SerializeField]
+    private CardTable cardTable;
     
     private static CardGameManager _instance = null;
     public static CardGameManager Instance
@@ -19,12 +20,34 @@ public class CardGameManager : MonoBehaviour
             return _instance;
         }
     }
+    void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+    void Start()
+    {
+        ParseCardData();
+        InitPlayer();
+    }
+
     
     private Dictionary<uint, Card> cards = new Dictionary<uint, Card>();
+    /// <summary>
+    /// 玩家状态信息，八维，行动点
+    /// </summary>
     public Player player = new Player();
-    public List<uint> deck = new List<uint>();
-    public List<uint> garbageDeck = new List<uint>();
-    public CardGameState gameState = CardGameState.GAME_START;
+    private List<uint> deck = new List<uint>();
+    private List<uint> garbageDeck = new List<uint>();
+    private CardGameState gameState = CardGameState.GAME_START;
+    public CardGameStatistics statistics = new CardGameStatistics();
     
     
     private const uint PLAYER_START_CARD_NUM = 5;
@@ -33,9 +56,15 @@ public class CardGameManager : MonoBehaviour
     /// <summary>
     /// 供effect与游戏流程中的同步使用
     /// </summary>
-    private Dictionary<string, List<Signal>> signalDictionary = new Dictionary<string, List<Signal>>();
-
-    public void setSignal(string key,Signal sig,bool clear = false)
+    private Dictionary<string, List<Signal>> signalDictionary = new Dictionary<string, List<Signal>>(); 
+    
+    /// <summary>
+    /// 设置信息
+    /// </summary>
+    /// <param name="key">时间点</param>
+    /// <param name="sig">信息</param>
+    /// <param name="clear">是否清除</param>
+    public void SetSignal(string key,Signal sig,bool clear = false)
     {
         List<Signal> signals;
         if (signalDictionary.TryGetValue(key, out signals))
@@ -57,9 +86,13 @@ public class CardGameManager : MonoBehaviour
             }
         }
     }
+    
     /// <summary>
-    /// 使用时检查null
+    /// 获取信息 使用时检查null
     /// </summary>
+    /// <param name="key">时间点</param>
+    /// <param name="updateTurn">是否更新次数</param>
+    /// <returns></returns>
     private List<Signal> getSignal(string key,bool updateTurn = true)
     {
         List<Signal> signals;
@@ -94,22 +127,13 @@ public class CardGameManager : MonoBehaviour
             (list[k], list[n]) = (list[n], list[k]);
         }  
     }
-    void Awake()
-    {
-        _instance = this;
-    }
-    void Start()
-    {
-        parseCardData();
-        initPlayer();
-    }
 
-    private void initPlayer()
+    private void InitPlayer()
     {
         uint[] data = {1000, 1001, 1002, 1003, 1004, 1005,1006};
         player.cardSet.AddRange(data);
     }
-    private void parseCardData()
+    private void ParseCardData()
     {
         foreach (CardEntity entity in cardTable.Sheet1)
         {
@@ -117,9 +141,9 @@ public class CardGameManager : MonoBehaviour
                 new Card(entity.id, entity.hold_effect,entity.hold_effect_scale, entity.condition,entity.condition_scale,entity.effect,entity.effect_scale,entity.post_effect,entity.post_effect_scale));
         }
     }
-
-
-    public void draw(uint num)
+    
+    
+    public void Draw(uint num)
     {
         if (deck.Count < num)
         {
@@ -136,30 +160,93 @@ public class CardGameManager : MonoBehaviour
         }
     }
 
-    private void discardAll()
+    private void ClearTurnOnlySignals()
+    {
+        foreach (var signals in signalDictionary.Values)
+        {
+            foreach (var sig in signals)
+            {
+                if (!sig.flag)
+                {
+                    signals.Remove(sig);
+                }
+            }
+        }
+    }
+    private void DiscardAll()
     {
         garbageDeck.AddRange(player.handCard);
         player.handCard.Clear();
     }
     /// <summary>
+    /// 开启一局游戏
+    /// </summary>
+    public void StartGame()
+    {
+        gameState = CardGameState.GAME_START;
+        NextGameState();
+    }
+    /// <summary>
     /// 结束本局游戏
     /// </summary>
-    public void endGame()
+    public void EndGame()
+    {
+        ClearData();
+        gameState = CardGameState.GAME_END;
+    }
+    /// <summary>
+    /// 结束当前回合
+    /// </summary>
+    public void EndTurn()
+    {
+        gameState = CardGameState.TURN_END;
+        NextGameState();
+    }
+    /// <summary>
+    /// 出牌
+    /// </summary>
+    /// <param name="cardID">出牌id</param>
+    /// <returns>是否能够出牌</returns>
+    public bool PlayCard(uint cardID)
+    {
+        if (gameState != CardGameState.PLAYER_PLAY)
+        {
+            Debug.LogError("当前不是出牌回合！");
+            return false;
+        }
+
+        bool res = cards[cardID].CheckCanPlay();
+        res &= player.energy > 0;
+        if (res)
+        {
+            player.energy--;
+            NextGameState(cardID);
+        }
+        return res;
+    }
+    /// <summary>
+    /// 开启一个回合
+    /// </summary>
+    public void StartTurn()
+    {
+        gameState = CardGameState.TURN_START;
+        NextGameState();
+    }
+
+    private void ClearData()
     {
         deck.Clear();
         garbageDeck.Clear();
-        // TODO : implement effect queue
-        gameState = CardGameState.GAME_END;
-        nextGameState();
+        signalDictionary.Clear();
+        statistics.Clear();
     }
-    public void nextGameState(int cardIndexInHand = 0)
+    private void NextGameState(uint cardID = 0)
     {
         switch (gameState)
         {
             case CardGameState.GAME_START:
                 Debug.Log("GAME START!");
-                deck.Clear();
-                garbageDeck.Clear();
+                ClearData();
                 deck.AddRange(player.cardSet);
                 Shuffle(deck);
                 player.handCard.Clear();
@@ -168,10 +255,10 @@ public class CardGameManager : MonoBehaviour
             case CardGameState.TURN_START:
                 Debug.Log("TURN START!");
                 player.originData.CopyTo(player.data,0);
-                draw(PLAYER_START_CARD_NUM);
+                Draw(PLAYER_START_CARD_NUM);
                 Debug.Log("MY TURN, DRAW!");
                 gameState = CardGameState.AUTO_PLAY;
-                nextGameState(cardIndexInHand);
+                NextGameState();
                 break;
             case CardGameState.AUTO_PLAY:
                 var data = getSignal("AUTO_PLAY");
@@ -179,26 +266,26 @@ public class CardGameManager : MonoBehaviour
                 {
                     foreach (var sig in data)
                     {
-                        EffectManager.Instance.execute(sig.effectKey, sig.arg);
+                        EffectManager.Instance.Execute(sig.effectKey, sig.arg);
                     }
                 }
                 foreach (var cid in player.handCard)
                 {
-                    cards[cid].hold();
+                    cards[cid].Hold();
                 }
                 gameState = CardGameState.PLAYER_PLAY;
                 break;
             case CardGameState.PLAYER_PLAY:
-                bool toGarbageDeck = cards[player.handCard[cardIndexInHand]].play();
+                bool toGarbageDeck = cards[cardID].Play();
                 if (toGarbageDeck)
                 {
-                    garbageDeck.Add(player.handCard[cardIndexInHand]);
+                    garbageDeck.Add(cardID);
                 }
-                player.handCard.RemoveAt(cardIndexInHand);
-                gameState = CardGameState.TURN_END;
+                player.handCard.Remove(cardID);
                 break;
             case CardGameState.TURN_END:
-                discardAll();
+                DiscardAll();
+                ClearTurnOnlySignals();
                 gameState = CardGameState.TURN_START;
                 break;
             case CardGameState.GAME_END:
@@ -210,11 +297,11 @@ public class CardGameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            nextGameState();
+            NextGameState();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            endGame();
+            EndGame();
         }
     }
 }
@@ -227,65 +314,15 @@ public enum CardGameState
     TURN_END,
     GAME_END
 }
-public class Card
+
+public class CardGameStatistics
 {
-    public uint id;
-    public List<string> hold_effect;
-    public List<string> condition;
-    public List<string> effect;
-    public List<string> post_effect;
-    
-    public List<int> hold_effect_scale;
-    public List<int> condition_scale;
-    public List<int> effect_scale;
-    public List<int> post_effect_scale;
-    public Card(uint id, string hold_effect,string hold_effect_scale,string condition,string condition_scale,string effect, string effect_scale,string post_effect,string post_effect_scale)
-    {
-        this.id = id;
-        this.hold_effect = new List<string>(hold_effect.Split(';'));
-        this.condition = new List<string>(condition.Split(';'));
-        this.effect = new List<string>(effect.Split(';'));
-        this.post_effect = new List<string>(post_effect.Split(';'));
+    public int cardUsed = 0;
 
-        this.hold_effect_scale = new List<int>(hold_effect_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.condition_scale = new List<int>(condition_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.effect_scale = new List<int>(effect_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.post_effect_scale = new List<int>(post_effect_scale.Split(';').Select(x => Int32.Parse(x)));
-    }
-
-    public bool play()
+    public void Clear()
     {
-        bool res = true;
-        if (examine(condition,condition_scale))
-        {
-            res = examine(effect,effect_scale);
-            examine(post_effect,post_effect_scale);
-            return res;
-        }
-        return false;
-    }
-
-    public bool hold()
-    {
-        return examine(hold_effect, hold_effect_scale);
-    }
-    public bool examine(List<string> effects,List<int> scale)
-    {
-        bool res = true;
-        for (int i = 0; i < effects.Count; i++)
-        {
-            res = res && EffectManager.Instance.execute(effects[i],scale[i]);
-        }
-        return res;
-    }
-    public bool examine(List<string> effects,Character chara)
-    {
-        bool res = true;
-        foreach (var key in effects)
-        {
-            res = res && EffectManager.Instance.execute(key,chara);
-        }
-        return res;
+        cardUsed = 0;
     }
 }
+
 
