@@ -11,13 +11,13 @@ namespace Ink2Unity
         public int choose;
         public bool ctS;
         public bool waitC;
-        Ink2Unity ink2Unity;
+        InkUnity ink2Unity;
         public int[] data;
         // Start is called before the first frame update
         void Start()
         {
-            data = CardGameManager.Instance.player.data;
-            ink2Unity = new Ink2Unity(asset);
+            data = new Player().data;
+            ink2Unity = new InkUnity(asset);
             choose = -1;
             ctS = false;
             waitC = false;

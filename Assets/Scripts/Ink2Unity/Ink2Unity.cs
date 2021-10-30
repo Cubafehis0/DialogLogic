@@ -11,15 +11,16 @@ namespace Ink2Unity
     /// <summary>
     /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
-    public class Ink2Unity
+    public class InkUnity
     {
         Story story;
         Player player;
         List<Choice> choicesList;
-        public Ink2Unity(TextAsset inkJSON)
+        public InkUnity(TextAsset inkJSON)
         {
             story = new Story(inkJSON.text);
-            player = CardGameManager.Instance.player;
+            //player = CardGameManager.Instance.player;
+            player = new Player();
             story.BindExternalFunction("InsidePlus", (int a) => { player.Inside += a; });
             story.BindExternalFunction("OutsidePlus", (int a) => { player.Outside += a; });
             story.BindExternalFunction("LogicPlus", (int a) => { player.Logic += a; });
