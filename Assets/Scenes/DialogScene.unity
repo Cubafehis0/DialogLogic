@@ -611,11 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e73f3e91f50ee2a4baf87fef6d583043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset: {fileID: 0}
-  choose: 0
-  ctS: 0
-  waitC: 0
-  data: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,8 +726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503342c9f157c4245a81a0aaf8f57737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAPrefab: {fileID: 2041896107711911529, guid: 44e8cc236a8e50f408452f34d97dd518, type: 3}
-  buttonBPrefab: {fileID: 2041896107711911529, guid: 8c5194967345a9c49966ced0d63b5d77, type: 3}
+  buttonAPrefab: {fileID: 2041896107711911529, guid: 44e8cc236a8e50f408452f34d97dd518,
+    type: 3}
+  buttonBPrefab: {fileID: 2041896107711911529, guid: 8c5194967345a9c49966ced0d63b5d77,
+    type: 3}
   choose_text: 
   m_buttonA: {fileID: 0}
   m_buttonB: {fileID: 0}
@@ -743,7 +740,8 @@ MonoBehaviour:
   - {fileID: 3786560584347855117, guid: 56a63ee0655f9dd428503864f2a8a4f5, type: 3}
   - {fileID: 4829514668210830952, guid: fc736284ca4c7bf40af7e25334c63dd6, type: 3}
   - {fileID: -1396359410560991221, guid: d4c35663e9599094f963dc233df89840, type: 3}
-  spriteOfB: {fileID: -6192215344775725389, guid: 7b7008ce94151fd4ca4825df5c336c0d, type: 3}
+  spriteOfB: {fileID: -6192215344775725389, guid: 7b7008ce94151fd4ca4825df5c336c0d,
+    type: 3}
 --- !u!114 &677633819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,7 +1487,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1291301393}
   m_HandleRect: {fileID: 1291301392}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1568,7 +1566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -32, y: -148}
+  m_AnchoredPosition: {x: -32, y: -113}
   m_SizeDelta: {x: -302.8475, y: -306.0693}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935765879
@@ -2005,7 +2003,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -217089216709990492, guid: 8962ef9796eb730428a9d872655f0558, type: 3}
+  m_Sprite: {fileID: -217089216709990492, guid: 8962ef9796eb730428a9d872655f0558,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
