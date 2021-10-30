@@ -111,7 +111,6 @@ public class DialogTextLoad : MonoBehaviour
                 }
                 else
                 {
-
                     Debug.Log("大大大于0啦");
                 }
             }
