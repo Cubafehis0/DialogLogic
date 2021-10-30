@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player
+public class Player1
 {
     public int[] data;
     public int Detour;
@@ -15,7 +15,7 @@ public class Player
     public int Unethic;
 
     private int www = 10;
-    public Player()
+    public Player1()
     {
         data = new int[] { www, www, www, www };
         Detour = www;
