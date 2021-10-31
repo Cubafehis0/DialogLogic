@@ -224,13 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6308c7b7c695ea4e81390fba89d101c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  talk: {fileID: 2086520314}
-  contentPrefab: {fileID: 6504761924536278015, guid: c88d0b97e6b497b41a16949db1c1ca33,
-    type: 3}
-  choicePrefab: {fileID: 2092835270579706207, guid: 116b91c51a1669a4086bd996fbe13624,
-    type: 3}
-  roleImgae: {fileID: 847065357}
-  inkJSONAsset: {fileID: 4900000, guid: 0406009208c64424b92200187a6d5a8f, type: 3}
 --- !u!114 &431493276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,12 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b207d641d404cef4f83ffec9c7aca07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprites:
-  - name: "\u7537\u5B69"
-    sprite: {fileID: 21300000, guid: a6b72b15d46d7244691cbf2db6bc0d73, type: 3}
-  - name: "\u5973\u5B69"
-    sprite: {fileID: 21300000, guid: 56121385d5d4de84397355004e368216, type: 3}
-  defaultSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!114 &431493281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485fa5e49494d40408244fad263fbc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qiangShi: 3
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,15 +518,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardTable: {fileID: 11400000, guid: a0295349c66aef64598c3d15334563b3, type: 2}
-  player:
-    data: 00000000000000000000000000000000
-    energy: 0
-    originData: 00000000000000000000000000000000
-    cardSet: 
-    handCard: 
-  deck: 
-  garbageDeck: 
-  gameState: 0
 --- !u!4 &1480060099
 Transform:
   m_ObjectHideFlags: 0
@@ -582,13 +559,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915057466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 973529a7784c4fa44a6a3837b38124d2, type: 3}
+  m_Script: {fileID: 11500000, guid: a920a36eafc1ef9418bcbeab3c8e6eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset: {fileID: 4900000, guid: 5ccecce717399504fb91906e9133dde6, type: 3}
-  choose: -1
-  ctS: 0
-  waitC: 0
+  conS: 0
+  wait: 0
+  c: 0
+  textAsset: {fileID: 4900000, guid: 5ccecce717399504fb91906e9133dde6, type: 3}
 --- !u!222 &1915057469
 CanvasRenderer:
   m_ObjectHideFlags: 0

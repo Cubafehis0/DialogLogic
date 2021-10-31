@@ -11,16 +11,33 @@ namespace Ink2Unity
     /// <summary>
     /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
-    public class InkUnity
+    public class InkStory
     {
+        private static InkStory _nowStory;
+        public static InkStory NowStory
+        {
+            get
+            {
+                return _nowStory;
+            }
+            private set
+            {
+                _nowStory = value;
+            }
+        }
         Story story;
         Player player;
         List<Choice> choicesList;
-        public InkUnity(TextAsset inkJSON)
+        public InkStory(TextAsset inkJSON)
         {
             story = new Story(inkJSON.text);
             //player = CardGameManager.Instance.player;
             player = new Player();
+            BindExternalFunction();
+            NowStory = this;
+        }
+        public void BindExternalFunction()
+        {
             story.BindExternalFunction("InsidePlus", (int a) => { player.Inside += a; });
             story.BindExternalFunction("OutsidePlus", (int a) => { player.Outside += a; });
             story.BindExternalFunction("LogicPlus", (int a) => { player.Logic += a; });
@@ -46,18 +63,17 @@ namespace Ink2Unity
             story.BindExternalFunction("MoralIsIn", (int l, int r) => { return player.Moral >= l && player.Moral < r; });
             story.BindExternalFunction("UnthicIsIn", (int l, int r) => { return player.Unethic >= l && player.Unethic < r; });
             story.BindExternalFunction("DetourIsIn", (int l, int r) => { return player.Detour >= l && player.Detour < r; });
-            story.BindExternalFunction("StrongIsIn", (int l, int r) => { return player.Strong>= l && player.Strong < r; });
-
+            story.BindExternalFunction("StrongIsIn", (int l, int r) => { return player.Strong >= l && player.Strong < r; });
             Ink.Runtime.Story.ExternalFunction choiceCanUse = (object[] args) =>
-              {
-                  return ChoiceCanUse((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
-              };
+            {
+                return ChoiceCanUse((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
+            };
             Ink.Runtime.Story.ExternalFunction judge = (object[] args) =>
             {
                 return TalkJudge((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
             };
-            story.BindExternalFunctionGeneral("TalkJudge",judge);
-            story.BindExternalFunctionGeneral("ChoiceCanUse",choiceCanUse);
+            story.BindExternalFunctionGeneral("TalkJudge", judge);
+            story.BindExternalFunctionGeneral("ChoiceCanUse", choiceCanUse);
         }
         /// <summary>
         /// 故事是否可继续读取内容(Content)
@@ -81,6 +97,7 @@ namespace Ink2Unity
         /// </summary>
         public Content CurrentContent()
         {
+            Debug.Log(story.state.currentPathString);
             string ct;
             //避免表达式的情况
             while ((ct = story.Continue()) == "") ;
@@ -165,8 +182,25 @@ namespace Ink2Unity
         {
             return SelectChoice(choice.index);
         }
+        /// <summary>
+        /// 获取当前选项个数
+        /// </summary>
+        public int CurrentChoicesCount
+        {
+            get
+            {
+                return CurrentChoices().Count;
+            }
+        }
 
-
+        public string NowState2Json()
+        {
+            return story.state.ToJson();
+        }
+        public void LoadStory(string state)
+        {
+            story.state.LoadJson(state);
+        }
         private bool  ChoiceCanUse(int i, int l, int m, int d)
         {
             int[] p = { i, l, m, d };

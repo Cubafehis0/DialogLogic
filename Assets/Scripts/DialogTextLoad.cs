@@ -15,7 +15,7 @@ public class DialogTextLoad : MonoBehaviour
     public Transform DialogChoosePanel;
     public Transform DialogNarratagePanel;
 
-    public InkUnity inkUnity;
+    public InkStory inkUnity;
     /* UI Prefabs */
     // 文本
     // 按钮
@@ -25,7 +25,7 @@ public class DialogTextLoad : MonoBehaviour
     // 初始化
     private void Awake()
     {
-        inkUnity = new InkUnity(textFile);
+        inkUnity = new InkStory(textFile);
         GameObject canvas = GameObject.Find("Canvas").transform.gameObject;
         DialogChoosePanel = canvas.transform.Find("DialogChoosePanel");
         DialogPanel = canvas.transform.Find("DialogPanel");
