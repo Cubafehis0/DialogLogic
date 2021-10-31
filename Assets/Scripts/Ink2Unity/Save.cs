@@ -17,7 +17,7 @@ public class SaveInfo
 }
 public abstract class Save
 {
-    public static void SaveGame()
+    public static void SaveGame(int index,string note=null)
     {
         SaveInfo saveInfo = CreateSaveInfoObject();
         FileStream file = File.Create(Application.persistentDataPath + "/gamesave.sav");
@@ -30,9 +30,8 @@ public abstract class Save
         BinaryWriter writer = new BinaryWriter(file);
         writer.Write(save2Json);
         writer.Close();
-        file.Close(); 
+        file.Close();
         Debug.Log("Game Saved");
-
     }
     private static SaveInfo CreateSaveInfoObject()
     {
