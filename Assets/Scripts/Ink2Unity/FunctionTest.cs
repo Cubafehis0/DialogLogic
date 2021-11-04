@@ -27,16 +27,16 @@ namespace Ink2Unity
         // Update is called once per frame
         void Update()
         {
-            if(save)
-            {
-                Save.SaveGame();
-                save = false;
-            }
-            if(load)
-            {
-                Load.LoadGame();
-                load = false;
-            }
+            //if(save)
+            //{
+            //    Save.SaveGame();
+            //    save = false;
+            //}
+            //if(load)
+            //{
+            //    Load.LoadGame();
+            //    load = false;
+            //}
             if (wait == true)
             {
                 if(c>=0)

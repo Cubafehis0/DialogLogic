@@ -70,7 +70,7 @@ public class DialogTextSave : MonoBehaviour
         {
             return Color.white;
         }
-        else if (speaker == "Lead")
+        else if (speaker == "Player")
         {
             return Color.green;
         }

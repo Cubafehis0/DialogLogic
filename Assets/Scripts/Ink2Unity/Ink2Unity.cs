@@ -38,32 +38,24 @@ namespace Ink2Unity
         }
         public void BindExternalFunction()
         {
-            story.BindExternalFunction("InsidePlus", (int a) => { player.Inside += a; });
-            story.BindExternalFunction("OutsidePlus", (int a) => { player.Outside += a; });
-            story.BindExternalFunction("LogicPlus", (int a) => { player.Logic += a; });
-            story.BindExternalFunction("PassionPlus", (int a) => { player.Passion += a; });
-            story.BindExternalFunction("MoralPlus", (int a) => { player.Moral += a; });
-            story.BindExternalFunction("UnethicPlus", (int a) => { player.Unethic += a; });
-            story.BindExternalFunction("DetourPlus", (int a) => { player.Detour += a; });
-            story.BindExternalFunction("StrongPlus", (int a) => { player.Strong += a; });
-
-            story.BindExternalFunction("InsideSet", (int a) => { player.Inside = a; });
-            story.BindExternalFunction("OutsideSet", (int a) => { player.Outside = a; });
-            story.BindExternalFunction("LogicSet", (int a) => { player.Logic = a; });
-            story.BindExternalFunction("PassionSet", (int a) => { player.Passion = a; });
-            story.BindExternalFunction("MoralSet", (int a) => { player.Moral = a; });
-            story.BindExternalFunction("UnethicSet", (int a) => { player.Unethic = a; });
-            story.BindExternalFunction("DetourSet", (int a) => { player.Detour = a; });
-            story.BindExternalFunction("StrongSet", (int a) => { player.Strong = a; });
-
-            story.BindExternalFunction("InsideIsIn", (int l, int r) => { return player.Inside >= l && player.Inside < r; });
-            story.BindExternalFunction("OutsideIsIn", (int l, int r) => { return player.Outside >= l && player.Outside < r; });
-            story.BindExternalFunction("LogicIsIn", (int l, int r) => { return player.Logic >= l && player.Logic < r; });
-            story.BindExternalFunction("PassionIsIn", (int l, int r) => { return player.Passion >= l && player.Passion < r; });
-            story.BindExternalFunction("MoralIsIn", (int l, int r) => { return player.Moral >= l && player.Moral < r; });
-            story.BindExternalFunction("UnthicIsIn", (int l, int r) => { return player.Unethic >= l && player.Unethic < r; });
-            story.BindExternalFunction("DetourIsIn", (int l, int r) => { return player.Detour >= l && player.Detour < r; });
-            story.BindExternalFunction("StrongIsIn", (int l, int r) => { return player.Strong >= l && player.Strong < r; });
+            Ink.Runtime.Story.ExternalFunction stateSet = (object[] args) =>
+              {
+                  StateSet((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
+                  return null;
+              };
+            Ink.Runtime.Story.ExternalFunction stateChange= (object[] args) =>
+            {
+                StateChange((int)args[0], (int)args[1], (int)args[2], (int)args[3], (int)args[4]);
+                return null;
+            };
+            story.BindExternalFunction("InnIsIn", (int l, int r) => { return player.Inside >= l && player.Inside < r; });
+            story.BindExternalFunction("ExtIsIn", (int l, int r) => { return player.Outside >= l && player.Outside < r; });
+            story.BindExternalFunction("LgcIsIn", (int l, int r) => { return player.Logic >= l && player.Logic < r; });
+            story.BindExternalFunction("SptIsIn", (int l, int r) => { return player.Passion >= l && player.Passion < r; });
+            story.BindExternalFunction("MrlIsIn", (int l, int r) => { return player.Moral >= l && player.Moral < r; });
+            story.BindExternalFunction("UtcIsIn", (int l, int r) => { return player.Unethic >= l && player.Unethic < r; });
+            story.BindExternalFunction("RdbIsIn", (int l, int r) => { return player.Detour >= l && player.Detour < r; });
+            story.BindExternalFunction("AgsIsIn", (int l, int r) => { return player.Strong >= l && player.Strong < r; });
             Ink.Runtime.Story.ExternalFunction choiceCanUse = (object[] args) =>
             {
                 return ChoiceCanUse((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
@@ -74,6 +66,8 @@ namespace Ink2Unity
             };
             story.BindExternalFunctionGeneral("TalkJudge", judge);
             story.BindExternalFunctionGeneral("ChoiceCanUse", choiceCanUse);
+            story.BindExternalFunctionGeneral("StateSet", stateSet);
+            story.BindExternalFunctionGeneral("StateChange", stateChange);
         }
         /// <summary>
         /// 故事是否可继续读取内容(Content)
@@ -93,11 +87,10 @@ namespace Ink2Unity
             UpdateInkVariable();
         }
         /// <summary>
-        ///     
+        ///   获取当前内容  
         /// </summary>
         public Content CurrentContent()
         {
-            Debug.Log(story.state.currentPathString);
             string ct;
             //避免表达式的情况
             while ((ct = story.Continue()) == "") ;
@@ -152,7 +145,7 @@ namespace Ink2Unity
             return rs;
         }
         /// <summary>
-        /// 根据索引值来进行选择，会返回选择选项后出现的文本
+        /// 根据索引值来进行选择，会返回选择选项后出现的文本，如果没有对应文本，则返回空
         /// </summary>
         /// <param name="index">当前选项的索引值</param>
         public Content SelectChoice(int index)
@@ -161,21 +154,17 @@ namespace Ink2Unity
             UpdateInkVariable();
             ///
             // 进行判定的过程
-            ///
+            ///忽略原本内容
             Content c = CurrentContent();
-            string t;
-            TagHandle.ChoiceCurrentTags(c.richText, out t);
-            if (t != "")
-            {
-                c.speaker = Speaker.Lead;
-                c.richText = t;
+            //采用定义的新内容
+            c = CurrentContent();
+            if (c.richText != "NIL")
                 return c;
-            }
             return null;
 
         }
         /// <summary>
-        /// 根据现选项来进行选择，会返回选择选项后出现的文本
+        /// 根据现选项来进行选择，会返回选择选项后出现的文本，如果没有文本返回则为空
         /// </summary>
         /// <param name="choice">当前选项</param>
         public Content SelectChoice(Choice choice)
@@ -192,7 +181,26 @@ namespace Ink2Unity
                 return CurrentChoices().Count;
             }
         }
+        private void StateChange(int i,int l,int m,int r,int t)
+        {
+            int[] p = { i, l, m, r };
+            for(int j=0;j<4;j++)
+            {
+                player.data[j] += p[j];
+            }
+            if(t!=-1)
+            {
+                //延迟buff
 
+            }
+        }
+
+        private void StateSet(int i, int l, int m, int r)
+        {
+            int[] p={ i,l,m,r};
+            for(int j=0;j<4;j++)
+                player.data[j] = p[j];
+        }
         public string NowState2Json()
         {
             return story.state.ToJson();
@@ -255,14 +263,14 @@ namespace Ink2Unity
         }
         private void UpdateInkVariable()
         {
-            story.variablesState["Inside"] = player.Inside;
-            story.variablesState["Outside"] = player.Outside;
-            story.variablesState["Logic"] = player.Logic;
-            story.variablesState["Passion"] = player.Passion;
-            story.variablesState["Moral"] = player.Moral;
-            story.variablesState["Unethic"] = player.Unethic;
-            story.variablesState["Detour"] = player.Detour;
-            story.variablesState["Strong"] = player.Strong;
+            story.variablesState["inn"] = player.Inside;
+            story.variablesState["ext"] = player.Outside;
+            story.variablesState["lgc"] = player.Logic;
+            story.variablesState["spt"] = player.Passion;
+            story.variablesState["mrl"] = player.Moral;
+            story.variablesState["utc"] = player.Unethic;
+            story.variablesState["rdb"] = player.Detour;
+            story.variablesState["ags"] = player.Strong;
         }
       
        
