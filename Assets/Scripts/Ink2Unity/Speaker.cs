@@ -10,6 +10,6 @@ public enum Speaker
     /// <summary>
     /// Ö÷½Ç£¬¼´Íæ¼Ò
     /// </summary>
-    Lead,
+    Player,
     NPC
 }

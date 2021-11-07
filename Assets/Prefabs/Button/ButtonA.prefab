@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2041896107711911530}
   - component: {fileID: 2041896107711911531}
   - component: {fileID: 2041896107711911535}
-  - component: {fileID: -8912050871117946329}
   m_Layer: 5
   m_Name: ButtonA
   m_TagString: DialogChooseBox
@@ -134,7 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2041896107711911529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268df9d80b46e8847b58a9df3e2faa8e, type: 3}
+  m_Script: {fileID: 11500000, guid: d411847abb9b0784a8d85d603398acb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
@@ -169,26 +168,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-8912050871117946329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041896107711911529}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: 900
-  m_MinHeight: 200
-  m_PreferredWidth: -1730
-  m_PreferredHeight: -1014
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 0
 --- !u!1 &2041896108026268635
 GameObject:
   m_ObjectHideFlags: 0

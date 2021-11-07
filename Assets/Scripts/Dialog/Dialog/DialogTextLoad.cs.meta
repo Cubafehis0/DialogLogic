@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: aa4a69254651eea429e8ffa8b4b954a2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_dialogTextSave: {instanceID: 0}
+  - m_buttonController: {instanceID: 0}
+  - textFile: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
+  - DialogChoosePanel: {instanceID: 0}
+  - text: {instanceID: 0}
+  - button: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
