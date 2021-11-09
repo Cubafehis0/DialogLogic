@@ -3,10 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public abstract class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public interface IButtonScript
 {
-    public  Image image;
+    /// <summary>
+    /// 刷新按钮的部分属性
+    /// </summary>
+    void RefreshButton();
+
+    /// <summary>
+    /// 初始化按钮，得到按钮的部分组件
+    /// </summary>
+    /// <param name="buttonController"></param>
+    void ButtonInit(ButtonController buttonController);
+
+    /// <summary>
+    /// 为按钮设置文本
+    /// </summary>
+    /// <param name="Button_text"></param>
+    /// <param name="play"></param>
+    void SetText(string Button_text, bool play);
+}
+public abstract class ButtonScript : MonoBehaviour, IButtonScript, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+{
+    public Image image;
     public Text text;
 
     protected DialogTextLoad dialogTextLoad;
@@ -16,7 +35,11 @@ public abstract class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public ButtonController m_buttonController;
 
-
+    public virtual void RefreshButton()
+    {
+        text.text = null;
+        hasPlayEnd = false;
+    }
     public virtual void ButtonInit(ButtonController buttonController)
     {
         text = this.GetComponentInChildren<Text>();
@@ -25,13 +48,14 @@ public abstract class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPoint
     }
 
     //play true 则逐字播放
-    public virtual void SetText(string Button_text,bool play)
+    public virtual void SetText(string Button_text, bool play)
     {
         if (text != null)
         {
             this.text.text = Button_text;
             hasPlayEnd = true;
         }
+        else Debug.LogError(text + " is null");
     }
     public abstract void OnPointerEnter(PointerEventData eventData);
 

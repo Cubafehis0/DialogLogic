@@ -16,46 +16,46 @@ public class GameLoop : MonoBehaviour
 
     public void Update()
     {
-        //Debug.Log("update");
-        m_UIController.Update();
-        GameObject gameObject = EventSystem.current.currentSelectedGameObject;
-        if (gameObject != null) Debug.Log(gameObject.name);
+        ////Debug.Log("update");
+        //m_UIController.Update();
+        //GameObject gameObject = EventSystem.current.currentSelectedGameObject;
+        //if (gameObject != null) Debug.Log(gameObject.name);
 
-        //if (Input.GetMouseButtonDown(0))
+        ////if (Input.GetMouseButtonDown(0))
+        ////{
+
+        ////    if (EventSystem.current.IsPointerOverGameObject())
+        ////    {
+        ////        Debug.Log("点击到UI");
+        ////    }
+        ////    else
+        ////    {
+        ////        Debug.Log("没点击到UI");
+
+        ////    }
+        ////}
+
+        //var mouse = Mouse.current;
+        //if (mouse == null)
         //{
-
-        //    if (EventSystem.current.IsPointerOverGameObject())
-        //    {
-        //        Debug.Log("点击到UI");
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("没点击到UI");
-
-        //    }
+        //    //Debug.Log("null");
+        //    return;
         //}
 
-        var mouse = Mouse.current;
-        if (mouse == null)
-        {
-            //Debug.Log("null");
-            return;
-        }
+        //if (mouse.leftButton.wasPressedThisFrame)
+        //{
+        //    //Debug.Log("pressed left button");
+        //    var onScreenPosition = mouse.position.ReadValue();
+        //    var ray = Camera.main.ScreenPointToRay(onScreenPosition);
 
-        if (mouse.leftButton.wasPressedThisFrame)
-        {
-            //Debug.Log("pressed left button");
-            var onScreenPosition = mouse.position.ReadValue();
-            var ray = Camera.main.ScreenPointToRay(onScreenPosition);
-
-            var hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, Mathf.Infinity);
-            if (hit.collider != null)
-            {
-                Debug.Log(hit.collider.gameObject.name);
-                hit.collider.gameObject.transform.position = ray.origin;
-            }
-            else Debug.Log("hit.collider = null");
-        }
+        //    var hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, Mathf.Infinity);
+        //    if (hit.collider != null)
+        //    {
+        //        Debug.Log(hit.collider.gameObject.name);
+        //        hit.collider.gameObject.transform.position = ray.origin;
+        //    }
+        //    else Debug.Log("hit.collider = null");
+        //}
 
 
     }
