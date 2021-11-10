@@ -30,12 +30,14 @@ public class DialogController : MonoBehaviour, IDialogController
     public DialogPanel m_dialogPanel;
     public DialogChoosePanel m_dialogChoosePanel;
     public DialogNarratagePanel m_dialogNarratagePanel;
+    public DialogSaveAndLoadPanel m_dialogSaveAndLoadPanel;
 
     public ButtonController m_buttonController;
     [SerializeField] private bool canUseDialogPanel;
     [SerializeField] private bool canUseDialogChoosePanel;
     [SerializeField] private bool canUseDialogNarratagePanel;
     [SerializeField] private bool canContinue = true;
+    [SerializeField] private bool locked = false;
     private Content lastContent = null;
 
     public void ClickDialogPanel()
@@ -49,6 +51,7 @@ public class DialogController : MonoBehaviour, IDialogController
         canUseDialogChoosePanel = true;
         canContinue = true;
         //Debug.Log(choice.index);
+        m_dialogSaveAndLoadPanel.SaveTextToFile(choice.content, true);
         Content content = inkUnity.SelectChoice(choice.index);
         lastContent = SetContentToDialog(content);
     }
@@ -59,6 +62,11 @@ public class DialogController : MonoBehaviour, IDialogController
         canContinue = true;
     }
 
+    public void ClickDialogSaveAndLoadPanel()
+    {
+        locked = !locked;
+    }
+
     private void Start()
     {
         canUseDialogChoosePanel = canUseDialogNarratagePanel = canUseDialogPanel = true;
@@ -66,6 +74,7 @@ public class DialogController : MonoBehaviour, IDialogController
         m_dialogPanel = this.transform.Find("DialogPanel").GetComponent<DialogPanel>();
         m_dialogChoosePanel = this.transform.Find("DialogChoosePanel").GetComponent<DialogChoosePanel>();
         m_dialogNarratagePanel = this.transform.Find("DialogNarratagePanel").GetComponent<DialogNarratagePanel>();
+        m_dialogSaveAndLoadPanel = this.transform.Find("DialogSaveAndLoadPanel").GetComponent<DialogSaveAndLoadPanel>();
         m_buttonController = this.GetComponent<ButtonController>();
     }
 
@@ -87,6 +96,7 @@ public class DialogController : MonoBehaviour, IDialogController
         //{
         //    Debug.Log("null");
         //}
+        //if (locked) return;
         if (inkUnity.CanCoutinue && canContinue)
         {
             canContinue = false;
@@ -140,7 +150,7 @@ public class DialogController : MonoBehaviour, IDialogController
     private Content SetContentToDialog(Content content)
     {
         Debug.Log(content.speaker + content.richText);
-
+        m_dialogSaveAndLoadPanel.SaveTextToFile(content, false);
         if (content.speaker == Speaker.Dialogue/* && canUseDialogNarratagePanel*/)
         {
             m_dialogNarratagePanel.SetContent(content);
