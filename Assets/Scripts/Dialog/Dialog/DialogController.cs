@@ -45,7 +45,7 @@ public class DialogController : MonoBehaviour, IDialogController
         canUseDialogPanel = true;
         canContinue = true;
     }
-
+    
     public void ClickDialogChoosePanel(Choice choice)
     {
         canUseDialogChoosePanel = true;
@@ -65,6 +65,12 @@ public class DialogController : MonoBehaviour, IDialogController
     public void ClickDialogSaveAndLoadPanel()
     {
         locked = !locked;
+    }
+    public void UpdateChooseDialogPanel()
+    {
+        List<Choice> choices = inkUnity.CurrentChoices();
+        m_dialogChoosePanel.ShowChooseButtons(choices);
+
     }
 
     private void Start()
