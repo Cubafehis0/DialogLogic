@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Ink2Unity;
+public interface IGameSaveAndLoadPanel
+{
+
+}
 public class GameSaveAndLoadPanel : MonoBehaviour
 {
     private GameObject gameSaveAndLoadPanel;
@@ -54,9 +58,8 @@ public class GameSaveAndLoadPanel : MonoBehaviour
         }
         else
         {
-            ILoad load = new Load();
-            
-            //Load.LoadGame();
+            Load load = new Load();
+            load.LoadGame(index);
             gameSaveAndLoadPanel.SetActive(false);
         }
     }
@@ -66,14 +69,15 @@ public class GameSaveAndLoadPanel : MonoBehaviour
         isSaveOrLoad = true;
         gameSaveAndLoadPanel.SetActive(true);
         inputSaveInformation.gameObject.SetActive(false);
-
+        inputSaveInformation.text = "";
+        GetInformation();
     }
     private void OnClickLoadButton()
     {
         isSaveOrLoad = false;
         gameSaveAndLoadPanel.SetActive(true);
         inputSaveInformation.gameObject.SetActive(false);
-
+        GetInformation();
     }
     private void OnSubmit()
     {
@@ -85,5 +89,17 @@ public class GameSaveAndLoadPanel : MonoBehaviour
     private void OnClickCloseButton()
     {
         gameSaveAndLoadPanel.SetActive(false);
+    }
+
+    private void GetInformation()
+    {
+        Load load = new Load();
+        List<string> list = load.LoadMessage();
+        if (list.Count > 1)
+            saveAndLoadButton1.GetComponentInChildren<Text>().text = list[1];
+        if (list.Count > 2)
+            saveAndLoadButton2.GetComponentInChildren<Text>().text = list[2];
+        if (list.Count > 3)
+            saveAndLoadButton3.GetComponentInChildren<Text>().text = list[3];
     }
 }

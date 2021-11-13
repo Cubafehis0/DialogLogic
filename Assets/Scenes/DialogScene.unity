@@ -3553,7 +3553,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1472890385}
   m_HandleRect: {fileID: 1472890384}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4141,7 +4141,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1291301393}
   m_HandleRect: {fileID: 1291301392}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4239,8 +4239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdab27aa06b544c499731dee880bf361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonAPrefab: {fileID: 0}
-  buttonBPrefab: {fileID: 0}
+  buttonAPrefab: {fileID: 2041896107711911529, guid: 44e8cc236a8e50f408452f34d97dd518,
+    type: 3}
+  buttonBPrefab: {fileID: 2041896107711911529, guid: 8c5194967345a9c49966ced0d63b5d77,
+    type: 3}
   choose_text: 
   m_buttonA: {fileID: 0}
   m_buttonB: {fileID: 0}
@@ -4260,7 +4262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffecf240deac453428169b2d9a52f929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textFile: {fileID: 4900000, guid: 0fbd9afae4b1cc9488a737cbc604a91e, type: 3}
+  textFile: {fileID: 4900000, guid: f36fa27c1bc5be74796a4e575e518b37, type: 3}
   m_dialogPanel: {fileID: 0}
   m_dialogChoosePanel: {fileID: 0}
   m_dialogNarratagePanel: {fileID: 0}
@@ -4467,6 +4469,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonB
       objectReference: {fileID: 0}
+    - target: {fileID: 2041896107711911533, guid: 8c5194967345a9c49966ced0d63b5d77,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2041896108026268634, guid: 8c5194967345a9c49966ced0d63b5d77,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -4486,6 +4493,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.7415
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041896108026268637, guid: 8c5194967345a9c49966ced0d63b5d77,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041896108026268637, guid: 8c5194967345a9c49966ced0d63b5d77,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041896108026268637, guid: 8c5194967345a9c49966ced0d63b5d77,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2041896108026268637, guid: 8c5194967345a9c49966ced0d63b5d77,
         type: 3}
@@ -4692,7 +4714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
