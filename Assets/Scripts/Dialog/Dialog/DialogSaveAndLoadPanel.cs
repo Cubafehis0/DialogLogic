@@ -48,6 +48,7 @@ public class DialogSaveAndLoadPanel :Dialog
         controllButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickControllButton(); });
         //HideChildren(this.gameObject);
         ClearTextFile(path);
+        HideChildren(this.gameObject);
     }
 
     private Color ChooseColor(string speaker)

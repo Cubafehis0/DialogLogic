@@ -15,7 +15,6 @@ public class GameSaveAndLoadPanel : MonoBehaviour
     private GameObject saveAndLoadButton2;
     private GameObject saveAndLoadButton3;
     private int index = 0;
-
     /// <summary>
     /// Save:True
     /// Load:False
@@ -42,6 +41,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour
         saveAndLoadButton2.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(2); });
         saveAndLoadButton3.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(3); });
 
+        gameSaveAndLoadPanel.SetActive(false);
     }
 
 
