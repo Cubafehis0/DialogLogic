@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Ink2Unity
 {
-
-
     public class FunctionTest : MonoBehaviour
     {
         public bool conS;
@@ -18,6 +16,7 @@ namespace Ink2Unity
         // Start is called before the first frame update
         void Start()
         {
+            TagHandle.ParseArray("(0,1,1,2)");
             c = -1;
             story = new InkStory(textAsset);
             wait = false;

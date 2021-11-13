@@ -17,7 +17,7 @@ public interface ISavable
 public interface ILoadable
 {
     //进行信息读取
-    void LoadInfo(string Deck);
+    void LoadInfo(Deck deck);
 }
 
 public class Deck : MonoBehaviour
