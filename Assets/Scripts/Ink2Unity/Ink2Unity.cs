@@ -28,6 +28,7 @@ namespace Ink2Unity
         Story story;
         Player player;
         List<Choice> choicesList;
+        IPlayerStateChange cardGame;
         public InkStory(TextAsset inkJSON)
         {
             story = new Story(inkJSON.text);
@@ -35,19 +36,10 @@ namespace Ink2Unity
             player = new Player();
             BindExternalFunction();
             NowStory = this;
+            cardGame = CardGameManager.Instance;
         }
         public void BindExternalFunction()
         {
-            Ink.Runtime.Story.ExternalFunction stateSet = (object[] args) =>
-              {
-                  StateSet((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
-                  return null;
-              };
-            Ink.Runtime.Story.ExternalFunction stateChange= (object[] args) =>
-            {
-                StateChange((int)args[0], (int)args[1], (int)args[2], (int)args[3], (int)args[4]);
-                return null;
-            };
             story.BindExternalFunction("InnIsIn", (int l, int r) => { return player.Inside >= l && player.Inside < r; });
             story.BindExternalFunction("ExtIsIn", (int l, int r) => { return player.Outside >= l && player.Outside < r; });
             story.BindExternalFunction("LgcIsIn", (int l, int r) => { return player.Logic >= l && player.Logic < r; });
@@ -56,18 +48,6 @@ namespace Ink2Unity
             story.BindExternalFunction("UtcIsIn", (int l, int r) => { return player.Unethic >= l && player.Unethic < r; });
             story.BindExternalFunction("RdbIsIn", (int l, int r) => { return player.Detour >= l && player.Detour < r; });
             story.BindExternalFunction("AgsIsIn", (int l, int r) => { return player.Strong >= l && player.Strong < r; });
-            Ink.Runtime.Story.ExternalFunction choiceCanUse = (object[] args) =>
-            {
-                return ChoiceCanUse((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
-            };
-            Ink.Runtime.Story.ExternalFunction judge = (object[] args) =>
-            {
-                return TalkJudge((int)args[0], (int)args[1], (int)args[2], (int)args[3]);
-            };
-            story.BindExternalFunctionGeneral("TalkJudge", judge);
-            story.BindExternalFunctionGeneral("ChoiceCanUse", choiceCanUse);
-            story.BindExternalFunctionGeneral("StateSet", stateSet);
-            story.BindExternalFunctionGeneral("StateChange", stateChange);
         }
         /// <summary>
         /// 故事是否可继续读取内容(Content)
@@ -84,7 +64,7 @@ namespace Ink2Unity
         /// </summary>
         public void UpdateInk()
         {
-            UpdateInkVariable();
+            UpdateInkPlayerInfo();
         }
         /// <summary>
         ///   获取当前内容  
@@ -94,7 +74,7 @@ namespace Ink2Unity
             string ct;
             //避免表达式的情况
             while ((ct = story.Continue()) == "") ;
-            UpdateInkVariable();
+            UpdateInkPlayerInfo();
             Content rs = new Content(ct);
             List<string> tags = story.currentTags;
             if (tags != null)
@@ -106,6 +86,8 @@ namespace Ink2Unity
                     ParseValue(rs, name, value);
                 }
             }
+            if (rs.stateChange != null)
+                cardGame.StateChange(rs.stateChange,rs.changeTurn);
             return rs;
         }
         public bool IsFinished
@@ -151,7 +133,26 @@ namespace Ink2Unity
         public Content SelectChoice(int index)
         {
             story.ChooseChoiceIndex(index);
-            UpdateInkVariable();
+            Choice cs = choicesList[index];
+            if(cs.judgeValue!=null)
+            {
+                bool success = TalkJudge(cs.judgeValue);
+                UpdateInkVariableByName<bool>("judgeSuccess", success);
+                if(success)
+                {
+                    if(cs.success_desc!=0)
+                        cardGame.PressureChange(-cs.success_desc);
+                }
+                else
+                {   
+                    if(cs.fail_add!=0)
+                        cardGame.PressureChange(cs.fail_add);
+                }
+            }
+            var sc = cs.content.stateChange;
+            if (sc != null)
+                cardGame.StateChange(sc,cs.content.changeTurn);
+            UpdateInk();
             ///
             // 进行判定的过程
             ///忽略原本内容
@@ -181,26 +182,7 @@ namespace Ink2Unity
                 return CurrentChoices().Count;
             }
         }
-        private void StateChange(int i,int l,int m,int r,int t)
-        {
-            int[] p = { i, l, m, r };
-            for(int j=0;j<4;j++)
-            {
-                player.data[j] += p[j];
-            }
-            if(t!=-1)
-            {
-                //延迟buff
-
-            }
-        }
-
-        private void StateSet(int i, int l, int m, int r)
-        {
-            int[] p={ i,l,m,r};
-            for(int j=0;j<4;j++)
-                player.data[j] = p[j];
-        }
+        
         public string NowState2Json()
         {
             return story.state.ToJson();
@@ -209,38 +191,55 @@ namespace Ink2Unity
         {
             story.state.LoadJson(state);
         }
-        private bool  ChoiceCanUse(int i, int l, int m, int d)
+        //private void StateChange(int i, int l, int m, int r, int t)
+        //{
+        //    int[] p = { i, l, m, r };
+        //    for (int j = 0; j < 4; j++)
+        //    {
+        //        player.data[j] += p[j];
+        //    }
+        //    if (t != -1)
+        //    {
+        //        //延迟buff
+        //    }
+        //}
+
+        private void StateSet(int i, int l, int m, int r)
         {
-            int[] p = { i, l, m, d };
+            int[] p = { i, l, m, r };
+            for (int j = 0; j < 4; j++)
+                player.data[j] = p[j];
+        }
+        private bool  ChoiceCanUse(List<int> values)
+        {
             for (int j = 0; j < 4; j++)
             {
-                if (p[j] > 0)
+                if (values[j] > 0)
                 {
-                    if (player.data[j]< p[j])
+                    if (player.data[j]< values[j])
                         return false;
                 }
-                else if (p[j] < 0)
+                else if (values[j] < 0)
                 {
-                    if (player.data[j]> p[j])
+                    if (player.data[j]> values[j])
                         return false;
                 }
             }
             return true;
         }
-        private bool TalkJudge(int i,int l,int m,int d)
+        private bool TalkJudge(List<int> values)
         {
             int r = GetRandomJudge();
-            int[] p = { i, l, m, d };
             for(int j=0;j<4;j++)
             {
-                if(p[j]>0)
+                if(values[j]>0)
                 {
-                    if (player.data[j] + r < p[j])
+                    if (player.data[j] + r < values[j])
                         return false;
                 }
-                else if(p[j]<0)
+                else if(values[j]<0)
                 {
-                    if (player.data[j] - r > p[j])
+                    if (player.data[j] - r > values[j])
                         return false;
                 }
             }
@@ -261,7 +260,7 @@ namespace Ink2Unity
             }
             return 0;
         }
-        private void UpdateInkVariable()
+        private void UpdateInkPlayerInfo()
         {
             story.variablesState["inn"] = player.Inside;
             story.variablesState["ext"] = player.Outside;
@@ -272,7 +271,10 @@ namespace Ink2Unity
             story.variablesState["rdb"] = player.Detour;
             story.variablesState["ags"] = player.Strong;
         }
-      
+        private void UpdateInkVariableByName<T>(string name,T value)
+        {
+            story.variablesState[name] = value;
+        }
        
         void ParseValue(Content content,string name,string value)
         {
@@ -280,6 +282,11 @@ namespace Ink2Unity
             {
                 case "Speaker":
                     content.speaker = TagHandle.ParseSpeaker(value);
+                    return;
+                case "StateChange":
+                    List<int> a = TagHandle.ParseArray(value);
+                    content.stateChange = a.GetRange(0, 4);
+                    content.changeTurn = a[4];
                     return;
                 default:
                     Debug.LogError("无法识别的标签类型："+name+":"+value);
@@ -294,10 +301,23 @@ namespace Ink2Unity
                     choice.content.speaker = TagHandle.ParseSpeaker(value);
                     return;
                 case "CanUse":
-                    choice.canUse = TagHandle.ParseBool(value);
+                    List<int> values = TagHandle.ParseArray(value);
+                    choice.judgeValue = values;
+                    choice.canUse = ChoiceCanUse(values);
                     return;
                 case "SpeechArt":
                     choice.speechArt = TagHandle.ParseSpeechArt(value);
+                    return;
+                case "Success":
+                    choice.success_desc = int.Parse(value);
+                    return;
+                case "Fail":
+                    choice.fail_add = int.Parse(value);
+                    return;
+                case "StateChange":
+                    List<int> a = TagHandle.ParseArray(value);
+                    choice.content.stateChange = a.GetRange(0, 4);
+                    choice.content.changeTurn = a[4];
                     return;
                 default:
                     Debug.LogError("无法识别的标签类型：" + name + ":" + value);

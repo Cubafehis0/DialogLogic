@@ -568,7 +568,7 @@ MonoBehaviour:
   save: 0
   load: 0
   loadFile: 
-  textAsset: {fileID: 4900000, guid: 0fbd9afae4b1cc9488a737cbc604a91e, type: 3}
+  textAsset: {fileID: 4900000, guid: f36fa27c1bc5be74796a4e575e518b37, type: 3}
 --- !u!222 &1915057469
 CanvasRenderer:
   m_ObjectHideFlags: 0

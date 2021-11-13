@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Ink2Unity
 {
-
-
     public class FunctionTest : MonoBehaviour
     {
         public bool conS;
@@ -18,25 +16,27 @@ namespace Ink2Unity
         // Start is called before the first frame update
         void Start()
         {
+            TagHandle.ParseArray("(0,1,1,2)");
             c = -1;
             story = new InkStory(textAsset);
             wait = false;
             conS = false;
-            save = false;
+            save = false; 
         }
         // Update is called once per frame
         void Update()
         {
-            //if(save)
-            //{
-            //    Save.SaveGame();
-            //    save = false;
-            //}
-            //if(load)
-            //{
-            //    Load.LoadGame();
-            //    load = false;
-            //}
+            if (save)
+            {
+                Save.SaveGame(1,"axsa");
+                save = false;
+            }
+            if (load)
+            {
+                ILoad l = new Load();
+                l.LoadGame(1);
+                load = false;
+            }
             if (wait == true)
             {
                 if(c>=0)

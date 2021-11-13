@@ -7,7 +7,16 @@ using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CardGameManager : MonoBehaviour
+public interface IPlayerStateChange
+{
+    //values为四维值的改变值，turns为改变持续回合数，为-1时表示无限回合
+    void StateChange(List<int> values,int turns);
+    //压力槽改变值，压力槽满时改为扣除value/3取整后的san值
+    void PressureChange(int value);
+}
+
+
+public class CardGameManager : MonoBehaviour,IPlayerStateChange
 {
     [SerializeField]
     private CardTable cardTable;
@@ -303,6 +312,16 @@ public class CardGameManager : MonoBehaviour
         {
             EndGame();
         }
+    }
+
+    public void StateChange(List<int> values, int turns)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PressureChange(int value)
+    {
+        throw new NotImplementedException();
     }
 }
 public enum CardGameState

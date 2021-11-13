@@ -36,6 +36,21 @@ namespace Ink2Unity
                 return false;
             }
         }
+        public static List<int> ParseArray(string value)
+        {
+            string parttern = @"([^\d]+)(\d+)";
+            var matches = Regex.Matches(value,parttern);
+            if(matches.Count>0)
+            {
+                List<int> res = new List<int>();
+                foreach (Match m in matches)
+                {
+                    res.Add(int.Parse(m.Groups[2].Value));
+                }
+                return res;
+            }
+            return null;
+        }
         public static string GetPureText(string richText)
         {
 
