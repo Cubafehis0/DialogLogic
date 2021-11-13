@@ -42,7 +42,13 @@ public abstract class Save
         return saveInfo;
     }
 }
-public abstract class Load
+
+public interface ILoad
+{
+    void LoadGame(int index);
+    List<string> LoadMessage();
+}
+public abstract class Load:ILoad
 {
     public static void LoadGame(string fileName=null)
     {
@@ -62,6 +68,16 @@ public abstract class Load
         //其他信息加载
         //
         Debug.Log("加载游戏");
+    }
+
+    public void LoadGame(int index)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public List<string> LoadMessage()
+    {
+        throw new System.NotImplementedException();
     }
 }
 
