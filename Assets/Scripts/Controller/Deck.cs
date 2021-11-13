@@ -8,6 +8,18 @@ public interface IDeckEventHandler
     public void OnDeckAdd(CardObject card);
 }
 
+public interface ISavable
+{
+    //将需要保存的信息封装为一个类
+    //序列化和反序列化在Save里面进行
+    Deck GetSaveInfo();
+}
+public interface ILoadable
+{
+    //进行信息读取
+    void LoadInfo(string Deck);
+}
+
 public class Deck : MonoBehaviour
 {
     /// <summary>

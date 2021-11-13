@@ -22,21 +22,22 @@ namespace Ink2Unity
             story = new InkStory(textAsset);
             wait = false;
             conS = false;
-            save = false;
+            save = false; 
         }
         // Update is called once per frame
         void Update()
         {
-            //if(save)
-            //{
-            //    Save.SaveGame();
-            //    save = false;
-            //}
-            //if(load)
-            //{
-            //    Load.LoadGame();
-            //    load = false;
-            //}
+            if (save)
+            {
+                Save.SaveGame(1,"axsa");
+                save = false;
+            }
+            if (load)
+            {
+                ILoad l = new Load();
+                l.LoadGame(1);
+                load = false;
+            }
             if (wait == true)
             {
                 if(c>=0)

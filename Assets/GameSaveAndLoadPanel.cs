@@ -54,7 +54,9 @@ public class GameSaveAndLoadPanel : MonoBehaviour
         }
         else
         {
-            Load.LoadGame();
+            ILoad load = new Load();
+            
+            //Load.LoadGame();
             gameSaveAndLoadPanel.SetActive(false);
         }
     }
