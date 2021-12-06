@@ -28,7 +28,7 @@ public abstract class ButtonScript : MonoBehaviour, IButtonScript, IPointerEnter
     public Image image;
     public Text text;
 
-    protected DialogTextLoad dialogTextLoad;
+    //protected DialogTextLoad dialogTextLoad;
     public bool hasPlayEnd;
     public bool canChoose = true;
     //public bool hasDestroyed;

@@ -7,7 +7,7 @@ public interface IGameSaveAndLoadPanel
 {
 
 }
-public class GameSaveAndLoadPanel : MonoBehaviour
+public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
 {
     private GameObject gameSaveAndLoadPanel;
     private InputField inputSaveInformation;

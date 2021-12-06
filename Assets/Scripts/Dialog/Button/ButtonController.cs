@@ -16,7 +16,7 @@ public class ButtonController : MonoBehaviour
     private GameObject DialogPanel;
     public GameObject DialogNarratagePanel;
 
-    public DialogTextLoad dialogTextLoad;
+    public DialogSaveAndLoadPanel dialogSaveAndLoadPanel;
 
     private UIController m_UIController;
     [SerializeField] private Sprite[] spritesOfA;
@@ -37,10 +37,10 @@ public class ButtonController : MonoBehaviour
         //Debug.Log(m_buttonB.text.text);
     }
 
-    public void Start()
+    private void Start()
     {
         //Debug.Log("start");
-        dialogTextLoad = this.GetComponentInChildren<DialogTextLoad>();
+        dialogSaveAndLoadPanel = this.GetComponentInChildren<DialogSaveAndLoadPanel>();
         DialogChoosePanel = this.transform.Find("DialogChoosePanel").gameObject;
         DialogPanel = this.transform.Find("DialogPanel").gameObject;
         DialogNarratagePanel = this.transform.Find("DialogNarratagePanel").gameObject;
@@ -53,35 +53,7 @@ public class ButtonController : MonoBehaviour
 
     public void UpdateChoose()
     {
-        dialogTextLoad.UpdateChoose();
-    }
-    public GameObject CreateButtonB(Content content)
-    {
-        if (content.richText == null) return null;
-        GameObject buttonB = Instantiate(buttonBPrefab);
-        //Debug.Log("CreateButtonB:" + content.richText+ content.speaker);
-
-        ButtonScript buttonScript = buttonB.GetComponent<ButtonScript>();
-        buttonScript.ButtonInit(this);
-        buttonScript.SetText(content.richText, true);
-
-        if (content.speaker != 0)
-        {
-            buttonScript.image.sprite = spriteOfB;
-
-            buttonB.transform.SetParent(DialogPanel.transform, false);
-        }
-        else 
-        {
-            //Debug.Log("is ÅÔ°×À²À²À²");
-            buttonB.transform.SetParent(DialogNarratagePanel.transform, false); 
-        }
-
-
-        //HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
-        //layoutGroup.childForceExpandHeight = false;
-
-        return buttonB;
+        //dialogSaveAndLoadPanel.UpdateChoose(); ´ýÊµÏÖ
     }
     public int ChooseSprite(Color color)
     {
@@ -103,44 +75,5 @@ public class ButtonController : MonoBehaviour
         }
         return 0;
     }
-    public GameObject FindButtonA(Choice choice)
-    {
-        if (!choice.isVisible)
-        {
-            Debug.Log("cannot  see");
-            return null;
-        }
-        if (choice.content.richText == null) { return null; }
-        GameObject button = Instantiate(buttonAPrefab);
-        button.transform.SetParent(DialogChoosePanel.transform, false);
-        ButtonScript buttonScript = button.GetComponent<ButtonScript>();
-        buttonScript.ButtonInit(this);
-        buttonScript.SetText(choice.content.richText, false);
-        buttonScript.image.sprite = spritesOfA[ChooseSprite(choice.BgColor)];
-        //Debug.Log("SetButtonActive:" + text);
-        //HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
-        //layoutGroup.childForceExpandHeight = false;
-
-        return button;
-    }
-    public GameObject CreateButtonA(Choice choice)
-    {
-        if (!choice.canUse)
-        {
-            Debug.Log("cannot  see");
-            return null;
-        }
-        if (choice.content.richText == null) { return null; }
-        GameObject button = Instantiate(buttonAPrefab);
-        button.transform.SetParent(DialogChoosePanel.transform, false);
-        ButtonScript buttonScript = button.GetComponent<ButtonScript>();
-        buttonScript.ButtonInit(this);
-        buttonScript.SetText(choice.content.richText, false);
-        buttonScript.image.sprite = spritesOfA[ChooseSprite(choice.BgColor)];
-        //Debug.Log("SetButtonActive:" + text);
-        //HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
-        //layoutGroup.childForceExpandHeight = false;
-
-        return button;
-    }
+    
 }

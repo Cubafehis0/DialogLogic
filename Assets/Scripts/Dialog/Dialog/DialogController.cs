@@ -162,7 +162,6 @@ public class DialogController : MonoBehaviour, IDialogController
             m_dialogNarratagePanel.SetContent(content);
             canUseDialogNarratagePanel = false;
             return content;
-
         }
         else if ((content.speaker == Speaker.Player || content.speaker == Speaker.NPC) /*&& canUseDialogPanel*/)
         {
