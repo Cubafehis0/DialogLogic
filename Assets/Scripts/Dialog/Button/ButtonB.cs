@@ -14,11 +14,6 @@ public interface IButtonB
     void ButtonInit(ButtonController buttonController);
 
     /// <summary>
-    /// 重置button部分属性，继承ButtonScript
-    /// </summary>
-    void RefreshButton();
-
-    /// <summary>
     /// 为button设置文本，play为true则调用协程打印文本，false则直接赋值文本，继承ButtonScript
     /// </summary>
     /// <param name="Button_text"></param>
@@ -29,15 +24,15 @@ public interface IButtonB
 public class ButtonB : ButtonScript, IButtonB
 {
 
-    private string text_;
-
+    public string text_;
+    private Coroutine coroutine;
     public override void ButtonInit(ButtonController buttonController)
     {
         base.ButtonInit(buttonController);
         hasPlayEnd = false;
     }
 
-    public override void RefreshButton()
+    protected override void RefreshButton()
     {
         hasPlayEnd = false;
         text.text = null;
@@ -45,11 +40,22 @@ public class ButtonB : ButtonScript, IButtonB
 
     public override void SetText(string Button_text, bool play)
     {
+        RefreshButton();
         //Debug.Log(Button_text + " play: " + play + " hasPlayEnd: " + hasPlayEnd);
         if (play)
-            StartCoroutine(ShowText(Button_text));
+            coroutine = StartCoroutine(ShowText(Button_text));
         else
+        {
             base.SetText(Button_text, play);
+            hasPlayEnd = true;
+        }
+    }
+
+    public void SetText()
+    {
+        StopCoroutine(coroutine);
+        text.text = text_;
+        hasPlayEnd = true;
     }
     IEnumerator ShowText(string Button_text)
     {
@@ -64,6 +70,16 @@ public class ButtonB : ButtonScript, IButtonB
             yield return new WaitForSeconds(.1f);
         }
 
+    }
+
+    private void Update()
+    {
+        if (!hasPlayEnd)
+        {
+            m_buttonController.buttonB = this;
+        }
+        else 
+            m_buttonController.buttonB = null;
     }
 
     public override void OnPointerClick(PointerEventData eventData)

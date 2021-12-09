@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class UIController
 {
-    private ButtonController m_buttonController;
-    
+    private DialogController dialogController;    
     public void Start()
     {
-        
+        dialogController = GameObject.Find("Dialog").GetComponent<DialogController>();
 
     }
 
     public void Update()
     {
-        
+      
+        //dialogController.update();
     }
 }

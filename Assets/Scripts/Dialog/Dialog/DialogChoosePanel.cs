@@ -5,23 +5,41 @@ using Ink2Unity;
 using UnityEngine.UI;
 public interface IDialogChoosePanel
 {
-    /// <summary>
-    /// 隐藏物体的所有子物体，重置一些变量，继承Dialog
-    /// </summary>
-    /// <param name="gameObject"></param>
-    void HideChildren(GameObject gameObject);
+    IDialogChoosePanel Instance { get; }
 
     /// <summary>
-    /// 调用显示选择选项
+    /// 传递choice如果是当前故事所有choice（不管是否能选择）中的一个则相当于选择了该选项，返回true，否则返回false
+    /// </summary>
+    /// <param name="choice"></param>
+    /// <returns></returns>
+    bool SelectChoice(Choice choice);
+
+
+    /// <summary>
+    /// 关闭选择面板
+    /// </summary>
+    void Close();
+
+    /// <summary>
+    /// 显示选项
     /// </summary>
     /// <param name="choices"></param>
-    void ShowChooseButtons(List<Choice> choices);
+    void Open(List<Choice> choices);
 
+    /// <summary>
+    /// 在可选择的choice中加入choice，如果合法，即是所有choice中的一个时
+    /// </summary>
+    /// <param name="choice"></param>
+    void Add(Choice choice);
+
+    /// <summary>
+    /// 更新可选择choice
+    /// </summary>
+    void UpdateChoice();
 }
+
 public class DialogChoosePanel : Dialog, IDialogChoosePanel
 {
-    //public DialogController m_dialogController;
-
     private GameObject chooseButton1;
     private GameObject chooseButton2;
     private GameObject lastButton;
@@ -30,46 +48,46 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
     private int index;
     private int numOfChoices;
     private List<Choice> nowChoices;
+    private List<Choice> allChoices;
     [SerializeField] private Sprite[] spritesOfButtonA;
 
+    public IDialogChoosePanel Instance { get; }
 
-    public override void HideChildren(GameObject parent)
+    protected override void HideChildren()
     {
         index = 0;
         numOfChoices = 0;
         nowChoices = null;
-        //lastButton.GetComponent<Button>().onClick.RemoveListener(delegate { ClickLastButton(); });
-        //nextButton.GetComponent<Button>().onClick.RemoveListener(delegate { ClickNextButton(); });
-        base.HideChildren(parent);
+        base.HideChildren();
     }
 
-    public void ShowChooseButtons(List<Choice> choices)
+    public void Open(List<Choice> choices)
     {
+        RefreshDialogChoosePanel();
         index = 0;
+        allChoices = choices;
         nowChoices = ChooseVisiableChoices(choices);
-        //Debug.Log("nowChoices: " + nowChoices.Count);
+        Debug.Log("nowChoices: " + nowChoices.Count);
         numOfChoices = nowChoices.Count;
-        //lastButton.GetComponent<Button>().onClick.AddListener(delegate { ClickLastButton(); });
-        //nextButton.GetComponent<Button>().onClick.AddListener(delegate { ClickNextButton(); });
         SetChooseButtons(nowChoices);
+        CardGameNotion cardGameNotion = new CardGameNotion();
+        cardGameNotion.SendStartNotionToCardGame();
     }
 
     /// <summary>
     /// 开始获取物体
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         m_dialogController = this.GetComponentInParent<DialogController>();
 
-        chooseButton1 = this.transform.Find("ButtonA1").gameObject;
-        chooseButton2 = this.transform.Find("ButtonA2").gameObject;
+        chooseButton1 = this.transform.Find("ChooseButton1").gameObject;
+        chooseButton2 = this.transform.Find("ChooseButton2").gameObject;
         lastButton = this.transform.Find("Up").gameObject;
         nextButton = this.transform.Find("Down").gameObject;
         lastButton.GetComponent<Button>().onClick.AddListener(delegate { ClickLastButton(); });
         nextButton.GetComponent<Button>().onClick.AddListener(delegate { ClickNextButton(); });
-        //lastButton.GetComponent<ButtonScript>().ButtonInit(m_dialogController.m_buttonController);
-        //nextButton.GetComponent<ButtonScript>().ButtonInit(m_dialogController.m_buttonController);
-        HideChildren(this.gameObject);
+        HideChildren();
     }
 
     private List<Choice> ChooseVisiableChoices(List<Choice> choices)
@@ -103,7 +121,6 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
             }
             else ShowButton(choices[i], chooseButton2.GetComponent<Button>());
         }
-        //index = index + 2 > choices.Count ? choices.Count - 1 : index + 2;
     }
     private int ChooseSprite(Color color)
     {
@@ -131,7 +148,6 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
         button.gameObject.SetActive(true);
         ButtonScript buttonScript = button.GetComponent<ButtonScript>();
         buttonScript.ButtonInit(m_dialogController.m_buttonController);
-        buttonScript.RefreshButton();
         buttonScript.SetText(choice.content.richText, false);
         buttonScript.image.sprite = spritesOfButtonA[ChooseSprite(choice.BgColor)];
         if (button && !choice.isLocked)
@@ -154,10 +170,8 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
     }
     private void OnClickChoiceButton(Choice choice, GameObject button)
     {
-        //chooseButton1.GetComponent<ButtonScript>().RefreshButton();
-        //chooseButton2.GetComponent<ButtonScript>().RefreshButton();
-        HideChildren(this.gameObject);
-        //Debug.Log(choice.content.speaker + ": " + choice.content.richText);
+        HideChildren();
+        Debug.Log(choice.content.speaker + ": " + choice.content.richText);
         m_dialogController.ClickDialogChoosePanel(choice);
     }
 
@@ -175,7 +189,7 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
     }
     private void ClickNextButton()
     {
-        //Debug.Log("click nextbutton1");
+        Debug.Log("click nextbutton1");
         Debug.Log(index != numOfChoices - 1);
         Debug.Log(index);
         Debug.Log(numOfChoices);
@@ -203,5 +217,43 @@ public class DialogChoosePanel : Dialog, IDialogChoosePanel
         for (int i = 0; i < childCount; i++)
             this.transform.GetChild(i).gameObject.SetActive(false);
 
+    }
+
+    public void Close()
+    {
+        HideChildren();
+    }
+
+    public void UpdateChoice()
+    {
+        m_dialogController.UpdateChooseDialogPanel();
+    }
+
+    public bool SelectChoice(Choice choice)
+    {
+        foreach (Choice c in allChoices)
+        {
+            if (c == choice)
+            {
+                OnClickChoiceButton(choice, null);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void Add(Choice choice)
+    {
+        foreach (Choice c in allChoices)
+        {
+            if (c == choice)
+            {
+                nowChoices.Add(choice);
+                int i = index;
+                RefreshDialogChoosePanel();
+                index = i;
+                SetChooseButtons(nowChoices);
+            }
+        }
     }
 }

@@ -4,62 +4,66 @@ using UnityEngine;
 using Ink2Unity;
 public interface IDialogController
 {
-    /// <summary>
-    /// 点击DialogPanel上的对话按钮后调用这个
-    /// </summary>
-    void ClickDialogPanel();
+
+    void SetContent(Content c);
 
     /// <summary>
-    /// 点击DialogChoosePanel上的选择按钮后调用这个
+    /// 
     /// </summary>
-    /// <param name="choice"></param>
-    void ClickDialogChoosePanel(Choice choice);
-
-    /// <summary>
-    /// 点击DialogNarratagePanel上的对话按钮后调用这个
-    /// </summary>
-    void ClickDialogNarratagePanel();
+    void ContinueDialog();
 
 }
 
 public class DialogController : MonoBehaviour, IDialogController
 {
-    private InkStory inkUnity;
-    [SerializeField] private TextAsset textFile;
+    
 
-    public DialogPanel m_dialogPanel;
+    public ContentPanel m_contentPanel;
     public DialogChoosePanel m_dialogChoosePanel;
-    public DialogNarratagePanel m_dialogNarratagePanel;
     public DialogSaveAndLoadPanel m_dialogSaveAndLoadPanel;
 
+    private GameObject dialogNarratagePanel;
+    private GameObject dialogChoosePanel;
     public ButtonController m_buttonController;
     [SerializeField] private bool canUseDialogPanel;
-    [SerializeField] private bool canUseDialogChoosePanel;
+    [SerializeField] public bool canUseDialogChoosePanel;
     [SerializeField] private bool canUseDialogNarratagePanel;
-    [SerializeField] private bool canContinue = true;
+    [SerializeField] public bool canContinue = true;
     [SerializeField] private bool locked = false;
+    [SerializeField] public InkStory inkStory;
     private Content lastContent = null;
 
+
+    public void ContinueDialog()
+    {
+        if (m_buttonController.buttonB)
+        {
+            m_buttonController.buttonB.SetText();
+        }
+        else update();
+    }
     public void ClickDialogPanel()
     {
         canUseDialogPanel = true;
         canContinue = true;
+        update();
     }
     
     public void ClickDialogChoosePanel(Choice choice)
     {
-        canUseDialogChoosePanel = true;
-        canContinue = true;
-        //Debug.Log(choice.index);
+        Debug.Log(choice.index);
         m_dialogSaveAndLoadPanel.SaveTextToFile(choice.content, true);
-        Content content = inkUnity.SelectChoice(choice.index);
+        Content content = inkStory.SelectChoice(choice.index);
         lastContent = SetContentToDialog(content);
+        update();
+        canContinue = true;
     }
 
     public void ClickDialogNarratagePanel()
     {
         canUseDialogNarratagePanel = true;
         canContinue = true;
+        update();
     }
 
     public void ClickDialogSaveAndLoadPanel()
@@ -68,76 +72,40 @@ public class DialogController : MonoBehaviour, IDialogController
     }
     public void UpdateChooseDialogPanel()
     {
-        List<Choice> choices = inkUnity.CurrentChoices();
-        m_dialogChoosePanel.ShowChooseButtons(choices);
-
+        List<Choice> choices = inkStory.CurrentChoices();
+        m_dialogChoosePanel.Open(choices);
     }
 
     private void Start()
     {
         canUseDialogChoosePanel = canUseDialogNarratagePanel = canUseDialogPanel = true;
-        inkUnity = new InkStory(textFile);
-        m_dialogPanel = this.transform.Find("DialogPanel").GetComponent<DialogPanel>();
+        dialogNarratagePanel = this.transform.Find("DialogNarratagePanel").gameObject;
+        dialogChoosePanel = this.transform.Find("DialogChoosePanel").gameObject;
+        m_contentPanel = this.transform.Find("DialogPanel").GetComponent<ContentPanel>();
         m_dialogChoosePanel = this.transform.Find("DialogChoosePanel").GetComponent<DialogChoosePanel>();
-        m_dialogNarratagePanel = this.transform.Find("DialogNarratagePanel").GetComponent<DialogNarratagePanel>();
         m_dialogSaveAndLoadPanel = this.transform.Find("DialogSaveAndLoadPanel").GetComponent<DialogSaveAndLoadPanel>();
         m_buttonController = this.GetComponent<ButtonController>();
+        update();
     }
 
     private void Update()
     {
-        //if (m_dialogPanel == null)
-        //{
-        //    Debug.Log("null");
-        //}
-        //if (m_dialogChoosePanel == null)
-        //{
-        //    Debug.Log("null");
-        //}
-        //if (m_dialogNarratagePanel == null)
-        //{
-        //    Debug.Log("null");
-        //}
-        //if (m_buttonController == null)
-        //{
-        //    Debug.Log("null");
-        //}
-        //if (locked) return;
-        if (inkUnity.CanCoutinue && canContinue)
+        if (ActiveChildCount(dialogChoosePanel) == 0)
         {
-            canContinue = false;
-            Content content = inkUnity.CurrentContent();
-            List<Choice> choices = inkUnity.CurrentChoices();
-            //if (lastContent != content)
-            //{
-            //    SetContentToDialog(content);
-            //}
-            if (ActiveChildCount(m_dialogNarratagePanel.gameObject) == 0 && content.speaker == Speaker.Dialogue)
-            {
-                lastContent = SetContentToDialog(content);
-            }
-            else if (lastContent != null && lastContent.speaker != content.speaker)
-            {
-                lastContent = SetContentToDialog(content);
-            }
-            //else if (lastContent.richText != content.richText)
-            //{
-            //    lastContent = SetContentToDialog(content);
-            //}
-            else
-            {
-                Debug.Log(ActiveChildCount(m_dialogNarratagePanel.gameObject));
-                Debug.Log("no print" + content.speaker + ":" + content.richText);
-                Debug.Log("lastContent == content");
-            }
-            if (choices != null)
-            {
-                m_dialogChoosePanel.ShowChooseButtons(choices);
-            }
+            canUseDialogChoosePanel = true;
         }
-
-
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            Debug.Log("update");
+            ContinueDialog();
+        }
     }
+    public void update()
+    {
+        canContinue = true;
+    }
+
+
 
     private int ActiveChildCount(GameObject parent)
     {
@@ -150,23 +118,20 @@ public class DialogController : MonoBehaviour, IDialogController
                 activeChildCount++;
             }
         }
+        //Debug.Log("active" + childCount+" "+activeChildCount+ parent.transform.GetChild(0).gameObject.name);
         return activeChildCount;
     }
 
     private Content SetContentToDialog(Content content)
     {
+        canContinue = false;
         Debug.Log(content.speaker + content.richText);
         m_dialogSaveAndLoadPanel.SaveTextToFile(content, false);
-        if (content.speaker == Speaker.Dialogue/* && canUseDialogNarratagePanel*/)
+        if ((content.speaker == Speaker.Player || content.speaker == Speaker.NPC||content.speaker==Speaker.Dialogue))
         {
-            m_dialogNarratagePanel.SetContent(content);
-            canUseDialogNarratagePanel = false;
-            return content;
-        }
-        else if ((content.speaker == Speaker.Player || content.speaker == Speaker.NPC) /*&& canUseDialogPanel*/)
-        {
-            m_dialogPanel.SetContent(content);
-            canUseDialogPanel = false;
+            m_contentPanel.SetContent(content.richText, content.speaker);
+            if (content.speaker == Speaker.Dialogue) canUseDialogNarratagePanel = false;
+            else canUseDialogPanel = false;
             return content;
         }
         else if (!(content.speaker == Speaker.Player || content.speaker == Speaker.NPC || content.speaker == Speaker.Dialogue))
@@ -179,5 +144,28 @@ public class DialogController : MonoBehaviour, IDialogController
             Debug.Log("canContinue:" + canContinue + " canUseDialogNarratagePanel：" + canUseDialogNarratagePanel + " canUseDialogPanel:" + canUseDialogPanel);
         }
         return null;
+    }
+    public void SetChoice(List<Choice> choices)
+    {
+        canUseDialogChoosePanel = false;
+        m_dialogChoosePanel.Open(choices);
+    }
+
+    public void SetContent(Content c)
+    {
+        if (c.speaker == Speaker.Dialogue)
+        {
+            lastContent = SetContentToDialog(c);
+        }
+        else if (lastContent != null && lastContent.speaker != c.speaker)
+        {
+            lastContent = SetContentToDialog(c);
+        }
+        else
+        {
+            Debug.Log(ActiveChildCount(dialogNarratagePanel));
+            Debug.Log("no print" + c.speaker + ":" + c.richText);
+            Debug.Log("lastContent == content");
+        }
     }
 }

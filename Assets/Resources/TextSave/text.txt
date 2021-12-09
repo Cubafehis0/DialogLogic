@@ -15,14 +15,9 @@ Dialogue#当你走到一个小院，准备敲响房门收保护费时，此时�
 NPC#你是来做什么的？
 
 Choose
-Dialogue#请问你是那位？ @SpeechArt:Normal @Speaker:Player @StateChange:(0,0,-1,0,-1)
+Dialogue#我是来收保护费的 @SpeechArt:Normal @Speaker:Player @StateChange:(0,1,0,0,-1)
 
-Player#请问你是那位？
-
-NPC#我是他们的邻居，我来帮助他们。
-
-Choose
-Player#我是来做我应该做的事情
+Player#我是来收保护费的
 
 NPC#收保护费?
 
@@ -31,14 +26,37 @@ Dialogue#女子看看身后显得有些破破烂烂的屋子。
 NPC#你和他们是一伙的？
 
 Choose
-Dialogue#我和他们不是一伙人，我会妥善处理这件事 @SpeechArt:Cheat @CanUse:(0,3,-3,3) @Success:5 @Fail:5 @Speaker:Player
-
-Player#我和他们不是一伙人，我会妥善处理这件事
+Player#我是来收保护费的
 
 NPC#我是他们的邻居，我来帮助他们。
 
 Choose
-Player#我是来做我应该做的事情
+Dialogue#你并不知道发生了什么，这件事与你无关 @SpeechArt:Pursuade @CanUse:(0,2,0,-2) @Success:5 @Fail:10 @Speaker:Player
 
-NPC#收保护费?
+Player#你并不知道发生了什么，这件事与你无关
+
+Dialogue#她往后退了一步，但仍然抬头直视你。
+
+NPC#你到底想干什么？
+
+Choose
+Dialogue#你握紧拳头
+
+Player#我讨厌被人质问，我更习惯用暴力回答问题。
+
+Dialogue#她愤怒的看着你，张开双手挡住了你面前的路。
+
+NPC#你别过来，再往前一步我就要找警署了。
+
+Dialogue#你耸耸肩，无所谓的摊开手。
+
+Player#悉听尊便，但是你没办法阻挡我。
+
+Dialogue#你推开她，走到房门前按响门铃，大声道：
+
+Player#别磨蹭了，快把钱拿出来。
+
+Dialogue#一时间周围悄无声息，只有机器运行时齿轮发出的咔咔声。
+
+Player#再不出来我就进去了！
 

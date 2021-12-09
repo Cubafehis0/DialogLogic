@@ -16,16 +16,16 @@ public interface IDialog
     /// <param name="content"></param>
     public void SetContent(Content content);
 }
-public abstract class Dialog : MonoBehaviour, IDialog
+public abstract class Dialog : MonoBehaviour
 {
     protected DialogController m_dialogController;
-    public virtual void HideChildren(GameObject parent)
+    protected virtual void HideChildren()
     {
-        var childCount = parent.transform.childCount;
+        var childCount = this.transform.childCount;
         for (int i = 0; i < childCount; i++)
-            parent.transform.GetChild(i).gameObject.SetActive(false);
+            this.transform.GetChild(i).gameObject.SetActive(false);
 
     }
 
-    public virtual void SetContent(Content content) { }
+    //public virtual void SetContent(Content content) { }
 }

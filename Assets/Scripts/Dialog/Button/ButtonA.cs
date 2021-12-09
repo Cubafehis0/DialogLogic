@@ -11,17 +11,11 @@ public interface IButtonA
     /// </summary>
     /// <param name="buttonController"></param>
     void ButtonInit(ButtonController buttonController);
-
-    /// <summary>
-    /// 重置button部分属性，继承ButtonScript
-    /// </summary>
-    void RefreshButton();
-
 }
 public class ButtonA : ButtonScript,IButtonA
 {
     public float biggerScale = 1.1f;
-    public override void RefreshButton()
+    protected override void RefreshButton()
     {
         base.RefreshButton();
         this.transform.localScale = new Vector3(1, 1, 1);

@@ -6,11 +6,6 @@ using UnityEngine.UI;
 public interface IButtonScript
 {
     /// <summary>
-    /// 刷新按钮的部分属性
-    /// </summary>
-    void RefreshButton();
-
-    /// <summary>
     /// 初始化按钮，得到按钮的部分组件
     /// </summary>
     /// <param name="buttonController"></param>
@@ -35,7 +30,7 @@ public abstract class ButtonScript : MonoBehaviour, IButtonScript, IPointerEnter
 
     public ButtonController m_buttonController;
 
-    public virtual void RefreshButton()
+    protected virtual void RefreshButton()
     {
         text.text = null;
         hasPlayEnd = false;
@@ -50,6 +45,7 @@ public abstract class ButtonScript : MonoBehaviour, IButtonScript, IPointerEnter
     //play true 则逐字播放
     public virtual void SetText(string Button_text, bool play)
     {
+        RefreshButton(); 
         if (text != null)
         {
             this.text.text = Button_text;
