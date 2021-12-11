@@ -338,10 +338,10 @@ MonoBehaviour:
   lastButton: {fileID: 7266418058538493104}
   nextButton: {fileID: 7266418059439459034}
   spritesOfButtonA:
-  - {fileID: 21300000, guid: 73eb24d3f7cb9984f8f0dfddeee5b781, type: 3}
-  - {fileID: 21300000, guid: 1eadc6feb307aca4d97ab8e8f3e21b4c, type: 3}
-  - {fileID: 21300000, guid: 400cbd8350e22bd40ae13b9ccf4f23e7, type: 3}
-  - {fileID: 21300000, guid: f131fa7963e986f4589987b078521678, type: 3}
+  - {fileID: 21300000, guid: fea44c85285c4ae4a8cb25d2e3be6fe2, type: 3}
+  - {fileID: 21300000, guid: 6bab7874326c4964cb5a365d8181f0bf, type: 3}
+  - {fileID: 21300000, guid: de7f82318ba7fc24eaf874a2a2801c9a, type: 3}
+  - {fileID: 21300000, guid: f9662748b0e02f745b7f473d119a4d4e, type: 3}
 --- !u!1001 &7266418059201266783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -459,6 +459,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseButton (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 2041896107711911533, guid: 9ca5a652404e037409c097d339fcd983,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6bab7874326c4964cb5a365d8181f0bf,
+        type: 3}
     - target: {fileID: 2041896108026268634, guid: 9ca5a652404e037409c097d339fcd983,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -606,6 +612,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChooseButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2041896107711911533, guid: 9ca5a652404e037409c097d339fcd983,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6bab7874326c4964cb5a365d8181f0bf,
+        type: 3}
     - target: {fileID: 2041896108026268634, guid: 9ca5a652404e037409c097d339fcd983,
         type: 3}
       propertyPath: m_SizeDelta.x
