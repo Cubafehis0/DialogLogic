@@ -7,7 +7,7 @@ namespace Ink2Unity
     public abstract class TagHandle
     {
         static string tagParttern = @"^([^:]+)(:)([^:]+)";
-        static string choiceTagParttern = @"([^@]*)(@)(.+)";
+        static string choiceTagParttern = @"([^@]*)(@.+)";
 
         static string conditionParttern;
         static string stateParrern;
@@ -36,6 +36,21 @@ namespace Ink2Unity
                 return false;
             }
         }
+        public static List<int> ParseArray(string value)
+        {
+            string parttern = @"([^\d]+)(\d+)";
+            var matches = Regex.Matches(value,parttern);
+            if(matches.Count>0)
+            {
+                List<int> res = new List<int>();
+                foreach (Match m in matches)
+                {
+                    res.Add(int.Parse(m.Groups[2].Value));
+                }
+                return res;
+            }
+            return null;
+        }
         public static string GetPureText(string richText)
         {
 
@@ -47,13 +62,12 @@ namespace Ink2Unity
             if (match.Success)
             {
                 List<string> result = new List<string>();
-                string tags = match.Groups[3].Value.Trim();
-                string tp = @"\S+";
+                string tags = match.Groups[2].Value.Trim();
+                string tp = @"(@)(\S+)(\s*)";
                 var matches = Regex.Matches(tags, tp);
                 foreach (Match m in matches)
                 {
-                    result.Add(m.Value);
-                    //Debug.Log(m.Value);
+                    result.Add(m.Groups[2].Value);
                 }
                 choice = match.Groups[1].Value.Trim();
                 return result;
@@ -66,11 +80,11 @@ namespace Ink2Unity
         {
             switch (speaker)
             {
-                case "主角":
-                    return Speaker.Lead;
+                case "Player":
+                    return Speaker.Player;
                 case "NPC":
                     return Speaker.NPC;
-                case "旁白":
+                case "Dialogue":
                     return Speaker.Dialogue;
                 default:
                     Debug.LogError("无法识别的Speaker标签");
@@ -81,11 +95,11 @@ namespace Ink2Unity
         {
             switch (sa)
             {
-                case "说服":
+                case "Persuade":
                    return SpeechArt.Persuade;
-                case "欺骗":
+                case "Cheat":
                     return SpeechArt.Cheat;
-                case "威胁":
+                case "Threaten":
                     return SpeechArt.Threaten;
                 default:
                     return SpeechArt.Normal;

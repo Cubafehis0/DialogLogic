@@ -5,6 +5,10 @@ namespace Ink2Unity
 {
     public class Choice
     {
+        //判定成功后压力槽减少至
+        public int success_desc;
+        //判定失败后压力槽增加值
+        public int fail_add;
         /// <summary>
         /// 当前选项的内容
         /// </summary>
@@ -33,7 +37,7 @@ namespace Ink2Unity
                 }
             }
         }
-
+        public List<int> judgeValue;
 
         /// <summary>
         /// 当前选项是否可见

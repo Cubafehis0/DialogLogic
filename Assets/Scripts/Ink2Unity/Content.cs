@@ -15,6 +15,11 @@ namespace Ink2Unity
         /// </summary>
         public string pureText;
         public Speaker speaker;
+        /// <summary>
+        /// 状态改变值，依次为外感、逻辑、道德、迂回，持续回合数。
+        /// </summary>
+        public List<int> stateChange;
+        public int changeTurn;
         public Content(string content)
         {
             richText = content;
