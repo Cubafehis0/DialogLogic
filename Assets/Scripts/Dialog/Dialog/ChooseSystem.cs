@@ -127,10 +127,13 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     {
         index -= chooseButtons.Count;
         UpdateVisualList();
+        Debug.Log("last");
     }
 
     private void ClickNextButton()
     {
+        Debug.Log("next");
+
         index += chooseButtons.Count;
         UpdateVisualList();
     }
@@ -189,6 +192,6 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         {
             return 3;
         }
-        return 0;
+        return 3;
     }
 }

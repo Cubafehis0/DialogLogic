@@ -12,11 +12,17 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     private GameObject gameSaveAndLoadPanel;
     private InputField inputSaveInformation;
     private Text inputText;
+    [SerializeField]
     private GameObject saveButton;
+    [SerializeField]
     private GameObject loadButton;
+    [SerializeField]
     private GameObject closeButton;
+    [SerializeField]
     private GameObject saveAndLoadButton1;
+    [SerializeField]
     private GameObject saveAndLoadButton2;
+    [SerializeField]
     private GameObject saveAndLoadButton3;
     private int index = 0;
     /// <summary>
@@ -30,13 +36,6 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         gameSaveAndLoadPanel = this.gameObject;
         inputSaveInformation = this.transform.Find("InputSaveInformation").GetComponent<InputField>();
         inputText = inputSaveInformation.transform.Find("Text").GetComponent<Text>();
-        closeButton = this.transform.Find("CloseButton").gameObject;
-        saveAndLoadButton1 = this.transform.Find("SaveAndLoadButton1").gameObject;
-        saveAndLoadButton2 = this.transform.Find("SaveAndLoadButton2").gameObject;
-        saveAndLoadButton3 = this.transform.Find("SaveAndLoadButton3").gameObject;
-        saveButton = GameObject.Find("Buttons").transform.Find("SaveButton").gameObject;
-        loadButton = GameObject.Find("Buttons").transform.Find("LoadButton").gameObject;
-
         inputSaveInformation.onEndEdit.AddListener(delegate { OnSubmit(); });
         closeButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickCloseButton(); });
         saveButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveButton(); });
