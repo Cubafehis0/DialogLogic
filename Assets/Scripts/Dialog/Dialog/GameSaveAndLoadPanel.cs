@@ -10,7 +10,9 @@ public interface IGameSaveAndLoadPanel
 public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
 {
     private GameObject gameSaveAndLoadPanel;
+    [SerializeField]
     private InputField inputSaveInformation;
+    [SerializeField]
     private Text inputText;
     [SerializeField]
     private GameObject saveButton;
@@ -34,8 +36,8 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     private void Start()
     {
         gameSaveAndLoadPanel = this.gameObject;
-        inputSaveInformation = this.transform.Find("InputSaveInformation").GetComponent<InputField>();
-        inputText = inputSaveInformation.transform.Find("Text").GetComponent<Text>();
+        //inputSaveInformation = this.transform.Find("InputSaveInformation").GetComponent<InputField>();
+        //inputText = inputSaveInformation.transform.Find("Text").GetComponent<Text>();
         inputSaveInformation.onEndEdit.AddListener(delegate { OnSubmit(); });
         closeButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickCloseButton(); });
         saveButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveButton(); });

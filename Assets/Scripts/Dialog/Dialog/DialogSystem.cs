@@ -65,6 +65,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
     public void SelectChoice(Choice choice)
     {
+        DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.content, true);
         ChooseSystem.Instance.Clear();
         CardGameManager.Instance.EndTurn();
         inkStory.SelectChoice(choice.index);
@@ -78,6 +79,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         {
             Content content = inkStory.NextContent(); ;
             SpeakSystem.Instance.Speak(content.richText, content.speaker);
+            DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
         }
         else
         {
