@@ -59,7 +59,7 @@ public class HandPileObject : MonoBehaviour, ICardEventHandler, IPileListener
     /// 卡牌在手牌动画中的移动速度
     /// </summary>
     [SerializeField]
-    private float moveSpeed = 0.01f;
+    private float moveSpeed = 0.07f;
 
     //参数区结束--------------------------------------------------
 

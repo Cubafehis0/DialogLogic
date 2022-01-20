@@ -20,6 +20,14 @@ public class CharacterBarView : MonoBehaviour, ICharacterView
     private Slider moralSlider = null;
     [SerializeField]
     private Slider strongSlider = null;
+    [SerializeField]
+    private Slider outsideSlider = null;
+    [SerializeField]
+    private Slider passionSlider = null;
+    [SerializeField]
+    private Slider unethicSlider = null;
+    [SerializeField]
+    private Slider detourSlider = null;
 
     private void Awake()
     {
@@ -47,6 +55,10 @@ public class CharacterBarView : MonoBehaviour, ICharacterView
         if (insideSlider) insideSlider.value = character.Inside;
         if (logicSlider) logicSlider.value = character.Logic;
         if (moralSlider) moralSlider.value = character.Moral;
-        if (strongSlider) strongSlider.value = character.Detour;
+        if (strongSlider) strongSlider.value = character.Strong;
+        if (outsideSlider) outsideSlider.value = character.Outside;
+        if (passionSlider) passionSlider.value = character.Passion;
+        if (unethicSlider) moralSlider.value = character.Unethic;
+        if (detourSlider) strongSlider.value = character.Detour;
     }
 }

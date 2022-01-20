@@ -13,6 +13,7 @@ public interface IRichButton
 
 public class RichButton : MonoBehaviour, IRichButton
 {
+    [HideInInspector]
     public Button btn;
     protected Image img;
     protected Text txt;

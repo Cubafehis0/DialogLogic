@@ -14,22 +14,19 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 {
     [SerializeField]
     private bool AutoPlay = true;
-
-
-
     [SerializeField]
     private RichTypeButton NPC_Dialog = null;
     [SerializeField]
     private RichTypeButton Player_Dialog = null;
     [SerializeField]
     private RichTypeButton narratageDialogButton = null;
+    [SerializeField]
+    private TextAsset testAsset=null;
 
     private static DialogSystem instance = null;
     public static DialogSystem Instance { get => instance; }
 
     private InkStory inkStory;
-    [SerializeField]
-    private TextAsset testAsset=null;
 
     private void Awake()
     {
@@ -65,8 +62,8 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
     public void SelectChoice(Choice choice)
     {
-        DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.content, true);
-        ChooseSystem.Instance.Clear();
+        //DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.content, true);
+        ChooseSystem.Instance.Close();
         CardGameManager.Instance.EndTurn();
         inkStory.SelectChoice(choice.index);
         MoveNext();
@@ -79,14 +76,15 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         {
             Content content = inkStory.NextContent(); ;
             SpeakSystem.Instance.Speak(content.richText, content.speaker);
-            DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
+            //DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
         }
         else
         {
             List<Choice> choices = inkStory.CurrentChoices();
             if (choices != null && choices.Count != 0)
             {
-                ChooseSystem.Instance.Open(choices);
+                ChooseSystem.Instance.Init(choices);
+                ChooseSystem.Instance.Open();
                 CardGameManager.Instance.StartTurn();
                 AutoPlay = false;
             }

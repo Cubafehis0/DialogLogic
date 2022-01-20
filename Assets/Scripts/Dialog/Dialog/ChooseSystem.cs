@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink2Unity;
 using UnityEngine.UI;
-public interface IChooseSystem
+public interface IChooseSystem:ITable
 {
     /// <summary>
     /// 传递choice如果是当前故事所有choice（不管是否能选择）中的一个则相当于选择了该选项，返回true，否则返回false
@@ -13,15 +13,10 @@ public interface IChooseSystem
     bool SelectChoice(int index);
 
     /// <summary>
-    /// 关闭选择面板
-    /// </summary>
-    void Clear();
-
-    /// <summary>
     /// 显示选项
     /// </summary>
     /// <param name="choices"></param>
-    void Open(List<Choice> choices);
+    void Init(List<Choice> choices);
 
     /// <summary>
     /// 在可选择的choice中加入choice，如果合法，即是所有choice中的一个时
@@ -74,25 +69,28 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         {
             btn.OnClick.AddListener(ClickChoiceButton);
         }
-        Clear();
+        Close();
         UpdateVisualList();
     }
 
-    public void Clear()
+    public void Close()
     {
         index = 0;
         allChoices.Clear();
         visibleChoices.Clear();
-        if (lastButton) lastButton.gameObject.SetActive(false);
-        if (nextButton) nextButton.gameObject.SetActive(false);
-        foreach (var c in chooseButtons) c.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
-    public void Open(List<Choice> choices)
+    public void Init(List<Choice> choices)
     {
         if (choices == null) return;
         index = 0;
         allChoices = choices;
+    }
+
+    public void Open()
+    {
+        gameObject.SetActive(true);
         UpdateVisualList();
     }
 
@@ -127,13 +125,10 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     {
         index -= chooseButtons.Count;
         UpdateVisualList();
-        Debug.Log("last");
     }
 
     private void ClickNextButton()
     {
-        Debug.Log("next");
-
         index += chooseButtons.Count;
         UpdateVisualList();
     }
@@ -166,10 +161,7 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         List<Choice> visiableChoices = new List<Choice>();
         foreach (Choice choice in choices)
         {
-            //if (choice.isVisible)
-            //{
             visiableChoices.Add(choice);
-            //}
         }
         return visiableChoices;
     }

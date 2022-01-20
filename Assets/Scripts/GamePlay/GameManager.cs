@@ -11,5 +11,10 @@ public class GameManager : MonoBehaviour
         CardGameManager.Instance.StartGame();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
 
+    }
 }

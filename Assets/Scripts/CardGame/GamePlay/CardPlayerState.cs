@@ -11,19 +11,37 @@ public interface ICardPlayerState
     IPile DrawPile { get; }
     IPile DiscardPile { get; }
     CardLibrary DynamicCardLibrary { get; }
+
     /// <summary>
     /// 牌库顶取num张牌
     /// </summary>
     /// <param name="num"></param>
     void Draw(uint num);
+
     /// <summary>
-    /// 牌库顶取1张牌
+    /// 抽牌直到手牌满
     /// </summary>
-    /// <param name="num"></param>
-    void Draw();
+    void Draw2Full();
+
+    /// <summary>
+    /// 
+    /// </summary>
     void Init();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="cid"></param>
     void DiscardCard(uint cid);
+
+    /// <summary>
+    /// 丢弃所有
+    /// </summary>
     void DiscardAll();
+
+    /// <summary>
+    /// 弃牌堆洗入抽牌堆
+    /// </summary>
     void Discard2Draw();
     void PlayCard(Card card, GameObject target = null);
     void SetupTestPlayer();
@@ -46,11 +64,12 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
 
     [SerializeField]
     private int energy;
-    public int Energy { 
-        get => energy; 
-        set 
+    public int Energy
+    {
+        get => energy;
+        set
         {
-            energy = value; 
+            energy = value;
             OnEnergyChange.Invoke();
         }
     }
@@ -67,8 +86,8 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
     private Pile discardPile = null;
     public IPile DiscardPile { get => discardPile; }
 
-    [SerializeField]
-    private CardLibrary dynamicCardLibrary;
+    
+    private CardLibrary dynamicCardLibrary = null;
     public CardLibrary DynamicCardLibrary { get => dynamicCardLibrary; }
 
     private ICardPlayerStateObject visuals;
@@ -88,6 +107,12 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
     private void Awake()
     {
         instance = this;
+        dynamicCardLibrary = GetComponent<CardLibrary>();
+        if (dynamicCardLibrary == null)
+        {
+            var lib = gameObject.AddComponent<CardLibrary>();
+            dynamicCardLibrary = lib;
+        }
         //if (character == null)
         //{
         //    character = gameObject.AddComponent(typeof(Character)) as Character;
@@ -106,33 +131,33 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
     {
         for (int i = 0; i < num; i++)
         {
-            Draw();
+            if (hand.CardsList.Count == PLAYER_HAND_CARD_MAXNUM)
+            {
+                //手牌满了
+                visuals.OnDrawButHandFull();
+                return;
+            }
+            if (drawPile.CardsList.Count == 0)
+            {
+                //抽牌堆为空
+                if (discardPile.CardsList.Count == 0)
+                {
+                    //没有牌可抽
+                    visuals.OnDrawButEmpty();
+                    return;
+                }
+                //洗牌
+                Discard2Draw();
+            }
+            //抽一张
+            PileMigrateUtils.MigrateTo(drawPile.GetCardByOrderID(0), hand);
+            visuals.OnDraw();
         }
     }
 
-    public void Draw()
+    public void Draw2Full()
     {
-        if (hand.CardsList.Count == PLAYER_HAND_CARD_MAXNUM)
-        {
-            //手牌满了
-            visuals.OnDrawButHandFull();
-            return;
-        }
-        if (drawPile.CardsList.Count == 0)
-        {
-            //抽牌堆为空
-            if (discardPile.CardsList.Count == 0)
-            {
-                //没有牌可抽
-                visuals.OnDrawButEmpty();
-                return;
-            }
-            //洗牌
-            Discard2Draw();
-        }
-        //抽一张
-        PileMigrateUtils.MigrateTo(drawPile.GetCardByOrderID(0), hand);
-        visuals.OnDraw();
+        throw new System.NotImplementedException();
     }
 
     public void DiscardCard(Card cid)

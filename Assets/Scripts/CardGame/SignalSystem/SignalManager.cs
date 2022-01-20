@@ -3,14 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public interface ISignalManager
+public class SignalManager : MonoBehaviour, ICardGameListener
 {
-    void SetSignal(string key, Signal sig);
-}
-
-public class SignalManager : MonoBehaviour, ICardGameListener,ISignalManager
-{
+    /// <summary>
+    /// 单例
+    /// </summary>
     private static SignalManager instance = null;
     public static SignalManager Instance { get => instance; }
 
@@ -30,7 +27,6 @@ public class SignalManager : MonoBehaviour, ICardGameListener,ISignalManager
     /// </summary>
     /// <param name="key">时间点</param>
     /// <param name="sig">信息</param>
-    /// <param name="clear">是否清除</param>
     public void SetSignal(string key, Signal sig)
     {
         if (signalDictionary.ContainsKey(key))
@@ -48,10 +44,11 @@ public class SignalManager : MonoBehaviour, ICardGameListener,ISignalManager
     {
         if (signalDictionary.TryGetValue("AUTO_PLAY", out List<Signal> signals))
         {
+            
             foreach (var sig in signals)
             {
-                sig.lastTurns--;
-                if (sig.lastTurns == 0)
+                sig.value--;
+                if (sig.value == 0)
                 {
                     signals.Remove(sig);
                 }
@@ -65,7 +62,7 @@ public class SignalManager : MonoBehaviour, ICardGameListener,ISignalManager
         {
             foreach (var sig in signals)
             {
-                if (!sig.flag)
+                if (!sig.decreaseOnTurnEnd)
                 {
                     signals.Remove(sig);
                 }

@@ -16,8 +16,14 @@ public interface ICharacter
     int Strong { get; set; }
 }
 
+public enum Personality
+{
+
+}
+
 public class Character : MonoBehaviour, ICharacter
 {
+    [SerializeField]
     private int[] personality = new int[4];
     public int[] Personality { get => personality; set => personality = value; }
 
