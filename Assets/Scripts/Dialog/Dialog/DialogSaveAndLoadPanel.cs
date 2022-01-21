@@ -45,7 +45,7 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
     }
 
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
         path = Application.dataPath + "/Resources/TextSave/text.txt";

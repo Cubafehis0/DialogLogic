@@ -100,8 +100,10 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         if (chooseButtons.Count == 0) return;
         int page = index / chooseButtons.Count;
         int totalPage = Mathf.CeilToInt(1f * visibleChoices.Count / chooseButtons.Count);
-        if (lastButton) lastButton.gameObject.SetActive(page > 0);
-        if (nextButton) nextButton.gameObject.SetActive(page + 1 < totalPage);
+        //if (lastButton) lastButton.gameObject.SetActive(page > 0);
+        //if (nextButton) nextButton.gameObject.SetActive(page + 1 < totalPage);
+        if (lastButton) lastButton.interactable = page > 0 ;
+        if (nextButton) nextButton.interactable = page + 1 < totalPage;
         for (int i = 0; i < chooseButtons.Count; i++)
         {
             if (index + i < visibleChoices.Count)
