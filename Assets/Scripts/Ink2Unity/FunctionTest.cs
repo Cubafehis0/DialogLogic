@@ -7,17 +7,16 @@ namespace Ink2Unity
     {
         public bool conS;
         public bool wait;
-        public int c;
+        public int c = -1;
         public bool save;
         public bool load;
         public string loadFile;
         public TextAsset textAsset;
         InkStory story;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            TagHandle.ParseArray("(0,1,1,2)");
-            c = -1;
+            //TagHandle.ParseArray("(0,1,1,2)");
             story = new InkStory(textAsset);
             wait = false;
             conS = false;
@@ -46,20 +45,29 @@ namespace Ink2Unity
                     c = -1;
                 }
             }
-            else if(conS)
+            if(conS)
             {
-                if(story.CanCoutinue)
+                switch (story.NextState)
                 {
-                    Debug.Log(story.CurrentContent());
-                }
-                else if(story.CurrentChoicesCount>0)
-                {
-                    var cs = story.CurrentChoices();
-                    foreach(var c in cs)
-                    {
-                        Debug.Log(c);
-                    }
-                    wait = true;
+                    case InkState.Init:
+                        break;
+                    case InkState.Content:
+                        story.NextContent();
+                        Debug.Log(story.CurrentContent());
+                        break;
+                    case InkState.Choice:
+                        var cs = story.CurrentChoices();
+                        foreach (var c in cs)
+                        {
+                            Debug.Log(c);
+                        }
+                        wait = true;
+                        break;
+                    case InkState.Finish:
+                        Destroy(this);
+                        break;
+                    default:
+                        break;
                 }
                 conS = false;
             }

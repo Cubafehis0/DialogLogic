@@ -8,9 +8,9 @@ using UnityEngine.Events;
 /// </summary>
 public class BaseAimer : MonoBehaviour
 {
-    protected UnityEvent<CardObject,GameObject> callback = new UnityEvent<CardObject,GameObject>();
+    protected UnityEvent<Card, GameObject> callback = new UnityEvent<Card, GameObject>();
 
-    protected CardObject aimer;
+    protected Card aimer;
 
     /// <summary>
     /// 供外部调用，强制瞄准一个目标
@@ -18,18 +18,25 @@ public class BaseAimer : MonoBehaviour
     /// <param name="target">目标</param>
     public void AimTarget(GameObject target)
     {
-        if (callback != null)
-        {
-            callback?.Invoke(aimer,target);
-            enabled = false;
-        }
+        if (callback == null) return;
+        callback?.Invoke(aimer, target);
+        enabled = false;
+    }
+
+    /// <summary>
+    /// 强制取消瞄准器
+    /// </summary>
+    public void CancelAiming()
+    {
+        callback?.Invoke(aimer, null);
+        enabled = false;
     }
 
     /// <summary>
     /// 添加选中目标后的回调函数
     /// </summary>
     /// <param name="callback">返回目标选择的发起者Card和选择的GameObject</param>
-    public void AddCallback(UnityAction<CardObject, GameObject> callback)
+    public void AddCallback(UnityAction<Card, GameObject> callback)
     {
         if (callback == null) return;
         this.callback.AddListener(callback);
@@ -40,7 +47,7 @@ public class BaseAimer : MonoBehaviour
     /// </summary>
     /// <param name="aimer">发起者Card</param>
     /// <param name="callback">回调函数</param>
-    public void StartAiming(CardObject aimer, UnityAction<CardObject, GameObject> callback = null)
+    public void StartAiming(Card aimer, UnityAction<Card, GameObject> callback = null)
     {
         this.aimer = aimer;
         if (callback != null) AddCallback(callback);
@@ -48,19 +55,10 @@ public class BaseAimer : MonoBehaviour
         enabled = true;
     }
 
-    /// <summary>
-    /// 强制取消瞄准器
-    /// </summary>
-    public void CancelAiming()
-    {
-        enabled = false;
-        AimTarget(null);
-    }
-
 
     protected virtual void UpdateVisual() { }
 
-    protected virtual bool CheckValidTarget(GameObject target) {return target.CompareTag("Character"); }
+    protected virtual bool CheckValidTarget(GameObject target) { return target.CompareTag("Character"); }
 
 
     private void DisableHUD()
@@ -78,7 +76,6 @@ public class BaseAimer : MonoBehaviour
         UpdateVisual();
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
-
             GameObject target = My2DRaycaster.GetCurrentObject(LayerMask.GetMask("Character"));
             if (target && CheckValidTarget(target))
             {

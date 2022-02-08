@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2041896107711911533}
   - component: {fileID: 2041896107711911530}
   - component: {fileID: 1283991167802519038}
-  - component: {fileID: 8236288952660508004}
   m_Layer: 5
   m_Name: NormalButton
   m_TagString: DialogBox
@@ -69,8 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3786560584347855117, guid: 56a63ee0655f9dd428503864f2a8a4f5,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73eb24d3f7cb9984f8f0dfddeee5b781, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -136,37 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9788bae1285d474bb27b961290df3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  text: {fileID: 0}
+  btn: {fileID: 0}
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
   hasPlayEnd: 0
-  canChoose: 1
-  m_buttonController: {fileID: 0}
---- !u!61 &8236288952660508004
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041896107711911529}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &2041896108026268635
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a5a5c7af516f29044b73fd5133d02f0d, type: 3}
+    m_Font: {fileID: 12800000, guid: c87a627830e6e2849966b09de7498783, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0

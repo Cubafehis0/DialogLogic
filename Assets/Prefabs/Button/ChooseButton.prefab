@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2041896107711911533}
   - component: {fileID: 2041896107711911530}
   - component: {fileID: 2041896107711911531}
-  - component: {fileID: 6891284626949789841}
+  - component: {fileID: 450658242584520221}
   m_Layer: 5
   m_Name: ChooseButton
   m_TagString: DialogChooseBox
@@ -69,9 +69,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2737084029505410636, guid: 86c77eebf5327b042852f67d1556e06f,
+  m_Sprite: {fileID: -5806670205437458361, guid: fea44c85285c4ae4a8cb25d2e3be6fe2,
     type: 3}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -136,38 +136,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d411847abb9b0784a8d85d603398acb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  text: {fileID: 0}
-  hasPlayEnd: 0
-  canChoose: 1
-  m_buttonController: {fileID: 0}
-  biggerScale: 1.1
---- !u!61 &6891284626949789841
-BoxCollider2D:
+  btn: {fileID: 0}
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &450658242584520221
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041896107711911529}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4686b64df79ead64e86a3c47c6fc7709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biggerScale: 1.1
 --- !u!1 &2041896108026268635
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +165,6 @@ GameObject:
   - component: {fileID: 2041896108026268636}
   - component: {fileID: 2041896108026268637}
   - component: {fileID: 5621087659517831767}
-  - component: {fileID: 7918691515787919475}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -205,7 +189,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2041896108026268636
 CanvasRenderer:
@@ -236,7 +220,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a5a5c7af516f29044b73fd5133d02f0d, type: 3}
+    m_Font: {fileID: 12800000, guid: c87a627830e6e2849966b09de7498783, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -269,17 +253,3 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &7918691515787919475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041896108026268635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 1
-  m_VerticalFit: 1

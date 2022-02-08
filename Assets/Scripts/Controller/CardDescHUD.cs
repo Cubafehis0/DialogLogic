@@ -25,7 +25,6 @@ public class CardDescHUD : MonoBehaviour
     private Text text;
     public void CreateCardDesc(string content, Vector2 worldPosition)
     {
-        Debug.Log(worldPosition);
         gameObject.SetActive(true);
         text.text = content;
         Vector2 pos= Camera.main.WorldToScreenPoint(worldPosition);
