@@ -26,14 +26,42 @@ public class ExcelImporter : AssetPostprocessor
 
 	static List<ExcelAssetInfo> cachedInfos = null; // Clear on compile.
 
+
+	[MenuItem("导入表格/导入条件表", priority = 1)]
+	static void ImportEffectTable()
+    {
+		Debug.Log("Import Effect Table");
+		string path = BrowserHelper.OpenProject("导入条件表",BrowserHelper.EXCELFILTER);
+		if (path == null) return;
+		ImportTable("EffectTable", path);
+		EffectTable effectTable = LoadOrCreateAsset("Assets//ExcelAssets//EffectTable.asset", typeof(EffectTable)) as EffectTable;
+		EffectDesc.InitalDic(effectTable);
+	}
+	[MenuItem("导入表格/导入卡牌表", priority = 0)]
+	static void ImportCardTable()
+    {
+		Debug.Log("Import Card Table"); string path = BrowserHelper.OpenProject("导入卡牌表", BrowserHelper.EXCELFILTER);
+		if (path == null) return;
+		ImportTable("CardTable", path);
+	}
+	static void ImportTable(string excelName,string path)
+	{
+		if (cachedInfos == null) cachedInfos = FindExcelAssetInfos();
+		ExcelAssetInfo info = cachedInfos.Find(i => i.ExcelName == excelName);
+		if (info == null) return;
+		ImportExcel(path, info);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+	}
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 	{
+		Debug.Log("import");
 		bool imported = false;
 		foreach(string path in importedAssets)
 		{
 			if(Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx") 
 			{
-				if(cachedInfos == null) cachedInfos = FindExcelAssetInfos();
+				
 
 				var excelName = Path.GetFileNameWithoutExtension(path);
 				if(excelName.StartsWith("~$")) continue;
@@ -75,7 +103,7 @@ public class ExcelImporter : AssetPostprocessor
 		return list;
 	}
 
-	static UnityEngine.Object LoadOrCreateAsset(string assetPath, Type assetType)
+	public static UnityEngine.Object LoadOrCreateAsset(string assetPath, Type assetType)
 	{
 		Directory.CreateDirectory(Path.GetDirectoryName(assetPath));
 
@@ -196,24 +224,13 @@ public class ExcelImporter : AssetPostprocessor
 
 	static void ImportExcel(string excelPath, ExcelAssetInfo info)
 	{
-		string assetPath = "";
 		string assetName = info.AssetType.Name + ".asset";
-
-		if(string.IsNullOrEmpty(info.Attribute.AssetPath))
-		{
-			string basePath = Path.GetDirectoryName(excelPath);
-			assetPath = Path.Combine(basePath, assetName);
-		}else{
-			var path = Path.Combine("Assets", info.Attribute.AssetPath);
-			assetPath = Path.Combine(path, assetName);
-		}
+		string assetPath = Path.Combine("Assets//ExcelAssets",assetName);
 		UnityEngine.Object asset = LoadOrCreateAsset(assetPath, info.AssetType);
-
 		IWorkbook book = LoadBook(excelPath);
 
 		var assetFields = info.AssetType.GetFields();
 		int sheetCount = 0;
-
 		foreach (var assetField in assetFields)
 		{
 			ISheet sheet =  book.GetSheet(assetField.Name);

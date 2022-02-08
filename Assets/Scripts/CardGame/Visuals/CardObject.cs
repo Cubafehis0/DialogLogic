@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,8 @@ using UnityEngine.UI;
 public interface ICardObject : IVisuals
 {
     void UpdateTitle();
-    void UpdateDesc();
+    void UpdateCdtDesc();
+    void UpdateEftDesc();
     void UpdateMeme();
 }
 
@@ -30,7 +32,9 @@ public class CardObject : MonoBehaviour, ICardObject
     [SerializeField]
     private Text titleText = null;
     [SerializeField]
-    private Text descText = null;
+    private Text cdtDescText = null;
+    [SerializeField]
+    private Text eftDescText = null;
     [SerializeField]
     private Text memeText = null;
 
@@ -40,7 +44,7 @@ public class CardObject : MonoBehaviour, ICardObject
         get => orderInLayer;
         set
         {
-            orderInLayer = value;
+            orderInLayer = value;   
             if (spriteRenderer) spriteRenderer.sortingOrder = value;
             if (cardUICanvas) cardUICanvas.sortingOrder = value;
         }
@@ -56,13 +60,21 @@ public class CardObject : MonoBehaviour, ICardObject
         }
     }
 
-    public string Desc
+    public string CdtDesc
     {
-        get => card.desc;
+        get => card.CdtDesc;
         set
         {
-            card.desc = value;
-            UpdateDesc();
+            //card.desc = value;
+            UpdateCdtDesc();
+        }
+    }
+    public string EftDesc
+    {
+        get => card.EftDesc;
+        set
+        {
+            UpdateEftDesc();
         }
     }
 
@@ -72,7 +84,7 @@ public class CardObject : MonoBehaviour, ICardObject
         set
         {
             card.meme = value;
-            UpdateDesc();
+            UpdateCdtDesc();
         }
     }
 
@@ -108,20 +120,28 @@ public class CardObject : MonoBehaviour, ICardObject
         if (titleText) titleText.text = card.title;
     }
 
-    public void UpdateDesc()
+    public void UpdateCdtDesc()
     {
-        if (descText) descText.text = card.desc;
+        if (cdtDescText) cdtDescText.text = card.CdtDesc;
     }
 
+    public void UpdateEftDesc()
+    {
+        if (eftDescText) eftDescText.text = card.EftDesc;
+    }
     public void UpdateMeme()
     {
         if (memeText) memeText.text = card.meme;
     }
-
     public void UpdateVisuals()
     {
         UpdateTitle();
-        UpdateDesc();
+        UpdateCdtDesc();
+        UpdateEftDesc();
         UpdateMeme();
+    }
+    public void GetCardComponent()
+    {
+        card = GetComponent<Card>();
     }
 }

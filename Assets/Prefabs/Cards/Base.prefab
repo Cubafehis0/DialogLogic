@@ -32,6 +32,7 @@ RectTransform:
   - {fileID: 7340621693845600111}
   - {fileID: 958316533416095335}
   - {fileID: 7557767468580260990}
+  - {fileID: 5295149439108642435}
   m_Father: {fileID: 9019535348072724198}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,7 +176,7 @@ GameObject:
   - component: {fileID: 8409859884936084832}
   - component: {fileID: 7293414418973324882}
   m_Layer: 5
-  m_Name: Body
+  m_Name: EftBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0014763, y: 53.03}
+  m_AnchoredPosition: {x: -0.0014763, y: -16}
   m_SizeDelta: {x: 524.74, y: 483.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8409859884936084832
@@ -242,6 +243,85 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0"
+--- !u!1 &8207439051939209360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5295149439108642435}
+  - component: {fileID: 7096934164003621178}
+  - component: {fileID: 8584857428455285713}
+  m_Layer: 5
+  m_Name: CdtBody
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5295149439108642435
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207439051939209360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4352746990534323204}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 34, y: 286}
+  m_SizeDelta: {x: 450, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7096934164003621178
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207439051939209360}
+  m_CullTransparentMesh: 1
+--- !u!114 &8584857428455285713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207439051939209360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9529412, g: 0.9529412, b: 0.9529412, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: c87a627830e6e2849966b09de7498783, type: 3}
+    m_FontSize: 44
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 44
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
 --- !u!1 &8513801518550904760
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +454,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.805, y: 6.065}
+    oldSize: {x: 2.5366666, y: 4.0433335}
     newSize: {x: 7.61, y: 12.13}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -463,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9991cb190144df87ebc8b19b4b870c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  staticID: 0
   hold_effect:
   - AddLogic
   condition:
@@ -471,12 +552,13 @@ MonoBehaviour:
   - AddLogic
   post_effect:
   - NIL
+  pull_effect: []
   hold_effect_scale: 01000000
   condition_scale: 00000000
   effect_scale: 03000000
   post_effect_scale: 00000000
+  pull_effect_scale: 
   title: "\u6807\u9898"
-  desc: "\u63CF\u8FF0\u63CF\u8FF0"
   meme: "\u5C3E\u6CE8\u5C3E\u6CE8"
 --- !u!114 &3857046234907958292
 MonoBehaviour:
@@ -491,5 +573,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleText: {fileID: 6666017920793967883}
-  descText: {fileID: 7293414418973324882}
+  cdtDescText: {fileID: 8584857428455285713}
+  eftDescText: {fileID: 7293414418973324882}
   memeText: {fileID: 6903562143003221898}

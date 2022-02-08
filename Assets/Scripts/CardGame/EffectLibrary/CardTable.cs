@@ -6,5 +6,10 @@ using UnityEngine;
 [ExcelAsset]
 public class CardTable : ScriptableObject
 {
-	public List<CardEntity> Sheet1; // Replace 'EntityType' to an actual type that is serializable.
+    public List<CardEntity> cardpool_lgc;
+    public List<CardEntity> cardpool_spt;
+    public List<CardEntity> cardpool_mrl;
+    public List<CardEntity> cardpool_imm;
+    public List<CardEntity> cardpool_rdb;
+    public List<CardEntity> cardpool_ags;
 }

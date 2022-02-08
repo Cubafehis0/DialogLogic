@@ -1,0 +1,972 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdad64f3921d85940b654622100e1466, type: 3}
+  m_Name: CardTable
+  m_EditorClassIdentifier: 
+  cardpool_lgc:
+  - id: 0
+    name: "\u89C2\u5BDF\u6280\u5DE7"
+    rarety: 2
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: n
+    rarety: 2
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u767E\u79D1\u4E66"
+    rarety: 2
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: lgcBiggerThan
+    condition_scale: 10
+    effect: choosePlusLgcMrlRdb
+    effect_scale: 8
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: mrlPlus
+    pull_effect_scale: 4
+    meme: 
+  - id: 0
+    name: "\u8C08\u5224\u6280\u5DE7"
+    rarety: 2
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: outBiggerThan
+    condition_scale: 4
+    effect: costOut;chooseRevealedMinors
+    effect_scale: 2;4
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u8BBA\u8BC1\u8FDE\u7EED\u6027"
+    rarety: 3
+    hold_effect: lgcPlus
+    hold_effect_scale: 1
+    condition: lastCardIsMoral;lgcBiggerThan
+    condition_scale: 1;10
+    effect: 
+    effect_scale: 
+    post_effect: drawWhenPlayed
+    post_effect_scale: 1
+    pull_effect: draw
+    pull_effect_scale: 2
+    meme: 
+  - id: 0
+    name: "\u798F\u5C14\u6469\u65AF\u57FA\u672C\u6F14\u7ECE\u6CD5"
+    rarety: 4
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: revealByOut
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u6B63\u5F53\u5316\u8FA9\u62A4\u5B66"
+    rarety: 4
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: 
+    condition_scale: 
+    effect: mrlChangeTo
+    effect_scale: 15
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: n
+    rarety: 1
+    hold_effect: lgcPlus
+    hold_effect_scale: 2
+    condition: lgcBiggerThan
+    condition_scale: 6
+    effect: 
+    effect_scale: 
+    post_effect: persuadPlus
+    post_effect_scale: 1
+    pull_effect: lgcPlus
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\u8BB0\u5FC6\u953B\u70BC"
+    rarety: 3
+    hold_effect: lgcPlus
+    hold_effect_scale: 3
+    condition: lgcBiggerThan
+    condition_scale: 12
+    effect: chooseDraw
+    effect_scale: 2
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: lgcPlus
+    pull_effect_scale: 3
+    meme: 
+  - id: 0
+    name: "\u8BB0\u5FC6\u5BAB\u6BBF"
+    rarety: 4
+    hold_effect: lgcPlus
+    hold_effect_scale: 8
+    condition: lgcBiggerThan;innBiggerThan
+    condition_scale: 19;7
+    effect: costInn;prsPlus
+    effect_scale: 7;5
+    post_effect: lockCard
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  cardpool_spt:
+  - id: 0
+    name: "\u8868\u8FBE\u6B32"
+    rarety: 1
+    hold_effect: sptPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: sptPlus
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: n
+    rarety: 1
+    hold_effect: sptPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u6124\u6012"
+    rarety: 1
+    hold_effect: sptPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: sptPlus;draw
+    effect_scale: 6;1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u9AD8\u901F\u53D1\u6563\u601D\u7EF4"
+    rarety: 1
+    hold_effect: sptPlus
+    hold_effect_scale: 2
+    condition: onThreatCard
+    condition_scale: 1
+    effect: 
+    effect_scale: 
+    post_effect: giveDrop;giveDraw
+    post_effect_scale: 1;3
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u7EB7\u4E71"
+    rarety: 2
+    hold_effect: sptPlus
+    hold_effect_scale: 3
+    condition: sptBiggerThan
+    condition_scale: 6
+    effect: shuffleDraw
+    effect_scale: 5
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: draw
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\u6FC0\u60C5\u91CA\u653E"
+    rarety: 2
+    hold_effect: sptPlus
+    hold_effect_scale: 4
+    condition: sptBiggerThan
+    condition_scale: 10
+    effect: chooseActive;sptPlus
+    effect_scale: 1;5
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: immPlus
+    pull_effect_scale: 4
+    meme: 
+  - id: 0
+    name: "\u601D\u7EF4\u7206\u53D1"
+    rarety: 3
+    hold_effect: sptPlus
+    hold_effect_scale: 5
+    condition: sptBiggerThan;measureBattleActiveOver
+    condition_scale: 15;1
+    effect: allHandActive;sptPlus;drawBan
+    effect_scale: 1;6;1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: prsPlus
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\u6FC0\u6D3B\u72B6\u6001"
+    rarety: 4
+    hold_effect: sptPlus;notActive
+    hold_effect_scale: 7;0
+    condition: sptBiggerThan;innBiggerThan;agsBiggerThan;immBiggerThan
+    condition_scale: 20;10;10;10
+    effect: costInn
+    effect_scale: 8
+    post_effect: chooseDeckActiveForever
+    post_effect_scale: 4
+    pull_effect: randomActive
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\u91CA\u653E"
+    rarety: 4
+    hold_effect: sptPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: costSan
+    effect_scale: 2
+    post_effect: releaseSpt
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u53EC\u5524\u611F"
+    rarety: 4
+    hold_effect: sptPlus
+    hold_effect_scale: 5
+    condition: sptBiggerThan
+    condition_scale: 10
+    effect: 
+    effect_scale: 
+    post_effect: anySentencePlusShuffleTimes
+    post_effect_scale: 1
+    pull_effect: agsPlus;sptPlus
+    pull_effect_scale: 3;2
+    meme: 
+  - id: 0
+    name: "\u808C\u8089\u8BB0\u5FC6"
+    rarety: 1
+    hold_effect: sptPlus
+    hold_effect_scale: 3
+    condition: lastCardIsSpirit;sptBiggerThan
+    condition_scale: 1;8
+    effect: randomActive
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: lgcPlus
+    pull_effect_scale: 3
+    meme: 
+  - id: 0
+    name: "\u72C2\u70ED"
+    rarety: 2
+    hold_effect: sptPlus;breakGive
+    hold_effect_scale: 9;2
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: agsPlus
+    pull_effect_scale: 3
+    meme: 
+  - id: 0
+    name: "\uFF08\u7075\u611F\uFF09"
+    rarety: 1
+    hold_effect: sptPlus;energyFree
+    hold_effect_scale: 1;1
+    condition: onThreatCard
+    condition_scale: 1
+    effect: 
+    effect_scale: 
+    post_effect: giveDraw
+    post_effect_scale: 2
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u9189\u9152\uFF09"
+    rarety: 1
+    hold_effect: energyFree
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: prsPlus
+    effect_scale: 1
+    post_effect: giveOnceOnly
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u671B\u9152\u6B62\u6E34\uFF09"
+    rarety: 2
+    hold_effect: sptPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u5453\u8BED\uFF09"
+    rarety: 2
+    hold_effect: sptPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: costOut
+    effect_scale: 6
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u7075\u611F\u7206\u53D1\uFF09"
+    rarety: 3
+    hold_effect: sptPlus
+    hold_effect_scale: 7
+    condition: sptBiggerThan
+    condition_scale: 9
+    effect: allSentenceDouble
+    effect_scale: 1
+    post_effect: lockOneSentenceForever
+    post_effect_scale: 1
+    pull_effect: chooseTendencyCard
+    pull_effect_scale: 3
+    meme: 
+  - id: 0
+    name: n
+    rarety: 3
+    hold_effect: sptPlus
+    hold_effect_scale: 3
+    condition: measureBattleActiveOver
+    condition_scale: 5
+    effect: immPlus
+    effect_scale: 6
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  cardpool_mrl:
+  - id: 0
+    name: "\u65E9\u62A5"
+    rarety: 1
+    hold_effect: mrlPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: mrlPlus
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u6668\u95F4\u8BB2\u5EA7"
+    rarety: 1
+    hold_effect: mrlPlus
+    hold_effect_scale: 1
+    condition: mrlBiggerThan
+    condition_scale: 3
+    effect: addPreach
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u8BF4\u6559"
+    rarety: 1
+    hold_effect: energyFree
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: choosePlusLgcMrlRdb
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u6F14\u8BB2\u518C\u5B50"
+    rarety: 2
+    hold_effect: mrlPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: addPreachEveryRound
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u5148\u8FDB\u4E8B\u8FF9"
+    rarety: 2
+    hold_effect: mrlPlus
+    hold_effect_scale: 3
+    condition: mrlBiggerThan
+    condition_scale: 5
+    effect: mrlPlus
+    effect_scale: 2
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: n
+    rarety: 2
+    hold_effect: mrlPlus
+    hold_effect_scale: 2
+    condition: mrlBiggerThan
+    condition_scale: 5
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u4F26\u7406\u54F2\u5B66"
+    rarety: 3
+    hold_effect: mrlPlus
+    hold_effect_scale: 5
+    condition: measurePreachCostOver
+    condition_scale: 5
+    effect: persuadePlusByPreach
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: addPreach
+    pull_effect_scale: 2
+    meme: 
+  - id: 0
+    name: "\u91CD\u5EFA"
+    rarety: 4
+    hold_effect: mrlPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: reconstruction
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u903C\u8FD1"
+    rarety: 3
+    hold_effect: mrlPlus
+    hold_effect_scale: 2
+    condition: measurePreachCostOver
+    condition_scale: 3
+    effect: 
+    effect_scale: 
+    post_effect: outPlusByPreach
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  cardpool_imm:
+  - id: 0
+    name: "\u85D0\u89C6"
+    rarety: 1
+    hold_effect: immPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: immPlus
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u81EA\u8650"
+    rarety: 1
+    hold_effect: immPlus;energyFree
+    hold_effect_scale: 1;0
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: nextPlayOnceOnly
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u81EA\u5927\uFF09"
+    rarety: 1
+    hold_effect: immPlus
+    hold_effect_scale: 3
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u9057\u5FD8\uFF09"
+    rarety: 2
+    hold_effect: immPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: chooseOnceOnlyCard
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u56FA\u6267\uFF09"
+    rarety: 1
+    hold_effect: immPlus;energyFree
+    hold_effect_scale: 1;0
+    condition: 
+    condition_scale: 
+    effect: costInn;retainCard
+    effect_scale: 1;1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u66B4\u529B\uFF09"
+    rarety: 3
+    hold_effect: immPlus
+    hold_effect_scale: 6
+    condition: measureOnceOnlyOver
+    condition_scale: 4
+    effect: copyOneCard
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: sptPlus
+    pull_effect_scale: 4
+    meme: 
+  - id: 0
+    name: "\uFF08\u7F6A\u6076\uFF09"
+    rarety: 2
+    hold_effect: immPlus
+    hold_effect_scale: 2
+    condition: immBiggerThan
+    condition_scale: 5
+    effect: costInn;makePersuadeOnceOnly;immPlus
+    effect_scale: 3;1;8
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\uFF08\u71C3\u70E7\uFF09"
+    rarety: 2
+    hold_effect: immPlus
+    hold_effect_scale: 8
+    condition: 
+    condition_scale: 
+    effect: costInn
+    effect_scale: 2
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: chooseOnceOnlyCard
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\uFF08\u81EA\u6B8B\uFF09"
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: prsPlus
+    pull_effect_scale: 2
+    meme: 
+  - id: 0
+    name: "\uFF08\u4EE5\u8840\u8499\u773C\uFF09"
+    rarety: 3
+    hold_effect: immPlus
+    hold_effect_scale: 7
+    condition: immBiggerThan;innBiggerThan
+    condition_scale: 8;3
+    effect: costInn;agsPlus;sptPlus
+    effect_scale: 3;8;12
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: addHurt
+    pull_effect_scale: 3
+    meme: 
+  - id: 0
+    name: "\uFF08\u786C\u6491\uFF09"
+    rarety: 3
+    hold_effect: immPlus
+    hold_effect_scale: 5
+    condition: immBiggerThan
+    condition_scale: 8
+    effect: addHurt;innPlusByOnceOnly
+    effect_scale: 3;1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: addHurt;draw
+    pull_effect_scale: 2;1
+    meme: 
+  - id: 0
+    name: n
+    rarety: 2
+    hold_effect: immPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: drawWhenOnceOnly
+    post_effect_scale: 1
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  cardpool_rdb:
+  - id: 0
+    name: "\u804A\u5929\u6C14"
+    rarety: 1
+    hold_effect: rdbPlus
+    hold_effect_scale: 1
+    condition: 
+    condition_scale: 
+    effect: rdbPlus
+    effect_scale: 3
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u8F6C\u79FB\u884C\u8FDB\u8BDD\u9898"
+    rarety: 2
+    hold_effect: rdbPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: roundaboutTalk
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u590D\u8BFB"
+    rarety: 2
+    hold_effect: rdbPlus
+    hold_effect_scale: 2
+    condition: onPersuadeCard
+    condition_scale: 1
+    effect: copy
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u8BDD\u672F\u5F15\u5BFC"
+    rarety: 4
+    hold_effect: rdbPlus
+    hold_effect_scale: 3
+    condition: mrlBiggerThan;rdbBiggerThan
+    condition_scale: 10;8
+    effect: 
+    effect_scale: 
+    post_effect: lead
+    post_effect_scale: 1
+    pull_effect: retainCard
+    pull_effect_scale: 1
+    meme: 
+  cardpool_ags:
+  - id: 0
+    name: "\u8003\u91CF"
+    rarety: 1
+    hold_effect: agsPlus
+    hold_effect_scale: 2
+    condition: 
+    condition_scale: 
+    effect: agsPlus
+    effect_scale: 4
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u5410\u4FE1"
+    rarety: 1
+    hold_effect: agsPlus
+    hold_effect_scale: 3
+    condition: 
+    condition_scale: 
+    effect: allAgsImmSptPlus;dropAggressiveCard
+    effect_scale: 4;2
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u786C\u6C49\u5C0F\u8BF4"
+    rarety: 2
+    hold_effect: agsPlus
+    hold_effect_scale: 5
+    condition: agsBiggerThan
+    condition_scale: 6
+    effect: doubleEnergy
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: "\u53D8\u8138"
+    rarety: 4
+    hold_effect: 
+    hold_effect_scale: 
+    condition: activeOnly
+    condition_scale: 1
+    effect: chooseTendencyTransition
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: draw
+    pull_effect_scale: 1
+    meme: 
+  - id: 0
+    name: "\u5229\u5DF1"
+    rarety: 4
+    hold_effect: agsPlus
+    hold_effect_scale: 8
+    condition: zeroDrawingPile
+    condition_scale: 1
+    effect: nextChoiceSucceed
+    effect_scale: 1
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
+  - id: 0
+    name: 
+    rarety: 1
+    hold_effect: 
+    hold_effect_scale: 
+    condition: 
+    condition_scale: 
+    effect: 
+    effect_scale: 
+    post_effect: 
+    post_effect_scale: 
+    pull_effect: 
+    pull_effect_scale: 
+    meme: 
