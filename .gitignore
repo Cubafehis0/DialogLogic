@@ -38,3 +38,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Assets/Scripts/~$CardTable.xlsx
+Logs/AssetImportWorker0.log
+Logs/AssetImportWorker0.log
