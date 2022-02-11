@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Dialog/NoUse.meta
 guid: 1a60d27fe790b144e97a6e5d4809026a
+=======
+guid: de404b4c65ce4f6468d66b0877b948b7
+>>>>>>> djc:Assets/Resources/Fonts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

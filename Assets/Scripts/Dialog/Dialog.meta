@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 0232105b6f1ca444db837e3e66527235
+=======
+guid: 70e2d2c561b99784fb46d79b1e0b6796
+>>>>>>> djc
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

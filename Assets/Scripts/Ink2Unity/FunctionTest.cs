@@ -7,17 +7,27 @@ namespace Ink2Unity
     {
         public bool conS;
         public bool wait;
+<<<<<<< HEAD
         public int c;
+=======
+        public int c = -1;
+>>>>>>> djc
         public bool save;
         public bool load;
         public string loadFile;
         public TextAsset textAsset;
         InkStory story;
         // Start is called before the first frame update
+<<<<<<< HEAD
         void Start()
         {
             TagHandle.ParseArray("(0,1,1,2)");
             c = -1;
+=======
+        void Awake()
+        {
+            //TagHandle.ParseArray("(0,1,1,2)");
+>>>>>>> djc
             story = new InkStory(textAsset);
             wait = false;
             conS = false;
@@ -46,6 +56,7 @@ namespace Ink2Unity
                     c = -1;
                 }
             }
+<<<<<<< HEAD
             else if(conS)
             {
                 if(story.CanCoutinue)
@@ -60,6 +71,31 @@ namespace Ink2Unity
                         Debug.Log(c);
                     }
                     wait = true;
+=======
+            if(conS)
+            {
+                switch (story.NextState)
+                {
+                    case InkState.Init:
+                        break;
+                    case InkState.Content:
+                        story.NextContent();
+                        Debug.Log(story.CurrentContent());
+                        break;
+                    case InkState.Choice:
+                        var cs = story.CurrentChoices();
+                        foreach (var c in cs)
+                        {
+                            Debug.Log(c);
+                        }
+                        wait = true;
+                        break;
+                    case InkState.Finish:
+                        Destroy(this);
+                        break;
+                    default:
+                        break;
+>>>>>>> djc
                 }
                 conS = false;
             }

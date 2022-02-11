@@ -4,13 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Ink2Unity;
+<<<<<<< HEAD
 public class DialogSaveAndLoadPanel :Dialog
 {
+=======
+public class DialogSaveAndLoadPanel : MonoBehaviour
+{
+    private static DialogSaveAndLoadPanel instance = null;
+    public static DialogSaveAndLoadPanel Instance{ get => instance; }
+>>>>>>> djc
     struct DialogTextSave_Content
     {
         public string speaker;
         public string text;
     };
+<<<<<<< HEAD
     private GameObject controllButton;
     private GameObject showHistoricalDialog;
     private Transform content;
@@ -19,6 +27,21 @@ public class DialogSaveAndLoadPanel :Dialog
     private List<DialogTextSave_Content> textList = new List<DialogTextSave_Content>();
 
     public void SaveTextToFile(Content content,bool isChoose)
+=======
+    [SerializeField]
+    private GameObject controllButton;
+    [SerializeField]
+    private GameObject showHistoricalDialog;
+    [SerializeField]
+    private Transform content;
+    [SerializeField] 
+    private Text text;
+
+    private string path;
+    private List<DialogTextSave_Content> textList = new List<DialogTextSave_Content>();
+
+    public void SaveTextToFile(Content content, bool isChoose = false)
+>>>>>>> djc
     {
         //Debug.Log("Savetext");
         //Debug.Log(path);
@@ -38,6 +61,7 @@ public class DialogSaveAndLoadPanel :Dialog
     }
 
 
+<<<<<<< HEAD
     private void Start()
     {
         path = Application.dataPath + "/Resources/TextSave/text.txt";
@@ -49,6 +73,19 @@ public class DialogSaveAndLoadPanel :Dialog
         //HideChildren(this.gameObject);
         ClearTextFile(path);
         HideChildren(this.gameObject);
+=======
+    private void Awake()
+    {
+        instance = this;
+        path = Application.dataPath + "/Resources/TextSave/text.txt";
+        //controllButton = GameObject.Find("Buttons").transform.Find("ButtonToControllShowDialogSaveAndLoadPanel").gameObject;
+        //showHistoricalDialog = this.transform.Find("ShowHistoricalDialog").gameObject;
+        //content = showHistoricalDialog.transform.Find("Viewport").Find("Content");
+        controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
+        //HideChildren(this.gameObject);
+        ClearTextFile(path);
+        //gameObject.SetActive(false);
+>>>>>>> djc
     }
 
     private Color ChooseColor(string speaker)
@@ -126,6 +163,10 @@ public class DialogSaveAndLoadPanel :Dialog
             showHistoricalDialog.gameObject.SetActive(true);
             CreateHistricalDialog(path);
         }
+<<<<<<< HEAD
         m_dialogController.ClickDialogSaveAndLoadPanel();
+=======
+        DialogSystem.Pause();
+>>>>>>> djc
     }
 }
