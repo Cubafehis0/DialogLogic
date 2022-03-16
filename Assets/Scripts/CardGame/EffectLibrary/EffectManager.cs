@@ -11,19 +11,13 @@ using UnityEngine;
 
 public class Effect
 {
-    public delegate bool Fun(ICardPlayerState player, int a);
+    public delegate bool Fun(CardPlayerState player, int a);
     public Fun fun;
 }
 
 
-public interface IEffectManager
-{
-    bool CheckCanPlay(Card card);
-    bool Hold(Card card);
-    bool Play(Card card);
-}
 
-public class EffectManager : IEffectManager
+public class EffectManager 
 {
     private static EffectManager _instance = null;
     public static EffectManager Instance
@@ -55,54 +49,57 @@ public class EffectManager : IEffectManager
 
     public bool CheckCanPlay(Card card)
     {
-        return Examine(card.condition, card.condition_scale);
+        return true;
     }
 
-    public bool Hold(Card card)
-    {
-        return Examine(card.hold_effect, card.hold_effect_scale);
-    }
+    //public bool Hold(Card card)
+    //{
+    //    return Examine(card.info.hold_effect, card.info.hold_effect_scale);
+    //}
 
-    public bool Play(Card card)
-    {
-        Debug.Log("使用卡牌： " + card.name);
-        bool res = true;
-        if (CheckCanPlay(card))
-        {
-            res = Examine(card.effect, card.effect_scale);
-            Examine(card.post_effect, card.post_effect_scale);
-            return res;
-        }
-        return false;
-    }
-
-
-    private bool Examine(List<string> effects, List<int> scale)
-    {
-        bool res = true;
-        for (int i = 0; i < effects.Count; i++)
-        {
-            res &= Execute(effects[i], scale[i]);
-        }
-        return res;
-    }
+    //public bool Play(Card card)
+    //{
+    //    //调用Play时已经检查并扣除费用
+    //    Debug.Log("使用卡牌： " + card.name);
+    //    bool res = true;
+    //    if (CheckCanPlay(card))
+    //    {
+    //        res = Examine(card.info.effect, card.info.effect_scale);
+    //        Examine(card.info.post_effect, card.info.post_effect_scale);
+    //        return res;
+    //    }
+    //    return false;
+    //}
 
 
-    private bool Execute(string key, int scale = 0)
-    {
-        if (!effects.TryGetValue(key, out Effect eff))
-        {
-            var t = typeof(EffectsLibrary);
-            var method = t.GetMethod(key);
-            if (method == null)
-            {
-                Debug.LogError(string.Format("对应的Effect{0}不存在，请检查配置！", key));
-                return true;
-            }
-            eff = new Effect();
-            eff.fun = (Effect.Fun)Delegate.CreateDelegate(typeof(Effect.Fun), EffectsLibrary.Instance, method);
-            effects.Add(key, eff);
-        }
-        return eff.fun(CardGameManager.Instance.MainPlayerState,scale);
-    }
+
+
+    //private bool Examine(List<string> effects, List<int> scale)
+    //{
+    //    bool res = true;
+    //    for (int i = 0; i < effects.Count; i++)
+    //    {
+    //        res &= Execute(effects[i], scale[i]);
+    //    }
+    //    return res;
+    //}
+
+
+    //private bool Execute(string key, int scale = 0)
+    //{
+    //    if (!effects.TryGetValue(key, out Effect eff))
+    //    {
+    //        var t = typeof(EffectsLibrary);
+    //        var method = t.GetMethod(key);
+    //        if (method == null)
+    //        {
+    //            Debug.LogError(string.Format("对应的Effect{0}不存在，请检查配置！", key));
+    //            return true;
+    //        }
+    //        eff = new Effect();
+    //        eff.fun = (Effect.Fun)Delegate.CreateDelegate(typeof(Effect.Fun), EffectsLibrary.Instance, method);
+    //        effects.Add(key, eff);
+    //    }
+    //    return eff.fun(CardGameManager.Instance.MainPlayerState,scale);
+    //}
 }

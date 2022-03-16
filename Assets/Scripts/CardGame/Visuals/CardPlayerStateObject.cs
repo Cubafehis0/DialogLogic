@@ -13,17 +13,17 @@ public interface ICardPlayerStateObject
     void OnTurnStart();
 }
 
-[RequireComponent(typeof(ICardPlayerState))]
+[RequireComponent(typeof(CardPlayerState))]
 public class CardPlayerStateObject : MonoBehaviour,ICardPlayerStateObject
 {
-    private ICardPlayerState playerState=null;
+    private CardPlayerState playerState=null;
 
     [SerializeField]
     private Text energyText;
 
     private void Awake()
     {
-        playerState = GetComponent<ICardPlayerState>();
+        playerState = GetComponent<CardPlayerState>();
     }
 
     private void Start()

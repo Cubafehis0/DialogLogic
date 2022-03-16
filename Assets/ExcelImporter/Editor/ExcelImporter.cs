@@ -55,7 +55,6 @@ public class ExcelImporter : AssetPostprocessor
 	}
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
 	{
-		Debug.Log("import");
 		bool imported = false;
 		foreach(string path in importedAssets)
 		{

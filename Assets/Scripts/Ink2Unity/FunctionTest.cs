@@ -40,7 +40,7 @@ namespace Ink2Unity
             {
                 if(c>=0)
                 {
-                    story.SelectChoice(c);
+                    story.SelectChoice(c,true);
                     wait = false;
                     c = -1;
                 }

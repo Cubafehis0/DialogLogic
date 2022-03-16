@@ -1,69 +1,115 @@
+using Ink2Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public interface ICardPlayerState
+using SemanticTree;
+using SemanticTree.CardSemantics;
+using SemanticTree.PlayerSemantics;
+using System;
+
+public class CostModifier
 {
-    ICharacter Character { get; }
-    IPlayer Player { get; }
-    int Energy { get; set; }
-    IPile Hand { get; }
-    IPile DrawPile { get; }
-    IPile DiscardPile { get; }
-    CardLibrary DynamicCardLibrary { get; }
-
-    /// <summary>
-    /// 牌库顶取num张牌
-    /// </summary>
-    /// <param name="num"></param>
-    void Draw(uint num);
-
-    /// <summary>
-    /// 抽牌直到手牌满
-    /// </summary>
-    void Draw2Full();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void Init();
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cid"></param>
-    void DiscardCard(uint cid);
-
-    /// <summary>
-    /// 丢弃所有
-    /// </summary>
-    void DiscardAll();
-
-    /// <summary>
-    /// 弃牌堆洗入抽牌堆
-    /// </summary>
-    void Discard2Draw();
-    void PlayCard(Card card, GameObject target = null);
-    void SetupTestPlayer();
-    void UpdateObjectReference();
+    public IConditionNode condition;
+    public IExpressionNode exp;
 }
 
-public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListener, Ink2Unity.IPlayerStateChange
+[Serializable]
+public class Timer<T>
 {
-    private static CardPlayerState instance = null;
-    public static CardPlayerState Instance { get => instance; }
+    public T value;
+    public int? cd;
+
+    public Timer(T value, int? cd)
+    {
+        this.value = value;
+        this.cd = cd;
+    }
+}
 
 
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGet
+{
     [SerializeField]
-    private Character character = null;
-    public ICharacter Character { get => character; }
-
+    private Personality basePersonality = new Personality(0, 0, 0, 0);
+    [SerializeField]
+    private SpeechArt baseSpeechArt = new SpeechArt(0, 0, 0, 0);
     [SerializeField]
     private Player player = null;
-    public IPlayer Player { get => player; }
-
     [SerializeField]
-    private int energy;
+    private int energy = 0;
+    [SerializeField]
+    private int pressure = 0;
+    [SerializeField]
+    private int drawNum = 5;
+    [SerializeField]
+    private uint handCardMaxNum = 10;
+    [SerializeField]
+    private bool drawBan = false;
+    [SerializeField]
+    private SpeechType? baseSpeechType = null;
+
+
+    private Pile<Card> hand = new Pile<Card>();
+    private Pile<Card> drawPile = new Pile<Card>();
+    private Pile<Card> discardPile = new Pile<Card>();
+    private UnityEvent onPersonalityChange = new UnityEvent();
+
+    private static CardPlayerState instance = null;
+    [SerializeField]
+    private List<Timer<Personality>> personalityModifiers = new List<Timer<Personality>>();
+    private List<Timer<SpeechArt>> speechModifiers = new List<Timer<SpeechArt>>();
+    private List<Timer<SpeechType>> focusSpeechModifiers = new List<Timer<SpeechType>>();
+    public List<Timer<CostModifier>> costModifers = new List<Timer<CostModifier>>();
+
+
+    private ICardPlayerStateObject visuals;
+    public UnityEvent OnEnergyChange = new UnityEvent();
+    public UnityEvent OnPlayCard = new UnityEvent();
+    public UnityEvent OnStartTurn = new UnityEvent();
+    public UnityEvent OnEndTurn = new UnityEvent();
+    //不同判定补正的概率
+    private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
+
+
+    public static CardPlayerState Instance { get => instance; }
+    public Personality FinalPersonality
+    {
+        get
+        {
+            Personality ret = basePersonality;
+            foreach (var modifer in personalityModifiers)
+            {
+                ret += modifer.value;
+            }
+            return ret;
+        }
+    }
+    public SpeechArt FinalSpeechArt
+    {
+        get
+        {
+            SpeechArt ret = baseSpeechArt;
+            foreach (var modifer in speechModifiers)
+            {
+                ret += modifer.value;
+            }
+            return ret;
+        }
+    }
+    public SpeechType? FocusSpeechType
+    {
+        get
+        {
+            SpeechType? ret = baseSpeechType;
+            foreach (var modifier in focusSpeechModifiers)
+            {
+                ret = modifier.value;
+            }
+            return ret;
+        }
+    }
+    public Personality Personality { get => FinalPersonality; }
     public int Energy
     {
         get => energy;
@@ -74,73 +120,44 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
         }
     }
 
-    [SerializeField]
-    private Pile hand = null;
-    public IPile Hand { get => hand; }
+    public int Pressure { get => pressure; set => pressure = value; }
+    public Pile<Card> Hand { get => hand; }
+    public Pile<Card> DrawPile { get => drawPile; }
+    public Pile<Card> DiscardPile { get => discardPile; }
+    public StatusManager StatusManager => GetComponent<StatusManager>();
+    public int DrawNum { get => (int)drawNum; set => drawNum=value; }
+    public bool IsHandFull => Hand.Count == handCardMaxNum;
+    public UnityEvent OnValueChange => onPersonalityChange;
+    public bool DrawBan { get => drawBan; set => drawBan = value; }
 
-    [SerializeField]
-    private Pile drawPile = null;
-    public IPile DrawPile { get => drawPile; }
-
-    [SerializeField]
-    private Pile discardPile = null;
-    public IPile DiscardPile { get => discardPile; }
-
-    
-    private CardLibrary dynamicCardLibrary = null;
-    public CardLibrary DynamicCardLibrary { get => dynamicCardLibrary; }
-
-    private ICardPlayerStateObject visuals;
-
-    public UnityEvent OnEnergyChange = new UnityEvent();
-
-    /// <summary>
-    /// 起始手牌数
-    /// </summary>
-    private const uint PLAYER_START_CARD_NUM = 5;
-
-    /// <summary>
-    /// 最大手牌数
-    /// </summary>
-    private const uint PLAYER_HAND_CARD_MAXNUM = 10;
 
     private void Awake()
     {
         instance = this;
-        dynamicCardLibrary = GetComponent<CardLibrary>();
-        if (dynamicCardLibrary == null)
-        {
-            var lib = gameObject.AddComponent<CardLibrary>();
-            dynamicCardLibrary = lib;
-        }
-        //if (character == null)
-        //{
-        //    character = gameObject.AddComponent(typeof(Character)) as Character;
-        //}
+        CardGameManager.Instance.OnStartGame.AddListener(OnStartGame);
     }
 
     private void Start()
     {
         BaseAimer nta = NoTargetAimer.instance;
         if (nta) nta.AddCallback(PlayCard);
-        BaseAimer ota = OneTargetAimer.instance;
-        if (ota) ota.AddCallback(PlayCard);
     }
 
     public void Draw(uint num)
     {
+        if (DrawBan) return;
         for (int i = 0; i < num; i++)
         {
-            if (hand.CardsList.Count == PLAYER_HAND_CARD_MAXNUM)
+            if (IsHandFull)
             {
                 //手牌满了
                 visuals.OnDrawButHandFull();
                 return;
             }
-            if (drawPile.CardsList.Count == 0)
+            if (drawPile.Count == 0)
             {
                 //抽牌堆为空
-                if (discardPile.CardsList.Count == 0)
+                if (discardPile.Count == 0)
                 {
                     //没有牌可抽
                     visuals.OnDrawButEmpty();
@@ -149,11 +166,12 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
                 //洗牌
                 Discard2Draw();
             }
-            //抽一张
-            PileMigrateUtils.MigrateTo(drawPile.GetCardByOrderID(0), hand);
+            drawPile.MigrateTo(drawPile[0], Hand);
             visuals.OnDraw();
         }
     }
+
+
 
     public void Draw2Full()
     {
@@ -162,28 +180,12 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
 
     public void DiscardCard(Card cid)
     {
-        PileMigrateUtils.MigrateTo(cid.GetComponent<Card>(), discardPile);
+        Hand.MigrateTo(cid, discardPile);
     }
 
     public void DiscardAll()
     {
-        hand.MigrateAllTo(discardPile);
-    }
-
-    public void SetupTestPlayer()
-    {
-        int[] data = { 0, 1, 2, 3, 4, 5, 6 };
-        player.CardSet.AddRange(data);
-    }
-
-    public void Init()
-    {
-        foreach (int i in player.CardSet)
-        {
-            Card newCard = StaticCardLibrary.Instance.GetCardCopyByID(i);
-            drawPile.Add(newCard);
-        }
-        drawPile.Shuffle();
+        Hand.MigrateAllTo(discardPile);
     }
 
     /// <summary>
@@ -198,7 +200,7 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
             //瞄准被取消了
             Debug.Log("瞄准被取消了");
         }
-        else if (Energy == 0)
+        else if (Energy < card.FinalCost)
         {
             //能量不足
             Debug.Log("能量不足");
@@ -207,11 +209,16 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
         else if (EffectManager.Instance.CheckCanPlay(card))
         {
             //目标有效且可以使用
-            Energy--;
-            if (EffectManager.Instance.Play(card))
-            {
-                PileMigrateUtils.MigrateTo(card, discardPile);
-            }
+            Energy -= card.FinalCost;
+            //调用Play时已经检查并扣除费用
+            Debug.Log("使用卡牌： " + card.name);
+            PlayerNode.PushPlayerContext(this);
+            CardNode.PushCardContext(card);
+            OnPlayCard.Invoke();
+            if (card.effectNode != null) card.effectNode.Execute();
+            CardNode.PopCardContext();
+            PlayerNode.PopPlayerContext();
+            Hand.MigrateTo(card, discardPile);
         }
     }
 
@@ -231,32 +238,111 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
         throw new System.NotImplementedException();
     }
 
-    public void OnStartTurn()
+    public void AddPersonalityModifer(Personality personality, int? timer)
+    {
+        personalityModifiers.Add(new Timer<Personality>(personality, timer));
+        onPersonalityChange.Invoke();
+    }
+    public void AddSpeechModifer(SpeechArt speechArt, int? timer)
+    {
+        speechModifiers.Add(new Timer<SpeechArt>(speechArt, timer));
+    }
+    public void AddFocusModifer(SpeechType speechArt, int? timer)
+    {
+        focusSpeechModifiers.Add(new Timer<SpeechType>(speechArt, timer));
+    }
+
+    public void AddCostModifer(CostModifier modifier, int? timer)
+    {
+        costModifers.Add(new Timer<CostModifier>(modifier, timer));
+    }
+
+    public void RemoveCostModifer(CostModifier modifier)
+    {
+        //有缺陷
+        costModifers.RemoveAll(item => item.value == modifier);
+    }
+
+    public void RandomReveal(int num)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RandomReveal(SpeechType type,int num)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SelectChoice(ChoiceSlot slot)
+    {
+        //判断是否可选
+        if (slot.Locked || (FocusSpeechType != null && FocusSpeechType == slot.SlotType))
+        {
+            return;
+        }
+        else
+        {
+            RawSelectChoice(slot);
+        }
+    }
+
+    /// <summary>
+    /// 不判断是否可选，强制选择选项
+    /// </summary>
+    /// <param name="slot"></param>
+    public void RawSelectChoice(ChoiceSlot slot)
+    {
+        int dis = Personality.MaxDistance(FinalPersonality, slot.Choice.JudgeValue);
+        SpeechArt speech = Instance.FinalSpeechArt;
+        int modifier = slot.SlotType switch
+        {
+            SpeechType.Normal => speech[SpeechType.Normal],
+            SpeechType.Cheat => speech[SpeechType.Cheat],
+            SpeechType.Threaten => speech[SpeechType.Threaten],
+            SpeechType.Persuade => speech[SpeechType.Persuade],
+            _ => 0,
+        };
+        int randomEPS = MyMath.GetRandomJudge(jp);
+        DialogSystem.Instance.ForceSelectChoice(slot.Choice, dis <= randomEPS + modifier);
+    }
+
+
+
+    public void StartTurn()
     {
         Debug.Log("我的回合，抽卡！！！");
         Energy = 4;
-        Draw(PLAYER_START_CARD_NUM);
+        Draw((uint)drawNum);
     }
 
-    public void OnEndTurn()
+    public void EndTurn()
     {
         Debug.Log("回合结束");
         DiscardAll();
+        personalityModifiers.ForEach(it => it.cd--);
+        personalityModifiers.RemoveAll(it => it.cd <= 0);
+        onPersonalityChange.Invoke();
+        speechModifiers.ForEach(it => it.cd--);
+        speechModifiers.RemoveAll(it => it.cd <= 0);
+        focusSpeechModifiers.ForEach(it => it.cd--);
+        focusSpeechModifiers.RemoveAll(it => it.cd <= 0);
     }
 
     public void OnStartGame()
     {
-        SetupTestPlayer();
-        Init();
+        Debug.Log("init");
+        foreach (int i in player.CardSet)
+        {
+            Card newCard = CardGameManager.Instance.EmptyCard;
+            newCard.Construct(StaticCardLibrary.Instance.GetCardByID(i));
+            drawPile.Add(newCard);
+        }
+        
+        drawPile.Shuffle();
     }
 
-    public void StateChange(List<int> delta, int turn)
+    public void StateChange(Personality delta, int turn)
     {
-        Debug.Log("StateChange");
-    }
-
-    public void PressureChange(int delta)
-    {
-        Debug.Log("PressureChange");
+        basePersonality += delta;
     }
 }

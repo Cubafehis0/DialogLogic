@@ -11,7 +11,7 @@ public interface ICharacterView
 public class CharacterBarView : MonoBehaviour, ICharacterView
 {
     [SerializeField]
-    private Character character = null;
+    private CardPlayerState character = null;
     [SerializeField]
     private Slider insideSlider = null;
     [SerializeField]
@@ -28,12 +28,6 @@ public class CharacterBarView : MonoBehaviour, ICharacterView
     private Slider unethicSlider = null;
     [SerializeField]
     private Slider detourSlider = null;
-
-    private void Awake()
-    {
-        if (character == null) character = GetComponent<Character>();
-
-    }
 
     private void OnEnable()
     {
@@ -52,13 +46,14 @@ public class CharacterBarView : MonoBehaviour, ICharacterView
     public void UpdateAll()
     {
         if (character == null) return;
-        if (insideSlider) insideSlider.value = character.Inside;
-        if (logicSlider) logicSlider.value = character.Logic;
-        if (moralSlider) moralSlider.value = character.Moral;
-        if (strongSlider) strongSlider.value = character.Strong;
-        if (outsideSlider) outsideSlider.value = character.Outside;
-        if (passionSlider) passionSlider.value = character.Passion;
-        if (unethicSlider) moralSlider.value = character.Unethic;
-        if (detourSlider) strongSlider.value = character.Detour;
+        Personality personality = character.Personality;
+        if (insideSlider) insideSlider.value = personality.Inside;
+        if (logicSlider) logicSlider.value = personality.Logic;
+        if (moralSlider) moralSlider.value = personality.Moral;
+        if (strongSlider) strongSlider.value = personality.Strong;
+        if (outsideSlider) outsideSlider.value = personality.Outside;
+        if (passionSlider) passionSlider.value = personality.Passion;
+        if (unethicSlider) moralSlider.value = personality.Unethic;
+        if (detourSlider) strongSlider.value = personality.Detour;
     }
 }

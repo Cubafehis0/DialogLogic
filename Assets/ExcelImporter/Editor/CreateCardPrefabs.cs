@@ -25,11 +25,11 @@ public class CreateCardPrefabs
         EffectDesc.InitalDic(effectTable);
         GameObject cardBase= AssetDatabase.LoadAssetAtPath(cardBasePath, typeof(GameObject)) as GameObject;
         CreateCardPool(cardTable.cardpool_ags,nameof(cardTable.cardpool_ags), effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_imm, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_lgc, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_mrl, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_rdb, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_spt, effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_imm, nameof(cardTable.cardpool_imm), effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_lgc, nameof(cardTable.cardpool_lgc), effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_mrl, nameof(cardTable.cardpool_mrl), effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_rdb, nameof(cardTable.cardpool_rdb), effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_spt, nameof(cardTable.cardpool_spt), effectTable, cardBase);
     }
     
     private static void CreateCardPool(List<CardEntity> cardpool, string poolName, EffectTable effectTable, GameObject cardBase)
@@ -52,7 +52,7 @@ public class CreateCardPrefabs
                 Debug.Log(string.Format("卡池{0}中第{1}个名称为{2}卡牌已经存在，已经将其替换成新的预制体", poolName, i+1,entity.name));
                 File.Delete(filePath);
             }
-            cardObject.GetComponent<Card>().Refresh(entity);
+            cardObject.GetComponent<Card>().info=new CardInfo(entity);
             CardObject card = cardObject.GetComponent<CardObject>();
             card.GetCardComponent();
             card.UpdateVisuals();

@@ -52,10 +52,10 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
         //controllButton = GameObject.Find("Buttons").transform.Find("ButtonToControllShowDialogSaveAndLoadPanel").gameObject;
         //showHistoricalDialog = this.transform.Find("ShowHistoricalDialog").gameObject;
         //content = showHistoricalDialog.transform.Find("Viewport").Find("Content");
-        controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
+        if(controllButton) controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
         //HideChildren(this.gameObject);
         ClearTextFile(path);
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private Color ChooseColor(string speaker)

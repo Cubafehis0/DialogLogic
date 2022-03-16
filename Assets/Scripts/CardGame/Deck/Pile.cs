@@ -1,115 +1,96 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public interface IPile
+
+public class PileType 
 {
-    List<Card> CardsList { get; }
-    Card GetCardByOrderID(int index);
-    void UpdateBindingObject();
-    void Add(Card card);
-    void Remove(Card card);
-    void MigrateAllTo(IPile newPile);
-    void MigrateTo(Card card, IPile newPile);
+    public static int Hand { get => 1; }
+    public static int DrawDeck { get => 2; }
+    public static int DiscardDeck { get => 4; }
+    public static int All { get => 7; }
 }
 
-public class Pile : MonoBehaviour, IPile
+
+public class Pile<T> : List<T>
 {
-    /// <summary>
-    /// 当前手中的卡牌物体
-    /// </summary>
-    private List<Card> cardsList = new List<Card>();
-    public List<Card> CardsList { get => cardsList; }
+    private UnityEvent<T> onAdd = new UnityEvent<T>();
+    private UnityEvent<T> onRemove = new UnityEvent<T>();
+    private UnityEvent onShuffle = new UnityEvent();
 
-    private List<IPileListener> listeners = new List<IPileListener>();
+    public UnityEvent<T> OnAdd { get => onAdd; }
+    public UnityEvent<T> OnRemove { get => onRemove; }
+    public UnityEvent OnShuffle { get => onShuffle; }
 
-    private void Start()
+    public Pile() : base()
     {
-        UpdateBindingObject();
+
+    }
+    public Pile(IEnumerable<T> i) :base(i){
+
     }
 
-    public Card GetCardByOrderID(int index)
-    {
-        if (0 <= index && index < cardsList.Count)
-        {
-            return cardsList[index];
-        }
-        return null;
-    }
     public void Shuffle()
     {
-        Debug.Log("洗牌 未实现");
+        MyMath.Shuffle(this);
+        OnShuffle.Invoke();
     }
 
-    public void Add(Card card)
+    public new void Add(T item)
     {
-        if (cardsList.Contains(card))
-        {
-            Debug.LogError("卡组添加卡牌失败，卡牌已经存在");
-            return;
-        }
-        cardsList.Add(card);
-        card.parentPile = this;
-        BroadcastOnAdd(card);
+        base.Add(item);
+        OnAdd.Invoke(item);
     }
 
-    private void BroadcastOnAdd(Card newCard)
+    public new void Remove(T item)
     {
-        //UpdateBindingObject();
-        foreach (IPileListener listener in listeners)
-            listener.OnAdd(newCard);
-    }
-
-    public void Remove(Card card)
-    {
-        if (!cardsList.Contains(card))
+        if (!Contains(item))
         {
             Debug.LogError("Remove Error");
             return;
         }
-        cardsList.Remove(card);
-        card.parentPile = null;
-        BroadcastRemove(card);
+        base.Remove(item);
+        OnRemove.Invoke(item);
     }
 
-    private void BroadcastRemove(Card oldCard)
+    public void MigrateTo(T card, Pile<T> newPile)
     {
-        //UpdateBindingObject();
-        foreach (IPileListener listener in listeners)
-            listener.OnRemove(oldCard);
-    }
-
-    public void MigrateTo(Card card, IPile newPile)
-    {
-        if (card.parentPile != (IPile)this)
+        if (card == null || newPile == null)
         {
-            Debug.Log("MigrateTo Error: " + name + " 没有 " + card.name);
+            Debug.LogError("Migrate Error: 输入不能为空");
             return;
         }
-        PileMigrateUtils.MigrateTo(card, newPile);
+        if (Contains(card))
+        {
+            if (this == newPile)
+            {
+                Debug.Log("MigrateTo Error: 不能转移到自身");
+                return;
+            }
+            Remove(card);
+            newPile.Add(card);
+        }
+        
     }
 
-    public void MigrateAllTo(IPile to)
+    public void MigrateAllTo(Pile<T> to)
     {
         if (to == null)
         {
             Debug.LogError("MigrateAllto Error: 不能转移到空牌堆");
             return;
         }
-        if ((IPile)this == to)
+        if (this == to)
         {
             Debug.LogError("MigrateAllto Error: 不能转移到自身牌堆");
             return;
         }
-        List<Card> tmp = new List<Card>(cardsList);
-        foreach (Card c in tmp)
+        List<T> tmp = new List<T>(this);
+        foreach (var c in tmp)
         {
             MigrateTo(c, to);
         }
-    }
-
-    public void UpdateBindingObject()
-    {
-        listeners = new List<IPileListener>(GetComponents<IPileListener>());
     }
 }
