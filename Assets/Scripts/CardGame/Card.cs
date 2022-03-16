@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+/// <summary>
+/// 表示卡牌类型
+/// </summary>
+public enum CardType
+{
+    Lgc,
+    Spt,
+    Mrl,
+    Imm,
+    Rdb,
+    Ags
+}
 
 public class Card : MonoBehaviour
 {
     public uint staticID;
     public IPile parentPile;
+    public CardType CardType{ get;set;}
 
     public List<string> hold_effect;
     public List<string> condition;
@@ -39,12 +52,15 @@ public class Card : MonoBehaviour
             tmp = GetDesc(pull_effect,pull_effect_scale);
             if (!string.IsNullOrEmpty(tmp))
                 ret += "抽取时:" + tmp;
-
             return ret;
         }
     }
 
     public string meme;
+    public Card()
+    {
+
+    }
     public Card(CardEntity cardEntity)
     {
 
@@ -99,7 +115,18 @@ public class Card : MonoBehaviour
     List<string> GetEffects(string effects)
     {
         if (effects == null) return new List<string>();
-        return new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e)).ToList();
+        var rawEffectList = new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e)).ToList();
+        List<string> res = new List<string>();
+        foreach(var e in rawEffectList)
+        {
+            string image = EftAndCdtNameImage.GetInstance().GetImageName(e);
+            if (image != null)
+            {
+                res.Add(image);
+            }
+        }
+        return res;
+    
     }
     List<int> GetEffectsScale(string scales,int eftCnt)
     {

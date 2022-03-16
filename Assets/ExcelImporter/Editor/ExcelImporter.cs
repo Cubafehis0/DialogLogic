@@ -27,7 +27,7 @@ public class ExcelImporter : AssetPostprocessor
 	static List<ExcelAssetInfo> cachedInfos = null; // Clear on compile.
 
 
-	[MenuItem("导入表格/导入条件表", priority = 1)]
+	[MenuItem("表格/导入条件表", priority = 1)]
 	static void ImportEffectTable()
     {
 		Debug.Log("Import Effect Table");
@@ -37,14 +37,24 @@ public class ExcelImporter : AssetPostprocessor
 		EffectTable effectTable = LoadOrCreateAsset("Assets//ExcelAssets//EffectTable.asset", typeof(EffectTable)) as EffectTable;
 		EffectDesc.InitalDic(effectTable);
 	}
-	[MenuItem("导入表格/导入卡牌表", priority = 0)]
+	[MenuItem("表格/导入卡牌表", priority = 2)]
 	static void ImportCardTable()
     {
 		Debug.Log("Import Card Table"); string path = BrowserHelper.OpenProject("导入卡牌表", BrowserHelper.EXCELFILTER);
 		if (path == null) return;
 		ImportTable("CardTable", path);
 	}
-	static void ImportTable(string excelName,string path)
+    
+	
+	//[MenuItem("表格/导入任务表", priority = 3)]
+ //   static void ImportTaskTable()
+ //   {
+ //       Debug.Log("Import Task Table"); string path = BrowserHelper.OpenProject("导入任务表", BrowserHelper.EXCELFILTER);
+ //       if (path == null) return;
+ //       ImportTable("TaskEntityTable", path);
+ //   }
+
+    static void ImportTable(string excelName,string path)
 	{
 		if (cachedInfos == null) cachedInfos = FindExcelAssetInfos();
 		ExcelAssetInfo info = cachedInfos.Find(i => i.ExcelName == excelName);
@@ -53,34 +63,35 @@ public class ExcelImporter : AssetPostprocessor
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 	}
-	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
-	{
-		Debug.Log("import");
-		bool imported = false;
-		foreach(string path in importedAssets)
-		{
-			if(Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx") 
-			{
+
+	//static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+	//{
+	//	Debug.Log("import");
+	//	bool imported = false;
+	//	foreach(string path in importedAssets)
+	//	{
+	//		if(Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx") 
+	//		{
 				
 
-				var excelName = Path.GetFileNameWithoutExtension(path);
-				if(excelName.StartsWith("~$")) continue;
+	//			var excelName = Path.GetFileNameWithoutExtension(path);
+	//			if(excelName.StartsWith("~$")) continue;
 
-				ExcelAssetInfo info = cachedInfos.Find(i => i.ExcelName == excelName);
+	//			ExcelAssetInfo info = cachedInfos.Find(i => i.ExcelName == excelName);
 
-				if(info == null) continue;
+	//			if(info == null) continue;
 
-				ImportExcel(path, info);
-				imported = true;
-			}
-		}
+	//			ImportExcel(path, info);
+	//			imported = true;
+	//		}
+	//	}
 
-		if(imported) 
-		{
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-		}
-	}
+	//	if(imported) 
+	//	{
+	//		AssetDatabase.SaveAssets();
+	//		AssetDatabase.Refresh();
+	//	}
+	//}
 
 	static List<ExcelAssetInfo> FindExcelAssetInfos()
 	{
@@ -119,7 +130,7 @@ public class ExcelImporter : AssetPostprocessor
 		return asset;
 	}
 
-	static IWorkbook LoadBook(string excelPath)
+	public static IWorkbook LoadBook(string excelPath)
 	{
 		using(FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 		{
@@ -127,16 +138,30 @@ public class ExcelImporter : AssetPostprocessor
 			else return new XSSFWorkbook(stream);
 		}
 	}
-
-	static List<string> GetFieldNamesFromSheetHeader(ISheet sheet)
+	public static List<string> GetSheetNames(IWorkbook book)
+	{
+		var sheetNames = new List<string>();
+		for (int i = 0; i < book.NumberOfSheets; i++)
+		{
+			var sheet = book.GetSheetAt(i);
+			sheetNames.Add(sheet.SheetName);
+		}
+		return sheetNames;
+	}
+	public static List<string> GetFieldNamesFromSheetHeader(ISheet sheet)
 	{
 		IRow headerRow = sheet.GetRow(0);
 
 		var fieldNames = new List<string>();
 		for (int i = 0; i < headerRow.LastCellNum; i++)
 		{
+
 			var cell = headerRow.GetCell(i);
-			if(cell == null || cell.CellType == CellType.Blank) break;
+			if (cell == null || cell.CellType == CellType.Blank)
+            {
+				fieldNames.Add("");
+				continue;
+			}
 			fieldNames.Add(cell.StringCellValue);
 		}
 		return fieldNames;
@@ -170,19 +195,19 @@ public class ExcelImporter : AssetPostprocessor
 	static object CreateEntityFromRow(IRow row, List<string> columnNames, Type entityType, string sheetName)
 	{
 		var entity = Activator.CreateInstance(entityType);
-
-		for (int i = 0; i < columnNames.Count; i++)
-		{
+		int cnt = 0;
+        for (int i = 0; i < row.LastCellNum; i++)
+        {
+			if (columnNames[i] == "") continue;
+			var cell = row.GetCell(i);
+			
+			if (cell == null || cell.CellType == CellType.Blank) continue;
 			FieldInfo entityField = entityType.GetField(
 				columnNames[i],
-				BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic 
+				BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
 			);
 			if (entityField == null) continue;
 			if (!entityField.IsPublic && entityField.GetCustomAttributes(typeof(SerializeField), false).Length == 0) continue;
-
-			ICell cell = row.GetCell(i);
-			if (cell == null) continue;
-
 			try
 			{
 				object fieldValue = CellToFieldObject(cell, entityField);
@@ -195,7 +220,6 @@ public class ExcelImporter : AssetPostprocessor
 		}
 		return entity;
 	}
-
 	static object GetEntityListFromSheet(ISheet sheet, Type entityType)
 	{
 		List<string> excelColumnNames = GetFieldNamesFromSheetHeader(sheet);
@@ -208,10 +232,10 @@ public class ExcelImporter : AssetPostprocessor
 		for (int i = 1; i <= sheet.LastRowNum; i++)
 		{
 			IRow row = sheet.GetRow(i);
-			if(row == null) break;
+			if(row == null) continue;
 
 			ICell entryCell = row.GetCell(0); 
-			if(entryCell == null || entryCell.CellType == CellType.Blank) break;
+			if(entryCell == null || entryCell.CellType == CellType.Blank) continue;
 
 			// skip comment row
 			if(entryCell.CellType == CellType.String && entryCell.StringCellValue.StartsWith("#")) continue;

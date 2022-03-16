@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pass name="EG1-1">
+    <player>
+        <character>
+            <lgc>0</lgc>
+            <mrl>0</mrl>
+            <rdb>0</rdb>
+            <inn>0</inn>
+        </character>
+        <maxCardNum>10</maxCardNum>
+        <drawCardNum>4</drawCardNum>
+        <health>80</health> 
+        <energy>5</energy>
+    </player>
+    <enemy>
+        <character>
+            <lgc>0</lgc>
+            <mrl>0</mrl>
+            <rdb>0</rdb>
+            <inn>0</inn>
+        </character>
+    </enemy>
+    <carddeck>
+        <card> 
+            <name>说服</name>    
+            <num>2</num>
+        </card>
+        <card> 
+            <name>职业道德</name>    
+            <num>2</num>
+        </card>
+    </carddeck>
+</pass>
+
+<Node >
+
+</Node>
+
+<GetCard name="说教">
+
+</DrawCard>

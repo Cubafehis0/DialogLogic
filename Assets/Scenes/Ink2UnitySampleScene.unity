@@ -150,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 397396353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f29bfef6ce694a4e8b2e1bba85ca9776, type: 3}
+  m_Script: {fileID: 11500000, guid: 94554375e84a3084fbbb3dfc6dceceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &397396355
@@ -161,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397396353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.409029, y: -1.2783263, z: -3.2467844}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480060097}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39bae08728f751146b3d4a15cc7a4745, type: 3}
   m_Name: 
@@ -302,18 +302,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480060097}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbce236fc97770d4f8d8a59eade66c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 397396354}
+  character: {fileID: 0}
   player: {fileID: 0}
   energy: 0
   hand: {fileID: 0}
   drawPile: {fileID: 0}
   discardPile: {fileID: 0}
-  dynamicCardLibrary: {fileID: 0}
+  OnEnergyChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1915057466
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +341,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915057466}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2697aee8e34dea42ac9541036c12bc8, type: 3}
   m_Name: 

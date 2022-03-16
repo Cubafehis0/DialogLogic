@@ -48,7 +48,7 @@ public interface ICardPlayerState
     void UpdateObjectReference();
 }
 
-public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListener, Ink2Unity.IPlayerStateChange
+public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListener, Ink2Unity.IPlayerStateChange,ICardOperationSubject
 {
     private static CardPlayerState instance = null;
     public static CardPlayerState Instance { get => instance; }
@@ -89,7 +89,7 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
     
     private CardLibrary dynamicCardLibrary = null;
     public CardLibrary DynamicCardLibrary { get => dynamicCardLibrary; }
-
+   
     private ICardPlayerStateObject visuals;
 
     public UnityEvent OnEnergyChange = new UnityEvent();
@@ -259,4 +259,7 @@ public class CardPlayerState : MonoBehaviour, ICardPlayerState, ICardGameListene
     {
         Debug.Log("PressureChange");
     }
+    public UnityEvent<Card, uint> OnDrawCard { get; set; }
+    public UnityEvent<Card, uint> OnPlayCard { get; set; }
+    public UnityEvent<Card, uint> OnDiscardCard { get; set; }
 }

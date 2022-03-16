@@ -27,14 +27,12 @@ namespace Ink2Unity
         {
             if (save)
             {
-                Save.SaveGame(1,"axsa");
+                SaveAndLoad.SaveGame(1,"axsa");
                 save = false;
             }
             if (load)
             {
-                ILoad l = new Load();
-                l.LoadGame(1);
-                load = false;
+                SaveAndLoad.Load(1);
             }
             if (wait == true)
             {

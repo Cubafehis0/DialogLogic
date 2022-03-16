@@ -22,7 +22,6 @@ public interface ICardGameManager
 
 public interface ICardGameListener
 {
-   
     void OnStartGame();
     void OnStartTurn();
     void OnEndTurn();

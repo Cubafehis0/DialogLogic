@@ -8,84 +8,78 @@ using System;
 using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
-
 public class ExcelAssetScriptMenu
 {
-	const string ScriptTemplateName = "ExcelAssetScriptTemplete.cs.txt";
-	const string FieldTemplete = "\t//public List<EntityType> #FIELDNAME#; // Replace 'EntityType' to an actual type that is serializable.";
-
-	[MenuItem("Assets/Create/ExcelAssetScript", false)]
+	const string TableScriptTemplateName = "ExcelTableScriptTemplete.cs.txt";
+	const string TableFieldTemplete = "\tpublic List<#EntityType#> #FIELDNAME#;";
+	const string EntityScriptTemplateName = "ExcelEntityScriptTemplate.cs.txt";
+	const string EntityFieldTemplete= "\tpublic string #FIELDNAME#;";
+	[MenuItem("表格/创建配置脚本信息", priority =0)]
 	static void CreateScript()
 	{
-		string savePath = EditorUtility.SaveFolderPanel("Save ExcelAssetScript", Application.dataPath, "");
+		string savePath = EditorUtility.SaveFolderPanel("选择生成的excel配置脚本保存位置", Application.dataPath, "");
 		if(savePath == "") return;
 
 		var selectedAssets = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
 
 		string excelPath = AssetDatabase.GetAssetPath(selectedAssets[0]);
 		string excelName = Path.GetFileNameWithoutExtension(excelPath);
-		List<string> sheetNames = GetSheetNames(excelPath);
 
-		string scriptString = BuildScriptString(excelName, sheetNames);
+		IWorkbook book = ExcelImporter.LoadBook(excelPath);
+		List<string> sheetNames = ExcelImporter.GetSheetNames(book);
+		List<string> fieldNames = ExcelImporter.GetFieldNamesFromSheetHeader(book.GetSheetAt(0)).FindAll(s=>!string.IsNullOrEmpty(s));
 
-		string path = Path.ChangeExtension(Path.Combine(savePath, excelName), "cs");
-		File.WriteAllText(path, scriptString);
+		string className = excelName + "Entity";
+		string scriptString = BulidAssetScriptString(className, fieldNames, EntityScriptTemplateName, EntityFieldTemplete);
+		string path = Path.ChangeExtension(Path.Combine(savePath, className), "cs");
+		WriteText2File(path, scriptString);
 
+		string sheetField = String.Copy(TableFieldTemplete);
+		sheetField = sheetField.Replace("#EntityType#", className);
+		className = excelName + "EntityTable";
+		scriptString = BulidAssetScriptString(className, sheetNames, TableScriptTemplateName, sheetField);
+		path = Path.ChangeExtension(Path.Combine(savePath, className), "cs");
+		WriteText2File(path, scriptString);
 		AssetDatabase.Refresh();
+		Debug.Log(string.Format("成功在{0}位置为{1}表格创建了配置脚本",savePath,excelName));
 	}
 
-	[MenuItem("Assets/Create/ExcelAssetScript", true)]
-	static bool CreateScriptValidation()
-	{
-		var selectedAssets = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
-		if(selectedAssets.Length != 1) return false;
-		var path = AssetDatabase.GetAssetPath(selectedAssets[0]);
-		return Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx";
+    [MenuItem("表格/创建配置脚本信息", true)]
+    static bool CreateScriptValidation()
+    {
+        var selectedAssets = Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets);
+        if (selectedAssets.Length != 1) return false;
+        var path = AssetDatabase.GetAssetPath(selectedAssets[0]);
+        return Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx";
+    }
+	static void WriteText2File(string path,string text)
+    {
+		if (File.Exists(path))
+			File.Delete(path);
+		File.WriteAllText(path, text);
 	}
-
-	static List<string> GetSheetNames(string excelPath)
-	{
-		var sheetNames = new List<string>();
-		using(FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-		{
-			IWorkbook book = null;
-			if (Path.GetExtension(excelPath) == ".xls") book = new HSSFWorkbook(stream);
-			else book = new XSSFWorkbook(stream);
-
-			for(int i = 0; i < book.NumberOfSheets; i++)
-			{
-				var sheet = book.GetSheetAt(i);
-				sheetNames.Add(sheet.SheetName);
-			}
-		}
-		return sheetNames;
-	}
-
-	static string GetScriptTempleteString()
+	static string GetScriptTempleteString(string templateName)
 	{
 		string currentDirectory = Directory.GetCurrentDirectory();
-		string[] filePath = Directory.GetFiles(currentDirectory, ScriptTemplateName, SearchOption.AllDirectories);
-		if(filePath.Length == 0) throw new Exception("Script template not found.");
+		string[] filePath = Directory.GetFiles(currentDirectory, templateName, SearchOption.AllDirectories);
+		if(filePath.Length <= 0) throw new Exception("Script template not found.");
 
 		string templateString = File.ReadAllText(filePath[0]);
 		return templateString;
 	}
-
-	static string BuildScriptString(string excelName, List<string> sheetNames)
+	static string BulidAssetScriptString(string excelName, List<string> fieldNames,string templateName,string filedTemplate)
 	{
-		string scriptString = GetScriptTempleteString();
+		string scriptString = GetScriptTempleteString(templateName);
+		scriptString = scriptString.Replace("#CLASSNAME#", excelName);
 
-		scriptString = scriptString.Replace("#ASSETSCRIPTNAME#", excelName);
-
-		foreach(string sheetName in sheetNames)
+		foreach(string sheetName in fieldNames)
 		{
-			string fieldString = String.Copy(FieldTemplete);
+			string fieldString = String.Copy(filedTemplate);
 			fieldString = fieldString.Replace("#FIELDNAME#", sheetName);
-			fieldString += "\n#ENTITYFIELDS#";
-			scriptString = scriptString.Replace("#ENTITYFIELDS#", fieldString);
+			fieldString += "\n#FIELDS#";
+			scriptString = scriptString.Replace("#FIELDS#", fieldString);
 		}
-		scriptString = scriptString.Replace("#ENTITYFIELDS#\n", "");
-
+		scriptString = scriptString.Replace("\n#FIELDS#", "");
 		return scriptString;
 	}
 }

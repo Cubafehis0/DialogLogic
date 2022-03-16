@@ -42,7 +42,7 @@ namespace Ink2Unity
     /// <summary>
     /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
-    public class InkStory : IInkStory,ISavable
+    public class InkStory : IInkStory,ISavable,ISaveAndLoad
     {
         private static InkStory _nowStory;
         public static InkStory NowStory { get => _nowStory; }
@@ -329,6 +329,28 @@ namespace Ink2Unity
                     Debug.LogError("无法识别的标签类型：" + name + ":" + value);
                     return;
             }
+        }
+
+        public void Register()
+        {
+            SaveAndLoad.OnLoad.AddListener(Load);
+            SaveAndLoad.OnSave.AddListener(Save);
+        }
+
+        public void Save(SaveInfo saveInfo)
+        {
+            saveInfo.AddSaveInfo(typeof(InkStory), story.state.ToJson());
+        }
+
+        public void Load(SaveInfo saveInfo)
+        {
+            string state = saveInfo.GetSaveInfo(typeof(InkStory)) as string;
+            if(state==null)
+            {
+                Debug.LogError("存档信息有误，无法读取InkStory的存档信息");
+                return;
+            }
+            story.state.LoadJson(state);
         }
     }
 

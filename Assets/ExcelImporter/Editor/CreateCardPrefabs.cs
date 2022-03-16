@@ -11,7 +11,7 @@ public class CreateCardPrefabs
     readonly static string effectTablePath = "Assets//ExcelAssets//EffectTable.asset";
     readonly static string cardBasePath= "Assets//Prefabs//Cards//Base.prefab";
     readonly static string cardDirPath = "Assets//Prefabs//Cards";
-    [MenuItem("导入表格/生成卡牌预制体", priority = 2)]
+    [MenuItem("表格/生成卡牌预制体")]
     static void CreateCardPrefab()
     {
         Debug.Log("Create Card Prefab");
@@ -24,15 +24,15 @@ public class CreateCardPrefabs
         EffectTable effectTable= ExcelImporter.LoadOrCreateAsset(effectTablePath, typeof(EffectTable)) as EffectTable;
         EffectDesc.InitalDic(effectTable);
         GameObject cardBase= AssetDatabase.LoadAssetAtPath(cardBasePath, typeof(GameObject)) as GameObject;
-        CreateCardPool(cardTable.cardpool_ags,nameof(cardTable.cardpool_ags), effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_imm, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_lgc, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_mrl, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_rdb, effectTable, cardBase);
-        //CreateCardPool(cardTable.cardpool_spt, effectTable, cardBase);
+        CreateCardPool(cardTable.cardpool_ags,nameof(cardTable.cardpool_ags), cardBase);
+        CreateCardPool(cardTable.cardpool_imm, nameof(cardTable.cardpool_imm), cardBase);
+        CreateCardPool(cardTable.cardpool_lgc, nameof(cardTable.cardpool_lgc), cardBase);
+        CreateCardPool(cardTable.cardpool_mrl, nameof(cardTable.cardpool_mrl), cardBase);
+        CreateCardPool(cardTable.cardpool_rdb, nameof(cardTable.cardpool_rdb), cardBase);
+        CreateCardPool(cardTable.cardpool_spt, nameof(cardTable.cardpool_spt), cardBase);
     }
-    
-    private static void CreateCardPool(List<CardEntity> cardpool, string poolName, EffectTable effectTable, GameObject cardBase)
+
+    private static void CreateCardPool(List<CardEntity> cardpool, string poolName, GameObject cardBase)
     {
         string dirPath = Path.Combine(cardDirPath, poolName);
         if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
@@ -53,6 +53,7 @@ public class CreateCardPrefabs
                 File.Delete(filePath);
             }
             cardObject.GetComponent<Card>().Refresh(entity);
+            cardObject.GetComponent<Card>().CardType = GetCardTypeByCardPoolName(poolName);
             CardObject card = cardObject.GetComponent<CardObject>();
             card.GetCardComponent();
             card.UpdateVisuals();
@@ -63,5 +64,25 @@ public class CreateCardPrefabs
             }
         }
         GameObject.DestroyImmediate(cardObject);
+    }
+
+    private static CardType GetCardTypeByCardPoolName(string pool)
+    {
+        switch (pool)
+        {
+            case "cardpool_ags":
+                return CardType.Ags;
+            case "cardpool_imm":
+                return CardType.Imm;
+            case "cardpool_lgc":
+                return CardType.Lgc;
+            case "cardpool_mrl":
+                return CardType.Mrl;
+            case "cardpool_rdb":
+                return CardType.Rdb;
+            case "cardpool_spt":
+                return CardType.Spt;
+        }
+        return CardType.Ags;
     }
 }

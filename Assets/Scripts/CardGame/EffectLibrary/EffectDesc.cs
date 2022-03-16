@@ -24,12 +24,18 @@ public class EffectDesc
     {
         foreach (var i in effectList)
         {
+            string name = EftAndCdtNameImage.GetInstance().GetImageName(i.name);
+            if(name==null)
+            {
+                Debug.Log(string.Format("名称位{0}的条件或效果尚未实现", i.name));
+                continue;
+            }
             if (eftName2Desc.ContainsKey(i.name))
             {
                 Debug.Log(string.Format("名称为{0}的条件或效果重复", i.name));
                 continue;
             }
-            eftName2Desc.Add(i.name, i.description);
+            eftName2Desc.Add(name, i.description);
         }
     }
 }

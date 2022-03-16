@@ -60,6 +60,7 @@ public class EftAndCdtNameImage
     /// <returns></returns>
     public string GetEffectName(string rawName)
     {
+        if (string.IsNullOrEmpty(rawName)) return null;
         if (eftNameImage.TryGetValue(rawName, out string res))
             return res;
         else
@@ -68,8 +69,14 @@ public class EftAndCdtNameImage
             return null;
         }
     }
+    public string GetImageName(string rawName)
+    {
+        string res = GetConditionName(rawName);
+        return res == null ? GetEffectName(res) : res;
+    }
     public string GetConditionName(string rawName)
     {
+        if (string.IsNullOrEmpty(rawName)) return null;
         if (cdtNameImage.TryGetValue(rawName, out string res))
             return res;
         else
