@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
+public interface IPersonalityGet
+{
+    UnityEvent OnValueChange { get; }
+
+    Personality Personality { get; }
+}
 public class CharacterLabelView : MonoBehaviour, ICharacterView
 {
     [SerializeField]
-    private Character character = null;
+    private IPersonalityGet character = null;
     [SerializeField]
     private Text insideText = null;
     [SerializeField]
@@ -18,7 +25,7 @@ public class CharacterLabelView : MonoBehaviour, ICharacterView
 
     private void Awake()
     {
-        if (character == null) character = GetComponent<Character>();
+        if (character == null) character = GetComponent<IPersonalityGet>();
 
     }
 
@@ -39,9 +46,10 @@ public class CharacterLabelView : MonoBehaviour, ICharacterView
     public void UpdateAll()
     {
         if (character == null) return;
-        if (insideText) insideText.text = character.Inside.ToString();
-        if (logicText) logicText.text = character.Logic.ToString();
-        if (moralText) moralText.text = character.Moral.ToString();
-        if (strongText) strongText.text = character.Detour.ToString();
+        Personality personality = character.Personality;
+        if (insideText) insideText.text = personality.Inside.ToString();
+        if (logicText) logicText.text = personality.Logic.ToString();
+        if (moralText) moralText.text = personality.Moral.ToString();
+        if (strongText) strongText.text = personality.Detour.ToString();
     }
 }

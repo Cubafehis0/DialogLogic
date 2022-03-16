@@ -30,6 +30,7 @@ public class CreateCardPrefabs
         CreateCardPool(cardTable.cardpool_mrl, nameof(cardTable.cardpool_mrl), cardBase);
         CreateCardPool(cardTable.cardpool_rdb, nameof(cardTable.cardpool_rdb), cardBase);
         CreateCardPool(cardTable.cardpool_spt, nameof(cardTable.cardpool_spt), cardBase);
+
     }
 
     private static void CreateCardPool(List<CardEntity> cardpool, string poolName, GameObject cardBase)
@@ -54,6 +55,7 @@ public class CreateCardPrefabs
             }
             cardObject.GetComponent<Card>().Refresh(entity);
             cardObject.GetComponent<Card>().CardType = GetCardTypeByCardPoolName(poolName);
+            cardObject.GetComponent<Card>().info=new CardInfo(entity);
             CardObject card = cardObject.GetComponent<CardObject>();
             card.GetCardComponent();
             card.UpdateVisuals();

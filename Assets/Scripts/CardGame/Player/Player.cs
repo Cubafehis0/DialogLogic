@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IPlayer
     private int health;
     public int Health { get => health; set => health = value; }
 
+    [SerializeField]
     private List<int> cardSet = new List<int>();
     public List<int> CardSet { get => cardSet; }
 

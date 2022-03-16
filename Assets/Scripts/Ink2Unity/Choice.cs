@@ -5,18 +5,43 @@ namespace Ink2Unity
 {
     public class Choice
     {
-        //判定成功后压力槽减少至
-        public int success_desc;
-        //判定失败后压力槽增加值
-        public int fail_add;
+        private readonly int index;
+        private readonly Content content;
+        private SpeechType speechArt = SpeechType.Normal;
+        private Personality judgeValue = new Personality(999, 999, 999, 999);
+        private int success_desc = 0;
+        private int fail_add = 0;
+
+
+        public Choice(Content content, int index)
+        {
+            this.content = content;
+            this.index = index;
+        }
+
+        public int Index => index;
         /// <summary>
         /// 当前选项的内容
         /// </summary>
-        public Content content;   
+        public Content Content { get => content; }
         /// <summary>
-        /// 当前选项是否可用
+        /// 当前选项的话术类型
         /// </summary>
-        public bool canUse;
+        public SpeechType SpeechArt { get => speechArt; set => speechArt = value; }
+        /// <summary>
+        /// 判定值
+        /// </summary>
+        public Personality JudgeValue { get => judgeValue; set => judgeValue = value; }
+        /// <summary>
+        /// 判定成功后压力槽减少至
+        /// </summary>
+        public int Success_desc { get => success_desc; set => success_desc = value; }
+        /// <summary>
+        /// 判定失败后压力槽增加值
+        /// </summary>
+        public int Fail_add { get => fail_add; set => fail_add = value; }
+
+
         /// <summary>
         /// 选项框背景色，和选项类型有关
         /// </summary>
@@ -24,66 +49,18 @@ namespace Ink2Unity
         {
             get
             {
-                switch (speechArt)
+                return SpeechArt switch
                 {
-                    case SpeechArt.Cheat:
-                        return Color.yellow;
-                    case SpeechArt.Persuade:
-                        return Color.green;
-                    case SpeechArt.Threaten:
-                        return Color.red;
-                    default:
-                        return Color.white;
-                }
+                    SpeechType.Cheat => Color.yellow,
+                    SpeechType.Persuade => Color.green,
+                    SpeechType.Threaten => Color.red,
+                    SpeechType.Normal => Color.white,
+                    _ => Color.white,
+                };
             }
         }
-        public List<int> judgeValue;
-
-        /// <summary>
-        /// 当前选项是否可见
-        /// </summary>
-        public bool isVisible;
-
-        /// <summary>
-        /// 当前选项是否被锁定
-        /// </summary>
-        public bool isLocked;
-
-        //public bool IsLocked
-        //{
-        //    get
-        //    {
-        //        return this.isLocked;
-        //    }
-        //}
-        //private bool isLocked;
-        //public void Locked()
-        //{
-        //    isLocked = true;
-        //}
 
 
-        
-        /// <summary>
-        /// 当前选项的话术类型
-        /// </summary>
-       
-        public SpeechArt speechArt;
-        
-        /// <summary>
-        /// 当前选项的索引值
-        /// </summary>
-        public int index;
-        public Choice()
-        {
-            speechArt = SpeechArt.Normal;
-            canUse = true;
-        }
-        public override string ToString()
-        {
-            string s = "   ";
-            return index + s + content.ToString() + s + speechArt.ToString() + s + BgColor + s + canUse;
-        }
     }
 
 }

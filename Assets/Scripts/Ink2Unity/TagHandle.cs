@@ -91,18 +91,18 @@ namespace Ink2Unity
                     return Speaker.Dialogue;
             }
         }
-        public static SpeechArt ParseSpeechArt(string sa)
+        public static SpeechType ParseSpeechArt(string sa)
         {
             switch (sa)
             {
                 case "Persuade":
-                   return SpeechArt.Persuade;
+                   return SpeechType.Persuade;
                 case "Cheat":
-                    return SpeechArt.Cheat;
+                    return SpeechType.Cheat;
                 case "Threaten":
-                    return SpeechArt.Threaten;
+                    return SpeechType.Threaten;
                 default:
-                    return SpeechArt.Normal;
+                    return SpeechType.Normal;
             }
             
         }

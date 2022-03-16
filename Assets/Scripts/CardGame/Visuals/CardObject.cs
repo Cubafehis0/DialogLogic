@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 //响应鼠标事件接口
 
@@ -14,16 +16,12 @@ public interface ICardObject : IVisuals
 }
 
 [RequireComponent(typeof(Card))]
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-public class CardObject : MonoBehaviour, ICardObject
+public class CardObject : MonoBehaviour, ICardObject,IPointerEnterHandler,IPointerExitHandler,IPointerDownHandler
 {
-    private ICardEventHandler eventHandler = null;
-    public ICardEventHandler EventHander
-    {
-        get => eventHandler;
-        set => eventHandler = value;
-    }
+
+    public UnityEvent<Card> OnPointerEnter = new UnityEvent<Card>();
+    public UnityEvent<Card> OnPointerExit = new UnityEvent<Card>();
+    public UnityEvent<Card> OnPointerDown = new UnityEvent<Card>();
 
     private Renderer spriteRenderer = null;
 
@@ -44,47 +42,10 @@ public class CardObject : MonoBehaviour, ICardObject
         get => orderInLayer;
         set
         {
-            orderInLayer = value;   
+            orderInLayer = value;
             if (spriteRenderer) spriteRenderer.sortingOrder = value;
             if (cardUICanvas) cardUICanvas.sortingOrder = value;
-        }
-    }
 
-    public string Title
-    {
-        get => card.title;
-        set
-        {
-            card.title = value;
-            UpdateTitle();
-        }
-    }
-
-    public string CdtDesc
-    {
-        get => card.CdtDesc;
-        set
-        {
-            //card.desc = value;
-            UpdateCdtDesc();
-        }
-    }
-    public string EftDesc
-    {
-        get => card.EftDesc;
-        set
-        {
-            UpdateEftDesc();
-        }
-    }
-
-    public string Meme
-    {
-        get => card.meme;
-        set
-        {
-            card.meme = value;
-            UpdateCdtDesc();
         }
     }
 
@@ -100,38 +61,23 @@ public class CardObject : MonoBehaviour, ICardObject
         cardUICanvas = GetComponentInChildren<Canvas>();
     }
 
-    private void OnMouseEnter()
-    {
-        if (eventHandler != null) eventHandler.OnEventMouseEnter(card);
-    }
-
-    private void OnMouseExit()
-    {
-        if (eventHandler != null) eventHandler.OnEventMouseExit(card);
-    }
-
-    private void OnMouseDown()
-    {
-        if (eventHandler != null) eventHandler.OnEventMousePress(card, true);
-    }
-
     public void UpdateTitle()
     {
-        if (titleText) titleText.text = card.title;
+        if (titleText) titleText.text = card.info.title;
     }
 
     public void UpdateCdtDesc()
     {
-        if (cdtDescText) cdtDescText.text = card.CdtDesc;
+        if (cdtDescText) cdtDescText.text = card.info.LocalizedConditionDesc;
     }
 
     public void UpdateEftDesc()
     {
-        if (eftDescText) eftDescText.text = card.EftDesc;
+        if (eftDescText) eftDescText.text = card.info.LocalizedEffectDesc;
     }
     public void UpdateMeme()
     {
-        if (memeText) memeText.text = card.meme;
+        if (memeText) memeText.text = card.info.LocalizedMeme;
     }
     public void UpdateVisuals()
     {
@@ -140,8 +86,29 @@ public class CardObject : MonoBehaviour, ICardObject
         UpdateEftDesc();
         UpdateMeme();
     }
+
+    private void OnEnable()
+    {
+        UpdateVisuals();
+    }
+
     public void GetCardComponent()
     {
         card = GetComponent<Card>();
+    }
+
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    {
+        OnPointerEnter.Invoke(card);
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+    {
+        OnPointerExit.Invoke(card);
+    }
+
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+    {
+        OnPointerDown.Invoke(card);
     }
 }

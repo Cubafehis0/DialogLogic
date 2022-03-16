@@ -19,12 +19,6 @@ public interface IChooseSystem:ITable
     void Init(List<Choice> choices);
 
     /// <summary>
-    /// 在可选择的choice中加入choice，如果合法，即是所有choice中的一个时
-    /// </summary>
-    /// <param name="choice"></param>
-    void Add(Choice choice);
-
-    /// <summary>
     /// 更新可选择choice
     /// </summary>
     void UpdateVisualList();
@@ -43,8 +37,8 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     private Sprite[] spritesOfButtonA = null;
 
     private int index = 0;
-    private List<Choice> visibleChoices = new List<Choice>();
-    private List<Choice> allChoices = new List<Choice>();
+    private List<ChoiceSlot> allChoices = new List<ChoiceSlot>();
+    
 
     private static IChooseSystem instance = null;
     public static IChooseSystem Instance { get => instance; }
@@ -77,7 +71,6 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     {
         index = 0;
         allChoices.Clear();
-        visibleChoices.Clear();
         gameObject.SetActive(false);
     }
 
@@ -85,7 +78,10 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     {
         if (choices == null) return;
         index = 0;
-        allChoices = choices;
+        foreach(Choice choice in choices)
+        {
+            allChoices.Add(new ChoiceSlot(choice));
+        }
     }
 
     public void Open()
@@ -96,22 +92,19 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
 
     public void UpdateVisualList()
     {
-        visibleChoices = ChooseVisiableChoices(allChoices);
         if (chooseButtons.Count == 0) return;
         int page = index / chooseButtons.Count;
-        int totalPage = Mathf.CeilToInt(1f * visibleChoices.Count / chooseButtons.Count);
-        //if (lastButton) lastButton.gameObject.SetActive(page > 0);
-        //if (nextButton) nextButton.gameObject.SetActive(page + 1 < totalPage);
+        int totalPage = Mathf.CeilToInt(1f * allChoices.Count / chooseButtons.Count);
         if (lastButton) lastButton.interactable = page > 0 ;
         if (nextButton) nextButton.interactable = page + 1 < totalPage;
         for (int i = 0; i < chooseButtons.Count; i++)
         {
-            if (index + i < visibleChoices.Count)
+            if (index + i < allChoices.Count)
             {
                 chooseButtons[i].gameObject.SetActive(true);
-                chooseButtons[i].SetText(visibleChoices[index + i].content.richText);
-                chooseButtons[i].SetSprite(spritesOfButtonA[ChooseSprite(visibleChoices[index + i].BgColor)]);
-                if (visibleChoices[index + i].isLocked)
+                chooseButtons[i].SetText(allChoices[index + i].Choice.Content.richText);
+                chooseButtons[i].SetSprite(spritesOfButtonA[ChooseSprite(allChoices[index + i].Choice.BgColor)]);
+                if (allChoices[index + i].Locked)
                 {
                     chooseButtons[i].btn.interactable = false;
                 }
@@ -142,30 +135,8 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
 
     public bool SelectChoice(int choiceIndex)
     {
-        DialogSystem.Instance.SelectChoice(visibleChoices[choiceIndex]);
+        CardPlayerState.Instance.SelectChoice(allChoices[choiceIndex]);
         return true;
-    }
-
-    public void Add(Choice choice)
-    {
-        foreach (Choice c in allChoices)
-        {
-            if (c == choice)
-            {
-                visibleChoices.Add(choice);
-                UpdateVisualList();
-            }
-        }
-    }
-
-    private List<Choice> ChooseVisiableChoices(List<Choice> choices)
-    {
-        List<Choice> visiableChoices = new List<Choice>();
-        foreach (Choice choice in choices)
-        {
-            visiableChoices.Add(choice);
-        }
-        return visiableChoices;
     }
 
     private int ChooseSprite(Color color)

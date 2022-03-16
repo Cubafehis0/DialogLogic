@@ -72,8 +72,6 @@ public class ExcelImporter : AssetPostprocessor
 	//	{
 	//		if(Path.GetExtension(path) == ".xls" || Path.GetExtension(path) == ".xlsx") 
 	//		{
-				
-
 	//			var excelName = Path.GetFileNameWithoutExtension(path);
 	//			if(excelName.StartsWith("~$")) continue;
 

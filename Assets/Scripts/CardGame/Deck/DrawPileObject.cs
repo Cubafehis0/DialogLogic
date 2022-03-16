@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 目前仅作为标记
-/// </summary>
-[RequireComponent(typeof(Pile))]
-public class DrawPileObject : MonoBehaviour,IPileListener
+public class DrawPileObject : PileObject
 {
     public static DrawPileObject instance = null;
 
@@ -18,28 +14,13 @@ public class DrawPileObject : MonoBehaviour,IPileListener
 
     private void OnEnable()
     {
-        GetComponent<Pile>().UpdateBindingObject();
+        pile = CardPlayerState.Instance.DrawPile;
     }
 
-    private void OnDisable()
+    protected override void OnAdd(Card newCard)
     {
-        GetComponent<Pile>().UpdateBindingObject();
-    }
-
-    public void OnAdd(Card newCard)
-    {
-        newCard.transform.SetParent(transform, true);
+        base.OnAdd(newCard);
         newCard.transform.localPosition = Vector3.zero;
         newCard.gameObject.SetActive(false);
-    }
-
-    public void OnRemove(Card oldCard)
-    {
-        return;
-    }
-
-    public void OnShuffle()
-    {
-        return;
     }
 }

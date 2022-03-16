@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         CardGameManager.Instance.StartGame();
     }
 
@@ -15,6 +14,5 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-
     }
 }

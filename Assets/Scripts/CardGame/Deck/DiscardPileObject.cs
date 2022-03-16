@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[RequireComponent(typeof(Pile))]
-public class DiscardPileObject : MonoBehaviour, IPileListener
+public class DiscardPileObject : PileObject
 {
     public static DiscardPileObject instance = null;
-
-
-    float speed = 50f;
+    [SerializeField]
+    private float speed = 50f;
 
     private void Awake()
     {
@@ -18,12 +15,7 @@ public class DiscardPileObject : MonoBehaviour, IPileListener
 
     private void OnEnable()
     {
-        GetComponent<IPile>().UpdateBindingObject();
-    }
-
-    private void OnDisable()
-    {
-        GetComponent<IPile>().UpdateBindingObject();
+        pile = CardPlayerState.Instance.DiscardPile;
     }
 
     IEnumerator Discard(Card card)
@@ -44,19 +36,9 @@ public class DiscardPileObject : MonoBehaviour, IPileListener
         card.gameObject.SetActive(false);
     }
 
-    public void OnAdd(Card card)
+    protected override void OnAdd(Card card)
     {
-        card.transform.SetParent(transform, true);
-        if (card) StartCoroutine(Discard(card));
-    }
-
-    public void OnRemove(Card oldCard)
-    {
-        return;
-    }
-
-    public void OnShuffle()
-    {
-        return;
+        base.OnAdd(card);
+        StartCoroutine(Discard(card));
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 /// <summary>
 /// 表示卡牌类型
@@ -14,30 +13,16 @@ public enum CardType
     Rdb,
     Ags
 }
-
 public class Card : MonoBehaviour
 {
-    public uint staticID;
-    public IPile parentPile;
-    public CardType CardType{ get;set;}
+    public CardInfo info;
+    public IEffectNode effectNode = null;
+    private bool temporaryActivate = false;
+    private bool permanentActivate = false;
 
-    public List<string> hold_effect;
-    public List<string> condition;
-    public List<string> effect;
-    public List<string> post_effect;
-    public List<string> pull_effect;
 
-    public List<int> hold_effect_scale;
-    public List<int> condition_scale;
-    public List<int> effect_scale;
-    public List<int> post_effect_scale;
-    public List<int> pull_effect_scale;
-
-    public string title;
-    public string CdtDesc {
-        get => GetDesc(condition, condition_scale);
-    }
-    public string EftDesc { 
+    public int FinalCost
+    {
         get
         {
             string ret = "";
@@ -52,64 +37,34 @@ public class Card : MonoBehaviour
             tmp = GetDesc(pull_effect,pull_effect_scale);
             if (!string.IsNullOrEmpty(tmp))
                 ret += "抽取时:" + tmp;
+            int ret = info.cost;
+            foreach (var modifer in CardPlayerState.Instance.costModifers)//有缺陷
+            {
+                CostModifier m = modifer.value;
+                ret = m.condition.Value ? m.exp.Value : ret;
+            }
             return ret;
         }
     }
 
     public string meme;
-    public Card()
-    {
 
+
+    public bool Activated
+    {
+        get
+        {
+            return TemporaryActivate || PermanentActivate;
+        }
     }
-    public Card(CardEntity cardEntity)
+    public bool TemporaryActivate { get => temporaryActivate; set => temporaryActivate = value; }
+    public bool PermanentActivate { get => permanentActivate; set => permanentActivate = value; }
+
+    public void Construct(CardInfo? info)
     {
-
-    }
-    public Card(uint staticID, string hold_effect, string hold_effect_scale, string condition, string condition_scale, string effect, string effect_scale, string post_effect, string post_effect_scale)
-    {
-        this.staticID = staticID;
-        this.hold_effect = new List<string>(hold_effect.Split(';'));
-        this.condition = new List<string>(condition.Split(';'));
-        this.effect = new List<string>(effect.Split(';'));
-        this.post_effect = new List<string>(post_effect.Split(';'));
-
-        this.hold_effect_scale = new List<int>(hold_effect_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.condition_scale = new List<int>(condition_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.effect_scale = new List<int>(effect_scale.Split(';').Select(x => Int32.Parse(x)));
-        this.post_effect_scale = new List<int>(post_effect_scale.Split(';').Select(x => Int32.Parse(x)));
-    }
-
-    public Card(uint staticID, List<string> hold_effect, List<int> hold_effect_scale, List<string> condition, List<int> condition_scale, List<string> effect, List<int> effect_scale, List<string> post_effect, List<int> post_effect_scale)
-    {
-        this.staticID = staticID;
-        this.hold_effect = new List<string>(hold_effect);
-        this.condition = new List<string>(condition);
-        this.effect = new List<string>(effect);
-        this.post_effect = new List<string>(post_effect);
-
-        this.hold_effect_scale = new List<int>(hold_effect_scale);
-        this.condition_scale = new List<int>(condition_scale);
-        this.effect_scale = new List<int>(effect_scale);
-        this.post_effect_scale = new List<int>(post_effect_scale);
-    }
-
-    public void Refresh(CardEntity entity)
-    {
-        uint.TryParse(entity.id,out staticID);
-        this.title = entity.name;
-        this.meme = entity.meme;
-        EftAndCdtNameImage nameImage = EftAndCdtNameImage.GetInstance();
-        this.hold_effect = GetEffects(entity.hold_effect);
-        this.condition = GetEffects(entity.condition);
-        this.effect = GetEffects(entity.effect);
-        this.post_effect = GetEffects(entity.post_effect);
-        this.pull_effect = GetEffects(entity.pull_effect);
-
-        this.hold_effect_scale = GetEffectsScale(entity.hold_effect_scale, hold_effect.Count);
-        this.condition_scale = GetEffectsScale(entity.condition_scale, condition.Count);
-        this.effect_scale = GetEffectsScale(entity.effect_scale, effect.Count);
-        this.post_effect_scale = GetEffectsScale(entity.post_effect_scale, post_effect.Count);
-        this.pull_effect_scale = GetEffectsScale(entity.pull_effect_scale, pull_effect.Count);
+        if (info == null) return;
+        this.info = info.Value;
+        effectNode = GetTestEffect(this.info.title);
     }
 
     List<string> GetEffects(string effects)
@@ -128,34 +83,40 @@ public class Card : MonoBehaviour
         return res;
     
     }
-    List<int> GetEffectsScale(string scales,int eftCnt)
+    //List<int> GetEffectsScale(string scales,int eftCnt)
+    private static IEffectNode GetTestEffect(string title)
     {
-        List<int> retval = new List<int>();
-        for (int i = 0; i < eftCnt; i++)
-            retval.Add(0);
-        int cnt = 0;
-        if (!string.IsNullOrEmpty(scales))
+        return title switch
         {
-            scales = scales.Trim();
-            string[] nums = scales.Split(new char[] { ';', '；' });
-            foreach (string num in nums)
-            {
-                if (cnt == eftCnt)
-                    break;
-                int.TryParse(num,out int t);
-                retval[cnt++]=t;
-            }
-        }
-        return retval;
+            "测试无效果" => null,
+            "测试立刻加逻辑" => SemanticTreeClass.TestAddLogicEffectNode,
+            "选项测试逻辑+2" => SemanticTreeClass.TestAddLogic2Node,
+            "选项测试道德+2" => SemanticTreeClass.TestAddMoral2Node,
+            "选项测试迂回+2" => SemanticTreeClass.TestAddDetour2Node,
+            "测试选择+2" => SemanticTreeClass.TestSelect,
+            "测试持续逻辑+1" => SemanticTreeClass.TestLgcPlusThreeRound,
+            "测试抽牌1" => SemanticTreeClass.TestDraw,
+            "测试向手牌增加1张“说教“卡牌" => SemanticTreeClass.TestAddPreach,
+            "测试【丢弃所有】向手牌中增加弃牌数量的【说教】" => SemanticTreeClass.TestReconstruction,
+            "测试随机【激活】1张手牌（无视条件且不消费行动点）" => SemanticTreeClass.TestRandomActive,
+            "测试【激活】全部手牌" => SemanticTreeClass.TestAllHandActive,
+            "测试【本回合】【下一次】【对策】不消耗【行动点】" => SemanticTreeClass.TestFreeCardNode,
+            "测试【丢弃：1】" => SemanticTreeClass.TestDropCard,
+            "测试从【卡组】中【选择：1】复制加入【手牌】" => SemanticTreeClass.TestChooseDraw,
+            "测试从【手牌】中【选择：1】【激活】" => SemanticTreeClass.TestChooseActive,
+            "测试从【抽牌堆】中【选择：1】【永久激活】" => SemanticTreeClass.TestChooseDeckActiveForever,
+            "测试【本回合】，【说服判定】增加3" => SemanticTreeClass.TestPersuadPlus,
+            "测试【本回合】不能再抽取手牌" => SemanticTreeClass.TestSetDrawBan,
+            "测试每打出一张【说教】牌，增加一点外感" => SemanticTreeClass.TestOutPlusByPreachNode,
+            "测试【持续】回合开始时，获得一张【说教】牌" => SemanticTreeClass.TestAddPreachEveryRound,
+            "测试【持续】回合开始时，每持有一点外感便随机揭示x个判定" => SemanticTreeClass.TestRevealByOut,
+            _ => null,
+        };
     }
 
-    string GetDesc(List<string> effects,List<int> scales)
+    public void AddModifier()
     {
-        string ret = "";
-        for(int i=0;i<effects.Count;i++)
-        {
-            ret += EffectDesc.GetDesc(effects[i], scales[i]);
-        }
-        return ret;
+
     }
+
 }
