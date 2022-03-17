@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
 using SemanticTree.PlayerSemantics;
-
 public class StatusManager : MonoBehaviour
 {
     /// <summary>
@@ -39,9 +38,8 @@ public class StatusManager : MonoBehaviour
                     if (status.OnTurnStart != null) player.OnPlayCard.RemoveListener(status.OnAfterPlayCard.Execute);
                     PlayerNode.PopPlayerContext();
                     statusList.Remove(s);
-                    return;
                 }
-
+                return;
             }
         }
         StatusCounter st = new StatusCounter { status = status, value = value };

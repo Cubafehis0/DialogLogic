@@ -11,14 +11,17 @@ public class StaticCardLibrary:MonoBehaviour
     }
 
     [SerializeField]
-    protected List<CardInfo> cards = new List<CardInfo>();
-
+    protected List<CardInfo> cards;
+    [SerializeField]
+    protected CardInfoTable cardInfoTable;
+    [SerializeField]
     public List<Card> cardObjects = new List<Card>();
 
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(this);
+        cards = cardInfoTable.cardInfos;
         foreach (CardInfo card in cards)
         {
             Card newCard = CardGameManager.Instance.EmptyCard;

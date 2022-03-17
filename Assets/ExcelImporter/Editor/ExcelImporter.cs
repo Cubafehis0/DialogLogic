@@ -34,7 +34,7 @@ public class ExcelImporter : AssetPostprocessor
 		string path = BrowserHelper.OpenProject("导入条件表",BrowserHelper.EXCELFILTER);
 		if (path == null) return;
 		ImportTable("EffectTable", path);
-		EffectTable effectTable = LoadOrCreateAsset("Assets//ExcelAssets//EffectTable.asset", typeof(EffectTable)) as EffectTable;
+		EffectTable effectTable = ScriptableAssetManage.GetScriptableObject("EffectTable") as EffectTable;
 		EffectDesc.InitalDic(effectTable);
 	}
 	[MenuItem("表格/导入卡牌表", priority = 2)]
@@ -112,7 +112,7 @@ public class ExcelImporter : AssetPostprocessor
 		return list;
 	}
 
-	public static UnityEngine.Object LoadOrCreateAsset(string assetPath, Type assetType)
+	static UnityEngine.Object LoadOrCreateAsset(string assetPath, Type assetType)
 	{
 		Directory.CreateDirectory(Path.GetDirectoryName(assetPath));
 

@@ -70,14 +70,14 @@ public struct Personality
         {
             return type switch
             {
-                PersonalityType.Inside => Inside,
+                PersonalityType.Inside => Inner,
                 PersonalityType.Outside => Outside,
                 PersonalityType.Logic => Logic,
-                PersonalityType.Passion => Passion,
+                PersonalityType.Passion => Spritial,
                 PersonalityType.Moral => Moral,
-                PersonalityType.Unethic => Unethic,
-                PersonalityType.Detour => Detour,
-                PersonalityType.Strong => Strong,
+                PersonalityType.Unethic => Immoral,
+                PersonalityType.Detour => Roundabout,
+                PersonalityType.Strong => Aggressive,
                 _ => throw new System.IndexOutOfRangeException(),
             };
         }
@@ -86,7 +86,7 @@ public struct Personality
             switch (type)
             {
                 case PersonalityType.Inside:
-                    Inside = value;
+                    Inner = value;
                     break;
                 case PersonalityType.Outside:
                     Outside = value;
@@ -95,19 +95,19 @@ public struct Personality
                     Logic = value;
                     break;
                 case PersonalityType.Passion:
-                    Passion = value;
+                    Spritial = value;
                     break;
                 case PersonalityType.Moral:
                     Moral = value;
                     break;
                 case PersonalityType.Unethic:
-                    Unethic = value;
+                    Immoral = value;
                     break;
                 case PersonalityType.Detour:
-                    Detour = value;
+                    Roundabout = value;
                     break;
                 case PersonalityType.Strong:
-                    Strong = value;
+                    Aggressive = value;
                     break;
                 default:
                     break;
@@ -131,7 +131,7 @@ public struct Personality
         this.p3 = l[3];
     }
 
-    public int Inside
+    public int Inner
     {
         get => p0;
         set => p0 = value;
@@ -146,7 +146,7 @@ public struct Personality
         get => p1;
         set => p1 = value;
     }
-    public int Passion
+    public int Spritial
     {
         get => -p1;
         set => p1 = -value;
@@ -157,18 +157,18 @@ public struct Personality
         get => p2;
         set => p2 = value;
     }
-    public int Unethic
+    public int Immoral
     {
         get => -p2;
         set => p2 = -value;
     }
 
-    public int Detour
+    public int Roundabout
     {
         get => p3;
         set => p3 = value;
     }
-    public int Strong
+    public int Aggressive
     {
         get => -p3;
         set => p3 = -value;

@@ -65,7 +65,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
 
     private ICardPlayerStateObject visuals;
     public UnityEvent OnEnergyChange = new UnityEvent();
-    public UnityEvent OnPlayCard = new UnityEvent();
+    public UnityEvent OnPlayCard = new UnityEvent();    
     public UnityEvent OnStartTurn = new UnityEvent();
     public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
@@ -215,7 +215,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             PlayerNode.PushPlayerContext(this);
             CardNode.PushCardContext(card);
             OnPlayCard.Invoke();
-            if (card.effectNode != null) card.effectNode.Execute();
+            //if (card.effectNode.Count != null) card.effectNode.Execute();
             CardNode.PopCardContext();
             PlayerNode.PopPlayerContext();
             Hand.MigrateTo(card, discardPile);

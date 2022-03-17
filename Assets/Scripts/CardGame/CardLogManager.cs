@@ -70,18 +70,6 @@ public class CardLogManager : MonoBehaviour,ICardLog
         cardLogs.Add(new CardLog(turn, CardLogType.DiscardCard, card));
     }
 
-    /// <summary>
-    /// 是否使用过卡牌类型为cardType的卡牌
-    /// </summary>
-    /// <param name="scope">查找范围</param>
-    /// <param name="currentTurns">当前回合</param>
-    /// <param name="cardType"></param>
-    public bool HasUseSpcTypeCard(CardLogFindScope scope,uint currentTurn,CardType cardType)
-    {
-        CardLogIterator iterator = new CardLogIterator(cardLogs, scope, currentTurn);
-        return Find(iterator, l => l.CardType == cardType);
-    }
-
     //实现有关查找的功能
     //查找的范围： 本回合 本局对战 上一张卡牌 上回合
 

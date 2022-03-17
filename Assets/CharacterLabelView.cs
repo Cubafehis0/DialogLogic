@@ -47,9 +47,9 @@ public class CharacterLabelView : MonoBehaviour, ICharacterView
     {
         if (character == null) return;
         Personality personality = character.Personality;
-        if (insideText) insideText.text = personality.Inside.ToString();
+        if (insideText) insideText.text = personality.Inner.ToString();
         if (logicText) logicText.text = personality.Logic.ToString();
         if (moralText) moralText.text = personality.Moral.ToString();
-        if (strongText) strongText.text = personality.Detour.ToString();
+        if (strongText) strongText.text = personality.Roundabout.ToString();
     }
 }

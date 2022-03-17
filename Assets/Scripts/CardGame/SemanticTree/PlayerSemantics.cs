@@ -28,8 +28,6 @@ namespace SemanticTree
                 if (playerContext.Count == 0) throw new SemanticException();
                 playerContext.Pop();
             }
-
-
         }
 
         public class GetPersonalityNode : PlayerNode,IExpressionNode
@@ -47,14 +45,14 @@ namespace SemanticTree
                 {
                     return type switch
                     {
-                        PersonalityType.Inside => PlayerContext.FinalPersonality.Inside,
+                        PersonalityType.Inside => PlayerContext.FinalPersonality.Inner,
                         PersonalityType.Outside => PlayerContext.FinalPersonality.Outside,
                         PersonalityType.Logic => PlayerContext.FinalPersonality.Logic,
-                        PersonalityType.Passion => PlayerContext.FinalPersonality.Passion,
+                        PersonalityType.Passion => PlayerContext.FinalPersonality.Spritial,
                         PersonalityType.Moral => PlayerContext.FinalPersonality.Moral,
-                        PersonalityType.Unethic => PlayerContext.FinalPersonality.Unethic,
-                        PersonalityType.Detour => PlayerContext.FinalPersonality.Detour,
-                        PersonalityType.Strong => PlayerContext.FinalPersonality.Strong,
+                        PersonalityType.Unethic => PlayerContext.FinalPersonality.Immoral,
+                        PersonalityType.Detour => PlayerContext.FinalPersonality.Roundabout,
+                        PersonalityType.Strong => PlayerContext.FinalPersonality.Aggressive,
                         _ => 0,
                     };
                 }

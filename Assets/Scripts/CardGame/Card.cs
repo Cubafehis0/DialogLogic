@@ -2,25 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
-/// <summary>
-/// 表示卡牌类型
-/// </summary>
-public enum CardType
-{
-    Lgc,
-    Spt,
-    Mrl,
-    Imm,
-    Rdb,
-    Ags
-}
 public class Card : MonoBehaviour
 {
     public CardInfo info;
-    public IEffectNode effectNode = null;
+
+    public List<IConditionNode> conditionNode=null;
+    public List<IEffectNode> pullEffectNode = null;
+    public List<IEffectNode> holdEffectNode = null;
+    public List<IEffectNode> effectNode = null;
     private bool temporaryActivate = false;
     private bool permanentActivate = false;
 
+
+    private Dictionary<string, IExpressionNode> cardVars;
+
+    private Dictionary<string, object> cardConsts;
+
+    public int GetCardVarValue(string varName)
+    {
+        return cardVars.TryGetValue(varName, out IExpressionNode node) ? node.Value : 0;
+    }
+
+    public void AddCardVarValue(string varName,IExpressionNode node)
+    {
+        if (!cardVars.ContainsKey(varName))
+        {
+            cardVars.Add(varName, node);
+        }
+        else cardVars[varName] = node;
+    }
 
     public int FinalCost
     {
@@ -53,7 +63,17 @@ public class Card : MonoBehaviour
     {
         if (info == null) return;
         this.info = info.Value;
-        effectNode = GetTestEffect(this.info.title);
+        //effectNode = GetTestEffect(this.info.title);
+    }
+
+    public void Construct(Card card)
+    {
+        this.conditionNode = card.conditionNode;
+        this.pullEffectNode = card.pullEffectNode;
+        this.holdEffectNode = card.holdEffectNode;
+        this.effectNode = card.effectNode;
+        this.info = card.info;
+        this.cardVars = card.cardVars;
     }
 
     List<string> GetEffects(string effects)

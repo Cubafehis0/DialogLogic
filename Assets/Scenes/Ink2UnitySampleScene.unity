@@ -133,7 +133,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397396355}
-  - component: {fileID: 397396354}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -141,18 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &397396354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 397396353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94554375e84a3084fbbb3dfc6dceceea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &397396355
 Transform:
   m_ObjectHideFlags: 0
@@ -280,7 +267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bae08728f751146b3d4a15cc7a4745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainPlayerState: {fileID: 1480060100}
+  emptyCard: {fileID: 0}
+  HighlightCanvs: {fileID: 0}
+  OnStartGame:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1480060099
 Transform:
   m_ObjectHideFlags: 0
@@ -307,13 +298,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbce236fc97770d4f8d8a59eade66c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  basePersonality:
+    p0: 0
+    p1: 0
+    p2: 0
+    p3: 0
+  baseSpeechArt:
+    normal: 0
+    cheat: 0
+    threat: 0
+    persuade: 0
   player: {fileID: 0}
   energy: 0
-  hand: {fileID: 0}
-  drawPile: {fileID: 0}
-  discardPile: {fileID: 0}
+  pressure: 0
+  drawNum: 5
+  handCardMaxNum: 10
+  drawBan: 0
+  personalityModifiers: []
+  costModifers: []
   OnEnergyChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayCard:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStartTurn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndTurn:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1915057466

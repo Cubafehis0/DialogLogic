@@ -51,7 +51,7 @@ namespace SemanticTree
         {
             public void Execute()
             {
-                CardContext.effectNode.Execute();
+                //CardContext.effectNode.Execute();
             }
         }
 

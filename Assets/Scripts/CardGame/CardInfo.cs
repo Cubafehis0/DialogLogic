@@ -14,9 +14,14 @@ public struct CardInfo
     public List<string> hold_effect;
     public List<string> condition;
     public List<string> effect;
-    public List<string> post_effect;
     public List<string> pull_effect;
 
+    public string effectDesc;
+    public string condtionDesc;
+
+
+
+    
     public List<int> hold_effect_scale;
     public List<int> condition_scale;
     public List<int> effect_scale;
@@ -41,7 +46,7 @@ public struct CardInfo
             if (!string.IsNullOrEmpty(tmp))
                 ret += "倾向:" + tmp;
 
-            tmp = LocalizeNameList(effect, effect_scale) + LocalizeNameList(post_effect, post_effect_scale);
+            //tmp = LocalizeNameList(effect, effect_scale) + LocalizeNameList(post_effect, post_effect_scale);
             if (!string.IsNullOrEmpty(tmp))
                 ret += "对策:" + tmp;
 
@@ -89,6 +94,7 @@ public struct CardInfo
     public static string LocalizeNameList(List<string> nameList, List<int> scales)
     {
         string ret = "";
+        return "";
         for (int i = 0; i < nameList.Count; i++)
         {
             ret += EffectDesc.GetDesc(nameList[i], scales[i]);
@@ -101,25 +107,27 @@ public struct CardInfo
     }
 
 
-    public CardInfo(CardEntity entity)
-    {
-        //uint.TryParse(entity.id, out staticID);
-        title = entity.name;
-        desc = "";
-        meme = entity.meme;
-        category = 0;
-        cost = 1;
-        //EftAndCdtNameImage nameImage = EftAndCdtNameImage.GetInstance();
-        hold_effect = SplitString(entity.hold_effect);
-        condition = SplitString(entity.condition);
-        effect = SplitString(entity.effect);
-        post_effect = SplitString(entity.post_effect);
-        pull_effect = SplitString(entity.pull_effect);
+    //public CardInfo(CardEntity entity)
+    //{
+    //    condtionDesc = null;
+    //    ef
+    //    //uint.TryParse(entity.id, out staticID);
+    //    title = entity.name;
+    //    desc = "";
+    //    meme = entity.meme;
+    //    category = 0;
+    //    cost = 1;
+    //    //EftAndCdtNameImage nameImage = EftAndCdtNameImage.GetInstance();
+    //    hold_effect = SplitString(entity.hold_effect);
+    //    condition = SplitString(entity.condition);
+    //    effect = SplitString(entity.effect);
+    //    //post_effect = SplitString(entity.post_effect);
+    //    pull_effect = SplitString(entity.pull_effect);
 
-        hold_effect_scale = SplitIntString(entity.hold_effect_scale, hold_effect.Count);
-        condition_scale = SplitIntString(entity.condition_scale, condition.Count);
-        effect_scale = SplitIntString(entity.effect_scale, effect.Count);
-        post_effect_scale = SplitIntString(entity.post_effect_scale, post_effect.Count);
-        pull_effect_scale = SplitIntString(entity.pull_effect_scale, pull_effect.Count);
-    }
+    //    hold_effect_scale = SplitIntString(entity.hold_effect_scale, hold_effect.Count);
+    //    condition_scale = SplitIntString(entity.condition_scale, condition.Count);
+    //    effect_scale = SplitIntString(entity.effect_scale, effect.Count);
+    //    //post_effect_scale = SplitIntString(entity.post_effect_scale, post_effect.Count);
+    //    pull_effect_scale = SplitIntString(entity.pull_effect_scale, pull_effect.Count);
+    //}
 }

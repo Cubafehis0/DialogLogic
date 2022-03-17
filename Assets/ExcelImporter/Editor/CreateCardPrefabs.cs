@@ -20,8 +20,8 @@ public class CreateCardPrefabs
             Debug.LogWarning("缺少相应的表格信息");
             return;
         }
-        CardTable cardTable = ExcelImporter.LoadOrCreateAsset(cardTablePath, typeof(CardTable)) as CardTable;
-        EffectTable effectTable= ExcelImporter.LoadOrCreateAsset(effectTablePath, typeof(EffectTable)) as EffectTable;
+        CardTable cardTable = ScriptableAssetManage.GetScriptableObject("CardTable") as CardTable;
+        EffectTable effectTable= ScriptableAssetManage.GetScriptableObject("EffectTable") as EffectTable;
         EffectDesc.InitalDic(effectTable);
         GameObject cardBase= AssetDatabase.LoadAssetAtPath(cardBasePath, typeof(GameObject)) as GameObject;
         CreateCardPool(cardTable.cardpool_ags,nameof(cardTable.cardpool_ags), cardBase);
@@ -53,7 +53,8 @@ public class CreateCardPrefabs
                 Debug.Log(string.Format("卡池{0}中第{1}个名称为{2}卡牌已经存在，已经将其替换成新的预制体", poolName, i+1,entity.name));
                 File.Delete(filePath);
             }
-            cardObject.GetComponent<Card>().info=new CardInfo(entity);
+            
+            //cardObject.GetComponent<Card>().info=new CardInfo(entity);
             CardObject card = cardObject.GetComponent<CardObject>();
             card.GetCardComponent();
             card.UpdateVisuals();
@@ -66,23 +67,23 @@ public class CreateCardPrefabs
         GameObject.DestroyImmediate(cardObject);
     }
 
-    private static CardType GetCardTypeByCardPoolName(string pool)
+    private static int GetCardTypeByCardPoolName(string pool)
     {
         switch (pool)
         {
             case "cardpool_ags":
-                return CardType.Ags;
+                return CardCategory.Ags;
             case "cardpool_imm":
-                return CardType.Imm;
+                return CardCategory.Imm;
             case "cardpool_lgc":
-                return CardType.Lgc;
+                return CardCategory.Lgc;
             case "cardpool_mrl":
-                return CardType.Mrl;
+                return CardCategory.Mrl;
             case "cardpool_rdb":
-                return CardType.Rdb;
+                return CardCategory.Rdb;
             case "cardpool_spt":
-                return CardType.Spt;
+                return CardCategory.Spt;
         }
-        return CardType.Ags;
+        return CardCategory.Ags;
     }
 }

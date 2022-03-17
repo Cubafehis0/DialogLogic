@@ -12,7 +12,7 @@ public enum CardLogType
 public interface ICardLogProperty
 {
     string name { get; }
-    CardType CardType { get; }
+    int cardCategory { get; }
     bool IsActive { get; }
 }
 
@@ -33,5 +33,5 @@ public class CardLog
     public CardLogType LogType { get => logType; }
     public string CardName { get => card?.name ?? ""; }
     public bool CardActive { get => card?.IsActive ?? false; }
-    public CardType CardType { get => card?.CardType ?? CardType.Lgc; }
+    //public int CardCategory { get => card?.cardCategory ?? CA.Lgc; }
 }

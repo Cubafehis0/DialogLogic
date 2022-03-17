@@ -190,14 +190,14 @@ namespace Ink2Unity
         private void UpdateInkPlayerInfo()
         {
             Personality personality = CardPlayerState.Instance.FinalPersonality;
-            story.variablesState["inn"] = personality.Inside;
+            story.variablesState["inn"] = personality.Inner;
             story.variablesState["ext"] = personality.Outside;
             story.variablesState["lgc"] = personality.Logic;
-            story.variablesState["spt"] = personality.Passion;
+            story.variablesState["spt"] = personality.Spritial;
             story.variablesState["mrl"] = personality.Moral;
-            story.variablesState["utc"] = personality.Unethic;
-            story.variablesState["rdb"] = personality.Detour;
-            story.variablesState["ags"] = personality.Strong;
+            story.variablesState["utc"] = personality.Immoral;
+            story.variablesState["rdb"] = personality.Roundabout;
+            story.variablesState["ags"] = personality.Aggressive;
         }
 
         private void ParseValue(Content content, string name, string value)

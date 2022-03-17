@@ -47,13 +47,13 @@ public class CharacterBarView : MonoBehaviour, ICharacterView
     {
         if (character == null) return;
         Personality personality = character.Personality;
-        if (insideSlider) insideSlider.value = personality.Inside;
+        if (insideSlider) insideSlider.value = personality.Inner;
         if (logicSlider) logicSlider.value = personality.Logic;
         if (moralSlider) moralSlider.value = personality.Moral;
-        if (strongSlider) strongSlider.value = personality.Strong;
+        if (strongSlider) strongSlider.value = personality.Aggressive;
         if (outsideSlider) outsideSlider.value = personality.Outside;
-        if (passionSlider) passionSlider.value = personality.Passion;
-        if (unethicSlider) moralSlider.value = personality.Unethic;
-        if (detourSlider) strongSlider.value = personality.Detour;
+        if (passionSlider) passionSlider.value = personality.Spritial;
+        if (unethicSlider) moralSlider.value = personality.Immoral;
+        if (detourSlider) strongSlider.value = personality.Roundabout;
     }
 }
