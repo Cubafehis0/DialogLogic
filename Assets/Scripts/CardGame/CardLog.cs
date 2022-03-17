@@ -9,12 +9,6 @@ public enum CardLogType
     DiscardCard
 }
 
-public enum CardType
-{
-    Lgc
-}
-
-
 public interface ICardLogProperty
 {
     string name { get; }

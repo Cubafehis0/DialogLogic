@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using SemanticTree;
 /// <summary>
 /// 表示卡牌类型
 /// </summary>
@@ -25,18 +26,6 @@ public class Card : MonoBehaviour
     {
         get
         {
-            string ret = "";
-            string tmp = GetDesc(hold_effect,hold_effect_scale);
-            if (!string.IsNullOrEmpty(tmp))
-                ret += "持有时:" + tmp;
-
-            tmp = GetDesc(effect,effect_scale) + GetDesc(post_effect,post_effect_scale);
-            if (!string.IsNullOrEmpty(tmp))
-                ret += "打出时:" + tmp;
-
-            tmp = GetDesc(pull_effect,pull_effect_scale);
-            if (!string.IsNullOrEmpty(tmp))
-                ret += "抽取时:" + tmp;
             int ret = info.cost;
             foreach (var modifer in CardPlayerState.Instance.costModifers)//有缺陷
             {
@@ -70,7 +59,7 @@ public class Card : MonoBehaviour
     List<string> GetEffects(string effects)
     {
         if (effects == null) return new List<string>();
-        var rawEffectList = new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e)).ToList();
+        var rawEffectList = new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e));
         List<string> res = new List<string>();
         foreach(var e in rawEffectList)
         {

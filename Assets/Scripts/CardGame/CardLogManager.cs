@@ -19,7 +19,7 @@ public interface ICardLog
 /// </summary>
 public class CardLogManager : MonoBehaviour,ICardLog
 {
-    private Stack<CardLog> cardLogs = new Stack<CardLog>();
+    private List<CardLog> cardLogs = new List<CardLog>();
     [SerializeField]
     ICardOperationSubject subject;
     public enum CardLogFindScope
@@ -59,15 +59,15 @@ public class CardLogManager : MonoBehaviour,ICardLog
     }
     public void OnDrawCard(ICardLogProperty card,uint turn)
     {
-        cardLogs.Push(new CardLog(turn,CardLogType.DrawCard, card));
+        cardLogs.Add(new CardLog(turn,CardLogType.DrawCard, card));
     }
     public void OnPlayCard(ICardLogProperty card,uint turn)
     {
-        cardLogs.Push(new CardLog(turn, CardLogType.PlayCard, card));
+        cardLogs.Add(new CardLog(turn, CardLogType.PlayCard, card));
     }
     public void OnDiscardCard(ICardLogProperty card,uint turn)
     {
-        cardLogs.Push(new CardLog(turn, CardLogType.DiscardCard, card));
+        cardLogs.Add(new CardLog(turn, CardLogType.DiscardCard, card));
     }
 
     /// <summary>

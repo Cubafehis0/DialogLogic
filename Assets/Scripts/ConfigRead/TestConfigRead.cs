@@ -10,7 +10,7 @@ public class TestConfigRead : MonoBehaviour
     string filePath;
     XmlDocument xmlDoc;
     CardPlayerState cardPlayer;
-    CardLibrary cardLibrary;
+    StaticCardLibrary cardLibrary;
     // Start is called before the first frame update
     void Start()
     {

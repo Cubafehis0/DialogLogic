@@ -1440,6 +1440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb5a9213193b824c9e1e7f33c322d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSelectCard:
+    m_PersistentCalls:
+      m_Calls: []
   maxLength: 700
   spacing: 150
   curvature: 1000
@@ -2667,6 +2670,21 @@ MonoBehaviour:
     post_effect_scale: 
     pull_effect_scale: 
   - title: "\u6D4B\u8BD5\u3010\u4E22\u5F03\u6240\u6709\u3011\u5411\u624B\u724C\u4E2D\u589E\u52A0\u5F03\u724C\u6570\u91CF\u7684\u3010\u8BF4\u6559\u3011"
+    desc: 
+    meme: 
+    cost: 0
+    category: 0
+    hold_effect: []
+    condition: []
+    effect: []
+    post_effect: []
+    pull_effect: []
+    hold_effect_scale: 
+    condition_scale: 
+    effect_scale: 
+    post_effect_scale: 
+    pull_effect_scale: 
+  - title: "\u8BF4\u6559"
     desc: 
     meme: 
     cost: 0
@@ -5527,7 +5545,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1798786902
@@ -6491,6 +6509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb5a9213193b824c9e1e7f33c322d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSelectCard:
+    m_PersistentCalls:
+      m_Calls: []
   maxLength: 700
   spacing: 150
   curvature: 1000
@@ -6508,6 +6529,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa591e09a5d86ea4292a046e0d128cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handPile: {fileID: 0}
+  selectedCardPile: {fileID: 0}
 --- !u!1001 &269206421532381333
 PrefabInstance:
   m_ObjectHideFlags: 0

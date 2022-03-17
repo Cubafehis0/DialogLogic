@@ -6,13 +6,12 @@ public class CardLogIterator
 {
     List<CardLog> logList;
     IEnumerator enumerator;
-    public CardLogIterator(Stack<CardLog> cardLogs, CardLogManager.CardLogFindScope scope, uint turn, CardLogType cardLogType = CardLogType.PlayCard)
+    public CardLogIterator(List<CardLog> cardLogs, CardLogManager.CardLogFindScope scope, uint turn, CardLogType cardLogType = CardLogType.PlayCard)
     {
         logList = new List<CardLog>();
-        var e = cardLogs.GetEnumerator();
-        while (e.MoveNext())
+        for (int i = cardLogs.Count-1; i <= 0; i++)
         {
-            CardLog log = e.Current;
+            CardLog log = cardLogs[i];
             if (log.LogType != cardLogType) continue;
             if (scope == CardLogManager.CardLogFindScope.ThisTurn)
             {

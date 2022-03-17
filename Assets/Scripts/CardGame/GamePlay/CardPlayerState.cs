@@ -345,7 +345,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     {
         basePersonality += delta;
     }
-    public UnityEvent<Card, uint> OnDrawCard { get; set; }
-    public UnityEvent<Card, uint> OnPlayCard { get; set; }
-    public UnityEvent<Card, uint> OnDiscardCard { get; set; }
+    //public UnityEvent<Card, uint> OnDrawCard { get; set; }
+    //public UnityEvent<Card, uint> OnPlayCard { get; set; }
+    //public UnityEvent<Card, uint> OnDiscardCard { get; set; }
 }

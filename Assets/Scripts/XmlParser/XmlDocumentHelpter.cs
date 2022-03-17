@@ -59,8 +59,6 @@ public class XmlDocumentHelpter
             string title= e["title"].InnerText;
             string desc = e["desc"].InnerText;
             string meme = e["meme"].InnerText;
-            Card card = new Card() { title=title,meme=meme};
-            res.Add(card);
         }
         return res;
     }

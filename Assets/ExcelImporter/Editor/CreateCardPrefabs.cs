@@ -53,8 +53,6 @@ public class CreateCardPrefabs
                 Debug.Log(string.Format("卡池{0}中第{1}个名称为{2}卡牌已经存在，已经将其替换成新的预制体", poolName, i+1,entity.name));
                 File.Delete(filePath);
             }
-            cardObject.GetComponent<Card>().Refresh(entity);
-            cardObject.GetComponent<Card>().CardType = GetCardTypeByCardPoolName(poolName);
             cardObject.GetComponent<Card>().info=new CardInfo(entity);
             CardObject card = cardObject.GetComponent<CardObject>();
             card.GetCardComponent();
