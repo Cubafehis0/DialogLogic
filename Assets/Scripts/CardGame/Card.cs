@@ -2,8 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
+using System.Xml;
+using System.Text.RegularExpressions;
+
 public class Card : MonoBehaviour
 {
+    //卡牌基本信息
+    public string title;
+    private string baseConfitionDesc;
+    private string baseEffectDesc;
+    public string meme;
+    public int cost;
+    public int category;
+
+    private Dictionary<string, IExpressionNode> cardVars;
+    
+    //private Dictionary<string, object> cardConsts;
+
     public CardInfo info;
 
     public List<IConditionNode> conditionNode=null;
@@ -12,25 +27,6 @@ public class Card : MonoBehaviour
     public List<IEffectNode> effectNode = null;
     private bool temporaryActivate = false;
     private bool permanentActivate = false;
-
-
-    private Dictionary<string, IExpressionNode> cardVars;
-
-    private Dictionary<string, object> cardConsts;
-
-    public int GetCardVarValue(string varName)
-    {
-        return cardVars.TryGetValue(varName, out IExpressionNode node) ? node.Value : 0;
-    }
-
-    public void AddCardVarValue(string varName,IExpressionNode node)
-    {
-        if (!cardVars.ContainsKey(varName))
-        {
-            cardVars.Add(varName, node);
-        }
-        else cardVars[varName] = node;
-    }
 
     public int FinalCost
     {
@@ -45,8 +41,6 @@ public class Card : MonoBehaviour
             return ret;
         }
     }
-
-    public string meme;
 
 
     public bool Activated
@@ -65,33 +59,100 @@ public class Card : MonoBehaviour
         this.info = info.Value;
         //effectNode = GetTestEffect(this.info.title);
     }
+    public int GetCardVarValue(string varName)
+    {
+        if (cardVars.TryGetValue(varName, out IExpressionNode node)) return node.Value;
+        else
+        {
+            Debug.LogError(string.Format("卡牌中不存在名称为{0}的变量", varName));
+            return 0;
+        }
+    }
+
+    public void AddCardVarValue(string varName, IExpressionNode node)
+    {
+        if (!cardVars.ContainsKey(varName))
+        {
+            cardVars.Add(varName, node);
+        }
+        else cardVars[varName] = node;
+    }
+
+
+    private readonly static string CardVarParttern=@"(#)([a-zA-Z0-9_]+)(#)";
+    public string ConditionDesc{get=> GetDesc(baseConfitionDesc);}
+    public string EffectDesc{get=> GetDesc(baseEffectDesc);}
+    private string GetDesc(string desc)
+    {
+        if (desc == null) return "";
+        var matches = Regex.Matches(desc, CardVarParttern);
+        if (matches.Count > 0)
+        {
+            foreach (Match m in matches)
+            {
+                string varName = m.Groups[2].Value;
+                string varHolder = m.Groups[0].Value;
+                //还有全局变量表的查询和替换，待补充
+                desc = desc.Replace(varHolder, GetCardVarValue(varName).ToString());
+            }
+        }
+        return desc;
+    }
+    public void Construct(XmlElement cardDefine)
+    {
+        title = cardDefine["title"].InnerText;
+        baseConfitionDesc = cardDefine["condition_desc"]?.InnerText;
+        baseEffectDesc = cardDefine["effect_desc"].InnerText;
+        meme = cardDefine["meme"].InnerText;
+        XmlNode effectNode = cardDefine.GetElementsByTagName("effect")[0];
+        if (effectNode["condition"] != null) conditionNode =XmlDocumentHelper.ParseCardConditions(effectNode["condition"]);
+        if (effectNode["pull_effect"] != null) pullEffectNode = XmlDocumentHelper.ParseCardEffects(effectNode["pull_effect"]);
+        if (effectNode["hold_effect"] != null) pullEffectNode = XmlDocumentHelper.ParseCardEffects(effectNode["hold_effect"]);
+        if (effectNode["play_effect"] != null) pullEffectNode = XmlDocumentHelper.ParseCardEffects(effectNode["play_effect"]);
+        XmlNodeList cardVars = cardDefine.GetElementsByTagName("define_card_var");
+        if (cardVars != null) this.cardVars = XmlDocumentHelper.ParseCardVar(cardVars);
+        
+        //temporaryActivate = false;
+        //permanentActivate = false;
+        //cost=1;
+        //category=1;
+}
+
 
     public void Construct(Card card)
     {
+        this.title = card.title;
+        this.baseConfitionDesc = card.baseConfitionDesc;
+        this.baseEffectDesc = card.baseEffectDesc;
+        this.meme = card.meme;
+        this.cost = card.cost;
+        this.category = card.category;
+        this.cardVars = card.cardVars;
+        //this.cardConsts = card.cardConsts;
         this.conditionNode = card.conditionNode;
         this.pullEffectNode = card.pullEffectNode;
         this.holdEffectNode = card.holdEffectNode;
         this.effectNode = card.effectNode;
-        this.info = card.info;
-        this.cardVars = card.cardVars;
+        this.temporaryActivate = card.temporaryActivate;
+        this.permanentActivate = card.permanentActivate;
     }
 
-    List<string> GetEffects(string effects)
-    {
-        if (effects == null) return new List<string>();
-        var rawEffectList = new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e));
-        List<string> res = new List<string>();
-        foreach(var e in rawEffectList)
-        {
-            string image = EftAndCdtNameImage.GetInstance().GetImageName(e);
-            if (image != null)
-            {
-                res.Add(image);
-            }
-        }
-        return res;
+    //List<string> GetEffects(string effects)
+    //{
+    //    if (effects == null) return new List<string>();
+    //    var rawEffectList = new List<string>(effects.Split(';', '；')).FindAll(e => !string.IsNullOrEmpty(e));
+    //    List<string> res = new List<string>();
+    //    foreach(var e in rawEffectList)
+    //    {
+    //        string image = EftAndCdtNameImage.GetInstance().GetImageName(e);
+    //        if (image != null)
+    //        {
+    //            res.Add(image);
+    //        }
+    //    }
+    //    return res;
     
-    }
+    //}
     //List<int> GetEffectsScale(string scales,int eftCnt)
     private static IEffectNode GetTestEffect(string title)
     {

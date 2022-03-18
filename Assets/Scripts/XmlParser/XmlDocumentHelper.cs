@@ -64,24 +64,25 @@ public class XmlDocumentHelper
             if (node["hold_effect"] != null) card.pullEffectNode = ParseCardEffects(node["hold_effect"]);
             if (node["play_effect"] != null) card.pullEffectNode = ParseCardEffects(node["play_effect"]);
             XmlNodeList nodeList = e.GetElementsByTagName("define_card_var");
-            if(nodeList!=null) ParseCardVar(cards, nodeList);
             cards.Add(card);
         }
         return cards;
     }
 
-    private static void ParseCardVar(List<Card> cards, XmlNodeList nodeList)
+    public static Dictionary<string,IExpressionNode> ParseCardVar(XmlNodeList nodeList)
     {
-        
+        Dictionary<string, IExpressionNode> res = new Dictionary<string, IExpressionNode>();
+
+        return res;
     }
 
-    private static List<IConditionNode> ParseCardConditions(XmlNode xmlNode)
+    public static List<IConditionNode> ParseCardConditions(XmlNode xmlNode)
     {
         return null;
     }
 
 
-    private static List<IEffectNode> ParseCardEffects(XmlNode xmlNode)
+    public static List<IEffectNode> ParseCardEffects(XmlNode xmlNode)
     {
         XmlNodeList nodeList = xmlNode.ChildNodes;
         List<IEffectNode> effects=new List<IEffectNode>();
