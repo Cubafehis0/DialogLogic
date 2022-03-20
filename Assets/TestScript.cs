@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TestScript : MonoBehaviour
+using UnityEngine.EventSystems;
+public class TestScript : MonoBehaviour, IPointerDownHandler
 {
-    private void OnMouseEnter()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Hello");
+        Debug.Log(eventData.pointerPress);
     }
 }

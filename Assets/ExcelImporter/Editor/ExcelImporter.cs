@@ -193,7 +193,7 @@ public class ExcelImporter : AssetPostprocessor
 	static object CreateEntityFromRow(IRow row, List<string> columnNames, Type entityType, string sheetName)
 	{
 		var entity = Activator.CreateInstance(entityType);
-		int cnt = 0;
+		//int cnt = 0;
         for (int i = 0; i < row.LastCellNum; i++)
         {
 			if (columnNames[i] == "") continue;

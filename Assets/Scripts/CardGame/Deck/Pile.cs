@@ -13,7 +13,6 @@ public class PileType
     public static int All { get => 7; }
 }
 
-
 public class Pile<T> : List<T>
 {
     private UnityEvent<T> onAdd = new UnityEvent<T>();
@@ -53,6 +52,15 @@ public class Pile<T> : List<T>
         }
         base.Remove(item);
         OnRemove.Invoke(item);
+    }
+
+    public new void Clear()
+    {
+        List<T> tmp=new List<T>(this);
+        foreach(var item in tmp)
+        {
+            Remove(item);
+        }
     }
 
     public void MigrateTo(T card, Pile<T> newPile)

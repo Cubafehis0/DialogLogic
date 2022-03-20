@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PileObject : MonoBehaviour
 {
-
-    protected Pile<Card> pile = null;
+    private Pile<Card> pile = null;
     public Pile<Card> Pile
     {
         get => pile;
@@ -14,23 +14,24 @@ public class PileObject : MonoBehaviour
             if (pile != null)
             {
                 pile.OnAdd.RemoveListener(OnAdd);
-                pile.OnRemove.RemoveListener(OnAdd);
             }
             if (value != null)
             {
                 value.OnAdd.AddListener(OnAdd);
-                value.OnRemove.AddListener(OnRemove);
             }
             pile = value;
         }
     }
+
     protected virtual void OnAdd(Card card)
     {
         card.transform.SetParent(transform, true);
-    }
-
-    protected virtual void OnRemove(Card card)
-    {
-
+        CardObject cardObject = card.GetComponent<CardObject>();
+        if (cardObject)
+        {
+            int index = CardPlayerState.Instance.Hand.IndexOf(card);
+            cardObject.gameObject.SetActive(true);
+            cardObject.transform.SetSiblingIndex(index);
+        }
     }
 }

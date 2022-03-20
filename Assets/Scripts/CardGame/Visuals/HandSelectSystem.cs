@@ -3,49 +3,55 @@ using SemanticTree.PileSemantics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HandSelectSystem : MonoBehaviour
 {
     [SerializeField]
-    private SelectablePileObject handPile;
+    private PileObject handPile;
     [SerializeField]
-    private SelectablePileObject selectedCardPile;
+    private PileObject selectedCardPile;
 
+    private static HandSelectSystem instance = null;
     private int minOccurs = 0;
     private int maxOccurs = 0;
     private IEffectNode action = null;
-    private static HandSelectSystem instance = null;
-    private Pile<Card> cardCandidate = new Pile<Card>();
-    private Pile<Card> cardSelected = new Pile<Card>();
+    public static Pile<Card> cardCandidate = new Pile<Card>();
+    public static Pile<Card> cardSelected = new Pile<Card>();
     private List<CardObject> cardObjects = new List<CardObject>();
     public static HandSelectSystem Instance { get => instance; }
 
     private void Awake()
     {
         instance = this;
-        handPile.Pile = cardCandidate;
         selectedCardPile.Pile = cardSelected;
-        handPile.OnSelectCard.AddListener(SelectCard);
-        selectedCardPile.OnSelectCard.AddListener(CancelCard);
+        handPile.Pile = cardCandidate;
+        gameObject.SetActive(false);
     }
 
     public void Open(List<Card> cards, int num, IEffectNode action)
     {
+        gameObject.SetActive(true);
         cardObjects.Clear();
-        cards.ForEach(item => cardCandidate.Add(item));
+        cards.ForEach(item => { 
+            cardCandidate.Add(item);
+        });
         minOccurs = num;
         maxOccurs = num;
         this.action = action;
     }
 
-    private void SelectCard(Card card)
+    public void SelectCard(BaseEventData eventData)
     {
+        Card card = ((PointerEventData)eventData).pointerClick.GetComponent<Card>();
+        if (cardSelected.Count == maxOccurs) return;
         cardCandidate.Remove(card);
         cardSelected.Add(card);
     }
 
-    private void CancelCard(Card card)
+    public void CancelCard(BaseEventData eventData)
     {
+        Card card = ((PointerEventData)eventData).pointerClick.GetComponent<Card>();
         cardSelected.Remove(card);
         cardCandidate.Add(card);
     }
@@ -54,8 +60,12 @@ public class HandSelectSystem : MonoBehaviour
     {
         if (minOccurs <= cardSelected.Count && cardSelected.Count <= maxOccurs)
         {
+            cardCandidate.Clear();
+            cardSelected.Clear();
+            gameObject.SetActive(false);
+            DragHandPileObject.instance.TakeoverAllCard();
             PileNode.PushCardContext(cardSelected);
-            action.Execute();
+            action?.Execute();
             PileNode.PopCardContext();
         }
     }

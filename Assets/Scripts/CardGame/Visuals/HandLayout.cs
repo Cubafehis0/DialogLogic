@@ -1,27 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ArrangePileObject : SelectablePileObject
+public class HandLayout : MonoBehaviour
 {
-    /// <summary>
-    /// 所有手牌最大总长度，实际可能会比这个值稍大
-    /// </summary>
-    [SerializeField]
-    private float maxLength = 10f;
 
     /// <summary>
     /// 当空间充足时，相邻卡牌中心点的距离
     /// 达到maxLength后，间隔会被压缩
     /// </summary>
     [SerializeField]
-    private float spacing = 1f;
+    private float spacing = 200f;
 
     /// <summary>
     /// 曲率半径
     /// </summary>
     [SerializeField]
-    private float curvature = 10f;
+    private float curvature = 2000f;
 
     /// <summary>
     /// 正态方差
@@ -34,21 +30,20 @@ public class ArrangePileObject : SelectablePileObject
     /// 卡牌在手牌动画中的移动速度
     /// </summary>
     [SerializeField]
-    private float moveSpeed = 0.07f;
+    private float moveSpeed = 10f;
 
-
+    private bool lockFocus = false;
+    private float maxLength;
     private float[] cardsArcOffset;
     private Vector3[] cardsOffset = new Vector3[0];
-
-    protected bool lockFocus = false;
-
-    private Card focusedCard = null;
-    protected Card FocusedCard
+    [SerializeField]
+    private Transform focusedCard = null;
+    public Transform FocusedCard
     {
         get => focusedCard;
         set
         {
-            if (lockFocus) return;
+            if (LockFocus) return;
             if (value != focusedCard)
             {
                 if (focusedCard)
@@ -72,10 +67,13 @@ public class ArrangePileObject : SelectablePileObject
         }
     }
 
+    public bool LockFocus { get => lockFocus; set => lockFocus = value; }
 
     protected void RecalculatePosition()
     {
-        int count = pile.Count;
+        Rect rect = GetComponent<RectTransform>().rect;
+        maxLength = rect.width;
+        int count = transform.childCount;
         if (count == 0) return;
         if (count == 1)
         {
@@ -101,23 +99,48 @@ public class ArrangePileObject : SelectablePileObject
             float ratio = 1f * i / (count - 1);
             cardsArcOffset[i] += totalLength * (ratio - 0.5f);
             cardsOffset[i] = pos + MyMath.CalcCircleOffset(cardsArcOffset[i] / curvature, curvature);
-            cardsOffset[i] += Vector3.forward * -0.1f * i;
+            cardsOffset[i] += -0.1f * i * Vector3.forward;
         }
+    }
+
+    private void OnTransformChildrenChanged()
+    {
+        RecalculatePosition();
+        lockFocus = false;
+        FocusedCard = null;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<CardObject>().OrderInLayer = i;
+        }
+    }
+    private void OnEnable()
+    {
+        RecalculatePosition();
     }
 
     private void Update()
     {
-        if (Pile == null) return;
         RecalculatePosition();
-        for (int i = 0; i < Pile.Count; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            if (FocusedCard == null || Pile[i] != FocusedCard)
+            Transform child = transform.GetChild(i);
+            if (FocusedCard == null || child != FocusedCard)
             {
-                Vector3 currentPos = Pile[i].transform.position;
+                Vector3 currentPos = child.position;
                 Vector3 targetPos = cardsOffset[i];
-                Pile[i].transform.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
-                Pile[i].transform.localEulerAngles = -Mathf.Rad2Deg * (cardsArcOffset[i] / curvature) * Vector3.forward;
+                child.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
+                child.localEulerAngles = -Mathf.Rad2Deg * (cardsArcOffset[i] / curvature) * Vector3.forward;
             }
         }
+    }
+
+    public void Focus(BaseEventData eventData)
+    {
+        FocusedCard = ((PointerEventData)eventData).pointerEnter.transform;
+    }
+
+    public void ResetFocus(BaseEventData eventData)
+    {
+        FocusedCard = null;
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class DiscardPileObject : PileObject
+public class DiscardPileObject : MonoBehaviour
 {
     public static DiscardPileObject instance = null;
     [SerializeField]
@@ -15,9 +15,12 @@ public class DiscardPileObject : PileObject
 
     private void OnEnable()
     {
-        pile = CardPlayerState.Instance.DiscardPile;
+        CardPlayerState.Instance.DiscardPile.OnAdd.AddListener(OnAdd);
     }
-
+    private void OnDisable()
+    {
+        CardPlayerState.Instance.DiscardPile.OnRemove.AddListener(OnAdd);
+    }
     IEnumerator Discard(Card card)
     {
         float jumpHeight = Random.Range(1f, 2f);
@@ -36,9 +39,9 @@ public class DiscardPileObject : PileObject
         card.gameObject.SetActive(false);
     }
 
-    protected override void OnAdd(Card card)
+    private void OnAdd(Card card)
     {
-        base.OnAdd(card);
+        card.transform.SetParent(transform, true);
         StartCoroutine(Discard(card));
     }
 }

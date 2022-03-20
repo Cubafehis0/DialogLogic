@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawPileObject : PileObject
+public class DrawPileObject : MonoBehaviour
 {
     public static DrawPileObject instance = null;
 
@@ -14,12 +14,12 @@ public class DrawPileObject : PileObject
 
     private void OnEnable()
     {
-        pile = CardPlayerState.Instance.DrawPile;
+        CardPlayerState.Instance.DrawPile.OnAdd.AddListener(OnAdd);
     }
 
-    protected override void OnAdd(Card newCard)
+    private void OnAdd(Card newCard)
     {
-        base.OnAdd(newCard);
+        newCard.transform.SetParent(transform, true);
         newCard.transform.localPosition = Vector3.zero;
         newCard.gameObject.SetActive(false);
     }

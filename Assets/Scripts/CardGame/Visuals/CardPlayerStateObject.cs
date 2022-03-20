@@ -2,19 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public interface ICardPlayerStateObject
-{
-    void OnEnergyChange();
-    void OnDrawButHandFull();
-    void OnDrawButEmpty();
-    void OnDraw();
-    void OnDiscard();
-    void OnUse();
-    void OnTurnStart();
-}
 
 [RequireComponent(typeof(CardPlayerState))]
-public class CardPlayerStateObject : MonoBehaviour,ICardPlayerStateObject
+public class CardPlayerStateObject : MonoBehaviour
 {
     private CardPlayerState playerState=null;
 
@@ -33,46 +23,16 @@ public class CardPlayerStateObject : MonoBehaviour,ICardPlayerStateObject
 
     private void OnEnable()
     {
-        playerState.UpdateObjectReference();
+        playerState.OnEnergyChange.AddListener(OnEnergyChange);
     }
 
     private void OnDisable()
     {
-        playerState.UpdateObjectReference();
+        playerState.OnEnergyChange.RemoveListener(OnEnergyChange);
     }
 
     public void OnEnergyChange()
     {
         if (energyText) energyText.text = playerState.Energy.ToString();
-    }
-
-    public void OnDraw()
-    {
-        return;
-    }
-
-    public void OnDiscard()
-    {
-        return;
-    }
-
-    public void OnUse()
-    {
-        return;
-    }
-
-    public void OnTurnStart()
-    {
-        return;
-    }
-
-    public void OnDrawButHandFull()
-    {
-        return;
-    }
-
-    public void OnDrawButEmpty()
-    {
-        return;
     }
 }

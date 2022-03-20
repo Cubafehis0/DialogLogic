@@ -21,15 +21,15 @@ public class StaticCardLibrary:MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(this);
-        cards = cardInfoTable.cardInfos;
-        foreach (CardInfo card in cards)
-        {
-            Card newCard = CardGameManager.Instance.EmptyCard;
-            newCard.Construct(card);
-            newCard.transform.SetParent(transform,false);
-            newCard.gameObject.SetActive(false);
-            cardObjects.Add(newCard);
-        }
+        //cards = cardInfoTable.cardInfos;
+        //foreach (CardInfo card in cards)
+        //{
+        //    Card newCard = CardGameManager.Instance.EmptyCard;
+        //    newCard.Construct(card);
+        //    newCard.transform.SetParent(transform,false);
+        //    newCard.gameObject.SetActive(false);
+        //    cardObjects.Add(newCard);
+        //}
     }
 
     public CardInfo? GetCardByID(int id)

@@ -56,17 +56,18 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     private UnityEvent onPersonalityChange = new UnityEvent();
 
     private static CardPlayerState instance = null;
-    [SerializeField]
     private List<Timer<Personality>> personalityModifiers = new List<Timer<Personality>>();
     private List<Timer<SpeechArt>> speechModifiers = new List<Timer<SpeechArt>>();
     private List<Timer<SpeechType>> focusSpeechModifiers = new List<Timer<SpeechType>>();
     public List<Timer<CostModifier>> costModifers = new List<Timer<CostModifier>>();
 
-
-    private ICardPlayerStateObject visuals;
+    [HideInInspector]
     public UnityEvent OnEnergyChange = new UnityEvent();
-    public UnityEvent OnPlayCard = new UnityEvent();    
+    [HideInInspector]
+    public UnityEvent OnPlayCard = new UnityEvent();
+    [HideInInspector]
     public UnityEvent OnStartTurn = new UnityEvent();
+    [HideInInspector]
     public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
@@ -139,8 +140,8 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
 
     private void Start()
     {
-        BaseAimer nta = NoTargetAimer.instance;
-        if (nta) nta.AddCallback(PlayCard);
+        //BaseAimer nta = NoTargetAimer.instance;
+        //if (nta) nta.AddCallback(PlayCard);
     }
 
     public void Draw(uint num)
@@ -151,7 +152,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             if (IsHandFull)
             {
                 //手牌满了
-                visuals.OnDrawButHandFull();
                 return;
             }
             if (drawPile.Count == 0)
@@ -160,14 +160,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
                 if (discardPile.Count == 0)
                 {
                     //没有牌可抽
-                    visuals.OnDrawButEmpty();
                     return;
                 }
                 //洗牌
                 Discard2Draw();
             }
             drawPile.MigrateTo(drawPile[0], Hand);
-            visuals.OnDraw();
         }
     }
 
@@ -193,18 +191,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     /// </summary>
     /// <param name="cardID">出牌id</param>
     /// <returns>是否成功出牌</returns>
-    public void PlayCard(Card card, GameObject target)
+    public void PlayCard(Card card)
     {
-        if (target == null)
-        {
-            //瞄准被取消了
-            Debug.Log("瞄准被取消了");
-        }
-        else if (Energy < card.FinalCost)
+        if (Energy < card.FinalCost)
         {
             //能量不足
             Debug.Log("能量不足");
-            NoTargetAimer.instance.CancelAiming();
         }
         else if (EffectManager.Instance.CheckCanPlay(card))
         {
@@ -212,19 +204,17 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             Energy -= card.FinalCost;
             //调用Play时已经检查并扣除费用
             Debug.Log("使用卡牌： " + card.name);
+            energy -= 1;
             PlayerNode.PushPlayerContext(this);
             CardNode.PushCardContext(card);
             OnPlayCard.Invoke();
+            CardGameManager.Instance.OpenHandChoosePanel(null, 1, null);
+            //CardGameManager.Instance.OpenPileChoosePanel(Hand, 1, null);
             //if (card.effectNode.Count != null) card.effectNode.Execute();
             CardNode.PopCardContext();
             PlayerNode.PopPlayerContext();
             Hand.MigrateTo(card, discardPile);
         }
-    }
-
-    public void UpdateObjectReference()
-    {
-        visuals = GetComponent<ICardPlayerStateObject>();
     }
 
     public void Discard2Draw()

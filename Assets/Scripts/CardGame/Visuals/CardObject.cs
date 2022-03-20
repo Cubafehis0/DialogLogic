@@ -5,86 +5,48 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-//响应鼠标事件接口
 
-public interface ICardObject : IVisuals
+[RequireComponent(typeof(Card))]//Card未来可能改成非Mono
+[RequireComponent(typeof(Canvas))]
+public class CardObject : MonoBehaviour
 {
-    void UpdateTitle();
-    void UpdateCdtDesc();
-    void UpdateEftDesc();
-    void UpdateMeme();
-}
+    [SerializeField]
+    private Text titleText;
+    [SerializeField]
+    private Text cdtDescText;
+    [SerializeField]
+    private Text eftDescText;
+    [SerializeField]
+    private Text memeText;
 
-[RequireComponent(typeof(Card))]
-public class CardObject : MonoBehaviour, ICardObject,IPointerEnterHandler,IPointerExitHandler,IPointerDownHandler
-{
-
-    public UnityEvent<Card> OnPointerEnter = new UnityEvent<Card>();
-    public UnityEvent<Card> OnPointerExit = new UnityEvent<Card>();
-    public UnityEvent<Card> OnPointerDown = new UnityEvent<Card>();
-
-    private Renderer spriteRenderer = null;
-
+    private Card card = null;
     private Canvas cardUICanvas = null;
-
-    [SerializeField]
-    private Text titleText = null;
-    [SerializeField]
-    private Text cdtDescText = null;
-    [SerializeField]
-    private Text eftDescText = null;
-    [SerializeField]
-    private Text memeText = null;
-
     private int orderInLayer = 0;
+
+    private void Awake()
+    {
+        card = GetComponent<Card>();
+        cardUICanvas = GetComponent<Canvas>();
+    }
+
     public int OrderInLayer
     {
         get => orderInLayer;
         set
         {
+            cardUICanvas.sortingOrder = value + 10;
             orderInLayer = value;
-            if (spriteRenderer) spriteRenderer.sortingOrder = value;
-            if (cardUICanvas) cardUICanvas.sortingOrder = value;
-
         }
     }
 
-    /// <summary>
-    /// 卡牌描述，后续会改成Card信息类
-    /// </summary>
-    private Card card = null;
+    public Card Card { get => card; }
 
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        card = GetComponent<Card>();
-        cardUICanvas = GetComponentInChildren<Canvas>();
-    }
-
-    public void UpdateTitle()
-    {
-        if (titleText) titleText.text = card.info.title;
-    }
-
-    public void UpdateCdtDesc()
-    {
-        if (cdtDescText) cdtDescText.text = card.info.LocalizedConditionDesc;
-    }
-
-    public void UpdateEftDesc()
-    {
-        if (eftDescText) eftDescText.text = card.info.LocalizedEffectDesc;
-    }
-    public void UpdateMeme()
-    {
-        if (memeText) memeText.text = card.info.LocalizedMeme;
-    }
     public void UpdateVisuals()
     {
-        UpdateTitle();
-        UpdateCdtDesc();
-        UpdateEftDesc();
-        UpdateMeme();
+        if (titleText) titleText.text = card.info.title;
+        if (cdtDescText) cdtDescText.text = card.info.LocalizedConditionDesc;
+        if (eftDescText) eftDescText.text = card.info.LocalizedEffectDesc;
+        if (memeText) memeText.text = card.info.LocalizedMeme;
     }
 
     private void OnEnable()
@@ -95,20 +57,5 @@ public class CardObject : MonoBehaviour, ICardObject,IPointerEnterHandler,IPoint
     public void GetCardComponent()
     {
         card = GetComponent<Card>();
-    }
-
-    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-    {
-        OnPointerEnter.Invoke(card);
-    }
-
-    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-    {
-        OnPointerExit.Invoke(card);
-    }
-
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-    {
-        OnPointerDown.Invoke(card);
     }
 }

@@ -93,17 +93,17 @@ public struct CardInfo
 
     public static string LocalizeNameList(List<string> nameList, List<int> scales)
     {
-        string ret = "";
+        //string ret = "";
         return "";
-        for (int i = 0; i < nameList.Count; i++)
-        {
-            ret += EffectDesc.GetDesc(nameList[i], scales[i]);
-        }
-        if (ret != "")
-        {
-            ret += "\n";
-        }
-        return ret;
+        //for (int i = 0; i < nameList.Count; i++)
+        //{
+        //    ret += EffectDesc.GetDesc(nameList[i], scales[i]);
+        //}
+        //if (ret != "")
+        //{
+        //    ret += "\n";
+        //}
+        //return ret;
     }
 
 

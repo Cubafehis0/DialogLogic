@@ -16,8 +16,6 @@ public class CardGameManager : MonoBehaviour
 {
     [SerializeField]
     private Card emptyCard = null;
-    [SerializeField]
-    private GameObject HighlightCanvs = null;
 
     private static CardGameManager instance = null;
     public UnityEvent OnStartGame = new UnityEvent();
@@ -28,8 +26,26 @@ public class CardGameManager : MonoBehaviour
     }
     public Card EmptyCard
     {
-        get => Instantiate(emptyCard);
+        
+        get
+        {
+            return Instantiate(emptyCard);
+        }
     }
+
+    public CardObject GetCardObject(Card card)
+    {
+        GameObject gameObject = Instantiate(card.gameObject);
+        gameObject.transform.localScale = Vector3.one;
+        gameObject.transform.rotation = Quaternion.identity;
+        return gameObject.GetComponent<CardObject>();
+    }
+
+    public void ReturnCardObject(CardObject cardObject)
+    {
+        Destroy(cardObject.gameObject);
+    }
+
     void Awake()
     {
         instance = this;
@@ -61,14 +77,12 @@ public class CardGameManager : MonoBehaviour
 
     public void OpenHandChoosePanel(IConditionNode condition,int num,IEffectNode action)
     {
-        HighlightCanvs.SetActive(true);
         HandSelectSystem.Instance.Open(CardPlayerState.Instance.Hand, num, action);
-        //Ω˚”√ ‰»Î
     }
 
     public void OpenPileChoosePanel(List<Card> cards, int num, IEffectNode action)
     {
-        throw new System.NotImplementedException();
+        PileSelectSystem.Instance.Open(cards, num, action);
     }
 
     public void OpenSlotSelectPanel(IChoiceSlotEffectNode action)

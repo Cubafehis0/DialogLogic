@@ -9,7 +9,7 @@ public class ScriptableAssetManage : MonoBehaviour
 {
     readonly static string CardTablePath = "Assets//ExcelAssets//CardTable.asset";
     readonly static string EffectTablePath = "Assets//ExcelAssets//EffectTable.asset";
-    readonly static string CardInfoTablePath = "Assets//ExcelAssets//CardInfoTable.asset";
+    //readonly static string CardInfoTablePath = "Assets//ExcelAssets//CardInfoTable.asset";
     public static UnityEngine.Object GetScriptableObject(Type type)
     {
         return GetScriptableObject(type.Name);
