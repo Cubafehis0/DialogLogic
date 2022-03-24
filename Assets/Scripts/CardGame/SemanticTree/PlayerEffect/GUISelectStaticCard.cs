@@ -19,19 +19,12 @@ namespace SemanticTree.PlayerEffect
         public List<string> Names { get; set; }
 
         [XmlElement(ElementName = "action")]
-        public Effect action;
+        public EffectList action;
 
         public GUISelectStaticCard()
         {
             Names = new List<string>();
             action = null;
-        }
-
-        public GUISelectStaticCard(List<string> names, Effect action)
-        {
-            Names = names;
-            this.action = action;
-            Construct();
         }
 
         public override void Construct()

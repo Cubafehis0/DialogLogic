@@ -9,7 +9,7 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName ="action")]
         public EffectList Actions { get; set; }
 
-        [XmlElement(ElementName ="condition")]
+        [XmlIgnore]
         public ICondition condition;
 
         [XmlElement(ElementName = "num")]

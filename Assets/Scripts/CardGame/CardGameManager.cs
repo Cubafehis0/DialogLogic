@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using SemanticTree;
-using XmlParser;
-using SemanticTree.ChoiceEffect;
-
-public enum CardGameTriggerType
-{
-    OnTurnStart,
-    OnTurnEnd,
-    OnPlayCard
-}
 
 
 public class CardGameManager : MonoBehaviour
@@ -88,7 +79,7 @@ public class CardGameManager : MonoBehaviour
     public void OpenPileChoosePanel(List<Card> cards, int num, EffectList action)
     {
         Debug.LogWarning("效果未完成");
-        PileSelectSystem.Instance.Open(cards, num, action[0]);
+        PileSelectSystem.Instance.Open(cards, num, action);
     }
 
     public void OpenSlotSelectPanel(EffectList action)

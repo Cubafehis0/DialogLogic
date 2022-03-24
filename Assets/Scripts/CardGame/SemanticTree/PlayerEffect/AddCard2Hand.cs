@@ -25,13 +25,7 @@ namespace SemanticTree.PlayerEffect
             num = null;
             prefab = null;
         }
-        public AddCard2Hand(string name, IExpression num)
-        {
-            NumExpression = "";
-            CardName = "";
-            this.num = num;
-            this.prefab = StaticCardLibrary.Instance.GetByName(name);
-        }
+
         public AddCard2Hand(XmlNode xmlNode)
         {
             NumExpression = "";

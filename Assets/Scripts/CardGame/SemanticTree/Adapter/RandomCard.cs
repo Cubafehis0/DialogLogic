@@ -30,13 +30,6 @@ namespace SemanticTree.Adapter
             Actions = new EffectList();
         }
 
-        public RandomCard(string num, Effect action)
-        {
-            NumExpression = num;
-            this.Actions = action;
-            Construct();
-        }
-
         public RandomCard(XmlNode xmlNode)
         {
             XmlNode xml = xmlNode.FirstChild;

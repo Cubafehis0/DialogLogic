@@ -16,14 +16,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        XmlSerializer ser = new XmlSerializer(typeof(Effect));
-        Effect effect = new ModifyPersonalityNode()
-        {
-            Modifier = new Personality(0, 1, 2, 3)
-        };
-        TextWriter writer = new StreamWriter("test.xml");
-        ser.Serialize(writer, effect);
-        writer.Close();
+
         //LoadXMLSettings();
         //CardGameManager.Instance.StartGame();
     }

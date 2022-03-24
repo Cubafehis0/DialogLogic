@@ -12,11 +12,6 @@ namespace SemanticTree.ChoiceEffect
         [XmlElement(ElementName ="action")]
         public EffectList action;
 
-        public GUISelectCurrentSlot(Effect action)
-        {
-            this.action = action;
-        }
-
         public override void Construct()
         {
             action.Construct();

@@ -39,8 +39,8 @@ public class SemanticAnalyser
     {
         return xmlNode.Name switch
         {
-            "modify_health" => new ModifyHealthNode(xmlNode),
-            "modify_personality" => new ModifyPersonalityNode(xmlNode),
+            "modify_health" => new ModifyHealth(xmlNode),
+            "modify_personality" => new ModifyPersonality(xmlNode),
             "modify_speech" => new ModifySpeech(xmlNode),
             "set_focus" => new ModifyFocusNode(xmlNode),
             "add_status" => new AddStatus(xmlNode),

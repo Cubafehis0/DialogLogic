@@ -88,7 +88,7 @@ public class XmlDocumentHelper
     {
         IEffectNode ret = xmlNode.Name switch
         {
-            "modify_personality" => new ModifyPersonalityNode(xmlNode),
+            "modify_personality" => new ModifyPersonality(xmlNode),
             _ => null,
         };
         return ret;

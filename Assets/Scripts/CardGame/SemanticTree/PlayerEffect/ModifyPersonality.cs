@@ -9,7 +9,8 @@ namespace SemanticTree.PlayerEffect
     /// 有缺陷,只能常数
     /// Personality参数
     /// </summary>
-    public class ModifyPersonalityNode : Effect
+    [XmlType(TypeName ="modify_personality")]
+    public class ModifyPersonality : Effect
     {
         [XmlElement(ElementName = "personality")]
         public Personality Modifier { get; set; }
@@ -17,19 +18,19 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName = "duration")]
         public int? Timer { get; set; }
 
-        public ModifyPersonalityNode()
+        public ModifyPersonality()
         {
             Modifier = null;
             Timer = null;
         }
 
-        public ModifyPersonalityNode(Personality modifier, int? timer)
+        public ModifyPersonality(Personality modifier, int? timer)
         {
             this.Modifier = modifier;
             this.Timer = timer;
         }
 
-        public ModifyPersonalityNode(XmlNode xmlNode)
+        public ModifyPersonality(XmlNode xmlNode)
         {
             Modifier = new Personality();
             Timer = null;

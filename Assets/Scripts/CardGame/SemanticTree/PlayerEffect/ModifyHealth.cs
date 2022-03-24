@@ -9,20 +9,20 @@ namespace SemanticTree.PlayerEffect
     /// effect
     /// Expression参数num
     /// </summary>
-    public class ModifyHealthNode : Effect
+    public class ModifyHealth : Effect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
 
         private IExpression num;
 
-        public ModifyHealthNode()
+        public ModifyHealth()
         {
             NumExpression = "";
             this.num = null;
         }
 
-        public ModifyHealthNode(XmlNode xmlNode)
+        public ModifyHealth(XmlNode xmlNode)
         {
 
             num = MyExpressionParse.ExpressionParser.AnalayseExpression(xmlNode.InnerText);
