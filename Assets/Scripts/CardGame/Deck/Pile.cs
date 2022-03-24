@@ -45,11 +45,6 @@ public class Pile<T> : List<T>
 
     public new void Remove(T item)
     {
-        if (!Contains(item))
-        {
-            Debug.LogError("Remove Error");
-            return;
-        }
         base.Remove(item);
         OnRemove.Invoke(item);
     }

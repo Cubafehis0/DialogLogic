@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 using SemanticTree;
-public class Status
+using XmlParser;
+
+public class GameScript
+{
+    protected string name;
+    public EffectList OnAfterPlayCard = null;
+    public EffectList OnTurnStart = null;
+}
+
+public class Status : GameScript
 {
     //可能替换为StatusInfo结构体
-    private string name;
     private int decreaseOnTurnStart = 0; //回合开始自动减少
     private int decreaseOnTurnEnd = 0;  //回合结束自动减少
     private bool stackable = true;   //
     private bool allowNegative = false;
 
-
-    public IEffectNode OnAdd = null;
-    public IEffectNode OnRemove = null;
-    public IEffectNode OnAfterPlayCard = null;
-    public IEffectNode OnTurnStart = null;
+    public EffectList OnAdd = null;
+    public EffectList OnRemove = null;
 
     public string Name { get => name; }
     public int DecreaseOnTurnStart { get => decreaseOnTurnStart; }
@@ -22,102 +28,48 @@ public class Status
     public bool Stackable { get => stackable; }
     public bool AllowNegative { get => allowNegative; }
 
-    private static Status drawBan = null;
-    public static Status DrawBan
+    public void Construct(XmlNode xmlNode)
     {
-        get
+        if (!xmlNode.Name.Equals("define_status")) throw new SemanticException();
+        name = xmlNode.Attributes["name"].InnerText;
+        XmlNode it = xmlNode.FirstChild;
+        while (it != null)
         {
-            if (drawBan == null)
+            switch (it.Name)
             {
-                drawBan = new Status()
-                {
-                    name = "drawBan",
-                    decreaseOnTurnEnd = 1,
-                    OnAdd = SemanticTreeClass.TestSetDrawBanNode(true),
-                    OnRemove = SemanticTreeClass.TestSetDrawBanNode(false)
-                };
-
+                case "decrease_on_turn_start":
+                    decreaseOnTurnStart = int.Parse(it.InnerText);
+                    break;
+                case "decrease_on_turn_end":
+                    decreaseOnTurnEnd = int.Parse(it.InnerText);
+                    break;
+                case "stackable":
+                    stackable = bool.Parse(it.InnerText);
+                    break;
+                case "negative":
+                    allowNegative = bool.Parse(it.InnerText);
+                    break;
+                case "on_turn_start":
+                    OnTurnStart = SemanticAnalyser.AnalayseEffectList(it);
+                    break;
+                case "on_after_play_card":
+                    OnAfterPlayCard = SemanticAnalyser.AnalayseEffectList(it);
+                    break;
+                case "on_add":
+                    OnAdd = SemanticAnalyser.AnalayseEffectList(it);
+                    break;
+                case "on_remove":
+                    OnRemove = SemanticAnalyser.AnalayseEffectList(it);
+                    break;
+                default:
+                    throw new SemanticException();
             }
-            return drawBan;
+            it = it.NextSibling;
         }
     }
-
-    private static Status freeCard = null;
-    public static Status FreeCard
-    {
-        get
-        {
-            if (freeCard == null)
-            {
-                freeCard = new Status()
-                {
-                    name = "freeCard",
-                    decreaseOnTurnEnd = 99,
-                    OnAdd = SemanticTreeClass.FreeCardOnAdd,
-                    OnRemove = SemanticTreeClass.FreeCardOnRemove,
-                    OnAfterPlayCard = SemanticTreeClass.FreeCardOnAfterPlayCard,
-                };
-            }
-            return freeCard;
-        }
-    }
-
-    private static Status outPlusByPreachStatus = null;
-    public static Status OutPlusByPreachStatus
-    {
-        get
-        {
-            if (outPlusByPreachStatus == null)
-            {
-                outPlusByPreachStatus = new Status()
-                {
-                    name = "outPlusByPreach",
-                    OnAfterPlayCard = SemanticTreeClass.TestOutPlusByPreachNode,
-                };
-            }
-            return outPlusByPreachStatus;
-        }
-    }
-
-    //【持续】回合开始时，获得一张【说教】牌
-    private static Status addPreachEveryRound = null;
-    public static Status AddPreachEveryRound
-    {
-        get
-        {
-            if (addPreachEveryRound == null)
-            {
-                addPreachEveryRound = new Status()
-                {
-                    name = "addPreachEveryRound",
-                    OnTurnStart = SemanticTreeClass.TestAddPreachEveryRoundOnTurnStart,
-                };
-            }
-            return addPreachEveryRound;
-        }
-    }
-
-    //【持续】回合开始时，每持有一点外感便随机揭示x个判定
-    //未完成
-    private static Status revealByOut = null;
-    public static Status RevealByOut
-    {
-        get
-        {
-            if (revealByOut == null)
-            {
-                revealByOut = new Status()
-                {
-                    name = "revealByOut",
-                    OnTurnStart = SemanticTreeClass.TestRevealByOutOnTurnStart,
-                };
-            }
-            return revealByOut;
-        }
-    }
-
 }
 
+[Serializable]
 public class StatusCounter
 {
     public Status status = null;

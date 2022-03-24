@@ -1,35 +1,33 @@
 using System;
-using UnityEngine;
+using System.Xml.Serialization;
 
-public enum SpeechType
-{
-    Normal,
-    Cheat,
-    Threaten,
-    Persuade
-}
+
 
 [Serializable]
-public struct SpeechArt
+public class SpeechArt
 {
-    [SerializeField]
-    private int normal;
-    [SerializeField]
-    private int cheat;
-    [SerializeField]
-    private int threat;
-    [SerializeField]
-    private int persuade;
+    [XmlElement(ElementName = "normal")]
+    public int Normal { get; set; }
+
+    [XmlElement(ElementName = "cheat")]
+    public int Cheat { get; set; }
+
+    [XmlElement(ElementName = "threaten")]
+    public int Threat { get; set; }
+
+    [XmlElement(ElementName = "persuade")]
+    public int Persuade { get; set; }
+
     public int this[SpeechType type]
     {
         get
         {
             return type switch
             {
-                SpeechType.Normal => normal,
-                SpeechType.Cheat => cheat,
-                SpeechType.Threaten => threat,
-                SpeechType.Persuade => persuade,
+                SpeechType.Normal => Normal,
+                SpeechType.Cheat => Cheat,
+                SpeechType.Threaten => Threat,
+                SpeechType.Persuade => Persuade,
                 _ => throw new IndexOutOfRangeException(),
             };
         }
@@ -38,34 +36,51 @@ public struct SpeechArt
             switch (type)
             {
                 case SpeechType.Normal:
-                    normal = value;
+                    Normal = value;
                     break;
                 case SpeechType.Cheat:
-                    cheat = value;
+                    Cheat = value;
                     break;
                 case SpeechType.Threaten:
-                    threat = value;
+                    Threat = value;
                     break;
                 case SpeechType.Persuade:
-                    persuade = value;
+                    Persuade = value;
                     break;
             }
         }
     }
+    public SpeechArt()
+    {
+        Normal = Cheat = Threat = Persuade = 0;
+    }
     public SpeechArt(int normal, int cheat, int threat, int persuade)
     {
-        this.normal = normal;
-        this.cheat = cheat;
-        this.threat = threat;
-        this.persuade = persuade;
+        this.Normal = normal;
+        this.Cheat = cheat;
+        this.Threat = threat;
+        this.Persuade = persuade;
     }
+    //重载加号运算符
     public static SpeechArt operator +(SpeechArt a, SpeechArt b)
     {
-        SpeechArt ret;
-        ret.normal = a.normal + b.normal;
-        ret.cheat = a.cheat + b.cheat;
-        ret.threat = a.threat + b.threat;
-        ret.persuade = a.persuade + b.persuade;
-        return ret;
+        return new SpeechArt
+        {
+            Normal = a.Normal + b.Normal,
+            Cheat = a.Cheat + b.Cheat,
+            Threat = a.Threat + b.Threat,
+            Persuade = a.Persuade + b.Persuade
+        };
+    }
+    //重载
+    public static SpeechArt operator -(SpeechArt a, SpeechArt b)
+    {
+        return new SpeechArt
+        {
+            Normal = a.Normal - b.Normal,
+            Cheat = a.Cheat - b.Cheat,
+            Threat = a.Threat - b.Threat,
+            Persuade = a.Persuade - b.Persuade
+        };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,7 +19,7 @@ public enum PersonalityType
 }
 
 [Serializable]
-public struct Personality
+public class Personality
 {
     [SerializeField]
     private int p0;
@@ -115,6 +116,10 @@ public struct Personality
         }
     }
 
+    public Personality()
+    {
+        p0 = p1 = p2 = p3 = 0;
+    }
     public Personality(int p0, int p1, int p2, int p3)
     {
         this.p0 = p0;
@@ -131,43 +136,51 @@ public struct Personality
         this.p3 = l[3];
     }
 
+    [XmlElement(ElementName ="inner")]
     public int Inner
     {
         get => p0;
         set => p0 = value;
     }
+
+    [XmlElement(ElementName = "outside")]
     public int Outside
     {
         get => -p0;
         set => p0 = -value;
     }
+    [XmlElement(ElementName = "logic")]
     public int Logic
     {
         get => p1;
         set => p1 = value;
     }
+    [XmlElement(ElementName = "spritial")]
     public int Spritial
     {
         get => -p1;
         set => p1 = -value;
     }
-
+    [XmlElement(ElementName = "moral")]
     public int Moral
     {
         get => p2;
         set => p2 = value;
     }
+    [XmlElement(ElementName = "immoral")]
     public int Immoral
     {
         get => -p2;
         set => p2 = -value;
     }
 
+    [XmlElement(ElementName = "roundabout")]
     public int Roundabout
     {
         get => p3;
         set => p3 = value;
     }
+    [XmlElement(ElementName = "aggressive")]
     public int Aggressive
     {
         get => -p3;
@@ -176,11 +189,13 @@ public struct Personality
 
     public static Personality operator +(Personality a, Personality b)
     {
-        Personality ret=new Personality(0,0,0,0);
-        ret.p0 = a.p0 + b.p0;
-        ret.p1 = a.p1 + b.p1;
-        ret.p2 = a.p2 + b.p2;
-        ret.p3 = a.p3 + b.p3;
+        Personality ret = new Personality
+        {
+            p0 = a.p0 + b.p0,
+            p1 = a.p1 + b.p1,
+            p2 = a.p2 + b.p2,
+            p3 = a.p3 + b.p3
+        };
         return ret;
     }
 

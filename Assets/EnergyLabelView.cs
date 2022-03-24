@@ -4,20 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 public class EnergyLabelView : MonoBehaviour
 {
+    [SerializeField]
+    private CardPlayerState player;
+
     private Text text;
     private void Awake()
     {
         text = GetComponentInChildren<Text>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        player.OnEnergyChange.AddListener(UpdateLabel);
         UpdateLabel();
-        CardPlayerState.Instance.OnEnergyChange.AddListener(UpdateLabel);
+    }
+
+    private void OnDisable()
+    {
+        player.OnEnergyChange.RemoveListener(UpdateLabel);
     }
 
     private void UpdateLabel()
     {
-        if(text) text.text = CardPlayerState.Instance.Energy.ToString();
+        if (text) text.text = player.Energy.ToString();
     }
 }

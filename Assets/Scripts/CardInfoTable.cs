@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="CardInfoTable",menuName ="TableAsset/CardInfoTable")]
 public class CardInfoTable : ScriptableObject
 {
-    public List<CardInfo> cardInfos;
+    //public List<CardInfo> cardInfos;
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Effect xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ModifyPersonalityNode">
+  <personality>
+    <inner>0</inner>
+    <outside>0</outside>
+    <logic>1</logic>
+    <spritial>-1</spritial>
+    <moral>2</moral>
+    <immoral>-2</immoral>
+    <roundabout>3</roundabout>
+    <aggressive>-3</aggressive>
+  </personality>
+  <duration xsi:nil="true" />
+</Effect>

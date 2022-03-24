@@ -13,6 +13,7 @@ public class Draggable : MonoBehaviour, IDragHandler,IEndDragHandler
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponentInParent<CanvasGroup>();
         rectTransform = GetComponent<RectTransform>();
+        canvasGroup.blocksRaycasts = true;
     }
     public void OnDrag(PointerEventData eventData)
     {

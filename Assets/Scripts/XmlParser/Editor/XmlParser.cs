@@ -29,10 +29,10 @@ public class XmlParser
         GameObject cardObject = GameObject.Instantiate(cardBase);
         foreach (var card in cards)
         {
-            cardObject.GetComponent<Card>().Construct(card);
+            //cardObject.GetComponent<Card>().Construct(card);
             cardObject.GetComponent<CardObject>().GetCardComponent();
             cardObject.GetComponent<CardObject>().UpdateVisuals();
-            string fileName = card.info.title + ".prefab";
+            string fileName = card.Title + ".prefab";
             string filePath = Path.Combine(cardDirPath, fileName);
             PrefabUtility.SaveAsPrefabAsset(cardObject, filePath, out bool success);
         }

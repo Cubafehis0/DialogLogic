@@ -1,10 +1,12 @@
 using SemanticTree;
-using SemanticTree.PlayerSemantics;
 using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using UnityEngine;
+using SemanticTree.PlayerEffect;
+using SemanticTree.Expression;
+
 public class XmlDocumentHelper
 {
     const string GRAMMARNS = "JaspersNodeGrammar";
@@ -49,7 +51,7 @@ public class XmlDocumentHelper
     static List<Card> ParseCardDefineNode(XmlNodeList cardsDefine)
     {
         List<Card> cards = new List<Card>();
-        CardInfoTable cardInfoTable = ScriptableAssetManage.GetScriptableObject(typeof(CardInfoTable)) as CardInfoTable;
+        //CardInfoTable cardInfoTable = ScriptableAssetManage.GetScriptableObject(typeof(CardInfoTable)) as CardInfoTable;
         foreach(XmlElement e in cardsDefine)
         {
             string title= e["title"].InnerText;
@@ -58,92 +60,39 @@ public class XmlDocumentHelper
             string meme = e["meme"].InnerText;
             XmlNode node = e.GetElementsByTagName("effect")[0];
             Card card = new Card();
-            card.info = new CardInfo() { title = title, condtionDesc = conditionDesc, effectDesc = effectDesc, meme = meme };
-            if(node["condition"]!=null) card.conditionNode = ParseCardConditions(node["condition"]);
-            if (node["pull_effect"] != null) card.pullEffectNode = ParseCardEffects(node["pull_effect"]);
-            if (node["hold_effect"] != null) card.pullEffectNode = ParseCardEffects(node["hold_effect"]);
-            if (node["play_effect"] != null) card.pullEffectNode = ParseCardEffects(node["play_effect"]);
+            //card.info = new CardInfo() { title = title, condtionDesc = conditionDesc, effectDesc = effectDesc, meme = meme };
+            //if(node["condition"]!=null) card.conditionNode = ParseCardConditions(node["condition"]);
+            //if (node["pull_effect"] != null) card.pullEffectNode = ParseCardEffects(node["pull_effect"]);
+            //if (node["hold_effect"] != null) card.pullEffectNode = ParseCardEffects(node["hold_effect"]);
+            //if (node["play_effect"] != null) card.pullEffectNode = ParseCardEffects(node["play_effect"]);
             XmlNodeList nodeList = e.GetElementsByTagName("define_card_var");
             cards.Add(card);
         }
         return cards;
     }
 
-    public static Dictionary<string,IExpressionNode> ParseCardVar(XmlNodeList nodeList)
+    public static Dictionary<string,IExpression> ParseCardVar(XmlNodeList nodeList)
     {
-        Dictionary<string, IExpressionNode> res = new Dictionary<string, IExpressionNode>();
+        Dictionary<string, IExpression> res = new Dictionary<string, IExpression>();
 
         return res;
     }
 
-    public static List<IConditionNode> ParseCardConditions(XmlNode xmlNode)
+    public static List<ICondition> ParseCardConditions(XmlNode xmlNode)
     {
         return null;
     }
 
 
-    public static List<IEffectNode> ParseCardEffects(XmlNode xmlNode)
+    public static IEffectNode ParseEffect(XmlNode xmlNode)
     {
-        XmlNodeList nodeList = xmlNode.ChildNodes;
-        List<IEffectNode> effects=new List<IEffectNode>();
-        foreach (XmlElement node in nodeList)
+        IEffectNode ret = xmlNode.Name switch
         {
-            var effect = ParseCardEffect(node);
-            if(effect!=null) effects.Add(effect);
-        }
-        return effects;
-    }
-
-    private static IEffectNode ParseCardEffect(XmlElement e)
-    {
-        IEffectNode effect=null;
-        switch (e.Name)
-        {
-            case "modify_personality":
-                XmlNode n= e.FirstChild;
-                int.TryParse(e.GetAttribute("last_turn"),out int _lastTurn);
-                Personality personality = ParsePersonality(n);
-                int? lastTurn=_lastTurn;
-                if (_lastTurn == -1)
-                    lastTurn = null;
-                effect = new ModifyPersonalityNode(personality, lastTurn);
-                break;
-        }
-        return effect;
-    }
-
-    private static Personality ParsePersonality(XmlNode n)
-    {
-        Personality personality = new Personality();
-        int.TryParse(n.InnerText, out int v);
-        switch(n.Name)
-        {
-            case "inside":
-                personality.Inner = v;
-                break;
-            case "outside":
-                personality.Outside = v;
-                break;
-            case "logic":
-                personality.Logic = v;
-                break;
-            case "spritial":
-                personality.Spritial = v;
-                break;
-            case "moral":
-                personality.Moral = v;
-                break;
-            case "unethic":
-                personality.Immoral = v;
-                break;
-            case "detour":
-                personality.Roundabout = v;
-                break;
-            case "strong":
-                personality.Aggressive = v;
-                break;
+            "modify_personality" => new ModifyPersonalityNode(xmlNode),
+            _ => null,
         };
-        return personality;
+        return ret;
+        
     }
 
     public static XmlNode FindXmlNodeInList(XmlNodeList nodeList, Predicate<XmlNode> predicate)

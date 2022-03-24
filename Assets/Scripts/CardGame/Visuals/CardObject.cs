@@ -34,6 +34,7 @@ public class CardObject : MonoBehaviour
         get => orderInLayer;
         set
         {
+            if (cardUICanvas == null) cardUICanvas = GetComponent<Canvas>();
             cardUICanvas.sortingOrder = value + 10;
             orderInLayer = value;
         }
@@ -43,10 +44,10 @@ public class CardObject : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        if (titleText) titleText.text = card.info.title;
-        if (cdtDescText) cdtDescText.text = card.info.LocalizedConditionDesc;
-        if (eftDescText) eftDescText.text = card.info.LocalizedEffectDesc;
-        if (memeText) memeText.text = card.info.LocalizedMeme;
+        if (titleText) titleText.text = card.Title;
+        if (cdtDescText) cdtDescText.text = card.ConditionDesc;
+        if (eftDescText) eftDescText.text = card.EffectDesc;
+        if (memeText) memeText.text = card.Meme;
     }
 
     private void OnEnable()

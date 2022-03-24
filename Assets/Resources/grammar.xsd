@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="define_status" />
+                <xs:element ref="define_card" />
+                <xs:element ref="define_cost_modifier" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="define_status">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="decrease_on_turn_start" type="xs:byte" minOccurs="0" />
+                <xs:element name="decrease_on_turn_end" type="xs:byte" minOccurs="0" />
+                <xs:element name="stackable" type="xs:boolean" minOccurs="0" />
+                <xs:element name="negative" type="xs:boolean" minOccurs="0" />
+                <xs:element name="on_turn_start" type="statementList" minOccurs="0" />
+                <xs:element name="on_after_play_card" type="cardscope" minOccurs="0" />
+                <xs:element name="on_add" type="statementList" minOccurs="0" />
+                <xs:element name="on_remove" type="statementList" minOccurs="0" />
+            </xs:all>
+            <xs:attribute name="name" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="define_card">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="title" type="xs:string" />
+                <xs:element name="effect_desc" type="xs:string" />
+                <xs:element name="condition_desc" type="xs:string" />
+                <xs:element name="meme" type="xs:string" />
+                <xs:element name="condition" type="xs:string" minOccurs="0"/>
+                <xs:element name="play_effect" type="statementList"  minOccurs="0"/>
+            </xs:all>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="category" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="define_cost_modifier">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string" ></xs:element>
+                <xs:element name="condition" type="condition" minOccurs="0"/>
+                <xs:element name="set_value" type="expression" />
+            </xs:all>
+            
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="statementList">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="modify_personality" />
+            <xs:element ref="modify_speech" />
+            <xs:element ref="modify_health"/>
+            <xs:element ref="set_focus" />
+            <xs:element ref="discard_all" />
+            <xs:element ref="add_status" />
+            <xs:element ref="draw" />
+            <xs:element ref="set_draw_ban" />
+            <xs:element ref="add_card_to_hand" />
+            <xs:element ref="set_variable" />
+            <xs:element ref="hand" />
+            <xs:element ref="card_set" />
+            <xs:element ref="draw_pile" />
+            <xs:element ref="add_cost_modifier" />
+            <xs:element ref="remove_cost_modifier" />
+            <xs:element ref="discard_some" />
+            <xs:element ref="random_reveal" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="modify_health" type="xs:byte"></xs:element>
+
+    <xs:element name="modify_personality">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="inside" type="expression" minOccurs="0"/>
+                <xs:element name="outside" type="expression" minOccurs="0"/>
+                <xs:element name="logic" type="expression" minOccurs="0"/>
+                <xs:element name="passion" type="expression" minOccurs="0"/>
+                <xs:element name="moral" type="expression" minOccurs="0"/>
+                <xs:element name="unethic" type="expression" minOccurs="0"/>
+                <xs:element name="detour" type="expression" minOccurs="0"/>
+                <xs:element name="strong" type="expression" minOccurs="0"/>
+                <xs:element name="last_turn" type="xs:byte" minOccurs="0"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="modify_speech">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="normal" type="expression" minOccurs="0"/>
+                <xs:element name="cheat" type="expression" minOccurs="0"/>
+                <xs:element name="threat" type="expression" minOccurs="0"/>
+                <xs:element name="persuade" type="expression" minOccurs="0"/>
+                <xs:element name="last_turn" type="xs:byte" minOccurs="0"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="set_focus">
+        <xs:complexType>
+            <xs:attribute name="last_turn" type="xs:byte" default="-1" />
+            <xs:attribute name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="normal" />
+                        <xs:enumeration value="cheat" />
+                        <xs:enumeration value="threat" />
+                        <xs:enumeration value="persuade" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="discard_all"></xs:element>
+    <xs:element name="add_status">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" maxOccurs="1" />
+                <xs:element name="value" type="xs:byte" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="draw" type="expression"></xs:element>
+    <xs:element name="set_draw_ban" type="xs:boolean"></xs:element>
+    <xs:element name="add_card_to_hand">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="num" type="expression" />
+            </xs:sequence>
+
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="discard_some">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="num" type="expression" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="set_variable">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="expression">
+                    <xs:attribute name="variable" type="xs:string" />
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="random_reveal">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="num" type="expression" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="add_cost_modifier" type="xs:string" />
+    <xs:element name="remove_cost_modifier" type="xs:string" />
+    <xs:element name="hand">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="pile_scope">
+                    <xs:choice minOccurs="0" maxOccurs="1">
+                        <xs:element ref="GUI_select_hand" />
+                    </xs:choice>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="card_set" type="pile_scope" />
+    <xs:element name="draw_pile" type="pile_scope" />
+    <xs:element name="GUI_select_hand">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="num" type="expression" />
+                <xs:element name="action" type="cardscope" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GUI_select_card">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="num" type="expression" />
+                <xs:element name="action" type="cardscope" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="random_card">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="num" type="expression" />
+                <xs:element name="action" type="cardscope" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="foreach_card">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="conditon" type="condition" minOccurs="0"/>
+                <xs:element name="action" type="cardscope" />
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="activate">
+        <xs:complexType>
+            <xs:attribute name="permanent" type="xs:boolean" default="false" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="add_copy_to_hand">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="num" type="expression"></xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="if">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="condition" type="condition" maxOccurs="1" />
+                <xs:element name="action" type="cardscope" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="cardscope">
+        <xs:complexContent>
+            <xs:extension base="statementList">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="activate" />
+                    <xs:element ref="add_copy_to_hand" />
+                    <xs:element ref="if" />
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="pile_scope">
+        <xs:choice minOccurs="0" maxOccurs="1">
+            <xs:element ref="random_card" />
+            <xs:element ref="foreach_card" />
+            <xs:element ref="GUI_select_card" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="expression">
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="condition">
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+</xs:schema>

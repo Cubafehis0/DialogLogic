@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
-using SemanticTree.PlayerSemantics;
 public class StatusManager : MonoBehaviour
 {
     /// <summary>
@@ -11,17 +10,8 @@ public class StatusManager : MonoBehaviour
     /// </summary>
     private static Dictionary<string, Status> statusDictionary = new Dictionary<string, Status>();
 
+    [SerializeField]
     private List<StatusCounter> statusList = new List<StatusCounter>();
-
-    public void AddStatusCounter(CardPlayerState player, string name, int value)
-    {
-        if (!statusDictionary.ContainsKey(name))
-        {
-            Debug.LogError("状态不存在");
-            return;
-        }
-        AddStatusCounter(player, statusDictionary[name], value);
-    }
 
     public void AddStatusCounter(CardPlayerState player, Status status, int value)
     {
@@ -30,25 +20,24 @@ public class StatusManager : MonoBehaviour
             if ((s.status == status) && s.status.Stackable)
             {
                 s.value += value;
-                if (s.value < 0 && !s.status.AllowNegative)
+                if (s.value <= 0 && !s.status.AllowNegative)
                 {
-                    PlayerNode.PushPlayerContext(player);
-                    s.status.OnRemove?.Execute();
-                    if (status.OnAfterPlayCard != null) player.OnPlayCard.RemoveListener(status.OnAfterPlayCard.Execute);
-                    if (status.OnTurnStart != null) player.OnPlayCard.RemoveListener(status.OnAfterPlayCard.Execute);
-                    PlayerNode.PopPlayerContext();
+                    Context.PushPlayerContext(player);
+                    s.status.OnRemove.Execute();
+                    player.DisableGameScript(s.status);
+                    Context.PopPlayerContext();
                     statusList.Remove(s);
                 }
                 return;
             }
         }
+        if (value <= 0 && !status.AllowNegative) return;
         StatusCounter st = new StatusCounter { status = status, value = value };
         statusList.Add(st);
-        PlayerNode.PushPlayerContext(player);
-        if (status.OnAfterPlayCard != null) player.OnPlayCard.AddListener(status.OnAfterPlayCard.Execute);
-        if (status.OnTurnStart != null) player.OnPlayCard.AddListener(status.OnAfterPlayCard.Execute);
-        status.OnAdd?.Execute();
-        PlayerNode.PopPlayerContext();
+        Context.PushPlayerContext(player);
+        player.EnableGameScript(status);
+        status.OnAdd.Execute();
+        Context.PopPlayerContext();
     }
 
     public static Status GetStatus(string name)
@@ -87,7 +76,7 @@ public class StatusManager : MonoBehaviour
         {
             StatusCounter sig = statusList[i];
             sig.value -= sig.status.DecreaseOnTurnStart;
-            if (sig.value == 0 || (sig.value < 0 && sig.status.AllowNegative == false))
+            if (sig.value == 0 || (sig.value < 0 && !sig.status.AllowNegative))
             {
                 statusList.Remove(sig);
             }
@@ -100,8 +89,13 @@ public class StatusManager : MonoBehaviour
         {
             StatusCounter sig = statusList[i];
             sig.value -= sig.status.DecreaseOnTurnEnd;
-            if (sig.value == 0 || (sig.value < 0 && sig.status.AllowNegative == false))
+            if (sig.value == 0 || (sig.value < 0 && !sig.status.AllowNegative))
             {
+                var player = CardPlayerState.Instance;
+                Context.PushPlayerContext(player);
+                sig.status.OnRemove.Execute();
+                player.DisableGameScript(sig.status);
+                Context.PopPlayerContext();
                 statusList.Remove(sig);
             }
         }

@@ -40,8 +40,10 @@ public class DragHandPileObject : MonoBehaviour
             int index = CardPlayerState.Instance.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
             cardObject.transform.SetSiblingIndex(index);
+            cardObject.transform.rotation = Quaternion.identity;
+            cardObject.transform.localScale = Vector3.one;
             Draggable draggable = cardObject.GetComponent<Draggable>();
-            if (draggable == null) draggable = cardObject.gameObject.AddComponent<Draggable>();
+            if (draggable == null) cardObject.gameObject.AddComponent<Draggable>();
         }
 
     }

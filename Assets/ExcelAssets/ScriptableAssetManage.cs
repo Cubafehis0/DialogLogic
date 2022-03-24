@@ -21,7 +21,7 @@ public class ScriptableAssetManage : MonoBehaviour
         {
             "CardTable" => LoadOrCreateAsset(CardTablePath, typeof(CardTable)),
             "EffectTable" => LoadOrCreateAsset(EffectTablePath, typeof(EffectTable)),
-            "CardInfoTable" => LoadOrCreateAsset(EffectTablePath, typeof(CardInfoTable)),
+            //"CardInfoTable" => LoadOrCreateAsset(EffectTablePath, typeof(CardInfoTable)),
             _ => null,
         };
 

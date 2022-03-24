@@ -1,5 +1,4 @@
 ﻿using SemanticTree;
-using SemanticTree.PileSemantics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +34,7 @@ public class PileSelectSystem : MonoBehaviour
         this.action = action;
         cards.ForEach(t =>
         {
-            CardObject item = CardGameManager.Instance.GetCardObject(t);
+            CardObject item = StaticCardLibrary.Instance.GetCardObject(t);
             item.gameObject.SetActive(true);
             item.transform.SetParent(content, true);
             cardObjects.Add(item);
@@ -59,9 +58,9 @@ public class PileSelectSystem : MonoBehaviour
     {
         if(minOccurs<= cardSelected.Count && cardSelected.Count <= maxOccurs)
         {
-            PileNode.PushCardContext(cardSelected);
+            Context.PushPileContext(cardSelected);
             action?.Execute();
-            PileNode.PopCardContext();
+            Context.PopPileContext();
             cardObjects.ForEach(item => CardGameManager.Instance.ReturnCardObject(item));
             cardObjects.Clear();
             cardSelected.Clear();

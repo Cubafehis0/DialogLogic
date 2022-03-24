@@ -409,8 +409,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 18281526}
-  - component: {fileID: 18281525}
   - component: {fileID: 18281527}
+  - component: {fileID: 18281525}
   - component: {fileID: 18281529}
   - component: {fileID: 18281531}
   m_Layer: 0
@@ -429,14 +429,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 18281524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bae08728f751146b3d4a15cc7a4745, type: 3}
+  m_Script: {fileID: 11500000, guid: 5560102a73c6e374cbb687ad2f797975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyCard: {fileID: 8272276035132219618, guid: 8f3e45fa873567346afeb36426b5aec6,
-    type: 3}
   OnStartGame:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2034699589}
+        m_TargetAssemblyTypeName: CardPlayerState, Assembly-CSharp
+        m_MethodName: OnStartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &18281526
 Transform:
   m_ObjectHideFlags: 0
@@ -1236,7 +1246,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446e9d39d1a05444b84ea0697edd25cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: Focus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: ResetFocus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: Focus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: set_LockFocus
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: set_LockFocus
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 200259789}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: ResetFocus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &227469089
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,201 +2420,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c5a72d67ef0ce41b73d46c6f5aaaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - title: "\u6D4B\u8BD5\u65E0\u6548\u679C\u5361\u724C"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u7ACB\u523B\u52A0\u903B\u8F91"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u9009\u9879\u6D4B\u8BD5\u903B\u8F91+2"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u9009\u9879\u6D4B\u8BD5\u9053\u5FB7+2"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u9009\u9879\u6D4B\u8BD5\u8FC2\u56DE+2"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u9009\u62E9+2"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u6301\u7EED\u903B\u8F91+1"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u62BD\u724C1"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u5411\u624B\u724C\u589E\u52A01\u5F20\u201C\u8BF4\u6559\u201C\u5361\u724C"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u6D4B\u8BD5\u3010\u4E22\u5F03\u6240\u6709\u3011\u5411\u624B\u724C\u4E2D\u589E\u52A0\u5F03\u724C\u6570\u91CF\u7684\u3010\u8BF4\u6559\u3011"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u8BF4\u6559"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  - title: "\u8BF4\u6559"
-    desc: 
-    meme: 
-    cost: 0
-    category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
-  cardInfoTable: {fileID: 0}
-  cardObjects: []
+  sampleCard: {fileID: 8272276035132219618, guid: 8f3e45fa873567346afeb36426b5aec6,
+    type: 3}
 --- !u!4 &619566917
 Transform:
   m_ObjectHideFlags: 0
@@ -3122,7 +3027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3639,7 +3544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000050476134}
+  m_AnchoredPosition: {x: 0, y: 0.000013294895}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1019761665
@@ -3678,7 +3583,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446e9d39d1a05444b84ea0697edd25cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates: []
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1514054541}
+          m_TargetAssemblyTypeName: PileSelectSystem, Assembly-CSharp
+          m_MethodName: ClickCard
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1020998794
 GameObject:
   m_ObjectHideFlags: 0
@@ -5015,6 +4936,7 @@ GameObject:
   - component: {fileID: 1359349282}
   - component: {fileID: 1359349283}
   - component: {fileID: 1359349284}
+  - component: {fileID: 1359349285}
   m_Layer: 5
   m_Name: "\u5DF2\u9009\u62E9\u624B\u724C\u5806"
   m_TagString: Untagged
@@ -5079,6 +5001,35 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1359349285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359349281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446e9d39d1a05444b84ea0697edd25cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 650806974}
+          m_TargetAssemblyTypeName: HandSelectSystem, Assembly-CSharp
+          m_MethodName: CancelCard
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1370692600
 GameObject:
   m_ObjectHideFlags: 0
@@ -6844,6 +6795,7 @@ GameObject:
   - component: {fileID: 1936098700}
   - component: {fileID: 1936098701}
   - component: {fileID: 1936098702}
+  - component: {fileID: 1936098703}
   m_Layer: 5
   m_Name: "\u5F85\u9009\u62E9\u624B\u724C\u5806"
   m_TagString: Untagged
@@ -6896,9 +6848,70 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936098699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8d971698659e614d8d0dd19ebaed62c, type: 3}
+  m_Script: {fileID: 11500000, guid: 09ff913db00c9fe459262f0b5e5620fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1936098703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936098699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446e9d39d1a05444b84ea0697edd25cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1936098701}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: Focus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1936098701}
+          m_TargetAssemblyTypeName: HandLayout, Assembly-CSharp
+          m_MethodName: ResetFocus
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 650806974}
+          m_TargetAssemblyTypeName: HandSelectSystem, Assembly-CSharp
+          m_MethodName: SelectCard
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!224 &1938025669 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 269206420165164112, guid: 894e14e2669ac4447b9874b84767a730,
@@ -7272,6 +7285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac708b4f11264824f8263c83e53c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusList: []
 --- !u!114 &2034699587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7285,7 +7299,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  cardSet: 09000000000000000000000000000000
+  cardSet:
+  - AddLogic
+  - Draw
+  - Draw
+  - AddLogic
+  - AddLogic
   vanilaCharacter: 00000000000000000000000000000000
 --- !u!114 &2034699588
 MonoBehaviour:
@@ -7313,10 +7332,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePersonality:
-    p0: 0
-    p1: 0
-    p2: 0
-    p3: 0
+    p0: 1
+    p1: 2
+    p2: 3
+    p3: 4
   baseSpeechArt:
     normal: 0
     cheat: 0
@@ -7328,6 +7347,9 @@ MonoBehaviour:
   drawNum: 5
   handCardMaxNum: 10
   drawBan: 0
+  personalityModifiers: []
+  speechModifiers: []
+  focusSpeechModifiers: []
   costModifers: []
   OnEnergyChange:
     m_PersistentCalls:
@@ -8104,6 +8126,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1147182746}
     m_Modifications:
+    - target: {fileID: 716600762, guid: f35cdbadeea24d746ac306d105748d4c, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2034699589}
     - target: {fileID: 3303592216040513640, guid: f35cdbadeea24d746ac306d105748d4c,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8227,7 +8253,7 @@ PrefabInstance:
         type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2034699589}
     - target: {fileID: 543705968925605543, guid: a637de4b6c86bbc478943e7c23000c09,
         type: 3}
       propertyPath: logicSlider
