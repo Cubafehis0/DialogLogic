@@ -3,11 +3,11 @@
   <xs:element name="CardInfo" nillable="true" type="CardInfo" />
   <xs:complexType name="CardInfo">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="title" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="condition_desc" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="effect_desc" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="meme" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="title" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="condition_desc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="effect_desc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="meme" nillable="true" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="cost" type="xs:int" />
       <xs:element minOccurs="1" maxOccurs="1" name="category" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="1" name="in_hand_personality" type="Personality" />
@@ -16,14 +16,14 @@
   </xs:complexType>
   <xs:complexType name="Personality">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="inner" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="outside" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="logic" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="spritial" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="moral" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="immoral" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="roundabout" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" maxOccurs="1" name="aggressive" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="inside" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="outside" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="logic" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="spritial" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="moral" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="immoral" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="roundabout" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="aggressive" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="EffectList">
@@ -216,6 +216,12 @@
   <xs:element name="Personality" nillable="true" type="Personality" />
   <xs:element name="SpeechArt" nillable="true" type="SpeechArt" />
   <xs:element name="SpeechType" type="SpeechType" />
+  <xs:element name="CardDefines" nillable="true" type="CardDefines" />
+  <xs:complexType name="CardDefines">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="define_card" type="CardInfo" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="ConditionList" nillable="true" type="ConditionList" />
   <xs:complexType name="ConditionList">
     <xs:sequence>

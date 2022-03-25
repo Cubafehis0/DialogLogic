@@ -10,19 +10,19 @@ using System.Xml.Serialization;
 [Serializable]
 public class CardInfo
 {
-    [XmlElement(ElementName = "name")]
+    [XmlElement(ElementName = "name", IsNullable = true)]
     public string Name;
 
-    [XmlElement(ElementName = "title")]
+    [XmlElement(ElementName = "title", IsNullable = true)]
     public string Title;
 
-    [XmlElement(ElementName = "condition_desc")]
+    [XmlElement(ElementName = "condition_desc", IsNullable = true)]
     public string ConditionDesc;
 
-    [XmlElement(ElementName = "effect_desc")]
+    [XmlElement(ElementName = "effect_desc", IsNullable = true)]
     public string EffectDesc;
 
-    [XmlElement(ElementName = "meme")]
+    [XmlElement(ElementName = "meme", IsNullable = true)]
     public string Meme;
 
     [XmlElement(ElementName = "cost")]
