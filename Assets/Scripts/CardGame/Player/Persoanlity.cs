@@ -69,46 +69,55 @@ public class Personality
     {
         get
         {
-            return type switch
+            switch (type)
             {
-                PersonalityType.Inside => Inner,
-                PersonalityType.Outside => Outside,
-                PersonalityType.Logic => Logic,
-                PersonalityType.Passion => Spritial,
-                PersonalityType.Moral => Moral,
-                PersonalityType.Unethic => Immoral,
-                PersonalityType.Detour => Roundabout,
-                PersonalityType.Strong => Aggressive,
-                _ => throw new System.IndexOutOfRangeException(),
-            };
+                case PersonalityType.Inside:
+                    return p0;
+                case PersonalityType.Outside:
+                    return -p0;
+                case PersonalityType.Logic:
+                    return p1;
+                case PersonalityType.Passion:
+                    return -p1;
+                case PersonalityType.Moral:
+                    return p2;
+                case PersonalityType.Unethic:
+                    return -p2;
+                case PersonalityType.Detour:
+                    return p3;
+                case PersonalityType.Strong:
+                    return -p3;
+                default:
+                    throw new IndexOutOfRangeException();
+            }
         }
         set
         {
             switch (type)
             {
                 case PersonalityType.Inside:
-                    Inner = value;
+                    p0 = value;
                     break;
                 case PersonalityType.Outside:
-                    Outside = value;
+                    p0 = -value;
                     break;
                 case PersonalityType.Logic:
-                    Logic = value;
+                    p1 = value;
                     break;
                 case PersonalityType.Passion:
-                    Spritial = value;
+                    p1 = -value;
                     break;
                 case PersonalityType.Moral:
-                    Moral = value;
+                    p2 = value;
                     break;
                 case PersonalityType.Unethic:
-                    Immoral = value;
+                    p2 = -value;
                     break;
                 case PersonalityType.Detour:
-                    Roundabout = value;
+                    p3 = value;
                     break;
                 case PersonalityType.Strong:
-                    Aggressive = value;
+                    p3 = -value;
                     break;
                 default:
                     break;

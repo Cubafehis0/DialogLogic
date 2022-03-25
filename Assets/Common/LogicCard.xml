@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<CardInfo>
+    <name>sanduanlun</name>
+    <condition_desc>无</condition_desc>
+    <effect_desc>持有逻辑+3，打出激情+5</effect_desc>
+    <meme>无</meme>
+    <cost>1</cost>
+    <category>2</category>
+    <in_hand_personality>
+        <logic>1</logic>
+    </in_hand_personality>
+    <on_play_card>
+        <modify_personality>
+            <personality>
+                <spritial>3</spritial>
+            </personality>
+            <duration>-1</duration>
+        </modify_personality>
+    </on_play_card>
+</CardInfo>
