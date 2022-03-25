@@ -2,16 +2,13 @@
 
 namespace SemanticTree.Condition
 {
-    public class AnyNode : ConditionNode
+    public class AnyNode : ConditionList
     {
-        [XmlElement]
-        public ConditionList conditions;
-
         public override bool Value
         {
             get
             {
-                foreach (var condition in conditions.conditions)
+                foreach (var condition in conditionsList)
                 {
                     if (condition.Value)
                     {
@@ -20,11 +17,6 @@ namespace SemanticTree.Condition
                 }
                 return false;
             }
-        }
-
-        public override void Construct()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace SemanticTree.Condition
             get
             {
                 int count = 0;
-                foreach (var condition in conditions.conditions)
+                foreach (var condition in conditions.conditionsList)
                 {
                     if (condition.Value)
                     {

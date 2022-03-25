@@ -1,4 +1,5 @@
-﻿using SemanticTree.PlayerEffect;
+﻿using SemanticTree.Condition;
+using SemanticTree.PlayerEffect;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -13,9 +14,7 @@ namespace SemanticTree
 
         private void Start()
         {
-            Serialize();
-            //Deserialize<CardInfo>();
-
+            SerializeCondition();
         }
 
         private void Serialize()
@@ -23,6 +22,7 @@ namespace SemanticTree
             XmlSerializer ser = new XmlSerializer(typeof(CardInfo));
             CardInfo effect = new CardInfo()
             {
+                Name = "english name",
                 Title = "Card样例",
                 ConditionDesc = "限制样例",
                 EffectDesc = "描述样例",
@@ -52,6 +52,30 @@ namespace SemanticTree
             writer.Close();
         }
 
+        private void SerializeCondition()
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(ConditionList));
+            ConditionList effect = new AllNode()
+            {
+                conditions = new List<object>()
+                {
+                    "r1",
+                    "r2",
+                    new NoneNode()
+                    {
+                        conditions =new List<object>()
+                        {
+                                "r3",
+                                "r4",
+                            }
+                        }
+                    }
+            };
+
+            TextWriter writer = new StreamWriter("Assets/Common/ConditionTemplate.xml");
+            ser.Serialize(writer, effect);
+            writer.Close();
+        }
         private void Deserialize<T>()
         {
             XmlSerializer ser = new XmlSerializer(typeof(T));

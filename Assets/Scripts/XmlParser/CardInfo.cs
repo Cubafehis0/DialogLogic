@@ -10,6 +10,9 @@ using System.Xml.Serialization;
 [Serializable]
 public class CardInfo
 {
+    [XmlElement(ElementName = "name")]
+    public string Name;
+
     [XmlElement(ElementName = "title")]
     public string Title;
 
