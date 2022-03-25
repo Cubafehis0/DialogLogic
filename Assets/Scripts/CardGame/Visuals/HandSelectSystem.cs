@@ -18,7 +18,7 @@ public class HandSelectSystem : MonoBehaviour
     private static HandSelectSystem instance = null;
     private Pile<Card> cardCandidate = new Pile<Card>();
     private Pile<Card> cardSelected = new Pile<Card>();
-    private IEffectNode action = null;
+    private IEffect action = null;
     public static HandSelectSystem Instance { get => instance; }
 
     private void Awake()
@@ -29,7 +29,7 @@ public class HandSelectSystem : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool Open(List<Card> cards, int num, IEffectNode action)
+    public bool Open(List<Card> cards, int num, IEffect action)
     {
         if (gameObject.activeSelf) return false;
         gameObject.SetActive(true);

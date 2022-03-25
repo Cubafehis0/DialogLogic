@@ -1,17 +1,14 @@
-﻿using SemanticTree.PlayerEffect;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace SemanticTree
 {
-
-    public abstract class Effect:IEffect
+    public abstract class ConditionNode : ICondition
     {
         public abstract void Construct();
-        public abstract void Execute();
+        public abstract bool Value { get; }
     }
 }

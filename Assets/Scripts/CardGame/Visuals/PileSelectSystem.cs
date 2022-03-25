@@ -12,7 +12,7 @@ public class PileSelectSystem : MonoBehaviour
     private static PileSelectSystem instance=null;
     private int minOccurs = 0;
     private int maxOccurs = 0;
-    private IEffectNode action = null;
+    private IEffect action = null;
     private List<CardObject> cardObjects = new List<CardObject>();
     private List<Card> cardSelected = new List<Card>();
     public static PileSelectSystem Instance { get => instance;}
@@ -23,7 +23,7 @@ public class PileSelectSystem : MonoBehaviour
         gameObject.SetActive(false);
         instance = this;
     }
-    public void Open(List<Card> cards, int num, IEffectNode action)
+    public void Open(List<Card> cards, int num, IEffect action)
     {
         if (gameObject.activeSelf) return;
         gameObject.SetActive(true);

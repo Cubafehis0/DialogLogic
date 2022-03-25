@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace SemanticTree.Condition
 {
-    public class AllNode : ICondition
+    public class AllNode : ConditionNode
     {
         [XmlElement]
-        public List<ICondition> conditions;
-        public bool Value
+        public ConditionList conditions;
+        public override bool Value
         {
             get
             {
-                foreach (var condition in conditions)
+                foreach (var condition in conditions.conditions)
                 {
                     if (!condition.Value)
                     {
@@ -24,6 +22,11 @@ namespace SemanticTree.Condition
                 }
                 return true;
             }
+        }
+
+        public override void Construct()
+        {
+            conditions.Construct();
         }
     }
 }

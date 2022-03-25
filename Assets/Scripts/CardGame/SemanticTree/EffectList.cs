@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace SemanticTree
 {
     [Serializable]
-    public class EffectList : IEffectNode
+    public class EffectList : IEffect
     {
         [XmlElement(typeof(ModifyPersonality),ElementName ="modify_personality")]
         [XmlElement(typeof(AddCard2Hand), ElementName = "add_card_to_hand")]

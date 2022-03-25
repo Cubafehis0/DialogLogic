@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace SemanticTree
 { 
-    public interface IEffectNode
+    public interface IEffect
     {
         void Execute();
     }

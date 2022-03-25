@@ -84,9 +84,9 @@ public class XmlDocumentHelper
     }
 
 
-    public static IEffectNode ParseEffect(XmlNode xmlNode)
+    public static IEffect ParseEffect(XmlNode xmlNode)
     {
-        IEffectNode ret = xmlNode.Name switch
+        IEffect ret = xmlNode.Name switch
         {
             "modify_personality" => new ModifyPersonality(xmlNode),
             _ => null,

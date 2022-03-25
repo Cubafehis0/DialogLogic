@@ -42,7 +42,7 @@ public class CardGameManager : MonoBehaviour
     /// </summary>
     /// <param name="cards"></param>
     /// <param name="action"></param>
-    public void OpenCardChoosePanel(List<Card> cards, int num,IEffectNode action)
+    public void OpenCardChoosePanel(List<Card> cards, int num,IEffect action)
     {
         //参数不能改成CardInfo
         throw new System.NotImplementedException();
@@ -66,12 +66,12 @@ public class CardGameManager : MonoBehaviour
         Debug.Log("启用卡牌操作 未实现");
     }
 
-    public void OpenHandChoosePanel(ICondition condition,int num,IEffectNode action)
+    public void OpenHandChoosePanel(ICondition condition,int num,IEffect action)
     {
         HandSelectSystem.Instance.Open(CardPlayerState.Instance.Hand, num, action);
     }
 
-    public void OpenPileChoosePanel(List<Card> cards, int num, IEffectNode action)
+    public void OpenPileChoosePanel(List<Card> cards, int num, IEffect action)
     {
         PileSelectSystem.Instance.Open(cards, num, action);
     }
