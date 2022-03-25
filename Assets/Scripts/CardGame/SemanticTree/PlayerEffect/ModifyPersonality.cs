@@ -14,7 +14,7 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName = "personality")]
         public Personality Modifier { get; set; }
 
-        [XmlElement(ElementName = "duration")]
+        [XmlElement(ElementName = "duration",IsNullable =true)]
         public int? Timer { get; set; }
 
         public ModifyPersonality()

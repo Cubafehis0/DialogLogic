@@ -6,26 +6,26 @@ namespace SemanticTree.PlayerEffect
     /// <summary>
     /// effect
     /// </summary>
-    public class ModifyFocusNode : Effect
+    public class ModifyFocus : Effect
     {
         [XmlElement(ElementName = "type")]
         public SpeechType modifier;
         [XmlElement(ElementName = "duration")]
         public int? Timer { get; set; }
 
-        public ModifyFocusNode()
+        public ModifyFocus()
         {
             modifier = SpeechType.Normal;
             Timer = null;
         }
 
-        public ModifyFocusNode(SpeechType modifier, int? timer)
+        public ModifyFocus(SpeechType modifier, int? timer)
         {
             this.modifier = modifier;
             this.Timer = timer;
         }
 
-        public ModifyFocusNode(XmlNode xmlNode)
+        public ModifyFocus(XmlNode xmlNode)
         {
             modifier = SpeechType.Normal;
             Timer = null;

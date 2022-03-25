@@ -10,6 +10,7 @@ namespace SemanticTree.CardEffect
     /// <summary>
     /// 无参数
     /// </summary>
+    [XmlType()]
     public class ActivateCard : CardNode
     {
         [XmlElement(ElementName = "permanent")]

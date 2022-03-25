@@ -31,6 +31,6 @@ public class CardInfo
     [XmlElement(ElementName = "in_hand_personality")]
     public Personality Personality;
 
-    [XmlArray(ElementName = "on_play_card")]
+    [XmlElement(ElementName = "on_play_card")]
     public EffectList Effects;
 }

@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
 {
-    public class GUISelectHandNode : Effect
+    public class GUISelectHand : Effect
     {
         [XmlElement(ElementName ="action")]
         public EffectList Actions { get; set; }

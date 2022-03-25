@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CardInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <title>Card样例</title>
+  <condition_desc>限制样例</condition_desc>
+  <effect_desc>描述样例</effect_desc>
+  <meme>尾巴样例</meme>
+  <cost>1</cost>
+  <category>0</category>
+  <in_hand_personality>
+    <inner>0</inner>
+    <outside>0</outside>
+    <logic>2</logic>
+    <spritial>-2</spritial>
+    <moral>0</moral>
+    <immoral>0</immoral>
+    <roundabout>0</roundabout>
+    <aggressive>0</aggressive>
+  </in_hand_personality>
+  <on_play_card>
+    <modify_personality>
+      <personality>
+        <inner>0</inner>
+        <outside>0</outside>
+        <logic>0</logic>
+        <spritial>0</spritial>
+        <moral>1</moral>
+        <immoral>-1</immoral>
+        <roundabout>0</roundabout>
+        <aggressive>0</aggressive>
+      </personality>
+      <duration xsi:nil="true" />
+    </modify_personality>
+    <modify_personality>
+      <personality>
+        <inner>0</inner>
+        <outside>0</outside>
+        <logic>1</logic>
+        <spritial>-1</spritial>
+        <moral>0</moral>
+        <immoral>0</immoral>
+        <roundabout>0</roundabout>
+        <aggressive>0</aggressive>
+      </personality>
+      <duration xsi:nil="true" />
+    </modify_personality>
+  </on_play_card>
+</CardInfo>

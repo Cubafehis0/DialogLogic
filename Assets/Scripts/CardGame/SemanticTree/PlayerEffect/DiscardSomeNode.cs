@@ -8,14 +8,14 @@ namespace SemanticTree.PlayerEffect
     /// <summary>
     /// effect
     /// </summary>
-    public class DiscardSomeHandNode : Effect
+    public class DiscardSomeHand : Effect
     {
 
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
         private IExpression num;
-        public DiscardSomeHandNode() { }
-        public DiscardSomeHandNode(XmlNode xmlNode)
+        public DiscardSomeHand() { }
+        public DiscardSomeHand(XmlNode xmlNode)
         {
             num = ExpressionParser.AnalayseExpression(xmlNode.InnerText);
         }
