@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Xml;
 using SemanticTree;
-using XmlParser;
 
 public class GameScript
 {

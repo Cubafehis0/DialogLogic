@@ -6,33 +6,31 @@ using System.Xml.Serialization;
 
 
 
-namespace XmlParser
+
+[Serializable]
+public class CardInfo
 {
-    [Serializable]
-    public class CardInfo
-    {
-        [XmlElement(ElementName = "title")]
-        public string Title { get; set; }
+    [XmlElement(ElementName = "title")]
+    public string Title;
 
-        [XmlElement(ElementName = "condition_desc")]
-        public string ConditionDesc { get; set; }
+    [XmlElement(ElementName = "condition_desc")]
+    public string ConditionDesc;
 
-        [XmlElement(ElementName = "effect_desc")]
-        public string EffectDesc { get; set; }
+    [XmlElement(ElementName = "effect_desc")]
+    public string EffectDesc;
 
-        [XmlElement(ElementName = "meme")]
-        public string Meme { get; set; }
+    [XmlElement(ElementName = "meme")]
+    public string Meme;
 
-        [XmlElement(ElementName = "cost")]
-        public int BaseCost { get; set; }
+    [XmlElement(ElementName = "cost")]
+    public int BaseCost;
 
-        [XmlIgnore]
-        public int category;
+    [XmlElement(ElementName = "category")]
+    public int category;
 
-        [XmlElement(ElementName = "in_hand_personality")]
-        public Personality Personality { get; set; }
+    [XmlElement(ElementName = "in_hand_personality")]
+    public Personality Personality;
 
-        [XmlArray(ElementName = "on_play_card")]
-        public EffectList Effects { get; set; }
-    }
+    [XmlArray(ElementName = "on_play_card")]
+    public EffectList Effects;
 }

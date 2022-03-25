@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SemanticTree.Expression
+﻿namespace ExpressionAnalyser
 {
-    public interface ITreeNode { }
-    public interface IExpression : ITreeNode
+    public interface IExpression
     {
         int Value { get; }
     }

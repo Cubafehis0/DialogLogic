@@ -1,5 +1,5 @@
-﻿using SemanticTree;
-using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
+using SemanticTree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.Adapter
 {
@@ -63,7 +62,7 @@ namespace SemanticTree.Adapter
 
         public override void Construct()
         {
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
             Actions.Execute();
         }
     }

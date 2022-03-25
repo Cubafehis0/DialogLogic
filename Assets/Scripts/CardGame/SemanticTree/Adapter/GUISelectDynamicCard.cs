@@ -1,7 +1,6 @@
-﻿using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.Adapter
 {
@@ -33,7 +32,7 @@ namespace SemanticTree.Adapter
 
         public override void Construct()
         {
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
             Actions.Execute();
         }
 

@@ -1,8 +1,6 @@
-﻿using MyExpressionParse;
-using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.ChoiceEffect
 {
@@ -13,9 +11,10 @@ namespace SemanticTree.ChoiceEffect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
+        private IExpression exp;
         [XmlElement(ElementName = "speech_type")]
         public SpeechType? SpeechType { get; set; }
-        private IExpression exp;
+
 
         public RandomRevealNode()
         {
@@ -31,7 +30,8 @@ namespace SemanticTree.ChoiceEffect
         public RandomRevealNode(XmlNode xmlNode)
         {
             //有缺陷
-            exp = MyExpressionParse.ExpressionParser.AnalayseExpression(xmlNode.InnerText);
+            NumExpression=xmlNode.InnerText;
+            Construct();
         }
 
         public override void Execute()

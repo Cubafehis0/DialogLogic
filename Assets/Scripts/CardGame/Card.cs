@@ -4,60 +4,30 @@ using UnityEngine;
 using SemanticTree;
 using System.Xml;
 using System.Text.RegularExpressions;
-using XmlParser;
 using System.Xml.Serialization;
-using SemanticTree.Expression;
+using ExpressionAnalyser;
 
 public class Card : MonoBehaviour
 {
     //卡牌基本信息
-    [SerializeField]
-    private string title;
-    [SerializeField]
-    private string baseConditionDesc;
-    [SerializeField]
-    private string baseEffectDesc;
-    [SerializeField]
-    private string meme;
-    [SerializeField]
-    private int cost;
-    [XmlIgnore]
-    public int category;
+    public CardInfo info;
+
     [SerializeField]
     private bool temporaryActivate = false;
     [SerializeField]
     private bool permanentActivate = false;
 
-
     private Dictionary<string, IExpression> cardVars;
 
+    public EffectList Effects;
     public ICondition conditionNode = null;
-    public EffectList pullEffectNode = null;
-    public EffectList holdEffectNode = null;
-    [XmlArray(ElementName = "on_play_card")]
-    public EffectList effectNode = null;
 
-
-    [XmlElement(ElementName = "title")]
-    public string Title { get => title; set => title = value; }
-    
-    [XmlElement(ElementName = "condition_desc")]
-    public string ConditionDesc { get => baseConditionDesc; set => baseConditionDesc = value; }
-    
-    [XmlElement(ElementName = "effect_desc")]
-    public string EffectDesc { get => baseEffectDesc; set => baseEffectDesc = value; }
-
-    [XmlElement(ElementName = "meme")]
-    public string Meme { get => meme; set => meme = value; }
-
-    [XmlElement(ElementName = "cost")]
-    public int BaseCost { get => cost; set => cost = value; }
     public int FinalCost
     {
         get
         {
             if (Activated) return 0;
-            int ret = cost;
+            int ret = info.BaseCost;
             foreach (var modifer in CardPlayerState.Instance.costModifers)//有缺陷
             {
                 CostModifier m = modifer.value;
@@ -69,7 +39,6 @@ public class Card : MonoBehaviour
             return ret;
         }
     }
-    public int Category { get => category; set => category = value; }
     public bool Activated { get => TemporaryActivate || PermanentActivate; }
     public bool TemporaryActivate { get => temporaryActivate; set => temporaryActivate = value; }
     public bool PermanentActivate { get => permanentActivate; set => permanentActivate = value; }
@@ -78,58 +47,57 @@ public class Card : MonoBehaviour
 
     public void Construct(Card prefab)
     {
+        //浅拷贝
+        info = prefab.info;
         conditionNode = prefab.conditionNode;
-        pullEffectNode = prefab.pullEffectNode;
-        holdEffectNode = prefab.holdEffectNode;
-        effectNode = prefab.effectNode;
     }
     public void Construct(XmlNode xml)
     {
-        if (!xml.Name.Equals("define_card")) throw new SemanticException();
-        temporaryActivate = false;
-        permanentActivate = false;
-        cost = 1;
-        Category = 1;
-        XmlNode it = xml.FirstChild;
-        while (it != null)
-        {
-            switch (it.Name)
-            {
-                case "title":
-                    Title = it.InnerText;
-                    break;
-                case "effect_desc":
-                    baseEffectDesc = it.InnerText;
-                    break;
-                case "condition_desc":
-                    baseConditionDesc = it.InnerText;
-                    break;
-                case "meme":
-                    Meme = it.InnerText;
-                    break;
-                case "condition":
-                    if (conditionNode != null) throw new SemanticException();
-                    conditionNode = SemanticAnalyser.AnalyseConditionList(it);
-                    break;
-                case "pull_effect":
-                    if (pullEffectNode != null) throw new SemanticException();
-                    pullEffectNode = SemanticAnalyser.AnalayseEffectList(it);
-                    break;
-                case "hold_effect":
-                    if (holdEffectNode != null) throw new SemanticException();
-                    holdEffectNode = SemanticAnalyser.AnalayseEffectList(it);
-                    break;
-                case "play_effect":
-                    if (effectNode != null) throw new SemanticException();
-                    effectNode = SemanticAnalyser.AnalayseEffectList(it);
-                    break;
-                case "define_card_var":
-                    throw new NotImplementedException();
-                default:
-                    throw new SemanticException();
-            }
-            it = it.NextSibling;
-        }
+        //if (!xml.Name.Equals("define_card")) throw new SemanticException();
+        //temporaryActivate = false;
+        //permanentActivate = false;
+        //cost = 1;
+        //Category = 1;
+        //XmlNode it = xml.FirstChild;
+        //while (it != null)
+        //{
+        //    switch (it.Name)
+        //    {
+        //        case "title":
+        //            Title = it.InnerText;
+        //            break;
+        //        case "effect_desc":
+        //            baseEffectDesc = it.InnerText;
+        //            break;
+        //        case "condition_desc":
+        //            baseConditionDesc = it.InnerText;
+        //            break;
+        //        case "meme":
+        //            Meme = it.InnerText;
+        //            break;
+        //        case "condition":
+        //            if (conditionNode != null) throw new SemanticException();
+        //            conditionNode = SemanticAnalyser.AnalyseConditionList(it);
+        //            break;
+        //        case "pull_effect":
+        //            if (pullEffectNode != null) throw new SemanticException();
+        //            pullEffectNode = SemanticAnalyser.AnalayseEffectList(it);
+        //            break;
+        //        case "hold_effect":
+        //            if (holdEffectNode != null) throw new SemanticException();
+        //            holdEffectNode = SemanticAnalyser.AnalayseEffectList(it);
+        //            break;
+        //        case "play_effect":
+        //            if (effectNode != null) throw new SemanticException();
+        //            effectNode = SemanticAnalyser.AnalayseEffectList(it);
+        //            break;
+        //        case "define_card_var":
+        //            throw new NotImplementedException();
+        //        default:
+        //            throw new SemanticException();
+        //    }
+        //    it = it.NextSibling;
+        //}
     }
 
     public int GetCardVarValue(string varName)

@@ -213,9 +213,9 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             Context.PushPlayerContext(this);
             Context.PushCardContext(card);
             OnPlayCard.Invoke();
-            if (card.effectNode == null) Debug.Log("空效果");
+            if (card.Effects == null) Debug.Log("空效果");
 
-            card.effectNode.Execute();
+            card.Effects.Execute();
             Context.PopCardContext();
             Context.PopPlayerContext();
             Hand.MigrateTo(card, discardPile);

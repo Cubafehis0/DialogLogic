@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<EffectList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <effects xsi:type="modify_personality">
+<ArrayOfEffect xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Effect xsi:type="modify_personality">
     <personality>
       <inner>0</inner>
       <outside>0</outside>
@@ -12,9 +12,9 @@
       <aggressive>-3</aggressive>
     </personality>
     <duration>2</duration>
-  </effects>
-  <effects xsi:type="AddCard2Hand">
+  </Effect>
+  <Effect xsi:type="add_card_to_hand">
     <num>1</num>
     <name>说教</name>
-  </effects>
-</EffectList>
+  </Effect>
+</ArrayOfEffect>

@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.GlobalEffect
 {
     public class IF : Effect
     {
         private ICondition condition;
+
         [XmlElement(ElementName = "action")]
         public EffectList Actions { get; set; }
+
+        public IF()
+        {
+
+        }
 
         public IF(ICondition condition, EffectList action)
         {

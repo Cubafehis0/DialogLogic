@@ -1,20 +1,21 @@
-﻿using MyExpressionParse;
-using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
+using System;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.PlayerEffect
 {
     /// <summary>
     /// effect
     /// </summary>
+    [XmlType(TypeName ="add_card_to_hand")]
+    [Serializable]
     public class AddCard2Hand : Effect
     {
         [XmlElement(ElementName = "num")]
-        public string NumExpression { get; set; }
+        public string NumExpression;
         [XmlElement(ElementName = "name")]
-        public string CardName { get; set; }
+        public string CardName;
 
         private IExpression num;
         private Card prefab;
@@ -40,7 +41,7 @@ namespace SemanticTree.PlayerEffect
                         prefab = StaticCardLibrary.Instance.GetByName(xml.InnerText);
                         break;
                     case "num":
-                        num = MyExpressionParse.ExpressionParser.AnalayseExpression(xml.InnerText);
+                        num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(xml.InnerText);
                         break;
                 }
                 xml = xml.NextSibling;

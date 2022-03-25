@@ -1,5 +1,5 @@
-﻿using SemanticTree;
-using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
+using SemanticTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,7 +73,7 @@ public class CostModifier
                     condition = SemanticAnalyser.AnalyseConditionList(it);
                     break;
                 case "set_value":
-                    exp = MyExpressionParse.ExpressionParser.AnalayseExpression(it.InnerText);
+                    exp = ExpressionAnalyser.ExpressionParser.AnalayseExpression(it.InnerText);
                     break;
                 default:
                     throw new SemanticException("未识别的符号");

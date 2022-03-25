@@ -1,3 +1,4 @@
+using SemanticTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Canvas))]
 public class CardObject : MonoBehaviour
 {
+
     [SerializeField]
     private Text titleText;
     [SerializeField]
@@ -44,10 +46,10 @@ public class CardObject : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        if (titleText) titleText.text = card.Title;
-        if (cdtDescText) cdtDescText.text = card.ConditionDesc;
-        if (eftDescText) eftDescText.text = card.EffectDesc;
-        if (memeText) memeText.text = card.Meme;
+        if (titleText) titleText.text = card.info.Title;
+        if (cdtDescText) cdtDescText.text = card.info.ConditionDesc;
+        if (eftDescText) eftDescText.text = card.info.EffectDesc;
+        if (memeText) memeText.text = card.info.Meme;
     }
 
     private void OnEnable()

@@ -1,4 +1,4 @@
-﻿using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -18,11 +18,6 @@ namespace SemanticTree.CardEffect
             NumExpression = "";
             num = null;
         }
-        public AddCopy2HandNode(XmlNode xmlNode)
-        {
-            NumExpression = xmlNode.InnerText;
-            Construct();
-        }
         public override void Execute()
         {
 
@@ -34,7 +29,7 @@ namespace SemanticTree.CardEffect
         }
         public override void Construct()
         {
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
         }
     }
 }

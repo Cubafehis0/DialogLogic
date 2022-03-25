@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using SemanticTree.CardEffect;
-using XmlParser;
 namespace SemanticTree.CardEffect
 {
     /// <summary>
@@ -18,16 +17,11 @@ namespace SemanticTree.CardEffect
         {
             this.Category = 0;
         }
-        public CardCategory(int category)
-        {
-            this.Category = category;
-        }
-
         public bool Value
         {
             get
             {
-                return Context.CardContext.Category == Category;
+                return Context.CardContext.info.category == Category;
             }
         }
 

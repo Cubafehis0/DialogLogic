@@ -1,7 +1,6 @@
-﻿using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.PlayerEffect
 {
@@ -28,12 +27,6 @@ namespace SemanticTree.PlayerEffect
             status = null;
         }
 
-        public AddStatus(Status status, int value)
-        {
-            this.status = status;
-            this.value = new ConstInt(value);
-        }
-
         public AddStatus(XmlNode xmlNode)
         {
             if (!xmlNode.Name.Equals("add_status")) throw new SemanticException();
@@ -47,7 +40,7 @@ namespace SemanticTree.PlayerEffect
                         status = StaticStatusLibrary.GetByName(xml.InnerText);
                         break;
                     case "value":
-                        value = MyExpressionParse.ExpressionParser.AnalayseExpression(xml.InnerText);
+                        value = ExpressionAnalyser.ExpressionParser.AnalayseExpression(xml.InnerText);
                         break;
                 }
                 xml = xml.NextSibling;
@@ -62,7 +55,7 @@ namespace SemanticTree.PlayerEffect
         public override void Construct()
         {
             status = StaticStatusLibrary.GetByName(StatusName);
-            value = MyExpressionParse.ExpressionParser.AnalayseExpression(ValueExpression);
+            value = ExpressionAnalyser.ExpressionParser.AnalayseExpression(ValueExpression);
         }
     }
 }

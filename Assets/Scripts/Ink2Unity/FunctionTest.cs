@@ -17,7 +17,7 @@ namespace Ink2Unity
         // Start is called before the first frame update
         void Awake()
         {
-            Debug.Log(card.ConditionDesc);
+            //Debug.Log(card.ConditionDesc);
             //TagHandle.ParseArray("(0,1,1,2)");
             story = new InkStory(textAsset);
             wait = false;

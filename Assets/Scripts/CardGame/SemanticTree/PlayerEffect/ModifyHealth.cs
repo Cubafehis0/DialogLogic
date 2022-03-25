@@ -1,7 +1,6 @@
-﻿using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.PlayerEffect
 {
@@ -25,12 +24,12 @@ namespace SemanticTree.PlayerEffect
         public ModifyHealth(XmlNode xmlNode)
         {
 
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(xmlNode.InnerText);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(xmlNode.InnerText);
         }
 
         public override void Construct()
         {
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
         }
 
         public override void Execute()

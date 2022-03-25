@@ -7,7 +7,6 @@ using SemanticTree.ChoiceEffect;
 using SemanticTree.CardEffect;
 using SemanticTree.Expression;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree
 { 

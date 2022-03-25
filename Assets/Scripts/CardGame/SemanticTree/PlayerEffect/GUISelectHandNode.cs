@@ -1,5 +1,5 @@
-﻿using SemanticTree;
-using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
+using SemanticTree;
 using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
@@ -19,7 +19,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Construct()
         {
-            num = MyExpressionParse.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
             Actions.Construct();
         }
 

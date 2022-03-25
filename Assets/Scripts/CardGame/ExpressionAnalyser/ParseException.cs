@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
-#pragma warning disable CS8632 // 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。
-namespace MyExpressionParse
-{
+
+namespace ExpressionAnalyser
+{ 
     /// <summary>
     /// 表明在表达式解析过程中会产生的异常，有以下类型
     /// 1.多余的操作符 例如：1**2 或者 (1))
@@ -24,26 +24,24 @@ namespace MyExpressionParse
             this.str = str;
             this.offset = offset;
         }
-
         public ParseException(string message) : base(message)
-
         {
         }
         public ParseException(string message,int? offset):base(message)
         {
             this.offset = offset;
         }
-        override public string? Message
+        override public string Message
         {
             get
             {
-                string? res =base.Message;
+                string res =base.Message;
                 if(str!=null) res += "\t对应的字符串为：" + str;
                 if (offset != null) res += "\t 对应偏移为：" + offset;
                 return res;
             }
         }
-        public ParseException(string message, Exception? innerException) : base(message, innerException)
+        public ParseException(string message, Exception innerException) : base(message, innerException)
         {
         }
         protected ParseException(SerializationInfo info, StreamingContext context) : base(info, context)
@@ -51,4 +49,3 @@ namespace MyExpressionParse
         }
     }
 }
-#pragma warning restore CS8632 // 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。

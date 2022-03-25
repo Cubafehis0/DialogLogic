@@ -6,7 +6,6 @@ using System.Xml;
 using System.Reflection;
 using System;
 using System.Xml.Serialization;
-using XmlParser;
 using System.IO;
 using SemanticTree.PlayerEffect;
 using SemanticTree;

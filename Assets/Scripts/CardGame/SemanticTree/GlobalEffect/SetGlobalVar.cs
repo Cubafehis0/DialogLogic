@@ -1,4 +1,4 @@
-﻿using SemanticTree.Expression;
+﻿using ExpressionAnalyser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +45,7 @@ namespace SemanticTree.GlobalEffect
 
         public override void Construct()
         {
-            exp = MyExpressionParse.ExpressionParser.AnalayseExpression(Expression);
+            exp = ExpressionAnalyser.ExpressionParser.AnalayseExpression(Expression);
         }
     }
 }

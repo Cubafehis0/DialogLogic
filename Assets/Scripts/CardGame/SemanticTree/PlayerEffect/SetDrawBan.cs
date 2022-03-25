@@ -1,6 +1,5 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
-using XmlParser;
 
 namespace SemanticTree.PlayerEffect
 {
