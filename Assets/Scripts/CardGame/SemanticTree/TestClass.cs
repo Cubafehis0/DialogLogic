@@ -14,7 +14,8 @@ namespace SemanticTree
 
         private void Start()
         {
-            SerializeCondition();
+            SerializePersonality();
+            //SerializeCondition();
         }
 
         private void Serialize()
@@ -49,6 +50,17 @@ namespace SemanticTree
 
             TextWriter writer = new StreamWriter("Assets/Common/CardTemplate.xml");
             ser.Serialize(writer, effect);
+            writer.Close();
+        }
+
+        private void SerializePersonality()
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(Personality));
+
+            var Personality = new Personality(0, 0, 0, 0);
+
+            TextWriter writer = new StreamWriter("Assets/Common/Pers.xml");
+            ser.Serialize(writer, Personality);
             writer.Close();
         }
 

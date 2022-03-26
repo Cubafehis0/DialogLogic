@@ -1,4 +1,5 @@
 ﻿using SemanticTree;
+using SemanticTree.Condition;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,12 @@ public class CardInfo
 
     [XmlElement(ElementName = "in_hand_personality")]
     public Personality Personality;
+
+    [XmlElement(ElementName = "requirements")]
+    public AllNode Requirements;
+
+    [XmlElement(ElementName = "on_draw")]
+    public EffectList DrawEffects;
 
     [XmlElement(ElementName = "on_play_card")]
     public EffectList Effects;

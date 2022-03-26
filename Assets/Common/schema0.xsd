@@ -11,6 +11,8 @@
       <xs:element minOccurs="1" maxOccurs="1" name="cost" type="xs:int" />
       <xs:element minOccurs="1" maxOccurs="1" name="category" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="1" name="in_hand_personality" type="Personality" />
+      <xs:element minOccurs="0" maxOccurs="1" name="requirements" type="AllNode" />
+      <xs:element minOccurs="0" maxOccurs="1" name="on_draw" type="EffectList" />
       <xs:element minOccurs="0" maxOccurs="1" name="on_play_card" type="EffectList" />
     </xs:sequence>
   </xs:complexType>
@@ -26,6 +28,54 @@
       <xs:element minOccurs="0" maxOccurs="1" name="aggressive" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="AllNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConditionList">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="requirement" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="all" type="AllNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="any" type="AnyNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="none" type="NoneNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="count_requirement" type="CountRequirement" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnyNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NoneNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CountRequirement">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionNode">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="compare_type" type="CompareType" />
+          <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="requirements" type="ConditionList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConditionNode" abstract="true" />
+  <xs:simpleType name="CompareType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LT" />
+      <xs:enumeration value="GT" />
+      <xs:enumeration value="LE" />
+      <xs:enumeration value="GE" />
+      <xs:enumeration value="EQ" />
+      <xs:enumeration value="NE" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="EffectList">
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -223,54 +273,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConditionList" nillable="true" type="ConditionList" />
-  <xs:complexType name="ConditionList">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element minOccurs="0" maxOccurs="1" name="requirement" type="xs:string" />
-        <xs:element minOccurs="0" maxOccurs="1" name="all" type="AllNode" />
-        <xs:element minOccurs="0" maxOccurs="1" name="any" type="AnyNode" />
-        <xs:element minOccurs="0" maxOccurs="1" name="none" type="NoneNode" />
-        <xs:element minOccurs="0" maxOccurs="1" name="count_requirement" type="CountRequirement" />
-      </xs:choice>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="AllNode">
-    <xs:complexContent mixed="false">
-      <xs:extension base="ConditionList" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="AnyNode">
-    <xs:complexContent mixed="false">
-      <xs:extension base="ConditionList" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="NoneNode">
-    <xs:complexContent mixed="false">
-      <xs:extension base="ConditionList" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="CountRequirement">
-    <xs:complexContent mixed="false">
-      <xs:extension base="ConditionNode">
-        <xs:sequence>
-          <xs:element minOccurs="1" maxOccurs="1" name="compare_type" type="CompareType" />
-          <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:int" />
-          <xs:element minOccurs="0" maxOccurs="1" name="requirements" type="ConditionList" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="ConditionNode" abstract="true" />
-  <xs:simpleType name="CompareType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="LT" />
-      <xs:enumeration value="GT" />
-      <xs:enumeration value="LE" />
-      <xs:enumeration value="GE" />
-      <xs:enumeration value="EQ" />
-      <xs:enumeration value="NE" />
-    </xs:restriction>
-  </xs:simpleType>
   <xs:element name="ConditionNode" nillable="true" type="ConditionNode" />
   <xs:element name="Effect" nillable="true" type="Effect" />
   <xs:element name="EffectList" nillable="true" type="EffectList" />

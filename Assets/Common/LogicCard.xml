@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-
 <CardDefines>
     <define_card>
         <name>三段论</name>
@@ -35,13 +34,126 @@
         </in_hand_personality>
     </define_card>
     <define_card>
-        <name></name>
-        <title></title>
+        <name>谈判技巧</name>
+        <title>谈判技巧</title>
+        <condition_desc>外感>4</condition_desc>
+        <effect_desc>持有时逻辑+3，打出时消耗两点外感，选择一个发言选项，选择其中一个已揭示的判定，其判定值减少1</effect_desc>
+        <meme></meme>
+        <cost>1</cost>
+        <category>0</category>
+        <in_hand_personality>
+            <logic>3</logic>
+        </in_hand_personality>
+        <on_play_card>
+            <modify_personality>
+                <personality>
+                    <outside>-2</outside>
+                </personality>
+                <duration>-1</duration>
+            </modify_personality>
+        </on_play_card>
+    </define_card>
+    <define_card>
+        <name>百科书</name>
+        <title>百科书</title>
         <condition_desc></condition_desc>
         <effect_desc></effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>0</category>
-        <in_hand_personality></in_hand_personality>
+        <in_hand_personality>
+            <logic>2</logic>
+        </in_hand_personality>
+        <on_draw>
+            <modify_personality>
+                <personality>
+                    <moral>4</moral>
+                </personality>
+                <duration>-1</duration>
+            </modify_personality>
+        </on_draw>
+        <on_play_card>
+            <!-- 未完成，倾向选择增加4-->
+        </on_play_card>
+    </define_card>
+    <define_card>
+        <name>论证连续性</name>
+        <title>论证连续性</title>
+        <condition_desc></condition_desc>
+        <effect_desc></effect_desc>
+        <meme></meme>
+        <cost>1</cost>
+        <category>0</category>
+
+        <requirements>
+            <requirement>logic>10</requirement>
+            <requirement>未完成，上一张是道德牌</requirement>
+        </requirements>
+        <on_draw>
+            <draw>
+                <num>2</num>
+            </draw>
+        </on_draw>
+        <on_play_card>
+            <add_status>
+                <name>未完成状态</name>
+                <value>1</value>
+            </add_status>
+        </on_play_card>
+    </define_card>
+    <define_card>
+        <name>大杂烩</name>
+        <title></title>
+        <condition_desc></condition_desc>
+        <effect_desc></effect_desc>
+        <meme></meme>
+
+        <!-- 此处即不花费行动点-->
+        <cost>0</cost>
+
+        <!-- 类型，未完成，先随便填一个数字-->
+        <category>0</category>
+        
+        <in_hand_personality>
+            <!-- 持有时效果，8种属性都可以写，互斥属性不做检查，结果不可预料-->
+            <logic>1</logic>
+            <moral>2</moral>
+        </in_hand_personality>
+
+        <!-- 条件123..的规则见文档-->
+        <requirements>
+            <!-- 满足以下全部-->
+            <requirement>条件1</requirement>
+            <any>
+                <!-- 至少满足一项-->
+                <requirement>条件2</requirement>
+                <requirement>条件3</requirement>
+                <requirement>条件4</requirement>
+            </any>
+            <all>
+                <!-- 满足以下全部-->
+                <requirement>条件5</requirement>
+                <requirement>条件6</requirement>
+            </all>
+            <none>
+                <!-- 以下无一满足-->
+                <requirement>条件7</requirement>
+                <requirement>条件8</requirement>
+            </none>
+            <count_requirement>
+                <!-- 满足数量符合条件-->
+                <compare_type>GT</compare_type> <!-- LT小于，GT大于,LE小于等于,GE大于等于,EQ相等,NE不等-->
+                <value>2</value> <!-- 目标数量-->
+                <requirements>
+                    <requirement>条件9</requirement>
+                    <requirement>条件10</requirement>
+                    <requirement>条件11</requirement>
+                    <requirement>条件12</requirement>
+                </requirements>
+            </count_requirement>
+        </requirements>
+
+        <!-- on_draw,on_play_card格式一致，以on_play_card为例-->
+        <on_play_card></on_play_card>
     </define_card>
 </CardDefines>

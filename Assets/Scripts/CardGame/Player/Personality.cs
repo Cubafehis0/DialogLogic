@@ -151,6 +151,12 @@ public class Personality
         get => p0;
         set => p0 = value;
     }
+    [XmlIgnore]
+    public bool InnerSpecified { 
+        get { return Inner != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { } 
+    }
 
     [XmlElement(ElementName = "outside")]
     public int Outside
@@ -158,30 +164,70 @@ public class Personality
         get => -p0;
         set => p0 = -value;
     }
+    [XmlIgnore]
+    public bool OutsideSpecified
+    {
+        get { return Outside != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
     [XmlElement(ElementName = "logic")]
     public int Logic
     {
         get => p1;
         set => p1 = value;
     }
+    [XmlIgnore]
+    public bool LogicSpecified
+    {
+        get { return Logic != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
     [XmlElement(ElementName = "spritial")]
     public int Spritial
     {
         get => -p1;
         set => p1 = -value;
     }
+    [XmlIgnore]
+    public bool SpritialSpecified
+    {
+        get { return Spritial != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
     [XmlElement(ElementName = "moral")]
     public int Moral
     {
         get => p2;
         set => p2 = value;
     }
+    [XmlIgnore]
+    public bool MoralSpecified
+    {
+        get { return Moral != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
     [XmlElement(ElementName = "immoral")]
     public int Immoral
     {
         get => -p2;
         set => p2 = -value;
     }
+    [XmlIgnore]
+    public bool ImmoralSpecified
+    {
+        get { return Immoral != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
 
     [XmlElement(ElementName = "roundabout")]
     public int Roundabout
@@ -189,11 +235,26 @@ public class Personality
         get => p3;
         set => p3 = value;
     }
+    [XmlIgnore]
+    public bool RoundaboutSpecified
+    {
+        get { return Roundabout != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
+    }
+
     [XmlElement(ElementName = "aggressive")]
     public int Aggressive
     {
         get => -p3;
         set => p3 = -value;
+    }
+    [XmlIgnore]
+    public bool AggressiveSpecified
+    {
+        get { return Aggressive != 0; }
+        [Obsolete("仅供xml识别，无需设置")]
+        set { }
     }
 
     public static Personality operator +(Personality a, Personality b)

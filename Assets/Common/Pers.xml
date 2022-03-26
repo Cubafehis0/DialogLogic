@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Personality xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <outside>0</outside>
+  <logic>0</logic>
+  <spritial>0</spritial>
+  <moral>0</moral>
+  <immoral>0</immoral>
+  <roundabout>0</roundabout>
+  <aggressive>0</aggressive>
+</Personality>
