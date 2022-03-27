@@ -2,47 +2,29 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace SemanticTree.ChoiceEffect
+namespace SemanticTree.ChoiceEffects
 {
     /// <summary>
-    /// effect
+    /// 
     /// </summary>
-    public class RandomRevealNode : Effect
+    public class RandomReveal : ChoiceEffect
     {
         [XmlElement(ElementName = "num")]
-        public string NumExpression { get; set; }
-        private IExpression exp;
+        public string NumExpression = null;
+        private IExpression num = null;
+
         [XmlElement(ElementName = "speech_type")]
-        public SpeechType? SpeechType { get; set; }
-
-
-        public RandomRevealNode()
-        {
-            NumExpression = "";
-        }
-
-        public RandomRevealNode(SpeechType? speechType, IExpression exp)
-        {
-            this.SpeechType = speechType;
-            this.exp = exp;
-        }
-
-        public RandomRevealNode(XmlNode xmlNode)
-        {
-            //有缺陷
-            NumExpression=xmlNode.InnerText;
-            Construct();
-        }
+        public SpeechType? SpeechType = null;
 
         public override void Execute()
         {
-            if (SpeechType == null) Context.PlayerContext.RandomReveal(exp.Value);
-            else Context.PlayerContext.RandomReveal(SpeechType.Value, exp.Value);
+            if (SpeechType.HasValue) Context.PlayerContext.RandomReveal(SpeechType.Value, num.Value); 
+            else Context.PlayerContext.RandomReveal(num.Value);
         }
 
         public override void Construct()
         {
-            exp = ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionParser.AnalayseExpression(NumExpression);
         }
     }
 }

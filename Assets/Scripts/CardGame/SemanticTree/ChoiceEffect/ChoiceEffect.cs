@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemanticTree.ChoiceEffect
+namespace SemanticTree.ChoiceEffects
 {
-    public interface IChoiceSlotEffectNode
+    public abstract class ChoiceEffect:Effect
     {
-        void Execute(ChoiceSlot slot);
     }
 }

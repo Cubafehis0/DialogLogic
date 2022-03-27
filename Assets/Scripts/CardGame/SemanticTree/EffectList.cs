@@ -1,6 +1,7 @@
 ﻿using SemanticTree;
 using SemanticTree.Adapter;
 using SemanticTree.CardEffects;
+using SemanticTree.GlobalEffect;
 using SemanticTree.PlayerEffect;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace SemanticTree
         [XmlElement(typeof(DiscardCard),ElementName ="discard")]
         [XmlElement(typeof(ExecuteCard),ElementName ="execute")]
 
+        [XmlElement(typeof(IF), ElementName = "if")]
+        
         public List<Effect> effects=new List<Effect>();
         public void Execute()
         {
