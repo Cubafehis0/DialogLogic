@@ -1,5 +1,5 @@
 ﻿using ExpressionAnalyser;
-using SemanticTree.CardEffect;
+using SemanticTree.CardEffects;
 using System.Xml;
 using System.Xml.Serialization;
 

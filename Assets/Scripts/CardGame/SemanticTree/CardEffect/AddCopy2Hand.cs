@@ -2,22 +2,17 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace SemanticTree.CardEffect
+namespace SemanticTree.CardEffects
 {
     /// <summary>
     /// card,player环境
     /// string参数，Expression数量
     /// </summary>
-    public class AddCopy2HandNode : CardNode
+    public class AddCopy2HandNode : CardEffect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
         private IExpression num = null;
-        public AddCopy2HandNode()
-        {
-            NumExpression = "";
-            num = null;
-        }
         public override void Execute()
         {
 
@@ -29,7 +24,7 @@ namespace SemanticTree.CardEffect
         }
         public override void Construct()
         {
-            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionParser.AnalayseExpression(NumExpression);
         }
     }
 }

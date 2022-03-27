@@ -1,15 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
-using System.Xml;
-using System.Collections.Generic;
+﻿using System.Xml;
 using SemanticTree;
-using System;
-using System.Text;
-using ExpressionAnalyser;
-using SemanticTree.PlayerEffect;
-using SemanticTree.ChoiceEffect;
-using SemanticTree.CardEffect;
-using SemanticTree.Adapter;
 
 public class SemanticAnalyser
 {

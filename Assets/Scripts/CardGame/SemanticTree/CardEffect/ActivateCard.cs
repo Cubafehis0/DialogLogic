@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace SemanticTree.CardEffect
+namespace SemanticTree.CardEffects
 {
     /// <summary>
     /// 无参数
     /// </summary>
     [XmlType()]
-    public class ActivateCard : CardNode
+    public class ActivateCard : CardEffect
     {
         [XmlElement(ElementName = "permanent")]
         public bool Permanent { get; set; }

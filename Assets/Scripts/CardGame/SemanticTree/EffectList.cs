@@ -1,5 +1,6 @@
 ﻿using SemanticTree;
 using SemanticTree.Adapter;
+using SemanticTree.CardEffects;
 using SemanticTree.PlayerEffect;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace SemanticTree
         [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]
         [XmlElement(typeof(RandomDynamicCard),ElementName ="random_dynamic_card")]
         [XmlElement(typeof(ForEachDynamicCard),ElementName ="foreach_dynamic_card")]
+
+        [XmlElement(typeof(ActivateCard),ElementName ="activate")]
+        [XmlElement(typeof(AddCopy2HandNode),ElementName ="add_copy_to_hand")]
+        [XmlElement(typeof(DiscardCard),ElementName ="discard")]
+        [XmlElement(typeof(ExecuteCard),ElementName ="execute")]
 
         public List<Effect> effects=new List<Effect>();
         public void Execute()

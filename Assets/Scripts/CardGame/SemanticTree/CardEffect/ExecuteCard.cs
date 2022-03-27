@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemanticTree.CardEffect
+namespace SemanticTree.CardEffects
 {
     /// <summary>
     /// 无参数
     /// </summary>
-    public class ExecuteCard : CardNode
+    public class ExecuteCard : CardEffect
     {
-        public ExecuteCard() { }
-
         public override void Construct() { }
 
         public override void Execute()
