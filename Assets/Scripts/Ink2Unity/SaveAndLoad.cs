@@ -13,9 +13,9 @@ public class SaveInfo
     {
         saveInfos = new Dictionary<Type, object>();
     }
-    public void AddSaveInfo(Type type,object o)
+    public void AddSaveInfo(Type type, object o)
     {
-        if(saveInfos.ContainsKey(type))
+        if (saveInfos.ContainsKey(type))
             saveInfos[type] = o;
         saveInfos.Add(type, o);
     }
@@ -28,7 +28,7 @@ public class SaveInfo
     //public string inkState;
     //玩家状态
     //public Player player;
-    
+
     //卡牌信息
     //public List<T> cardInHand;
     //public List<T> cardInDeck;
@@ -36,7 +36,6 @@ public class SaveInfo
 }
 public interface ISaveAndLoad
 {
-    void Register();
     void Save(SaveInfo saveInfo);
     void Load(SaveInfo saveInfo);
 }
@@ -44,9 +43,16 @@ public abstract class SaveAndLoad
 {
     public static UnityEvent<SaveInfo> OnSave { get; }
     public static UnityEvent<SaveInfo> OnLoad { get; }
-    public static void SaveGame(int index,string note= "")
+
+    public static void Register(ISaveAndLoad sub)
     {
-        if (note.Length > 20){
+        OnSave.AddListener(sub.Save);
+        OnLoad.AddListener(sub.Load);
+    }
+    public static void SaveGame(int index, string note = "")
+    {
+        if (note.Length > 20)
+        {
             Debug.LogError("输入存档备份信息过长,存档失败");
             return;
         }
@@ -68,7 +74,7 @@ public abstract class SaveAndLoad
         Debug.Log(save2Json);
         writer.Close();
         file.Close();
-        Debug.Log("Game Saved In"+ Application.persistentDataPath + "/gamesave" + index + ".sav");
+        Debug.Log("Game Saved In" + Application.persistentDataPath + "/gamesave" + index + ".sav");
     }
     //private static SaveInfo CreateSaveInfoObject()
     //{
@@ -113,53 +119,3 @@ public abstract class SaveAndLoad
         return res;
     }
 }
-
-//public interface ILoad
-//{
-//    void LoadGame(int index);
-//    List<string> LoadMessage();
-//}
-//public class Load:ILoad
-//{
-//    public static List<string> LoadMessage()
-//    {
-//        List<string> res = new List<string>();
-//        string[] filepaths = Directory.GetFiles(Application.persistentDataPath);
-//        foreach (var path in filepaths)
-//        {
-//            FileStream file = File.Open(path, FileMode.Open);
-//            BinaryReader reader = new BinaryReader(file);
-//            string note = reader.ReadString();
-//            reader.Close();
-//            file.Close();
-//            res.Add(note);
-//        }
-//        return res;
-//    }
-
-//    public void LoadGame(int index)
-//    {
-
-//        //FileStream file = File.Open(Application.persistentDataPath + "/"+fileName, FileMode.Open);
-//        FileStream file = File.Open(Application.persistentDataPath + "/gamesave" + index + ".sav", FileMode.Open);
-//        //反序列化
-//        //BinaryFormatter bf = new BinaryFormatter();
-//        //SaveInfo saveInfo = (SaveInfo)bf.Deserialize(file);
-//        BinaryReader reader = new BinaryReader(file);
-//        //string note = new string(reader.ReadChars(20));
-//        //Debug.Log(note);
-//        string note = reader.ReadString();
-//        string saveJSON = reader.ReadString();
-       
-//        SaveInfo saveInfo = JsonUtility.FromJson<SaveInfo>(saveJSON);
-//        reader.Close();
-//        file.Close();
-//        string state = saveInfo.inkState;
-//        Ink2Unity.InkStory.NowStory.LoadStory(state);
-//        //
-//        //其他信息加载
-//        //
-//        Debug.Log("加载游戏");
-//    }
-//}
-

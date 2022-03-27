@@ -15,7 +15,6 @@ namespace SemanticTree
         {
             Serialize();
             //Deserialize<CardInfo>();
-
         }
 
         private void Serialize()

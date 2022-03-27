@@ -41,8 +41,39 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     [SerializeField]
     private SpeechType? baseSpeechType = null;
 
-
-
+    #region 玩家基本信息配置方法
+    public void SetBasePersonality(Personality personality)
+    {
+        this.basePersonality= personality;
+    }
+    public void SetBaseEnergy(int energy)
+    {
+        this.energy = energy;
+    }
+    public void SetDrawCardNum(int drawNum)
+    {
+        this.drawNum = drawNum;
+    }
+    public void SetMaxCardNum(uint handCardMaxNum)
+    {
+        this.handCardMaxNum = handCardMaxNum;
+    }
+    public void SetBasePressure(int basePressure)
+    {
+        throw new Exception("没有包含对应属性");
+        //this.basePressure = basePressure;
+    }
+    public void SetMaxPressure(int maxPressure)
+    {
+        throw new Exception("没有包含对应属性");
+        //this.maxPressure = maxPressure;
+    }
+    public void SetHealth(int health)
+    {
+        throw new Exception("没有包含对应属性");
+        //this.health = health;
+    }
+    #endregion
 
     private Pile<Card> hand = new Pile<Card>();
     private Pile<Card> drawPile = new Pile<Card>();
