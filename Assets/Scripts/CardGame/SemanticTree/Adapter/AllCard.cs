@@ -13,11 +13,6 @@ namespace SemanticTree.Adapter
     {
         private readonly ICondition condition;
 
-        public AllCard(ICondition condition)
-        {
-            this.condition = condition;
-        }
-
         public bool Value
         {
             get

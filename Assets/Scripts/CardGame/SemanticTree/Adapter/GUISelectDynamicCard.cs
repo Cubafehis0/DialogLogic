@@ -1,4 +1,5 @@
 ﻿using ExpressionAnalyser;
+using SemanticTree.Condition;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -6,47 +7,42 @@ namespace SemanticTree.Adapter
 {
     public class GUISelectDynamicCard : Effect
     {
+        [XmlElement(ElementName = "include")]
+        public PileType type = 0;
+
         [XmlElement(ElementName = "num")]
-        public string NumExpression { get; set; }
+        public string NumExpression = null;
         private IExpression num;
 
         [XmlElement(ElementName = "condition")]
-        public ICondition Condition { get; set; }
+        public AllNode Condition = null;
 
         [XmlElement(ElementName = "action")]
-        public EffectList Actions { get; set; }
+        public EffectList Actions = null;
 
-        public GUISelectDynamicCard()
-        {
-            NumExpression = "";
-            Condition = null;
-            Actions = new EffectList();
-        }
-
-        public GUISelectDynamicCard(ICondition condition, string num, EffectList action)
-        {
-            Condition = condition;
-            NumExpression = num;
-            Actions = action;
-        }
 
         public override void Construct()
         {
-            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
-            Actions.Execute();
+            num = ExpressionParser.AnalayseExpression(NumExpression);
+            Condition?.Construct();
+            Actions?.Construct();
         }
 
         public override void Execute()
         {
+            List<Card> candidate = new List<Card>();
+            if ((PileType.Hand & type) > 0) candidate.AddRange(Context.PlayerContext.Hand);
+            if ((PileType.DrawDeck & type) > 0) candidate.AddRange(Context.PlayerContext.DrawPile);
+            if ((PileType.DiscardDeck & type) > 0) candidate.AddRange(Context.PlayerContext.DiscardPile);
             List<Card> res = new List<Card>();
-            foreach (Card card in Context.PileContext)
+            foreach (Card card in candidate)
             {
                 Context.PushCardContext(card);
-                if (Condition.Value) res.Add(card);
+                if (Condition?.Value ?? true) res.Add(card);
                 Context.PopCardContext();
             }
             CardGameManager.Instance.OpenPileChoosePanel(res, num.Value, Actions);
-            //禁用输入
+            CardGameManager.Instance.DisableInput();
         }
     }
 }

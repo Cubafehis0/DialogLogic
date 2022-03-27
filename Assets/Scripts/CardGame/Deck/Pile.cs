@@ -4,15 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-public class PileType 
-{
-    public static int Hand { get => 1; }
-    public static int DrawDeck { get => 2; }
-    public static int DiscardDeck { get => 4; }
-    public static int All { get => 7; }
-}
-
 public class Pile<T> : List<T>
 {
     private UnityEvent<T> onAdd = new UnityEvent<T>();
@@ -27,7 +18,8 @@ public class Pile<T> : List<T>
     {
 
     }
-    public Pile(IEnumerable<T> i) :base(i){
+    public Pile(IEnumerable<T> i) : base(i)
+    {
 
     }
 
@@ -51,8 +43,8 @@ public class Pile<T> : List<T>
 
     public new void Clear()
     {
-        List<T> tmp=new List<T>(this);
-        foreach(var item in tmp)
+        List<T> tmp = new List<T>(this);
+        foreach (var item in tmp)
         {
             Remove(item);
         }
@@ -75,7 +67,7 @@ public class Pile<T> : List<T>
             Remove(card);
             newPile.Add(card);
         }
-        
+
     }
 
     public void MigrateAllTo(Pile<T> to)

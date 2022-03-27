@@ -1,4 +1,5 @@
 ﻿using SemanticTree;
+using SemanticTree.Adapter;
 using SemanticTree.PlayerEffect;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,17 @@ namespace SemanticTree
         [XmlElement(typeof(DiscardAllHand), ElementName = "discard_all_hand")]
         [XmlElement(typeof(DiscardSomeHand), ElementName = "discard_some_hand")]
         [XmlElement(typeof(Draw), ElementName = "draw")]
-        [XmlElement(typeof(GUISelectHand), ElementName = "GUI_select_hand")]
-        [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]
         [XmlElement(typeof(ModifyFocus), ElementName = "modify_focus")]
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
         [XmlElement(typeof(ModifySpeech), ElementName = "modify_speech")]
         [XmlElement(typeof(RemoveCostModifier), ElementName = "remove_cost_modifier")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
+
+        [XmlElement(typeof(GUISelectDynamicCard),ElementName ="GUI_select_dynamic_card")]
+        [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]
+        [XmlElement(typeof(RandomDynamicCard),ElementName ="random_dynamic_card")]
+        [XmlElement(typeof(ForEachDynamicCard),ElementName ="foreach_dynamic_card")]
+
         public List<Effect> effects=new List<Effect>();
         public void Execute()
         {

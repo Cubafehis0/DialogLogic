@@ -154,6 +154,17 @@
         </requirements>
 
         <!-- on_draw,on_play_card格式一致，以on_play_card为例-->
-        <on_play_card></on_play_card>
+        <on_play_card>
+            <foreach_dynamic_card>
+                <include>hand</include>
+                <potantial>
+                    <condition>
+                    </condition>
+                    <action>
+                        
+                    </action>
+                </potantial>
+            </foreach_dynamic_card>
+        </on_play_card>
     </define_card>
 </CardDefines>

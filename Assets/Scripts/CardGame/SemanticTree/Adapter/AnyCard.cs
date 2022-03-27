@@ -12,12 +12,6 @@ namespace SemanticTree.Adapter
     public class AnyCard : ICondition
     {
         private readonly ICondition condition = null;
-
-        public AnyCard(ICondition condition)
-        {
-            this.condition = condition ?? throw new ArgumentNullException(nameof(condition));
-        }
-
         public bool Value
         {
             get
