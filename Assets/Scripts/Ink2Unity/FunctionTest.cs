@@ -3,73 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Ink2Unity
 {
-    public class FunctionTest : MonoBehaviour
+    [System.Serializable]
+    public partial class FunctionTest : MonoBehaviour
     {
-        public bool conS;
-        public bool wait;
-        public int c = -1;
-        public bool save;
-        public bool load;
-        public string loadFile;
-        public TextAsset textAsset;
-        InkStory story;
-        public Card card;
-        // Start is called before the first frame update
+        [SerializeField]
+        int a = 0;
+        [SerializeField]
+        Personality personality;
+        [SerializeField]
+        bool save = false;
+        [SerializeField]
+        bool load = false;
         void Awake()
         {
-            //Debug.Log(card.ConditionDesc);
-            //TagHandle.ParseArray("(0,1,1,2)");
-            story = new InkStory(textAsset);
-            wait = false;
-            conS = false;
-            save = false; 
+            a = 1;
+            personality = new Personality(1, 2, 3, 4);
         }
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (save)
             {
-                SaveAndLoad.SaveGame(1,"axsa");
+                SaveAndLoad.SaveGame(0);
                 save = false;
             }
             if (load)
             {
-                SaveAndLoad.Load(1);
-            }
-            if (wait == true)
-            {
-                if(c>=0)
-                {
-                    story.SelectChoice(c,true);
-                    wait = false;
-                    c = -1;
-                }
-            }
-            if(conS)
-            {
-                switch (story.NextState)
-                {
-                    case InkState.Init:
-                        break;
-                    case InkState.Content:
-                        story.NextContent();
-                        Debug.Log(story.CurrentContent());
-                        break;
-                    case InkState.Choice:
-                        var cs = story.CurrentChoices();
-                        foreach (var c in cs)
-                        {
-                            Debug.Log(c);
-                        }
-                        wait = true;
-                        break;
-                    case InkState.Finish:
-                        Destroy(this);
-                        break;
-                    default:
-                        break;
-                }
-                conS = false;
+                SaveAndLoad.Load(0);
+                load = false;
             }
         }
     }

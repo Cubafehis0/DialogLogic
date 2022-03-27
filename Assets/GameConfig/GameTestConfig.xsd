@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="JaspersGameConfigGrammar"
+xmlns="JaspersGameConfigGrammar"
+elementFormDefault="qualified">
+<xs:element name="pass">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="InkStory"/>
+            <xs:element name="player">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="personality"/>
+                        <xs:element name="maxCardNum" type="xs:integer"/>
+                        <xs:element name="drawCardNum" type="xs:integer"/>
+                        <xs:element name="basePressure" type="xs:integer"/>
+                        <xs:element name="maxPressure" type="xs:integer"/> 
+                        <xs:element name="health" type="xs:integer"/>
+                        <xs:element name="energy" type="xs:integer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="enemy">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="personality"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="cardDeck">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="card">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="num" type="xs:integer" default="1"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+<xs:element name="personality">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="logic" type="xs:integer"/>
+            <xs:element name="moral" type="xs:integer"/>
+            <xs:element name="roundabout" type="xs:integer"/>
+            <xs:element name="inner" type="xs:integer"/>
+            <xs:element name="outside" type="xs:integer"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+</xs:schema>

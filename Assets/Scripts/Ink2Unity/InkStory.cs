@@ -69,6 +69,7 @@ namespace Ink2Unity
             choicesList = null;
             _nowStory = this;
             BindExternalFunction();
+            SaveAndLoad.Register(this);
         }
 
         /// <summary>
@@ -247,13 +248,6 @@ namespace Ink2Unity
                     return;
             }
         }
-
-        public void Register()
-        {
-            SaveAndLoad.OnLoad.AddListener(Load);
-            SaveAndLoad.OnSave.AddListener(Save);
-        }
-
         public void Save(SaveInfo saveInfo)
         {
             saveInfo.AddSaveInfo(typeof(InkStory), story.state.ToJson());

@@ -1,6 +1,7 @@
 using Ink2Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -40,7 +41,22 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     {
         Debug.LogWarning("暂停未实现");
     }
-
+    public void SetInkStoryAsset(string name)
+    {
+        string InkStoryPath = Path.Combine(Application.dataPath, "InkStory");
+        if (!Directory.Exists(InkStoryPath))
+        {
+            Debug.LogError("Asset目录下不存在InkStory文件");
+            return;
+        }
+        string[] filePath = Directory.GetFiles(InkStoryPath, name+".json", SearchOption.AllDirectories);
+        if (filePath.Length <= 0)
+        {
+            Debug.LogError($"InkStory目录下不存在名为{name}的文件");
+            return;
+        }
+        testAsset = new TextAsset(File.ReadAllText(filePath[0]));
+    }
     private void Start()
     {
         NPC_Dialog.OnClick.AddListener(OnClickDialogButton);

@@ -2,9 +2,8 @@
 <pass xmlns="JaspersGameConfigGrammar"
 xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
 xs:schemaLocation="JaspersGameConfigGrammar GameTestConfig.xsd">
-<InkStory>EG1-1</InkStory>
+    <InkStory></InkStory>
     <player>
-    
         <personality>
             <logic>0</logic>
             <moral>0</moral>
@@ -29,9 +28,5 @@ xs:schemaLocation="JaspersGameConfigGrammar GameTestConfig.xsd">
         </personality>
     </enemy>
     <cardDeck>
-        <card>
-            <name>xsa</name>
-            <num>2</num>
-        </card>
     </cardDeck>
 </pass>
