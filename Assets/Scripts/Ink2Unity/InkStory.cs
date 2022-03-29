@@ -103,6 +103,7 @@ namespace Ink2Unity
                     ParseValue(rs, name, value);
                 }
             }
+            if(rs.personalityModifier != null)
             CardPlayerState.Instance.StateChange(rs.personalityModifier, rs.changeTurn);
             return rs;
         }
@@ -141,7 +142,8 @@ namespace Ink2Unity
             Choice cs = CurrentChoices()[index];
             story.variablesState["judgeSuccess"] = success;
             CardPlayerState.Instance.Pressure += success ? -cs.Success_desc : cs.Fail_add;
-            CardPlayerState.Instance.StateChange(cs.Content.personalityModifier, cs.Content.changeTurn);
+            if (cs.Content.personalityModifier != null)
+                CardPlayerState.Instance.StateChange(cs.Content.personalityModifier, cs.Content.changeTurn);
             story.ChooseChoiceIndex(index);
             // 进行判定的过程
             // 忽略原本内容

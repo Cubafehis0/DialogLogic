@@ -62,6 +62,13 @@ public class SpeechArt
         this.Persuade = persuade;
     }
     //÷ÿ‘ÿº”∫≈‘ÀÀ„∑˚
+    public SpeechArt(SpeechArt origin)
+    {
+        this.Normal = origin.Normal;
+        this.Cheat = origin.Cheat;
+        this.Threat = origin.Threat;
+        this.Persuade = origin.Persuade;
+    }
     public static SpeechArt operator +(SpeechArt a, SpeechArt b)
     {
         return new SpeechArt

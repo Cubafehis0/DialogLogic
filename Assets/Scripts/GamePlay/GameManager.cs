@@ -12,12 +12,38 @@ using SemanticTree;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private TextAsset[] xmlFiles;
     // Start is called before the first frame update
+
+    private List<Common> commons = new List<Common>();
     void Start()
     {
+        foreach (var file in xmlFiles)
+        {
+            commons.Add(Deserialize<Common>(file.text));
+        }
+        commons.ForEach(x => x.Declare());
+        commons.ForEach(x => x.Define());
+        
+        CardGameManager.Instance.StartGame();
+    }
 
-        //LoadXMLSettings();
-        //CardGameManager.Instance.StartGame();
+    private T Deserialize<T>(string s)
+    {
+        XmlSerializer ser = new XmlSerializer(typeof(T));
+        using var stream = StreamString2Stream(s);
+        return (T)ser.Deserialize(stream);
+    }
+
+    private static Stream StreamString2Stream(string s)
+    {
+        MemoryStream stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
     }
 
     private void Update()
@@ -25,46 +51,4 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
     }
-
-    public void LoadXMLSettings()
-    {
-        XmlDocument dom = new XmlDocument();
-        TextAsset txt = Resources.Load("test") as TextAsset;
-        dom.LoadXml(txt.text);
-        XmlNode it = dom["root"].FirstChild;
-        while (it != null)
-        {
-            switch (it.Name)
-            {
-                case "define_card":
-                    StaticCardLibrary.Instance.DeclareCard(it);
-                    break;
-                case "define_status":
-                    StaticStatusLibrary.DeclareStatus(it);
-                    break;
-                case "define_cost_modifier":
-                    StaticCostModifierLibrary.Declare(it);
-                    break;
-            }
-            it = it.NextSibling;
-        }
-        it = dom["root"].FirstChild;
-        while (it != null)
-        {
-            switch (it.Name)
-            {
-                case "define_card":
-                    StaticCardLibrary.Instance.DefineCard(it);
-                    break;
-                case "define_status":
-                    StaticStatusLibrary.DefineStatus(it);
-                    break;
-                case "define_cost_modifier":
-                    StaticCostModifierLibrary.Define(it);
-                    break;
-            }
-            it = it.NextSibling;
-        }
-    }
-
 }

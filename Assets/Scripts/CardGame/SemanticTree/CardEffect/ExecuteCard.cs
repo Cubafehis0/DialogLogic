@@ -15,7 +15,7 @@ namespace SemanticTree.CardEffects
 
         public override void Execute()
         {
-            Context.CardContext.Effects.Execute();
+            Context.CardContext.info.Effects.Execute();
         }
     }
 }

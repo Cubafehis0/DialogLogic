@@ -43,6 +43,8 @@ namespace ExpressionAnalyser
             }
         }
 
+        public static IVariableAdapter VariableTable { get; set; }
+
         public static IExpression AnalayseExpression(string s)
         {
             List<Token> tokens = LexAnalysis.Lex(s);

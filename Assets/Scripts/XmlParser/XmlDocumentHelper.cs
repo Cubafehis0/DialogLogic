@@ -83,18 +83,6 @@ public class XmlDocumentHelper
         return null;
     }
 
-
-    public static IEffect ParseEffect(XmlNode xmlNode)
-    {
-        IEffect ret = xmlNode.Name switch
-        {
-            "modify_personality" => new ModifyPersonality(xmlNode),
-            _ => null,
-        };
-        return ret;
-        
-    }
-
     public static XmlNode FindXmlNodeInList(XmlNodeList nodeList, Predicate<XmlNode> predicate)
     {
         foreach(XmlNode node in nodeList)

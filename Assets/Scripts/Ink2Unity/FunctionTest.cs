@@ -7,8 +7,6 @@ namespace Ink2Unity
     public partial class FunctionTest : MonoBehaviour
     {
         [SerializeField]
-        int a = 0;
-        [SerializeField]
         Personality personality;
         [SerializeField]
         bool save = false;
@@ -16,7 +14,6 @@ namespace Ink2Unity
         bool load = false;
         void Awake()
         {
-            a = 1;
             personality = new Personality(1, 2, 3, 4);
         }
         private void Update()

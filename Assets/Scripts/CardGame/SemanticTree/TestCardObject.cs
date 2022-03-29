@@ -8,6 +8,6 @@ namespace SemanticTree
     {
 
         [SerializeField]
-        private AddCard2Hand effectList;
+        private AddStaticCard2Hand effectList;
     }
 }

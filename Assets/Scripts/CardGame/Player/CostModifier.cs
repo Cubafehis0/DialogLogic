@@ -4,25 +4,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
 
-public class CostModifierInfo
-{
-    public string Name { get; set; }
-    public ICondition ConditionInfo { get; set; }
-    public string NumExpression { get; set; }
-    public CostModifierInfo(ICondition conditionInfo, string numExpression)
-    {
-        ConditionInfo = conditionInfo;
-        NumExpression = numExpression ?? throw new ArgumentNullException(nameof(numExpression));
-    }
-
-    public CostModifierInfo()
-    {
-        ConditionInfo = null;
-        NumExpression = "";
-    }
-}
 
 public static class StaticCostModifierLibrary
 {
@@ -31,55 +15,39 @@ public static class StaticCostModifierLibrary
     {
         return costModifierDictionary[name];
     }
-    public static void Declare(XmlNode xmlNode)
-    {
-        string name = xmlNode["name"].InnerText;
-        Declare(name);
-    }
 
-    public static void Declare(string name)
+    public static void Declare(CostModifier costModifier)
     {
-        if (costModifierDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义modifier");
-        costModifierDictionary.Add(name, new CostModifier());
-    }
-
-    public static void Define(XmlNode xmlNode)
-    {
-        string name = xmlNode["name"].InnerText;
-        if (!costModifierDictionary.ContainsKey(name)) Declare(xmlNode);
-        costModifierDictionary[name].Construct(xmlNode);
+        if (costModifierDictionary.ContainsKey(costModifier.Name)) throw new SemanticException("不能重复定义modifier");
+        costModifierDictionary.Add(costModifier.Name, costModifier);
     }
 }
 
 
 public class CostModifier
 {
-    private CostModifierInfo info;
-    public ICondition condition;
+    [XmlElement(ElementName = "name")]
+    public string Name;
+
+    [XmlElement(ElementName = "condition")]
+    public ConditionNode Condition;
+
+    [XmlElement(ElementName = "factor")]
+    public string NumExpression;
     public IExpression exp;
 
-    public void Construct(XmlNode xmlNode)
+    public CostModifier() { }
+    public CostModifier(CostModifier origin)
     {
-        info= new CostModifierInfo();
-        XmlNode it = xmlNode.FirstChild;
-        while (it != null)
-        {
-            switch (it.Name)
-            {
-                case "name":
-                    info.Name = xmlNode["name"].InnerText;
-                    break;
-                case "condition":
-                    condition = SemanticAnalyser.AnalyseConditionList(it);
-                    break;
-                case "set_value":
-                    exp = ExpressionAnalyser.ExpressionParser.AnalayseExpression(it.InnerText);
-                    break;
-                default:
-                    throw new SemanticException("未识别的符号");
-            }
-            it = it.NextSibling;
-        }
+        Name = origin.Name;
+        Condition = origin.Condition;
+        NumExpression = origin.NumExpression;
+        exp = origin.exp;
+    }
 
+    public void Construct()
+    {
+        Condition.Construct();
+        exp = ExpressionParser.AnalayseExpression(NumExpression);
     }
 }

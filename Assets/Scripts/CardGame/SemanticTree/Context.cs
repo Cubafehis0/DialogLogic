@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpressionAnalyser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SemanticTree
 {
-    public static class Context
+    public class Context : IVariableAdapter
     {
         private static readonly Stack<CardPlayerState> playerContext = new Stack<CardPlayerState>();
         private static readonly Stack<Card> cardStack = new Stack<Card>();
@@ -51,6 +52,9 @@ namespace SemanticTree
                 return playerContext.Peek();
             }
         }
+
+
+
         public static void PushPlayerContext(CardPlayerState player)
         {
             playerContext.Push(player);
@@ -59,6 +63,45 @@ namespace SemanticTree
         {
             if (playerContext.Count == 0) throw new SemanticException();
             playerContext.Pop();
+        }
+
+        public int this[string name]
+        {
+            get
+            {
+                List<string> t = name.Split('.').ToList();
+                if(t.Count==2 && t[0].Equals("status"))
+                {
+                    return PlayerContext.StatusManager.GetStatusValue(t[1]);
+                }
+                return name switch
+                {
+                    "inner" => PlayerContext.Personality.Inner,
+                    "outside" => PlayerContext.Personality.Outside,
+                    "logic" => PlayerContext.Personality.Logic,
+                    "spritial" => PlayerContext.Personality.Spritial,
+                    "moral" => PlayerContext.Personality.Moral,
+                    "immoral" => PlayerContext.Personality.Immoral,
+                    "roundabout" => PlayerContext.Personality.Roundabout,
+                    "aggressive" => PlayerContext.Personality.Aggressive,
+                    "hand_count"=>PlayerContext.Hand.Count,
+                    "draw_count"=>PlayerContext.DrawPile.Count,
+                    "discard_count"=>PlayerContext.DiscardPile.Count,
+                    _ => throw new SemanticException()
+                };
+            }
+        }
+        public bool Contains(string name)
+        {
+            try
+            {
+                var t = this[name];
+                return true;
+            }
+            catch (SemanticException)
+            {
+                return false;
+            }
         }
     }
 }

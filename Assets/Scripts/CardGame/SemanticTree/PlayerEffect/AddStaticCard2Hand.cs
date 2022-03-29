@@ -8,9 +8,8 @@ namespace SemanticTree.PlayerEffect
     /// <summary>
     /// effect
     /// </summary>
-    [XmlType(TypeName ="add_card_to_hand")]
     [Serializable]
-    public class AddCard2Hand : Effect
+    public class AddStaticCard2Hand : Effect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression;
@@ -19,7 +18,7 @@ namespace SemanticTree.PlayerEffect
 
         private IExpression num;
         private Card prefab;
-        public AddCard2Hand()
+        public AddStaticCard2Hand()
         {
             NumExpression = "";
             CardName = "";
@@ -27,7 +26,7 @@ namespace SemanticTree.PlayerEffect
             prefab = null;
         }
 
-        public AddCard2Hand(XmlNode xmlNode)
+        public AddStaticCard2Hand(XmlNode xmlNode)
         {
             NumExpression = "";
             CardName = "";

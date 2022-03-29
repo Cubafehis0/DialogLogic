@@ -137,6 +137,13 @@ public class Personality
         this.p3 = p3;
     }
 
+    public Personality(Personality origin)
+    {
+        this.p0 = origin.p0;
+        this.p1 = origin.p1;
+        this.p2 = origin.p2;
+        this.p3 = origin.p3;
+    }
     public Personality(List<int> l)
     {
         this.p0 = l[0];

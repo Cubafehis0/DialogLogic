@@ -55,11 +55,11 @@ public class StaticCardLibrary : MonoBehaviour
         return gameObject.GetComponent<CardObject>();
     }
 
-    public void DefineCard(XmlNode xmlNode)
+    public void DefineCard(CardInfo info)
     {
-        if (!xmlNode.Name.Equals("define_card")) return;
-        string name = xmlNode.Attributes["name"].InnerText;
-        if (!cardDictionary.ContainsKey(name)) DeclareCard(xmlNode);
-        cardDictionary[name].Construct(xmlNode);
+        string name = info.Name;
+        if (!cardDictionary.ContainsKey(name)) DeclareCard(name);
+        cardDictionary[name].Construct(info);
+        info.Construct();
     }
 }

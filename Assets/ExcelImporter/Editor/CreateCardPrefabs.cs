@@ -67,23 +67,23 @@ public class CreateCardPrefabs
         GameObject.DestroyImmediate(cardObject);
     }
 
-    private static int GetCardTypeByCardPoolName(string pool)
-    {
-        switch (pool)
-        {
-            case "cardpool_ags":
-                return CardCategory.Ags;
-            case "cardpool_imm":
-                return CardCategory.Imm;
-            case "cardpool_lgc":
-                return CardCategory.Lgc;
-            case "cardpool_mrl":
-                return CardCategory.Mrl;
-            case "cardpool_rdb":
-                return CardCategory.Rdb;
-            case "cardpool_spt":
-                return CardCategory.Spt;
-        }
-        return CardCategory.Ags;
-    }
+    //private static int GetCardTypeByCardPoolName(string pool)
+    //{
+    //    switch (pool)
+    //    {
+    //        case "cardpool_ags":
+    //            return CardCategory.Ags;
+    //        case "cardpool_imm":
+    //            return CardCategory.Imm;
+    //        case "cardpool_lgc":
+    //            return CardCategory.Lgc;
+    //        case "cardpool_mrl":
+    //            return CardCategory.Mrl;
+    //        case "cardpool_rdb":
+    //            return CardCategory.Rdb;
+    //        case "cardpool_spt":
+    //            return CardCategory.Spt;
+    //    }
+    //    return CardCategory.Ags;
+    //}
 }

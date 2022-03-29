@@ -13,8 +13,10 @@ namespace ExpressionAnalyser
         {
             get
             {
-                if (GlobalExpression.varibles.TryGetValue(name, out var value))
-                    return value.Value;
+                if (ExpressionParser.VariableTable.Contains(name))
+                {
+                    return ExpressionParser.VariableTable[name];
+                }
                 else
                 {
                     Debug.LogError($"全局变量表中不存在{name}变量");

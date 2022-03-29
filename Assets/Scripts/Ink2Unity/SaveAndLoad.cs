@@ -41,8 +41,8 @@ public interface ISaveAndLoad
 }
 public abstract class SaveAndLoad
 {
-    public static UnityEvent<SaveInfo> OnSave { get; }
-    public static UnityEvent<SaveInfo> OnLoad { get; }
+    public static UnityEvent<SaveInfo> OnSave { get; } = new UnityEvent<SaveInfo>();
+    public static UnityEvent<SaveInfo> OnLoad { get; } = new UnityEvent<SaveInfo>();
 
     public static void Register(ISaveAndLoad sub)
     {

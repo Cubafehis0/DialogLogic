@@ -95,6 +95,10 @@
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_static_card" type="GUISelectStaticCard" />
         <xs:element minOccurs="0" maxOccurs="1" name="random_dynamic_card" type="RandomDynamicCard" />
         <xs:element minOccurs="0" maxOccurs="1" name="foreach_dynamic_card" type="ForEachDynamicCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="activate" type="ActivateCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_copy_to_hand" type="AddCopy2HandNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="discard" type="DiscardCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="execute" type="ExecuteCard" />
       </xs:choice>
     </xs:sequence>
   </xs:complexType>
@@ -109,6 +113,39 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="Effect" abstract="true" />
+  <xs:complexType name="CardEffect" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ExecuteCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiscardCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddCopy2HandNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivateCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="permanent" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="IF">
     <xs:complexContent mixed="false">
       <xs:extension base="Effect">
@@ -336,8 +373,8 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="CardDefines" nillable="true" type="CardDefines" />
-  <xs:complexType name="CardDefines">
+  <xs:element name="Common" nillable="true" type="Common" />
+  <xs:complexType name="Common">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="define_card" type="CardInfo" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="define_status" type="Status" />
@@ -417,51 +454,8 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ActivateCard" nillable="true" type="ActivateCard" />
-  <xs:complexType name="ActivateCard">
-    <xs:complexContent mixed="false">
-      <xs:extension base="CardNode">
-        <xs:sequence>
-          <xs:element minOccurs="1" maxOccurs="1" name="permanent" type="xs:boolean" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="CardNode" abstract="true">
-    <xs:complexContent mixed="false">
-      <xs:extension base="Effect" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="DiscardCard">
-    <xs:complexContent mixed="false">
-      <xs:extension base="CardNode" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="ExecuteCard">
-    <xs:complexContent mixed="false">
-      <xs:extension base="CardNode" />
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="CardCategory">
-    <xs:complexContent mixed="false">
-      <xs:extension base="CardNode">
-        <xs:sequence>
-          <xs:element minOccurs="1" maxOccurs="1" name="category" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:element name="AddCopy2HandNode" nillable="true" type="AddCopy2HandNode" />
-  <xs:complexType name="AddCopy2HandNode">
-    <xs:complexContent mixed="false">
-      <xs:extension base="CardNode">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="CardCategory" nillable="true" type="CardCategory" />
-  <xs:element name="CardNode" nillable="true" type="CardNode" />
+  <xs:element name="CardEffect" nillable="true" type="CardEffect" />
   <xs:element name="DiscardCard" nillable="true" type="DiscardCard" />
   <xs:element name="ExecuteCard" nillable="true" type="ExecuteCard" />
   <xs:element name="AllCard" nillable="true" type="AllCard" />

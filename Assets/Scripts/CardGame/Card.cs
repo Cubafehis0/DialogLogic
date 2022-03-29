@@ -19,19 +19,16 @@ public class Card : MonoBehaviour
 
     private Dictionary<string, IExpression> cardVars;
 
-    public EffectList Effects;
-    public ICondition conditionNode = null;
-
     public int FinalCost
     {
         get
         {
             if (Activated) return 0;
             int ret = info.BaseCost;
-            foreach (var modifer in CardPlayerState.Instance.costModifers)//有缺陷
+            foreach (var modifer in CardPlayerState.Instance.Modifiers)//有缺陷
             {
-                CostModifier m = modifer.value;
-                if(m.condition?.Value ?? true)
+                CostModifier m = modifer.CostModifier;
+                if (m != null && (m.Condition?.Value ?? true))
                 {
                     ret = m.exp.Value;
                 }
@@ -49,56 +46,13 @@ public class Card : MonoBehaviour
     {
         //浅拷贝
         info = prefab.info;
-        conditionNode = prefab.conditionNode;
     }
-    public void Construct(XmlNode xml)
+
+    public void Construct(CardInfo info)
     {
-        //if (!xml.Name.Equals("define_card")) throw new SemanticException();
-        //temporaryActivate = false;
-        //permanentActivate = false;
-        //cost = 1;
-        //Category = 1;
-        //XmlNode it = xml.FirstChild;
-        //while (it != null)
-        //{
-        //    switch (it.Name)
-        //    {
-        //        case "title":
-        //            Title = it.InnerText;
-        //            break;
-        //        case "effect_desc":
-        //            baseEffectDesc = it.InnerText;
-        //            break;
-        //        case "condition_desc":
-        //            baseConditionDesc = it.InnerText;
-        //            break;
-        //        case "meme":
-        //            Meme = it.InnerText;
-        //            break;
-        //        case "condition":
-        //            if (conditionNode != null) throw new SemanticException();
-        //            conditionNode = SemanticAnalyser.AnalyseConditionList(it);
-        //            break;
-        //        case "pull_effect":
-        //            if (pullEffectNode != null) throw new SemanticException();
-        //            pullEffectNode = SemanticAnalyser.AnalayseEffectList(it);
-        //            break;
-        //        case "hold_effect":
-        //            if (holdEffectNode != null) throw new SemanticException();
-        //            holdEffectNode = SemanticAnalyser.AnalayseEffectList(it);
-        //            break;
-        //        case "play_effect":
-        //            if (effectNode != null) throw new SemanticException();
-        //            effectNode = SemanticAnalyser.AnalayseEffectList(it);
-        //            break;
-        //        case "define_card_var":
-        //            throw new NotImplementedException();
-        //        default:
-        //            throw new SemanticException();
-        //    }
-        //    it = it.NextSibling;
-        //}
+        this.info = info;
     }
+
 
     public int GetCardVarValue(string varName)
     {

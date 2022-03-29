@@ -11,25 +11,11 @@ namespace SemanticTree.PlayerEffect
     public class ModifyHealth : Effect
     {
         [XmlElement(ElementName = "num")]
-        public string NumExpression { get; set; }
-
+        public string NumExpression;
         private IExpression num;
-
-        public ModifyHealth()
-        {
-            NumExpression = "";
-            this.num = null;
-        }
-
-        public ModifyHealth(XmlNode xmlNode)
-        {
-
-            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(xmlNode.InnerText);
-        }
-
         public override void Construct()
         {
-            num = ExpressionAnalyser.ExpressionParser.AnalayseExpression(NumExpression);
+            num = ExpressionParser.AnalayseExpression(NumExpression);
         }
 
         public override void Execute()

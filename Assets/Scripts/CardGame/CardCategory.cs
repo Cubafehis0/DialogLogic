@@ -1,13 +1,21 @@
 ﻿using System.Collections;
+using System.Xml.Serialization;
 using UnityEngine;
 
-public class CardCategory
+public enum CardCategory
 {
-    public static int None { get => 0; }
-    public static int Lgc { get => 1; }
-    public static int Spt { get => 2; }
-    public static int Mrl { get => 4; }
-    public static int Imm { get => 8; }
-    public static int Rdb { get => 16; }
-    public static int Ags { get => 32; }
+    [XmlEnum(Name ="none")]
+    None,
+    [XmlEnum(Name = "logic")]
+    Lgc,
+    [XmlEnum(Name = "spirital")]
+    Spt,
+    [XmlEnum(Name = "moral")]
+    Mrl,
+    [XmlEnum(Name = "immoral")]
+    Imm,
+    [XmlEnum(Name = "roundabout")]
+    Rdb,
+    [XmlEnum(Name = "aggressive")]
+    Ags,
 }

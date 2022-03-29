@@ -30,6 +30,7 @@ public class CardGameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
     }
 
     public void OpenTendencyChoosePanel(int mask)

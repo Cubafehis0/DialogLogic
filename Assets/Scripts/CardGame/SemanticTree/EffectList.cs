@@ -15,16 +15,16 @@ namespace SemanticTree
     [Serializable]
     public class EffectList : IEffect
     {
-        [XmlElement(typeof(ModifyPersonality),ElementName ="modify_personality")]
-        [XmlElement(typeof(AddCard2Hand), ElementName = "add_card_to_hand")]
-        [XmlElement(typeof(AddCostModifier), ElementName = "add_cost_modifier")]
+        [XmlElement(typeof(AnonymousModifyPersonality),ElementName ="modify_personality")]
+        [XmlElement(typeof(AddStaticCard2Hand), ElementName = "add_card_to_hand")]
+        [XmlElement(typeof(AnonymousModifyCost), ElementName = "add_cost_modifier")]
         [XmlElement(typeof(AddStatus), ElementName = "add_status")]
         [XmlElement(typeof(DiscardAllHand), ElementName = "discard_all_hand")]
         [XmlElement(typeof(DiscardSomeHand), ElementName = "discard_some_hand")]
         [XmlElement(typeof(Draw), ElementName = "draw")]
-        [XmlElement(typeof(ModifyFocus), ElementName = "modify_focus")]
+        [XmlElement(typeof(AnonymousModifyFocus), ElementName = "modify_focus")]
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
-        [XmlElement(typeof(ModifySpeech), ElementName = "modify_speech")]
+        [XmlElement(typeof(AnonymousModifySpeech), ElementName = "modify_speech")]
         [XmlElement(typeof(RemoveCostModifier), ElementName = "remove_cost_modifier")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
 

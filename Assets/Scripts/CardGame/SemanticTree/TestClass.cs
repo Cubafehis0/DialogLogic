@@ -34,11 +34,11 @@ namespace SemanticTree
                 {
                     effects = new List<Effect>()
                     {
-                        new ModifyPersonality()
+                        new AnonymousModifyPersonality()
                         {
                             Modifier = new Personality(0, 0, 1, 0),
                         },
-                        new ModifyPersonality()
+                        new AnonymousModifyPersonality()
                         {
                             Modifier = new Personality(0, 1, 0, 0),
                         },

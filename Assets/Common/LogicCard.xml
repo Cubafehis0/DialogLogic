@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<CardDefines>
+<Common>
     <define_card>
         <name>三段论</name>
         <title>三段论</title>
@@ -167,4 +167,4 @@
             </foreach_dynamic_card>
         </on_play_card>
     </define_card>
-</CardDefines>
+</Common>

@@ -43,4 +43,11 @@ public class CardInfo
 
     [XmlElement(ElementName = "on_play_card")]
     public EffectList Effects;
+
+    public void Construct()
+    {
+        Requirements?.Construct();
+        DrawEffects?.Construct();
+        Effects?.Construct();
+    }
 }
