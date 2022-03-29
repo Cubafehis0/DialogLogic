@@ -31,6 +31,9 @@ public class Status
     [XmlElement(ElementName = "on_remove")]
     public EffectList OnRemove = null;
 
+    [XmlIgnore]
+    public bool DecreaseOnTurnEndSpecified { get { return DecreaseOnTurnEnd != 0; } set { } }
+
     public void Construct()
     {
         OnAdd?.Construct();

@@ -25,7 +25,6 @@ namespace SemanticTree
         [XmlElement(typeof(AnonymousModifyFocus), ElementName = "modify_focus")]
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
         [XmlElement(typeof(AnonymousModifySpeech), ElementName = "modify_speech")]
-        [XmlElement(typeof(RemoveCostModifier), ElementName = "remove_cost_modifier")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
 
         [XmlElement(typeof(GUISelectDynamicCard),ElementName ="GUI_select_dynamic_card")]
