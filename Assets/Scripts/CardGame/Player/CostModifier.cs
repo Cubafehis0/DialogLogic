@@ -34,6 +34,7 @@ public class CostModifier
 
     [XmlElement(ElementName = "factor")]
     public string NumExpression;
+    [XmlIgnore]
     public IExpression exp;
 
     public CostModifier() { }

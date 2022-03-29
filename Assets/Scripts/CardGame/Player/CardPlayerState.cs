@@ -24,8 +24,6 @@ public class Timer<T>
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGet
 {
     [SerializeField]
-    private Personality basePersonality = new Personality(0, 0, 0, 0);
-    [SerializeField]
     private SpeechArt baseSpeechArt = new SpeechArt(0, 0, 0, 0);
     [SerializeField]
     private Player player = null;
@@ -39,8 +37,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     private uint handCardMaxNum = 10;
     [SerializeField]
     private bool drawBan = false;
-    [SerializeField]
-    private SpeechType? baseSpeechType = null;
 
     private Pile<Card> hand = new Pile<Card>();
     private Pile<Card> drawPile = new Pile<Card>();
@@ -59,48 +55,21 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
-    public List<Modifier> Modifiers = new List<Modifier>();
+    public ModifierGroup Modifiers = new ModifierGroup();
 
     public static CardPlayerState Instance { get => instance; }
     public Personality FinalPersonality
     {
-        get
-        {
-            Personality ret = basePersonality;
-            foreach (var modifer in Modifiers)
-            {
-                if(modifer.PersonalityLinear!=null)
-                ret += modifer.PersonalityLinear;
-            }
-            return ret;
-        }
+        get => player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
     }
     public SpeechArt FinalSpeechArt
     {
-        get
-        {
-            SpeechArt ret = baseSpeechArt;
-            foreach (var modifer in Modifiers)
-            {
-                if (modifer.SpeechLinear != null)
-                    ret += modifer.SpeechLinear;
-            }
-            return ret;
-        }
+        get => baseSpeechArt + Modifiers.SpeechLinear;
     }
     public SpeechType? FocusSpeechType
     {
-        get
-        {
-            SpeechType? ret = baseSpeechType;
-            foreach (var modifier in Modifiers)
-            {
-                ret = modifier.Focus;
-            }
-            return ret;
-        }
+        get => Modifiers.Focus;
     }
-    public Personality Personality { get => FinalPersonality; }
     public int Energy
     {
         get => energy;
@@ -120,7 +89,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public bool IsHandFull => Hand.Count == handCardMaxNum;
     public UnityEvent OnValueChange => onPersonalityChange;
     public bool DrawBan { get => drawBan; set => drawBan = value; }
-    public Player Player { get => player;}
+    public Player Player { get => player; }
 
     private void Awake()
     {
@@ -178,7 +147,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
 
     public void Draw2Full()
     {
-        for(int i = 0; i < 20; i++)
+        for (int i = 0; i < 20; i++)
         {
             if (!CanDraw()) break;
             Draw(1);
@@ -321,6 +290,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             Debug.LogWarning("StateChange null");
             return;
         }
-        basePersonality += delta;
+        StatusManager.AddAnonymousPersonalityModifier(delta, turn);
     }
 }

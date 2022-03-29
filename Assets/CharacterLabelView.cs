@@ -8,7 +8,7 @@ public interface IPersonalityGet
 {
     UnityEvent OnValueChange { get; }
 
-    Personality Personality { get; }
+    Personality FinalPersonality { get; }
 }
 public class CharacterLabelView : MonoBehaviour, ICharacterView
 {
@@ -46,7 +46,7 @@ public class CharacterLabelView : MonoBehaviour, ICharacterView
     public void UpdateAll()
     {
         if (character == null) return;
-        Personality personality = character.Personality;
+        Personality personality = character.FinalPersonality;
         if (insideText) insideText.text = personality.Inner.ToString();
         if (logicText) logicText.text = personality.Logic.ToString();
         if (moralText) moralText.text = personality.Moral.ToString();

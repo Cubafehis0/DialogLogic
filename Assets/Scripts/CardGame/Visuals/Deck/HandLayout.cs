@@ -128,7 +128,7 @@ public class HandLayout : MonoBehaviour
             {
                 Vector3 currentPos = child.position;
                 Vector3 targetPos = cardsOffset[i];
-                child.position = Vector3.MoveTowards(currentPos, targetPos, moveSpeed);
+                child.position = Vector3.MoveTowards(currentPos, targetPos, Time.deltaTime*moveSpeed);
                 child.localEulerAngles = -Mathf.Rad2Deg * (cardsArcOffset[i] / curvature) * Vector3.forward;
             }
         }

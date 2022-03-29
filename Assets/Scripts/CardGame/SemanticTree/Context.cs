@@ -77,14 +77,14 @@ namespace SemanticTree
                 }
                 return name switch
                 {
-                    "inner" => PlayerContext.Personality.Inner,
-                    "outside" => PlayerContext.Personality.Outside,
-                    "logic" => PlayerContext.Personality.Logic,
-                    "spritial" => PlayerContext.Personality.Spritial,
-                    "moral" => PlayerContext.Personality.Moral,
-                    "immoral" => PlayerContext.Personality.Immoral,
-                    "roundabout" => PlayerContext.Personality.Roundabout,
-                    "aggressive" => PlayerContext.Personality.Aggressive,
+                    "inner" => PlayerContext.FinalPersonality.Inner,
+                    "outside" => PlayerContext.FinalPersonality.Outside,
+                    "logic" => PlayerContext.FinalPersonality.Logic,
+                    "spritial" => PlayerContext.FinalPersonality.Spritial,
+                    "moral" => PlayerContext.FinalPersonality.Moral,
+                    "immoral" => PlayerContext.FinalPersonality.Immoral,
+                    "roundabout" => PlayerContext.FinalPersonality.Roundabout,
+                    "aggressive" => PlayerContext.FinalPersonality.Aggressive,
                     "hand_count"=>PlayerContext.Hand.Count,
                     "draw_count"=>PlayerContext.DrawPile.Count,
                     "discard_count"=>PlayerContext.DiscardPile.Count,
