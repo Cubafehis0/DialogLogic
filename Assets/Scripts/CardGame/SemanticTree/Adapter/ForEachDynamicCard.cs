@@ -26,9 +26,12 @@ namespace SemanticTree.Adapter
             if ((PileType.Hand & type) > 0) ret.AddRange(Context.PlayerContext.Hand);
             if ((PileType.DrawDeck & type) > 0) ret.AddRange(Context.PlayerContext.DrawPile);
             if ((PileType.DiscardDeck & type) > 0) ret.AddRange(Context.PlayerContext.DiscardPile);
-            Context.PushPileContext(ret);
-            actions.ForEach(x => x.Execute());
-            Context.PopPileContext();
+            foreach(Card card in ret)
+            {
+                Context.PushCardContext(card);
+                actions.ForEach(x => x.Execute());
+                Context.PopCardContext();
+            }
         }
 
         public override void Construct()

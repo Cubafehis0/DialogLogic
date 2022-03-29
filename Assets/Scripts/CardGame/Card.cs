@@ -17,7 +17,7 @@ public class Card : MonoBehaviour
     [SerializeField]
     private bool permanentActivate = false;
 
-    private Dictionary<string, IExpression> cardVars;
+    private Dictionary<string, IExpression> cardVars=new Dictionary<string, IExpression>();
 
     public int FinalCost
     {

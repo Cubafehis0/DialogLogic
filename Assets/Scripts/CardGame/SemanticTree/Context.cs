@@ -12,6 +12,7 @@ namespace SemanticTree
         private static readonly Stack<CardPlayerState> playerContext = new Stack<CardPlayerState>();
         private static readonly Stack<Card> cardStack = new Stack<Card>();
         private static readonly Stack<List<Card>> pileStack = new Stack<List<Card>>();
+        public static readonly Stack<StatusCounter> statusCounterStack = new Stack<StatusCounter>();
         public static List<Card> PileContext
         {
             get

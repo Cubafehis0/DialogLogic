@@ -21,7 +21,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddStatusCounter(Context.PlayerContext, status, value.Value);
+            Context.PlayerContext.StatusManager.AddStatusCounter(status, value.Value);
         }
 
         public override void Construct()

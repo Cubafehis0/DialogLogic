@@ -15,6 +15,7 @@ public class Modifier
     public CostModifier CostModifier;
     public EffectList OnTurnStart;
     public EffectList OnPlayCard;
+    public EffectList OnBuff;
 
     [XmlIgnore]
     public bool FocusSpecified { get { return Focus != null; } set { } }

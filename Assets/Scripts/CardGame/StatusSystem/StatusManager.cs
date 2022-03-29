@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CardPlayerState))]
 public class StatusManager : MonoBehaviour
 {
-    /// <summary>
-    /// 供effect与游戏流程中的同步使用
-    /// </summary>
-    private static Dictionary<string, Status> statusDictionary = new Dictionary<string, Status>();
-
+    public UnityEvent<StatusCounter> OnBuff = new UnityEvent<StatusCounter>();
     [SerializeField]
     private List<StatusCounter> statusList = new List<StatusCounter>();
+
+    private CardPlayerState player;
+    private static Dictionary<string, Status> statusDictionary = new Dictionary<string, Status>();
 
     public void AddAnonymousPersonalityModifier(Personality personality, int timer)
     {
@@ -26,7 +26,7 @@ public class StatusManager : MonoBehaviour
             },
             DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
         };
-        AddStatusCounter(GetComponent<CardPlayerState>(), anonymous, Mathf.Max(1, timer));
+        AddStatusCounter(anonymous, Mathf.Max(1, timer));
         //Status需要GC
     }
     public void AddAnonymousSpeechModifer(SpeechArt speechArt, int timer)
@@ -40,7 +40,7 @@ public class StatusManager : MonoBehaviour
             },
             DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
         };
-        AddStatusCounter(GetComponent<CardPlayerState>(), anonymous, Mathf.Max(1, timer));
+        AddStatusCounter(anonymous, Mathf.Max(1, timer));
         //Status需要GC
     }
     public void AddAnonymousCostModifer(CostModifier costModifier, int timer)
@@ -54,7 +54,7 @@ public class StatusManager : MonoBehaviour
             },
             DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
         };
-        AddStatusCounter(GetComponent<CardPlayerState>(), anonymous, Mathf.Max(1, timer));
+        AddStatusCounter(anonymous, Mathf.Max(1, timer));
         //Status需要GC
     }
     public void AddAnonymousFocusModifer(SpeechType speechType, int timer)
@@ -68,35 +68,45 @@ public class StatusManager : MonoBehaviour
             },
             DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
         };
-        AddStatusCounter(GetComponent<CardPlayerState>(), anonymous, Mathf.Max(1, timer));
+        AddStatusCounter(anonymous, Mathf.Max(1, timer));
         //Status需要GC
     }
 
 
-    public void AddStatusCounter(CardPlayerState player, Status status, int value)
+    public void AddStatusCounter(Status status, int value)
     {
-        foreach (StatusCounter s in statusList)
+        Context.PushPlayerContext(player);
+        StatusCounter st = new StatusCounter { status = status, value = value };
+        foreach (var modifier in player.Modifiers)
         {
-            if ((s.status == status) && s.status.Stackable)
+            if (modifier.OnBuff != null)
             {
-                s.value += value;
-                if (s.value <= 0 && !s.status.AllowNegative)
-                {
-                    Context.PushPlayerContext(player);
-                    s.status.OnRemove.Execute();
-                    player.RemoveModifier(s.status.Modifier);
-                    Context.PopPlayerContext();
-                    statusList.Remove(s);
-                }
-                return;
+                Context.statusCounterStack.Push(st);
+                modifier.OnBuff.Execute();
+                Context.statusCounterStack.Pop();
             }
         }
-        if (value <= 0 && !status.AllowNegative) return;
-        StatusCounter st = new StatusCounter { status = status, value = value };
-        statusList.Add(st);
-        Context.PushPlayerContext(player);
-        player.AddModifier(status.Modifier);
-        status.OnAdd.Execute();
+        StatusCounter s= statusList.Find(x => x.status == status && x.status.Stackable);
+        if(s != null)
+        {
+            s.value += value;
+            if (s.value <= 0 && !s.status.AllowNegative)
+            {
+                s.status.OnRemove.Execute();
+                player.RemoveModifier(s.status.Modifier);
+                statusList.Remove(s);
+            }
+        }
+        else
+        {
+            if (value > 0 || status.AllowNegative)
+            {
+                statusList.Add(st);
+                player.AddModifier(status.Modifier);
+                status.OnAdd.Execute();
+            }
+
+        }
         Context.PopPlayerContext();
     }
 
@@ -122,11 +132,15 @@ public class StatusManager : MonoBehaviour
         return 0;
     }
 
+    private void Awake()
+    {
+        player = GetComponent<CardPlayerState>();
+    }
 
     private void Start()
     {
-        CardPlayerState.Instance.OnStartTurn.AddListener(OnStartTurn);
-        CardPlayerState.Instance.OnEndTurn.AddListener(OnEndTurn);
+        player.OnStartTurn.AddListener(OnStartTurn);
+        player.OnEndTurn.AddListener(OnEndTurn);
     }
 
 
@@ -151,7 +165,6 @@ public class StatusManager : MonoBehaviour
             sig.value -= sig.status.DecreaseOnTurnEnd;
             if (sig.value == 0 || (sig.value < 0 && !sig.status.AllowNegative))
             {
-                var player = CardPlayerState.Instance;
                 Context.PushPlayerContext(player);
                 sig.status.OnRemove.Execute();
                 player.RemoveModifier(sig.status.Modifier);

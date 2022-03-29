@@ -42,7 +42,6 @@ namespace SemanticTree.Adapter
             if ((PileType.Hand & type) > 0) tmp.AddRange(Context.PlayerContext.Hand);
             if ((PileType.DrawDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DrawPile);
             if ((PileType.DiscardDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DiscardPile);
-            Context.PushPileContext(tmp);
             MyMath.Shuffle(tmp);
             foreach (Card card in tmp.GetRange(0, num.Value))
             {
