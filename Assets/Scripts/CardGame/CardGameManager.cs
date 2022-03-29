@@ -33,7 +33,7 @@ public class CardGameManager : MonoBehaviour
         ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
     }
 
-    public void OpenTendencyChoosePanel(int mask)
+    public void OpenTendencyChoosePanel(HashSet<PersonalityType> types,int value)
     {
         throw new System.NotImplementedException();
     }
