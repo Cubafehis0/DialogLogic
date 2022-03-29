@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Xml;
 using System.IO;
 using System;
+using SemanticTree;
 
 public class TestConfigRead : MonoBehaviour
 {
@@ -14,11 +15,9 @@ public class TestConfigRead : MonoBehaviour
     CardPlayerState cardPlayer;
     [SerializeField]
     DialogSystem dialogSystem;
-    StaticCardLibrary cardLibrary;
     // Start is called before the first frame update
     void Awake()
     {
-        cardLibrary = StaticCardLibrary.Instance;
         xmlDoc = new XmlDocument();
         try
         {
@@ -45,34 +44,12 @@ public class TestConfigRead : MonoBehaviour
                     dialogSystem.SetInkStoryAsset(inkStoryName);
                     break;
                 case "player":
-                    Personality personality = XmlUtil.GetPersonality(ele["personality"]);
-                    cardPlayer.SetBasePersonality(personality);
-                    uint maxCardNum = (uint)XmlUtil.GetInt(ele["maxCardNum"]);
-                    cardPlayer.SetMaxCardNum(maxCardNum);
-                    int drawCardNum = XmlUtil.GetInt(ele["drawCardNum"]);
-                    cardPlayer.SetDrawCardNum(drawCardNum);
-                    int basePressure = XmlUtil.GetInt(ele["basePressure"]);
-                    cardPlayer.SetBasePressure(basePressure);
-                    int maxPressure = XmlUtil.GetInt(ele["maxPressure"]);
-                    cardPlayer.SetMaxPressure(maxPressure);
-                    int health = XmlUtil.GetInt(ele["health"]);
-                    cardPlayer.SetHealth(health);
-                    int energy = XmlUtil.GetInt(ele["energy"]);
-                    cardPlayer.SetBaseEnergy(energy);
+
+                    cardPlayer.Player.PlayerInfo = TestClass.Deserialize<PlayerInfo>(ele.OuterXml);
                     break;
                 case "enemy":
                     Personality enemyPersonality = XmlUtil.GetPersonality(ele["personality"]);
 
-                    break;
-                case "cardDeck":
-                    foreach (XmlElement e in list)
-                    {
-                        XmlUtil.ParseCardInfo(e, out string name, out int num);
-                        for (int i = 0; i < num; i++)
-                        {
-                            cardPlayer.Player.CardSet.Add(name);
-                        }
-                    }
                     break;
             }
         }

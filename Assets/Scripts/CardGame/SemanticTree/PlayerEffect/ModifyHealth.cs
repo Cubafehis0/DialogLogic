@@ -20,7 +20,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.Player.Health += num.Value;
+            Context.PlayerContext.Player.PlayerInfo.Health += num.Value;
         }
     }
 }

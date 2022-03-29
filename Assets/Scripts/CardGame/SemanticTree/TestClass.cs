@@ -88,12 +88,11 @@ namespace SemanticTree
             ser.Serialize(writer, effect);
             writer.Close();
         }
-        private void Deserialize<T>()
+        public static T Deserialize<T>(string s)
         {
             XmlSerializer ser = new XmlSerializer(typeof(T));
-            using var stream = StreamString2Stream(xmlFile.text);
-            T res = (T)ser.Deserialize(stream);
-            Debug.Log(res);
+            using var stream = StreamString2Stream(s);
+            return (T)ser.Deserialize(stream);
         }
 
         public static Stream StreamString2Stream(string s)

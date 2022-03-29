@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using SemanticTree;
 using System;
+using System.Xml.Serialization;
 
 [Serializable]
 public class Timer<T>
@@ -40,40 +41,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     private bool drawBan = false;
     [SerializeField]
     private SpeechType? baseSpeechType = null;
-
-    #region 玩家基本信息配置方法
-    public void SetBasePersonality(Personality personality)
-    {
-        this.basePersonality= personality;
-    }
-    public void SetBaseEnergy(int energy)
-    {
-        this.energy = energy;
-    }
-    public void SetDrawCardNum(int drawNum)
-    {
-        this.drawNum = drawNum;
-    }
-    public void SetMaxCardNum(uint handCardMaxNum)
-    {
-        this.handCardMaxNum = handCardMaxNum;
-    }
-    public void SetBasePressure(int basePressure)
-    {
-        throw new Exception("没有包含对应属性");
-        //this.basePressure = basePressure;
-    }
-    public void SetMaxPressure(int maxPressure)
-    {
-        throw new Exception("没有包含对应属性");
-        //this.maxPressure = maxPressure;
-    }
-    public void SetHealth(int health)
-    {
-        throw new Exception("没有包含对应属性");
-        //this.health = health;
-    }
-    #endregion
 
     private Pile<Card> hand = new Pile<Card>();
     private Pile<Card> drawPile = new Pile<Card>();
@@ -302,7 +269,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public void RawSelectChoice(ChoiceSlot slot)
     {
         int dis = Personality.MaxDistance(FinalPersonality, slot.Choice.JudgeValue);
-        SpeechArt speech = Instance.FinalSpeechArt;
+        SpeechArt speech = FinalSpeechArt;
         int modifier = slot.SlotType switch
         {
             SpeechType.Normal => speech[SpeechType.Normal],
@@ -338,7 +305,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public void OnStartGame()
     {
         Debug.Log("init");
-        foreach (string name in Player.CardSet)
+        foreach (string name in Player.PlayerInfo.CardSet)
         {
             Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
             drawPile.Add(newCard);
