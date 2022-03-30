@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CardGame.Recorder;
 
 namespace SemanticTree
 {
@@ -71,9 +72,27 @@ namespace SemanticTree
             get
             {
                 List<string> t = name.Split('.').ToList();
-                if(t.Count==2 && t[0].Equals("status"))
+                if (t.Count == 2 && t[0].Equals("status"))
                 {
                     return PlayerContext.StatusManager.GetStatusValue(t[1]);
+                }
+                if (t.Count == 2 && t[0].Equals("recorder"))
+                {
+                    return t[1] switch
+                    {
+                        "preach_total" =>
+                        (from x in CardRecorder.Instance.cardLogs
+                         where x.Name == name
+                         && x.LogType == CardLogEntryEnum.PlayCard
+                         select x).Count(),
+                        "preach_thisturn" =>
+                        (from x in CardRecorder.Instance.cardLogs
+                        where x.Name == name
+                        && x.LogType == CardLogEntryEnum.PlayCard
+                        && x.Turn==CardGameManager.Instance.turn
+                        select x).Count(),
+                        _ => throw new SemanticException()
+                    };
                 }
                 return name switch
                 {
@@ -85,9 +104,9 @@ namespace SemanticTree
                     "immoral" => PlayerContext.FinalPersonality.Immoral,
                     "roundabout" => PlayerContext.FinalPersonality.Roundabout,
                     "aggressive" => PlayerContext.FinalPersonality.Aggressive,
-                    "hand_count"=>PlayerContext.Hand.Count,
-                    "draw_count"=>PlayerContext.DrawPile.Count,
-                    "discard_count"=>PlayerContext.DiscardPile.Count,
+                    "hand_count" => PlayerContext.Hand.Count,
+                    "draw_count" => PlayerContext.DrawPile.Count,
+                    "discard_count" => PlayerContext.DiscardPile.Count,
                     _ => throw new SemanticException()
                 };
             }

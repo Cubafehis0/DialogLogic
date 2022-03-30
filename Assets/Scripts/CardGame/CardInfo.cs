@@ -30,7 +30,7 @@ public class CardInfo
     public int BaseCost;
 
     [XmlElement(ElementName = "category")]
-    public int category;
+    public CardCategory category;
 
     [XmlElement(ElementName = "in_hand_personality")]
     public Personality Personality;

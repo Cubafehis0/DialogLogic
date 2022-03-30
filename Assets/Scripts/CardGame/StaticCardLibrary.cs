@@ -25,13 +25,6 @@ public class StaticCardLibrary : MonoBehaviour
         else Destroy(this);
     }
 
-    public void DeclareCard(XmlNode xmlNode)
-    {
-        if (!xmlNode.Name.Equals("define_card")) return;
-        string name = xmlNode.Attributes["name"].InnerText;
-        DeclareCard(name);
-    }
-
     public void DeclareCard(string name)
     {
         if (cardDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义卡牌");

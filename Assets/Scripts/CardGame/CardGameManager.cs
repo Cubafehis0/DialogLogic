@@ -9,7 +9,7 @@ public class CardGameManager : MonoBehaviour
 {
     private static CardGameManager instance = null;
     public UnityEvent OnStartGame = new UnityEvent();
-
+    public int turn = 0;
     public static CardGameManager Instance
     {
         get => instance;
@@ -93,6 +93,7 @@ public class CardGameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        turn = 0;
         OnStartGame.Invoke();
     }
     /// <summary>
@@ -108,6 +109,7 @@ public class CardGameManager : MonoBehaviour
     /// </summary>
     public void StartTurn()
     {
+        turn++;
         CardPlayerState.Instance.StartTurn();
     }
 }

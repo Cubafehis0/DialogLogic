@@ -14,11 +14,11 @@ namespace SemanticTree.PlayerEffect
         public Personality Modifier;
 
         [XmlElement(ElementName = "duration")]
-        public int Timer;
+        public int duration;
 
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddAnonymousPersonalityModifier(Modifier, Timer);
+            Context.PlayerContext.StatusManager.AddAnonymousPersonalityModifier(Modifier, duration);
         }
 
         public override void Construct()

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.Condition
 {
-    public class PreviousIsCategory:ConditionNode
+    public class PreviousIsCategory : ConditionNode
     {
         [XmlElement]
         public CardCategory category;
@@ -17,8 +17,12 @@ namespace SemanticTree.Condition
         {
             get
             {
-                var qs=CardRecorder.Instance.Query(CardLogFindScopeEnum.ThisTurn, 0, x => true).ToList();
-                return qs[0].CardCategory==category;
+                var qs = from x in CardRecorder.Instance.cardLogs
+                         where x.Turn == CardGameManager.Instance.turn
+                         && x.LogType == CardLogEntryEnum.PlayCard
+                         select x;
+                if (qs.Count() == 0) return false;
+                return qs.First().CardCategory == category;
             }
         }
 

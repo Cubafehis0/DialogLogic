@@ -8,10 +8,10 @@ public class CardLogEntry
     private string name;
     private CardCategory cardCategory;
     private bool isActive;
-    private uint turn;
+    private int turn;
     private CardLogEntryEnum logType;
 
-    public uint Turn { get => turn; set => turn = value; }
+    public int Turn { get => turn; set => turn = value; }
     public CardLogEntryEnum LogType { get => logType; set => logType = value; }
     public CardCategory CardCategory { get => cardCategory; set => cardCategory = value; }
     public bool IsActive { get => isActive; set => isActive = value; }

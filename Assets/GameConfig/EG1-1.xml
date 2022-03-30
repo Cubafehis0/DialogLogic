@@ -29,8 +29,7 @@ xs:schemaLocation="JaspersGameConfigGrammar GameTestConfig.xsd">
     </enemy>
     <cardDeck>
         <card>
-            <name>xsa</name>
-            <num>2</num>
+            <name>xsa</name> 
         </card>
     </cardDeck>
 </pass>

@@ -14,7 +14,7 @@ public class Common
     public void Declare()
     {
         CardInfos?.ForEach(x => StaticCardLibrary.Instance.DeclareCard(x.Name));
-        Statuss?.ForEach(x => StaticStatusLibrary.DeclareStatus(x.Name));
+        Statuss?.ForEach(x => StaticStatusLibrary.DeclareStatus(x.Name,x));
     }
 
     public void Define()

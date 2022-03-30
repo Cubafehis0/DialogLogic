@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using SemanticTree;
 using System;
 using System.Xml.Serialization;
+using CardGame.Recorder;
 
 [Serializable]
 public class Timer<T>
@@ -24,13 +25,13 @@ public class Timer<T>
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGet
 {
     [SerializeField]
-    private SpeechArt baseSpeechArt = new SpeechArt(0, 0, 0, 0);
-    [SerializeField]
     private Player player = null;
     [SerializeField]
     private int energy = 0;
     [SerializeField]
     private int pressure = 0;
+    [SerializeField]
+    private Personality additionalPersonality = new Personality();
     [SerializeField]
     private int drawNum = 5;
     [SerializeField]
@@ -60,11 +61,11 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public static CardPlayerState Instance { get => instance; }
     public Personality FinalPersonality
     {
-        get => player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
+        get => player.PlayerInfo.Personality + AdditionalPersonality + Modifiers.PersonalityLinear;
     }
     public SpeechArt FinalSpeechArt
     {
-        get => baseSpeechArt + Modifiers.SpeechLinear;
+        get => Modifiers.SpeechLinear;
     }
     public SpeechType? FocusSpeechType
     {
@@ -90,6 +91,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public UnityEvent OnValueChange => onPersonalityChange;
     public bool DrawBan { get => drawBan; set => drawBan = value; }
     public Player Player { get => player; }
+    public Personality AdditionalPersonality { get => additionalPersonality; set => additionalPersonality = value; }
 
     private void Awake()
     {
@@ -182,12 +184,20 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         {
             Context.PushPlayerContext(this);
             Context.PushCardContext(card);
-            if (card.info.Requirements?.Value ?? true)
+            if (card.Activated || (card.info.Requirements?.Value ?? true))
             {
                 //目标有效且可以使用
                 Energy -= card.FinalCost;
-                //调用Play时已经检查并扣除费用
                 Debug.Log("使用卡牌： " + card.info.Title);
+                CardLogEntry log = new CardLogEntry
+                {
+                    Name = card.info.Name,
+                    IsActive = card.Activated,
+                    LogType = CardLogEntryEnum.PlayCard,
+                    Turn = CardGameManager.Instance.turn,
+                    CardCategory = card.info.category,
+                };
+                CardRecorder.Instance.AddRecordEntry(log);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
                 card.info.Effects.Execute();

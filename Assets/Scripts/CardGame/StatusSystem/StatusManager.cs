@@ -18,16 +18,23 @@ public class StatusManager : MonoBehaviour
     public void AddAnonymousPersonalityModifier(Personality personality, int timer)
     {
         if (timer == 0) return;
-        Status anonymous = new Status()
+        if (timer < 0)
         {
-            Modifier = new Modifier()
+            player.AdditionalPersonality += personality;
+        }
+        else
+        {
+            Status anonymous = new Status()
             {
-                PersonalityLinear = new Personality(personality),
-            },
-            DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
-        };
-        AddStatusCounter(anonymous, Mathf.Max(1, timer));
-        //Status需要GC
+                Modifier = new Modifier()
+                {
+                    PersonalityLinear = new Personality(personality),
+                },
+                DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
+            };
+            AddStatusCounter(anonymous, Mathf.Max(1, timer));
+            //Status需要GC
+        }
     }
     public void AddAnonymousSpeechModifer(SpeechArt speechArt, int timer)
     {
