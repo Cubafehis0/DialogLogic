@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <Common>
+
+
     <define_card>
-        <name>三段论</name>
-        <title>三段论</title>
-        <condition_desc>无</condition_desc>
-        <effect_desc>持有逻辑+3，打出激情+5</effect_desc>
-        <meme>无</meme>
+        <name>整理思绪</name>
+        <title>整理思绪</title>
+        <condition_desc></condition_desc>
+        <effect_desc>打出时：丢弃5张牌</effect_desc>
+        <meme>容我三思</meme>
         <cost>1</cost>
-        <category>2</category>
-        <in_hand_personality>
-            <logic>1</logic>
-        </in_hand_personality>
+        <category>1</category>
         <on_play_card>
-            <modify_personality>
-                <personality>
-                    <spritial>3</spritial>
-                </personality>
-                <duration>-1</duration>
-            </modify_personality>
+            <discard />
         </on_play_card>
     </define_card>
     <define_card>

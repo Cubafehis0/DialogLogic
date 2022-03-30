@@ -13,7 +13,7 @@ namespace ExpressionAnalyser
      *       lp exp rp
      *       unaryOperator exp
      */
-    public class ExpressionParser
+    public static class ExpressionParser
     {
         class OperatorFlagWrap
         {
@@ -177,123 +177,5 @@ namespace ExpressionAnalyser
             }
             return false;
         }
-
-        //private static IExpression Parse(List<Token> tokens)
-        //{
-        //    if (tokens.Count == 0) return null;
-        //    ParseUnaryOperator(tokens);
-        //    List<Token> suffix = TransInfix2Suffix(tokens);
-        //    return ParseSuffix(suffix);
-        //}
-        //    private static void ParseUnaryOperator(List<Token> tokens)
-        //    {
-        //        bool lastIsOperand = false;
-        //        for (int i = 0; i < tokens.Count - 1; i++)
-        //        {
-        //            Token t = tokens[i];
-        //            if (t.type == TokenType.Operand)
-        //            {
-        //                lastIsOperand = true;
-        //            }
-        //            else
-        //            {
-        //                if (!lastIsOperand)
-        //                {
-        //                    if (tokens[i + 1].type == TokenType.Operand)
-        //                    {
-        //                        Operator ope = (t.node as IOperator).Operator;
-        //                        if (ope == Operator.Minus || ope == Operator.Plus)
-        //                        {
-        //                            tokens.RemoveAt(i);
-        //                            IExpression e = tokens[i].node as IExpression;
-        //                            tokens.RemoveAt(i);
-        //                            UnaryExpression unary = new UnaryExpression(t.node as IOperator, e);
-        //                            tokens.Insert(i, new Token(TokenType.Operand, unary, t.begIndex));
-        //                            lastIsOperand = true;
-        //                            continue;
-        //                        }
-        //                    }
-        //                }
-        //                lastIsOperand = false;
-        //            }
-        //        }
-        //    }
-        //    private static IExpression ParseSuffix(List<Token> suffix)
-        //    {
-        //        Stack<IExpression> stack = new Stack<IExpression>();
-        //        foreach (var token in suffix)
-        //        {
-        //            TokenType type = token.type;
-        //            switch (type)
-        //            {
-        //                case TokenType.Operand:
-        //                    stack.Push(token.node as IExpression);
-        //                    break;
-        //                case TokenType.Operator:
-        //                    Operator ope = (token.node as IOperator).Operator;
-        //                    if (stack.Count < 2)
-        //                    {
-        //                        throw new ParseException($"多余的操作符{OperatorTool.GetOperator(ope)}", token.begIndex);
-        //                    }
-        //                    else
-        //                    {
-        //                        IExpression r = stack.Pop();
-        //                        IExpression l = stack.Pop();
-        //                        stack.Push(new BinExpression(token.node as IOperator, l, r));
-        //                    }
-        //                    break;
-        //            }
-        //        }
-        //        if (stack.Count == 0)
-        //        {
-        //            throw new ParseException("表达式为空。没有实际的值");
-        //        }
-        //        else if (stack.Count > 1)
-        //        {
-        //            throw new ParseException("过多的操作数。操作数和操作符不匹配");
-        //        }
-        //        return stack.Peek();
-        //    }
-        //    private static List<Token> TransInfix2Suffix(List<Token> infix)
-        //    {
-        //        Stack<Token> stack = new Stack<Token>();
-        //        List<Token> suffix = new List<Token>();
-        //        foreach (var token in infix)
-        //        {
-        //            switch (token.type)
-        //            {
-        //                case TokenType.Operand:
-        //                    suffix.Add(token);
-        //                    break;
-        //                case TokenType.Operator:
-        //                    Operator ope = (token.node as IOperator).Operator;
-        //                    if (ope == Operator.Rp)
-        //                    {
-        //                        while (stack.Count > 0 && (stack.Peek().node as IOperator).Operator != Operator.Lp)
-        //                        {
-        //                            suffix.Add(stack.Pop());
-        //                        }
-        //                        stack.Pop();
-        //                    }
-        //                    else
-        //                    {
-        //                        while (stack.Count > 0 &&
-        //                                (stack.Peek().node as IOperator).Operator != Operator.Lp &&
-        //                                (token.node as OperatorNode).Proirity <= (stack.Peek().node as OperatorNode).Proirity)
-        //                        {
-        //                            suffix.Add(stack.Pop());
-        //                        }
-        //                        stack.Push(token);
-        //                    }
-        //                    break;
-        //            }
-        //        }
-        //        while (stack.Count > 0)
-        //        {
-        //            suffix.Add(stack.Pop());
-        //        }
-        //        return suffix;
-        //    }
-        //}
     }
 }

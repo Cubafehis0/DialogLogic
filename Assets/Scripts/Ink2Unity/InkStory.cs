@@ -68,7 +68,6 @@ namespace Ink2Unity
             story = new Story(inkJSON.text);
             choicesList = null;
             _nowStory = this;
-            BindExternalFunction();
             SaveAndLoad.Register(this);
         }
 
@@ -168,39 +167,10 @@ namespace Ink2Unity
             story.state.LoadJson(state);
         }
 
-        private void BindExternalFunction()
-        {
-            story.BindExternalFunction("InnIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Inside, l, r));
-            story.BindExternalFunction("ExtIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Outside, l, r));
-            story.BindExternalFunction("LgcIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Logic, l, r));
-            story.BindExternalFunction("SptIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Passion, l, r));
-            story.BindExternalFunction("MrlIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Moral, l, r));
-            story.BindExternalFunction("UtcIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Unethic, l, r));
-            story.BindExternalFunction("RdbIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Detour, l, r));
-            story.BindExternalFunction("AgsIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Strong, l, r));
-        }
 
         private bool InBound(Personality personality, PersonalityType type, int l, int r)
         {
             return personality[type] >= l && personality[type] < r;
-        }
-
-        public void BindPlayerInfo(UnityEvent uevent)
-        {
-            uevent.AddListener(UpdateInkPlayerInfo);
-        }
-
-        private void UpdateInkPlayerInfo()
-        {
-            Personality personality = CardPlayerState.Instance.FinalPersonality;
-            story.variablesState["inn"] = personality.Inner;
-            story.variablesState["ext"] = personality.Outside;
-            story.variablesState["lgc"] = personality.Logic;
-            story.variablesState["spt"] = personality.Spritial;
-            story.variablesState["mrl"] = personality.Moral;
-            story.variablesState["utc"] = personality.Immoral;
-            story.variablesState["rdb"] = personality.Roundabout;
-            story.variablesState["ags"] = personality.Aggressive;
         }
 
         private void ParseValue(Content content, string name, string value)

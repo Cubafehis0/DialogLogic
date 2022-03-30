@@ -138,27 +138,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9991cb190144df87ebc8b19b4b870c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  meme: 
-  cost: 0
-  category: 0
   info:
-    title: 
-    desc: 
-    meme: 
-    cost: 0
+    Name: 
+    Title: 
+    ConditionDesc: 
+    EffectDesc: 
+    Meme: 
+    BaseCost: 0
     category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
+    Personality:
+      p0: 0
+      p1: 0
+      p2: 0
+      p3: 0
+  temporaryActivate: 0
+  permanentActivate: 0
 --- !u!114 &2057728378944601323
 MonoBehaviour:
   m_ObjectHideFlags: 0

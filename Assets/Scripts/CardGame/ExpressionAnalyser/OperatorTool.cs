@@ -2,37 +2,12 @@
 
 namespace ExpressionAnalyser
 {
-    //public enum OperatorFlag : uint
-    //{
-    //    Sperator = 1,
-    //    LeftOperation = 2,
-    //    RightOperation = 4,
-    //    UnaryOperation = 8,
-    //    BinOperation = 16
-    //}
     public enum OperatorFlag : uint
     {
         None,
         Left,
         Right,
     }
-    //public struct Operator
-    //{
-    //    public OperatorType type;
-    //    public string str;
-    //    public OperatorFlag category;
-
-    //    public Operator(OperatorType type, string str, OperatorFlag category)
-    //    {
-    //        this.type = type;
-    //        this.str = str;
-    //        this.category = category;
-    //    }
-    //    public bool IsCategory(OperatorFlag category)
-    //    {
-    //        return (this.category & category) != 0;
-    //    }
-    //}
 
     public static class OperatorTool
     {

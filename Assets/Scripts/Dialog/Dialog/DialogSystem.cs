@@ -9,11 +9,6 @@ public interface IDialogSystem
 {
     void MoveNext();
 }
-
-
-
-
-
 public class DialogSystem : MonoBehaviour, IDialogSystem
 {
     [SerializeField]
@@ -25,7 +20,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     [SerializeField]
     private RichTypeButton narratageDialogButton = null;
     [SerializeField]
-    private TextAsset testAsset = null;
+    private TextAsset textAsset = null;
 
     private static DialogSystem instance = null;
     public static DialogSystem Instance { get => instance; }
@@ -55,26 +50,19 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
             Debug.LogError($"InkStory目录下不存在名为{name}的文件");
             return;
         }
-        testAsset = new TextAsset(File.ReadAllText(filePath[0]));
+        textAsset = new TextAsset(File.ReadAllText(filePath[0]));
     }
     private void Start()
     {
         NPC_Dialog.OnClick.AddListener(OnClickDialogButton);
         Player_Dialog.OnClick.AddListener(OnClickDialogButton);
         narratageDialogButton.OnClick.AddListener(OnClickDialogButton);
-        if (testAsset)
+        if (textAsset)
         {
-            CreateNewDialog(testAsset);
+            inkStory = new InkStory(textAsset);
             if (AutoPlay) MoveNext();
         }
     }
-
-    public void CreateNewDialog(TextAsset textAsset)
-    {
-        inkStory = new InkStory(textAsset);
-        inkStory.BindPlayerInfo(CardPlayerState.Instance.OnValueChange);
-    }
-
     private void OnClickDialogButton(RichButton button)
     {
         if (AutoPlay) MoveNext();
@@ -92,7 +80,6 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
         MoveNext();
-        AutoPlay = true;
     }
 
 
@@ -100,9 +87,10 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     {
         if (inkStory.NextState == InkState.Content)
         {
-            Content content = inkStory.NextContent(); ;
+            Content content = inkStory.NextContent();
             SpeakSystem.Instance.Speak(content.richText, content.speaker);
             DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
+            AutoPlay = true;
         }
         else
         {
