@@ -231,7 +231,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public void SelectChoice(ChoiceSlot slot)
     {
         //ÅÐ¶ÏÊÇ·ñ¿ÉÑ¡
-        if (slot.Locked || (FocusSpeechType != null && FocusSpeechType == slot.SlotType))
+        if (slot.Locked || (FocusSpeechType != null && FocusSpeechType == slot.Choice.SpeechType))
         {
             return;
         }
@@ -249,7 +249,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     {
         int dis = Personality.MaxDistance(FinalPersonality, slot.Choice.JudgeValue);
         SpeechArt speech = FinalSpeechArt;
-        int modifier = slot.SlotType switch
+        int modifier = slot.Choice.SpeechType switch
         {
             SpeechType.Normal => speech[SpeechType.Normal],
             SpeechType.Cheat => speech[SpeechType.Cheat],

@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CardGame.Recorder;
 
 namespace SemanticTree
@@ -14,6 +12,7 @@ namespace SemanticTree
         private static readonly Stack<Card> cardStack = new Stack<Card>();
         private static readonly Stack<List<Card>> pileStack = new Stack<List<Card>>();
         public static readonly Stack<StatusCounter> statusCounterStack = new Stack<StatusCounter>();
+        public static readonly Stack<ChoiceSlot> choiceSlotStack = new Stack<ChoiceSlot>();
         public static List<Card> PileContext
         {
             get

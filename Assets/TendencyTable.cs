@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public interface ITable
-{
-    void Open();
-    void Close();
-}
-
-public class TendencyTable : MonoBehaviour, ITable
+public class TendencyTable : MonoBehaviour
 {
     public enum Mask
     {
@@ -36,16 +31,6 @@ public class TendencyTable : MonoBehaviour, ITable
     private Button insideButton = null;
     [SerializeField]
     private Button outsideButton = null;
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void Open()
-    {
-        gameObject.SetActive(true);
-    }
-
     public void Init(Mask mask)
     {
         detourButton.interactable = ((int)mask & (int)Mask.Strong) > 0;
@@ -58,8 +43,19 @@ public class TendencyTable : MonoBehaviour, ITable
         outsideButton.interactable = ((int)mask & (int)Mask.Inside) > 0;
     }
 
-    public void SelectTendency(Button button)
+    public void SelectTendency()
     {
 
+    }
+
+    private PersonalityType CurrentSelectedTendency()
+    {
+        GameObject currentSelectedObject = EventSystem.current.currentSelectedGameObject;
+        Button currentSelectedBtn = currentSelectedObject.GetComponent<Button>();
+        if (currentSelectedBtn == insideButton) return PersonalityType.Inside;
+        if(currentSelectedBtn == outsideButton) return PersonalityType.Outside;
+        if(currentSelectedBtn == unethicButton) return PersonalityType.Unethic;
+        if(currentSelectedBtn == passionButton) return PersonalityType.Passion;
+        return PersonalityType.Inside;
     }
 }

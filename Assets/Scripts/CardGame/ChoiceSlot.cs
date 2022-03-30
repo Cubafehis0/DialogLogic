@@ -1,32 +1,40 @@
 ﻿using Ink2Unity;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class ChoiceSlot
 {
-    private readonly Choice choice;
+    [SerializeField]
+    private Choice choice;
+    [SerializeField]
     private bool locked = false;
-    private readonly HashSet<PersonalityType> personalityMask = new HashSet<PersonalityType>();
-
-    public ChoiceSlot(Choice choice)
-    {
-        this.choice = choice;
-    }
+    [SerializeField]
+    private HashSet<PersonalityType> revealMask = new HashSet<PersonalityType>();
 
     public bool Locked { get => locked; set => locked = value; }
-    public Choice Choice { get => choice; }
-    public SpeechType SlotType { get => Choice.SpeechArt; }
+    public Choice Choice { 
+        get => choice;
+        set
+        {
+            choice = value ?? throw new ArgumentNullException(nameof(value));
+            RevealMask.Clear();
+        }
+    }
+
+    public HashSet<PersonalityType> RevealMask { get => revealMask;}
 
     public PersonalityType? PickupARandomUnmasked()
     {
         PersonalityType[] randomArray = PickupAllUnmasked();
-        return randomArray?[Random.Range(0, randomArray.Length - 1)] ?? null;
+        return randomArray?[UnityEngine.Random.Range(0, randomArray.Length - 1)] ?? null;
     }
 
     public PersonalityType[] PickupAllUnmasked()
     {
         var candidate = Personality.PositiveSet;
-        candidate.ExceptWith(personalityMask);
+        candidate.ExceptWith(RevealMask);
         if (candidate.Count == 0) return null;
         PersonalityType[] ret = new PersonalityType[candidate.Count];
         candidate.CopyTo(ret);
@@ -35,7 +43,7 @@ public class ChoiceSlot
 
     public void AddMask(PersonalityType type)
     {
-        personalityMask.Add(type);
+        RevealMask.Add(type);
     }
 
     public void OpenSelectConditionPanel(PersonalityType[] condition)

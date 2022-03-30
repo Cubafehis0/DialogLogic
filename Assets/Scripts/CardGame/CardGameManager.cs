@@ -85,6 +85,8 @@ public class CardGameManager : MonoBehaviour
 
     public void OpenSlotSelectPanel(EffectList action)
     {
+        //Context.statusCounterStack.Push();
+        //Context.statusCounterStack.Pop();
         throw new System.NotImplementedException();
     }
 

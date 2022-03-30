@@ -7,7 +7,7 @@ namespace SemanticTree.ChoiceEffects
     /// <summary>
     /// 
     /// </summary>
-    public class RandomReveal : ChoiceEffect
+    public class AllChoiceRandomReveal : ChoiceEffect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression = null;

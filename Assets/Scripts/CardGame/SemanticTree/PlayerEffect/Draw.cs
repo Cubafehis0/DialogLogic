@@ -11,24 +11,7 @@ namespace SemanticTree.PlayerEffect
     {
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
-
         private IExpression num;
-
-        public Draw()
-        {
-            NumExpression = "";
-        }
-
-        public Draw(int num)
-        {
-            this.num = new ConstNode(num);
-        }
-
-        public Draw(XmlNode xmlNode)
-        {
-            NumExpression = xmlNode.InnerText;
-            Construct();
-        }
 
         public override void Construct()
         {

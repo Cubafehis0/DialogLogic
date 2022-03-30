@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using ExpressionAnalyser;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
@@ -12,16 +13,16 @@ namespace SemanticTree.PlayerEffect
         public SpeechArt Modifier;
 
         [XmlElement(ElementName = "duration")]
-        public int Timer;
-
+        public string DurationExpression;
+        private IExpression duration;
         public override void Construct()
         {
-
+            duration = ExpressionParser.AnalayseExpression(DurationExpression);
         }
 
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddAnonymousSpeechModifer(Modifier, Timer);
+            Context.PlayerContext.StatusManager.AddAnonymousSpeechModifer(Modifier, duration.Value);
         }
     }
 }

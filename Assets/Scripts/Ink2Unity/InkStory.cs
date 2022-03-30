@@ -232,7 +232,7 @@ namespace Ink2Unity
                     choice.JudgeValue = new Personality(values);
                     return;
                 case "SpeechArt":
-                    choice.SpeechArt = TagHandle.ParseSpeechArt(value);
+                    choice.SpeechType = TagHandle.ParseSpeechArt(value);
                     return;
                 case "Success":
                     choice.Success_desc = int.Parse(value);

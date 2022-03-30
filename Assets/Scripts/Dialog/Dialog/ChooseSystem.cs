@@ -3,29 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink2Unity;
 using UnityEngine.UI;
-public interface IChooseSystem:ITable
-{
-    /// <summary>
-    /// 传递choice如果是当前故事所有choice（不管是否能选择）中的一个则相当于选择了该选项，返回true，否则返回false
-    /// </summary>
-    /// <param name="choice"></param>
-    /// <returns></returns>
-    bool SelectChoice(int index);
+using UnityEngine.EventSystems;
 
-    /// <summary>
-    /// 显示选项
-    /// </summary>
-    /// <param name="choices"></param>
-    void Init(List<Choice> choices);
-
-    /// <summary>
-    /// 更新可选择choice
-    /// </summary>
-    void UpdateVisualList();
-
-}
-
-public class ChooseSystem : MonoBehaviour, IChooseSystem
+public class ChooseSystem : MonoBehaviour
 {
     [SerializeField]
     private List<RichButton> chooseButtons = new List<RichButton>();
@@ -36,15 +16,15 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     [SerializeField]
     private Sprite[] spritesOfButtonA = null;
 
-    private int index = 0;
+    private int pageIndex = 0;
     private List<ChoiceSlot> allChoices = new List<ChoiceSlot>();
     
 
-    private static IChooseSystem instance = null;
-    public static IChooseSystem Instance { get => instance; }
+    private static ChooseSystem instance = null;
+    public static ChooseSystem Instance { get => instance; }
 
     private void Awake()
-    {
+    {   
         if (instance == null)
         {
             instance = this;
@@ -53,58 +33,43 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         {
             Destroy(this);
         }
-    }
-
-    private void Start()
-    {
-        if (lastButton) lastButton.onClick.AddListener(ClickLastButton);
-        if (nextButton) nextButton.onClick.AddListener(ClickNextButton);
+        if (lastButton) lastButton.onClick.AddListener(PreviousPage);
+        if (nextButton) nextButton.onClick.AddListener(NextPage);
         foreach (var btn in chooseButtons)
         {
             btn.OnClick.AddListener(ClickChoiceButton);
         }
-        Close();
-        UpdateVisualList();
-    }
-
-    public void Close()
-    {
-        index = 0;
-        allChoices.Clear();
         gameObject.SetActive(false);
     }
 
-    public void Init(List<Choice> choices)
+    public void Open(List<Choice> choices)
     {
         if (choices == null) return;
-        index = 0;
+        pageIndex = 0;
+        allChoices.Clear();
         foreach(Choice choice in choices)
         {
-            allChoices.Add(new ChoiceSlot(choice));
+            allChoices.Add(new ChoiceSlot { Choice = choice });
         }
-    }
-
-    public void Open()
-    {
         gameObject.SetActive(true);
-        UpdateVisualList();
+        UpdateVisuals();
     }
 
-    public void UpdateVisualList()
+    public void UpdateVisuals()
     {
         if (chooseButtons.Count == 0) return;
-        int page = index / chooseButtons.Count;
+        int page = pageIndex / chooseButtons.Count;
         int totalPage = Mathf.CeilToInt(1f * allChoices.Count / chooseButtons.Count);
         if (lastButton) lastButton.interactable = page > 0 ;
         if (nextButton) nextButton.interactable = page + 1 < totalPage;
         for (int i = 0; i < chooseButtons.Count; i++)
         {
-            if (index + i < allChoices.Count)
+            if (pageIndex + i < allChoices.Count)
             {
                 chooseButtons[i].gameObject.SetActive(true);
-                chooseButtons[i].SetText(allChoices[index + i].Choice.Content.richText);
-                chooseButtons[i].SetSprite(spritesOfButtonA[ChooseSprite(allChoices[index + i].Choice.BgColor)]);
-                if (allChoices[index + i].Locked)
+                chooseButtons[i].SetText(allChoices[pageIndex + i].Choice.Content.richText);
+                chooseButtons[i].SetSprite(spritesOfButtonA[ChooseSprite(allChoices[pageIndex + i].Choice.BgColor)]);
+                if (allChoices[pageIndex + i].Locked)
                 {
                     chooseButtons[i].btn.interactable = false;
                 }
@@ -116,21 +81,21 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
         }
     }
 
-    private void ClickLastButton()
+    public void PreviousPage()
     {
-        index -= chooseButtons.Count;
-        UpdateVisualList();
+        pageIndex -= chooseButtons.Count;
+        UpdateVisuals();
     }
 
-    private void ClickNextButton()
+    public void NextPage()
     {
-        index += chooseButtons.Count;
-        UpdateVisualList();
+        pageIndex += chooseButtons.Count;
+        UpdateVisuals();
     }
 
     private void ClickChoiceButton(RichButton from)
     {
-        SelectChoice(chooseButtons.IndexOf(from) + index);
+        SelectChoice(chooseButtons.IndexOf(from) + pageIndex);
     }
 
     public bool SelectChoice(int choiceIndex)

@@ -9,13 +9,6 @@ namespace SemanticTree.PlayerEffect
     /// </summary>
     public class DiscardAllHand : Effect
     {
-        public DiscardAllHand() { }
-        public DiscardAllHand(XmlNode xmlNode)
-        {
-            if (!xmlNode.Name.Equals("discard_all")) throw new SemanticException();
-            if (xmlNode.HasChildNodes) throw new SemanticException();
-        }
-
         public override void Construct()
         {
 

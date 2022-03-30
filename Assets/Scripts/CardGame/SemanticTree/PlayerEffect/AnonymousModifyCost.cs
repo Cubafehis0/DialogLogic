@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using ExpressionAnalyser;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
@@ -8,20 +9,22 @@ namespace SemanticTree.PlayerEffect
     /// </summary>
     public class AnonymousModifyCost : Effect
     {
-        [XmlElement(ElementName = "duration")]
-        public int Duration;
-
-        [XmlElement(ElementName = "name")]
+        [XmlElement(ElementName = "modifier")]
         public CostModifier Modifier;
 
+        [XmlElement(ElementName = "duration")]
+        public string DurationExp;
+
+        private IExpression duration;
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddAnonymousCostModifer(Modifier, Duration);
+            Context.PlayerContext.StatusManager.AddAnonymousCostModifer(Modifier, duration.Value);
         }
 
         public override void Construct()
         {
             Modifier.Construct();
+            duration=ExpressionParser.AnalayseExpression(DurationExp);
         }
     }
 }

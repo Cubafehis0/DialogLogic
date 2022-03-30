@@ -7,7 +7,7 @@ namespace Ink2Unity
     {
         private readonly int index;
         private readonly Content content;
-        private SpeechType speechArt = SpeechType.Normal;
+        private SpeechType speechType = SpeechType.Normal;
         private Personality judgeValue = new Personality(999, 999, 999, 999);
         private int success_desc = 0;
         private int fail_add = 0;
@@ -27,7 +27,7 @@ namespace Ink2Unity
         /// <summary>
         /// 当前选项的话术类型
         /// </summary>
-        public SpeechType SpeechArt { get => speechArt; set => speechArt = value; }
+        public SpeechType SpeechType { get => speechType; set => speechType = value; }
         /// <summary>
         /// 判定值
         /// </summary>
@@ -49,7 +49,7 @@ namespace Ink2Unity
         {
             get
             {
-                return SpeechArt switch
+                return SpeechType switch
                 {
                     SpeechType.Cheat => Color.yellow,
                     SpeechType.Persuade => Color.green,

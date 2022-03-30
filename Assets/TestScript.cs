@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class TestScript : MonoBehaviour, IPointerDownHandler
+public class TestScript : MonoBehaviour
 {
-    public void OnPointerDown(PointerEventData eventData)
+    public void Fun()
     {
-        Debug.Log(eventData.pointerPress);
+        Debug.Log(EventSystem.current.currentSelectedGameObject);
+    }
+
+    private void Update()
+    {
+        Fun();
     }
 }

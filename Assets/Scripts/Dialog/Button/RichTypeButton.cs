@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Ink.Runtime;
+using System.Text;
 
 public interface IRichTypeButton
 {
@@ -59,9 +60,8 @@ public class RichTypeButton : RichButton, IRichTypeButton
         hasPlayEnd = false;
         for (int i = 0; i < content.Length; i++)
         {
-            //djc: 大量的内存垃圾
             if (content[i] != '\r' && content[i] != '\n')
-            {
+            {   
                 txt.text += content[i];
             }
             yield return new WaitForSeconds(.1f);

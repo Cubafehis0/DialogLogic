@@ -14,11 +14,6 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
         private IExpression num;
-        public DiscardSomeHand() { }
-        public DiscardSomeHand(XmlNode xmlNode)
-        {
-            num = ExpressionParser.AnalayseExpression(xmlNode.InnerText);
-        }
 
         public override void Execute()
         {
