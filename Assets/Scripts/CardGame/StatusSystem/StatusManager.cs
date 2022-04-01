@@ -166,7 +166,7 @@ public class StatusManager : MonoBehaviour
             if (sig.value == 0 || (sig.value < 0 && !sig.status.AllowNegative))
             {
                 Context.PushPlayerContext(player);
-                sig.status.OnRemove.Execute();
+                sig.status.OnRemove?.Execute();
                 player.RemoveModifier(sig.status.Modifier);
                 Context.PopPlayerContext();
                 statusList.Remove(sig);
