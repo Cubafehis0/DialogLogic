@@ -44,7 +44,6 @@ public class TestConfigRead : MonoBehaviour
                     dialogSystem.SetInkStoryAsset(inkStoryName);
                     break;
                 case "player":
-
                     cardPlayer.Player.PlayerInfo = TestClass.Deserialize<PlayerInfo>(ele.OuterXml);
                     break;
                 case "enemy":

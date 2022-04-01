@@ -103,7 +103,7 @@ public class StatusManager : MonoBehaviour
             {
                 statusList.Add(st);
                 player.AddModifier(status.Modifier);
-                status.OnAdd.Execute();
+                status.OnAdd?.Execute();
             }
 
         }

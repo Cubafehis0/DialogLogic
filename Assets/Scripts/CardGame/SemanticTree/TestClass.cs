@@ -42,7 +42,7 @@ namespace SemanticTree
                         {
                             Modifier = new Personality(0, 1, 0, 0),
                         },
-                    }
+                    } 
                 },
 
                 Personality = new Personality(0, 2, 0, 0),

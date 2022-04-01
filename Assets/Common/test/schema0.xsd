@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CardInfo" nillable="true" type="CardInfo" />
+  <xs:complexType name="CardInfo">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="title" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="condition_desc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="effect_desc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="meme" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="cost" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="category" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="in_hand_personality" type="Personality" />
+      <xs:element minOccurs="0" maxOccurs="1" name="requirements" type="AllNode" />
+      <xs:element minOccurs="0" maxOccurs="1" name="on_draw" type="EffectList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="on_play_card" type="EffectList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Personality">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="inner" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="outside" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="logic" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="spritial" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="moral" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="immoral" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="roundabout" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="aggressive" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AllNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConditionList">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="requirement" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="all" type="AllNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="any" type="AnyNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="none" type="NoneNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="count_requirement" type="CountRequirement" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AnyNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="NoneNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionList" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CountRequirement">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionNode">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="compare_type" type="CompareType" />
+          <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="requirements" type="ConditionList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ConditionNode" abstract="true" />
+  <xs:simpleType name="CompareType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LT" />
+      <xs:enumeration value="GT" />
+      <xs:enumeration value="LE" />
+      <xs:enumeration value="GE" />
+      <xs:enumeration value="EQ" />
+      <xs:enumeration value="NE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="EffectList">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="modify_personality" type="modify_personality" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_card_to_hand" type="AddCard2Hand" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_cost_modifier" type="AddCostModifier" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_status" type="AddStatus" />
+        <xs:element minOccurs="0" maxOccurs="1" name="discard_all_hand" type="DiscardAllHand" />
+        <xs:element minOccurs="0" maxOccurs="1" name="discard_some_hand" type="DiscardSomeHand" />
+        <xs:element minOccurs="0" maxOccurs="1" name="draw" type="Draw" />
+        <xs:element minOccurs="0" maxOccurs="1" name="modify_focus" type="ModifyFocus" />
+        <xs:element minOccurs="0" maxOccurs="1" name="modify_health" type="ModifyHealth" />
+        <xs:element minOccurs="0" maxOccurs="1" name="modify_speech" type="ModifySpeech" />
+        <xs:element minOccurs="0" maxOccurs="1" name="remove_cost_modifier" type="RemoveCostModifier" />
+        <xs:element minOccurs="0" maxOccurs="1" name="set_draw_ban" type="SetDrawBan" />
+        <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_dynamic_card" type="GUISelectDynamicCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_static_card" type="GUISelectStaticCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="random_dynamic_card" type="RandomDynamicCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="foreach_dynamic_card" type="ForEachDynamicCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="activate" type="ActivateCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_copy_to_hand" type="AddCopy2HandNode" />
+        <xs:element minOccurs="0" maxOccurs="1" name="discard" type="DiscardCard" />
+        <xs:element minOccurs="0" maxOccurs="1" name="execute" type="ExecuteCard" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modify_personality">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="personality" type="Personality" />
+          <xs:element minOccurs="1" maxOccurs="1" name="duration" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Effect" abstract="true" />
+  <xs:complexType name="CardEffect" abstract="true">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ExecuteCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiscardCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddCopy2HandNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ActivateCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="CardEffect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="permanent" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IF">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="condition" type="AllNode" />
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ForEachDynamicCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="include" type="PileType" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="potantial" type="IF" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="PileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="hand" />
+      <xs:enumeration value="draw_pile" />
+      <xs:enumeration value="discard_pile" />
+      <xs:enumeration value="all" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="RandomDynamicCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="include" type="PileType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="condition" type="AllNode" />
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GUISelectStaticCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="card_list" type="ArrayOfString" />
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GUISelectDynamicCard">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="include" type="PileType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="condition" type="AllNode" />
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SetDrawBan">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="value" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RemoveCostModifier">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ModifySpeech">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Modifer" type="SpeechArt" />
+          <xs:element minOccurs="1" maxOccurs="1" name="duration" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SpeechArt">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="normal" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="cheat" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="threaten" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="persuade" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ModifyHealth">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ModifyFocus">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="type" type="SpeechType" />
+          <xs:element minOccurs="1" maxOccurs="1" name="duration" nillable="true" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SpeechType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal" />
+      <xs:enumeration value="cheat" />
+      <xs:enumeration value="threaten" />
+      <xs:enumeration value="persuade" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Draw">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiscardSomeHand">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DiscardAllHand">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddStatus">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddCostModifier">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="duration" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AddCard2Hand">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CostModifier" nillable="true" type="CostModifier" />
+  <xs:complexType name="CostModifier">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="set_value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PersonalityType" type="PersonalityType" />
+  <xs:simpleType name="PersonalityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Inside" />
+      <xs:enumeration value="Outside" />
+      <xs:enumeration value="Logic" />
+      <xs:enumeration value="Passion" />
+      <xs:enumeration value="Moral" />
+      <xs:enumeration value="Unethic" />
+      <xs:enumeration value="Detour" />
+      <xs:enumeration value="Strong" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Personality" nillable="true" type="Personality" />
+  <xs:element name="SpeechArt" nillable="true" type="SpeechArt" />
+  <xs:element name="SpeechType" type="SpeechType" />
+  <xs:element name="GameScript" nillable="true" type="GameScript" />
+  <xs:complexType name="GameScript">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="on_play_card" type="EffectList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="on_turn_start" type="EffectList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Status" nillable="true" type="Status" />
+  <xs:complexType name="Status">
+    <xs:complexContent mixed="false">
+      <xs:extension base="GameScript">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="on_add" type="EffectList" />
+          <xs:element minOccurs="0" maxOccurs="1" name="on_remove" type="EffectList" />
+          <xs:element minOccurs="1" maxOccurs="1" name="name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="decrease_on_turn_end" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Common" nillable="true" type="Common" />
+  <xs:complexType name="Common">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="define_card" type="CardInfo" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="define_status" type="Status" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConditionList" nillable="true" type="ConditionList" />
+  <xs:element name="ConditionNode" nillable="true" type="ConditionNode" />
+  <xs:element name="Effect" nillable="true" type="Effect" />
+  <xs:element name="EffectList" nillable="true" type="EffectList" />
+  <xs:element name="PileType" type="PileType" />
+  <xs:element name="AddCard2Hand" nillable="true" type="AddCard2Hand" />
+  <xs:element name="AddCostModifier" nillable="true" type="AddCostModifier" />
+  <xs:element name="AddStatus" nillable="true" type="AddStatus" />
+  <xs:element name="DiscardAllHand" nillable="true" type="DiscardAllHand" />
+  <xs:element name="DiscardSomeHand" nillable="true" type="DiscardSomeHand" />
+  <xs:element name="Draw" nillable="true" type="Draw" />
+  <xs:element name="ModifyFocus" nillable="true" type="ModifyFocus" />
+  <xs:element name="ModifyHealth" nillable="true" type="ModifyHealth" />
+  <xs:element name="modify_personality" nillable="true" type="modify_personality" />
+  <xs:element name="ModifySpeech" nillable="true" type="ModifySpeech" />
+  <xs:element name="RemoveCostModifier" nillable="true" type="RemoveCostModifier" />
+  <xs:element name="SetDrawBan" nillable="true" type="SetDrawBan" />
+  <xs:element name="IF" nillable="true" type="IF" />
+  <xs:element name="IFELSE" nillable="true" type="IFELSE" />
+  <xs:complexType name="IFELSE" />
+  <xs:element name="SetVariableNode" nillable="true" type="SetVariableNode" />
+  <xs:complexType name="SetVariableNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AllNode" nillable="true" type="AllNode" />
+  <xs:element name="AnyNode" nillable="true" type="AnyNode" />
+  <xs:element name="CompareType" type="CompareType" />
+  <xs:element name="CountRequirement" nillable="true" type="CountRequirement" />
+  <xs:element name="NoneNode" nillable="true" type="NoneNode" />
+  <xs:element name="StringCondition" nillable="true" type="StringCondition" />
+  <xs:complexType name="StringCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionNode">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="ConditionExpression" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GUISelectCurrentSlot" nillable="true" type="GUISelectCurrentSlot" />
+  <xs:complexType name="GUISelectCurrentSlot">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RandomRevealNode" nillable="true" type="RandomRevealNode" />
+  <xs:complexType name="RandomRevealNode">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="1" maxOccurs="1" name="speech_type" nillable="true" type="SpeechType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SlotRandomRevealNode" nillable="true" type="SlotRandomRevealNode" />
+  <xs:complexType name="SlotRandomRevealNode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ActivateCard" nillable="true" type="ActivateCard" />
+  <xs:element name="AddCopy2HandNode" nillable="true" type="AddCopy2HandNode" />
+  <xs:element name="CardEffect" nillable="true" type="CardEffect" />
+  <xs:element name="DiscardCard" nillable="true" type="DiscardCard" />
+  <xs:element name="ExecuteCard" nillable="true" type="ExecuteCard" />
+  <xs:element name="AllCard" nillable="true" type="AllCard" />
+  <xs:complexType name="AllCard" />
+  <xs:element name="AnyCard" nillable="true" type="AnyCard" />
+  <xs:complexType name="AnyCard" />
+  <xs:element name="ForEachDynamicCard" nillable="true" type="ForEachDynamicCard" />
+  <xs:element name="GUISelectDynamicCard" nillable="true" type="GUISelectDynamicCard" />
+  <xs:element name="GUISelectStaticCard" nillable="true" type="GUISelectStaticCard" />
+  <xs:element name="RandomDynamicCard" nillable="true" type="RandomDynamicCard" />
+</xs:schema>

@@ -8,10 +8,14 @@ public class CardSlot : MonoBehaviour,IDropHandler
     {
         if (eventData.pointerDrag != null)
         {
-            Card card = eventData.pointerDrag.GetComponent<Card>();
+            var dragCard = eventData.pointerDrag.gameObject;
+            Card card =dragCard.GetComponent<Card>();
             if (card)
             {
-                CardPlayerState.Instance.PlayCard(card);
+                float y = dragCard.transform.localPosition.y;
+                Debug.Log(y);
+                if(y>350)
+                    CardPlayerState.Instance.PlayCard(card);
             }
         }
     }
