@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<Common>
+    <define_card>
+      <name>基本信息测试</name>
+      <title>基本信息测试</title>
+      <condition_desc>这是一个测试的卡牌条件描述</condition_desc>
+      <effect_desc>这是一个测试的卡牌效果描述</effect_desc>
+      <meme>测</meme>
+      <cost>1</cost>
+      <category>0</category>
+    </define_card>
+  </Common>

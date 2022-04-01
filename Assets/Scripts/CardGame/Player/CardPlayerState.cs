@@ -106,7 +106,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public void RemoveModifier(Modifier script)
     {
         if (script.OnPlayCard != null) OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnPlayCard.RemoveListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) OnStartTurn.RemoveListener(script.OnTurnStart.Execute);
         Modifiers.Remove(script);
     }
 
