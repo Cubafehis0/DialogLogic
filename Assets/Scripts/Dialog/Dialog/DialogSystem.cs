@@ -15,13 +15,17 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     [SerializeField]
     private bool AutoPlay = true;
     [SerializeField]
+    private bool isNarration = true;
+    [SerializeField]
     private RichTypeButton NPC_Dialog = null;
     [SerializeField]
     private RichTypeButton Player_Dialog = null;
     [SerializeField]
     private RichTypeButton narratageDialogButton = null;
     [SerializeField]
-    private TextAsset testAsset=null;
+    private TextAsset testAsset = null;
+    [SerializeField]
+    private GameObject narrationTime = null;
 
     private static IDialogSystem instance = null;
     public static IDialogSystem Instance { get => instance; }
@@ -46,7 +50,8 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         if (testAsset)
         {
             CreateNewDialog(testAsset);
-            if(AutoPlay) MoveNext();
+            narrationTime.GetComponent<NarrationTime>().HideGameObjects();
+            if (AutoPlay) MoveNext();
         }
     }
 
@@ -75,9 +80,14 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     {
         if (inkStory.NextState == InkState.Content)
         {
-            Content content = inkStory.NextContent(); ;
+            Content content = inkStory.NextContent();
+            if (isNarration&&content.speaker != Speaker.Dialogue)
+            {
+                narrationTime.GetComponent<NarrationTime>().DisplayGameObjects();
+                isNarration = false;
+            }
             SpeakSystem.Instance.Speak(content.richText, content.speaker);
-            DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
+            DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);           
         }
         else
         {

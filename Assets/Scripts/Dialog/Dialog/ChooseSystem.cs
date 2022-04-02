@@ -41,6 +41,8 @@ public class ChooseSystem : MonoBehaviour, IChooseSystem
     private Button nextButton = null;
     [SerializeField]
     private Sprite[] spritesOfButtonA = null;
+    //[SerializeField]
+    //private Sprite[] spritesOfLogo = null;
 
     private int index = 0;
     private List<Choice> visibleChoices = new List<Choice>();

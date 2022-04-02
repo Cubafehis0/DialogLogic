@@ -7,7 +7,7 @@ using Ink.Runtime;
 
 public interface IRichButton
 {
-    void SetSprite(Sprite sprite);
+    void SetSprite(Sprite sprite, Sprite[] sprites = null);
     void SetText(string Button_text);
 }
 
@@ -15,6 +15,8 @@ public class RichButton : MonoBehaviour, IRichButton
 {
     [HideInInspector]
     public Button btn;
+    [SerializeField]
+    private Image[] imagesOfLogo;
     protected Image img;
     protected Text txt;
     public UnityEvent<RichButton> OnClick = new UnityEvent<RichButton>();
@@ -28,6 +30,7 @@ public class RichButton : MonoBehaviour, IRichButton
 
     protected virtual void Start()
     {
+        ClearLogoImages();
         btn.onClick.AddListener(delegate { OnClick.Invoke(this); });
     }
 
@@ -43,8 +46,9 @@ public class RichButton : MonoBehaviour, IRichButton
         }
     }
 
-    public void SetSprite(Sprite sprite)
+    public void SetSprite(Sprite sprite, Sprite[] sprites = null)
     {
+        ClearLogoImages();
         if (img != null)
         {
             img.sprite = sprite;
@@ -52,6 +56,28 @@ public class RichButton : MonoBehaviour, IRichButton
         else
         {
             Debug.LogWarning(name + " 缺少Image组件");
+        }
+        if (sprites != null) 
+        {
+            for(int i = 0; i < sprites.Length; i++) 
+            {
+                if (imagesOfLogo.Length > i)
+                {
+                    imagesOfLogo[i].sprite = sprites[i];
+                    imagesOfLogo[i].color = new Color(imagesOfLogo[i].color.r, imagesOfLogo[i].color.g, imagesOfLogo[i].color.b, 255f);
+                }
+                else
+                {
+                    Debug.LogWarning("imagesOfLogo数量不够");
+                }
+            }
+        }
+    }
+    private void ClearLogoImages() 
+    {
+        foreach(Image img in imagesOfLogo)
+        {
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
         }
     }
 }

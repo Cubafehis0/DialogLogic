@@ -96,6 +96,7 @@ public class ChooseCardTable : MonoBehaviour,IChooseCardTable
     private void OnClickGiveUpButton()
     {
         chooseCardsNumber.Clear();
+        Close();
     }
 
     private void OnClickConfirmButton()
@@ -113,6 +114,7 @@ public class ChooseCardTable : MonoBehaviour,IChooseCardTable
             Debug.Log("选择card数目大于" + MAXCANCHOOSECARDNUM);
         }
         chooseCardsNumber.Clear();
+        Close();
     }
 
 }

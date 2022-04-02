@@ -13,18 +13,19 @@ public class TestScript : MonoBehaviour
     public IChooseCardTable chooseCardTable;
     private void Start()
     {
-        chooseCardTable = gameObject1.GetComponent<IChooseCardTable>();
-        button.onClick.AddListener(OnClick);
+        TestIncident();
     }
-    private void OnClick()
+    public void TestIncident()
     {
-        List<Card> cards = new List<Card>();
-        Card card = card1.GetComponent<Card>();
-        card.desc = "1";
-        card.title = "1";
-        card.meme = "1";
-        for (int i = 0; i < 5; i++)
-            cards.Add(card);
-        chooseCardTable.Open(cards);
+        List<Incident> incidents = new List<Incident>();
+        Incident incident1 = new Incident("1", IncidentType.Main, 1, "1", "1", "1", "1", 1, 1, " (1,10) ");
+        Incident incident2 = new Incident("2", IncidentType.Daily , 2, "1", "1", "1", "1", 1, 1, " (1,10) ");
+        Incident incident3 = new Incident("3", IncidentType.Main, 2, "2", "1", "1", "1", 1, 1, " (1,10) ");
+        incidents.Add(incident1);
+        incidents.Add(incident2);
+        incidents.Add(incident3);
+        IncidentSystem.Instance.AddIncident(incidents);
+        IncidentSystem.Instance.CheckIncident();
+
     }
 }
