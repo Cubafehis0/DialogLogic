@@ -4,41 +4,28 @@ using UnityEngine;
 using Ink2Unity;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class ChooseSystem : MonoBehaviour
 {
     [SerializeField]
-    private List<RichButton> chooseButtons = new List<RichButton>();
+    private List<ChoiceSlotObject> chooseButtons = new List<ChoiceSlotObject>();
     [SerializeField]
     private Button lastButton = null;
     [SerializeField]
     private Button nextButton = null;
     [SerializeField]
-    private Sprite[] spritesOfButtonA = null;
+    private List<ChoiceSlot> allChoices = new List<ChoiceSlot>();
+    [SerializeField]
+    private UnityEvent<ChoiceSlot> onChoose = new UnityEvent<ChoiceSlot>();
 
     private int pageIndex = 0;
-    private List<ChoiceSlot> allChoices = new List<ChoiceSlot>();
-    
 
-    private static ChooseSystem instance = null;
-    public static ChooseSystem Instance { get => instance; }
+    public IReadOnlyList<ChoiceSlot> Choices { get => allChoices; }
 
+    public UnityEvent<ChoiceSlot> OnChoose { get => onChoose; }
     private void Awake()
-    {   
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-        if (lastButton) lastButton.onClick.AddListener(PreviousPage);
-        if (nextButton) nextButton.onClick.AddListener(NextPage);
-        foreach (var btn in chooseButtons)
-        {
-            btn.OnClick.AddListener(ClickChoiceButton);
-        }
+    {
         gameObject.SetActive(false);
     }
 
@@ -47,7 +34,7 @@ public class ChooseSystem : MonoBehaviour
         if (choices == null) return;
         pageIndex = 0;
         allChoices.Clear();
-        foreach(Choice choice in choices)
+        foreach (Choice choice in choices)
         {
             allChoices.Add(new ChoiceSlot { Choice = choice });
         }
@@ -60,25 +47,26 @@ public class ChooseSystem : MonoBehaviour
         if (chooseButtons.Count == 0) return;
         int page = pageIndex / chooseButtons.Count;
         int totalPage = Mathf.CeilToInt(1f * allChoices.Count / chooseButtons.Count);
-        if (lastButton) lastButton.interactable = page > 0 ;
+        if (lastButton) lastButton.interactable = page > 0;
         if (nextButton) nextButton.interactable = page + 1 < totalPage;
         for (int i = 0; i < chooseButtons.Count; i++)
         {
             if (pageIndex + i < allChoices.Count)
             {
                 chooseButtons[i].gameObject.SetActive(true);
-                chooseButtons[i].SetText(allChoices[pageIndex + i].Choice.Content.richText);
-                chooseButtons[i].SetSprite(spritesOfButtonA[ChooseSprite(allChoices[pageIndex + i].Choice.BgColor)]);
-                if (allChoices[pageIndex + i].Locked)
-                {
-                    chooseButtons[i].btn.interactable = false;
-                }
+                chooseButtons[i].ChoiceSlot = allChoices[pageIndex + i];
+                chooseButtons[i].UpdateVisuals();
             }
             else
             {
                 chooseButtons[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public List<ChoiceSlot> GetChoiceSlot(SpeechType type)
+    {
+        return allChoices.FindAll(x => x.Choice.SpeechType == type);
     }
 
     public void PreviousPage()
@@ -93,35 +81,16 @@ public class ChooseSystem : MonoBehaviour
         UpdateVisuals();
     }
 
-    private void ClickChoiceButton(RichButton from)
+    public void SelectChoice()
     {
-        SelectChoice(chooseButtons.IndexOf(from) + pageIndex);
-    }
-
-    public bool SelectChoice(int choiceIndex)
-    {
-        CardPlayerState.Instance.SelectChoice(allChoices[choiceIndex]);
-        return true;
-    }
-
-    private int ChooseSprite(Color color)
-    {
-        if (color == Color.yellow)
+        GameObject o = EventSystem.current.currentSelectedGameObject;
+        if (o == null) return;
+        ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();
+        if (c == null) return;
+        Debug.Log("Select Choice "+c.ChoiceSlot.Choice.Content);
+        if (chooseButtons.Contains(c))
         {
-            return 0;
+            onChoose.Invoke(c.ChoiceSlot);
         }
-        else if (color == Color.green)
-        {
-            return 1;
-        }
-        else if (color == Color.red)
-        {
-            return 2;
-        }
-        else if (color == Color.white)
-        {
-            return 3;
-        }
-        return 3;
     }
 }

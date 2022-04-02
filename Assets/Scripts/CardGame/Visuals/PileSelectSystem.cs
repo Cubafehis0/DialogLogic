@@ -58,14 +58,17 @@ public class PileSelectSystem : MonoBehaviour
     {
         if(minOccurs<= cardSelected.Count && cardSelected.Count <= maxOccurs)
         {
-            Context.PushPileContext(cardSelected);
-            action?.Execute();
-            Context.PopPileContext();
+            foreach (Card card in cardSelected)
+            {
+                Context.PushCardContext(card);
+                action?.Execute();
+                Context.PopCardContext();
+            }
             cardObjects.ForEach(item => CardGameManager.Instance.ReturnCardObject(item));
             cardObjects.Clear();
             cardSelected.Clear();
             gameObject.SetActive(false);
-            
+            CardGameManager.Instance.WaitGUI = false;
         }
     }
 

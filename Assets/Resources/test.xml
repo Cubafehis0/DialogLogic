@@ -1,96 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="grammar.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<root>
-
-
-    <define_cost_modifier>
-        <name>FreeCard</name>
-        <set_value>0</set_value>
-    </define_cost_modifier>
-    <define_status name="FreeCard">
-        <decrease_on_turn_end>99</decrease_on_turn_end>
-        <on_add>
-            <add_cost_modifier>FreeCard</add_cost_modifier>
-        </on_add>
-        <on_remove>
-            <remove_cost_modifier>FreeCard</remove_cost_modifier>
-        </on_remove>
-        <on_after_play_card>
-            <add_status>
-                <name>FreeCard</name>
-                <value>-1</value>
-            </add_status>
-        </on_after_play_card>
-    </define_status>
-
-
-    <define_card name="AddLogic" category="0">
-        <title>综合title</title>
+<Common>
+    <define_card>
+        <name>logic1</name>
+        <title></title>
         <condition_desc></condition_desc>
-        <effect_desc>综合</effect_desc>
+        <effect_desc></effect_desc>
         <meme></meme>
-        <play_effect>
-            <discard_some>
-                <num>1</num>
-            </discard_some>
-        </play_effect>
+        <cost>1</cost>
+        <category>logic</category>
+        <on_play_card>
+            <discard_some_hand>
+                <num>3</num>
+            </discard_some_hand>
+        </on_play_card>
     </define_card>
-    <define_card name="Draw" category="0">
-        <title>抽牌1title</title>
-        <condition_desc></condition_desc>
-        <effect_desc>抽牌1desc</effect_desc>
-        <meme>抽牌1meme</meme>
-        <play_effect>
-            <draw>1</draw>
-        </play_effect>
-    </define_card>
-    <define_card name="AddPreach" category="0">
-        <title>测试向手牌增加1张“说教“卡牌</title>
-        <condition_desc></condition_desc>
-        <effect_desc>测试向手牌增加1张“说教“卡牌</effect_desc>
-        <meme>meme</meme>
-        <play_effect>
-            <add_card_to_hand>
-                <name>Preach</name>
-                <num>1</num>
-            </add_card_to_hand>
-        </play_effect>
-    </define_card>
-    <define_card name="RandomActive">
-        <title>测试随机【激活】1张手牌</title>
-        <condition_desc></condition_desc>
-        <effect_desc>测试随机【激活】1张手牌</effect_desc>
-        <meme>meme</meme>
-        <play_effect>
-            <hand>
-                <random_card>
-                    <num>1</num>
-                    <action>
-                        <activate permanent="false"></activate>
-                    </action>
-                </random_card>
-            </hand>
-        </play_effect>
-    </define_card>
-    <define_card name="Preach" category="0">
-        <title>说教</title>
-        <condition_desc></condition_desc>
-        <effect_desc>说教</effect_desc>
-        <meme>meme</meme>
-    </define_card>
-    <define_card name="AllHandActive">
-        <title>测试【激活】全部手牌</title>
-        <condition_desc></condition_desc>
-        <effect_desc>测试【激活】全部手牌</effect_desc>
-        <meme>meme</meme>
-        <play_effect>
-            <hand>
-                <foreach_card>
-                    <action>
-                        <activate></activate>
-                    </action>
-                </foreach_card>
-            </hand>
-        </play_effect>
-    </define_card>
-</root>
+</Common>

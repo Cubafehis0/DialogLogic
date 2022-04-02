@@ -20,7 +20,7 @@ public class StatusManager : MonoBehaviour
         if (timer == 0) return;
         if (timer < 0)
         {
-            player.AdditionalPersonality += personality;
+            player.Player.PlayerInfo.Personality += personality;
         }
         else
         {
@@ -99,7 +99,7 @@ public class StatusManager : MonoBehaviour
             s.value += value;
             if (s.value <= 0 && !s.status.AllowNegative)
             {
-                s.status.OnRemove.Execute();
+                s.status.OnRemove?.Execute();
                 player.RemoveModifier(s.status.Modifier);
                 statusList.Remove(s);
             }
@@ -110,7 +110,7 @@ public class StatusManager : MonoBehaviour
             {
                 statusList.Add(st);
                 player.AddModifier(status.Modifier);
-                status.OnAdd.Execute();
+                status.OnAdd?.Execute();
             }
 
         }
@@ -173,7 +173,7 @@ public class StatusManager : MonoBehaviour
             if (sig.value == 0 || (sig.value < 0 && !sig.status.AllowNegative))
             {
                 Context.PushPlayerContext(player);
-                sig.status.OnRemove.Execute();
+                sig.status.OnRemove?.Execute();
                 player.RemoveModifier(sig.status.Modifier);
                 Context.PopPlayerContext();
                 statusList.Remove(sig);

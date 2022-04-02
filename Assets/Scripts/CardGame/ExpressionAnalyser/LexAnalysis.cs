@@ -94,7 +94,6 @@ namespace ExpressionAnalyser
                     throw new ParseException("字符串含有不支持的词法规则", s, i);
                 }
             }
-            Debug.Log("对传入的字符串进行词法分析成功");
         }
         private static string AnalysisLexParttern(string s,KeyValuePair<LexType, string> parttern, List<Token> tokens)
         {

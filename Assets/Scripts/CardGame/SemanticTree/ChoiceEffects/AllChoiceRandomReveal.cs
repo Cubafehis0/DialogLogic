@@ -14,11 +14,13 @@ namespace SemanticTree.ChoiceEffects
         private IExpression num = null;
 
         [XmlElement(ElementName = "speech_type")]
-        public SpeechType? SpeechType = null;
+        public SpeechType SpeechType = SpeechType.Normal;
+        [XmlIgnore]
+        public bool SpeechTypeSpecified = false;
 
         public override void Execute()
         {
-            if (SpeechType.HasValue) Context.PlayerContext.RandomReveal(SpeechType.Value, num.Value); 
+            if (SpeechTypeSpecified) Context.PlayerContext.RandomReveal(SpeechType, num.Value);
             else Context.PlayerContext.RandomReveal(num.Value);
         }
 

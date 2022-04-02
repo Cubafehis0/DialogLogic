@@ -48,7 +48,7 @@ public class CostModifier
 
     public void Construct()
     {
-        Condition.Construct();
+        Condition?.Construct();
         exp = ExpressionParser.AnalayseExpression(NumExpression);
     }
 }

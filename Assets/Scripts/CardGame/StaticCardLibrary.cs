@@ -7,8 +7,6 @@ using SemanticTree;
 
 public class StaticCardLibrary : MonoBehaviour
 {
-    
-
     [SerializeField]
     private Dictionary<string, Card> cardDictionary = new Dictionary<string, Card>();
     [SerializeField]
@@ -37,6 +35,11 @@ public class StaticCardLibrary : MonoBehaviour
 
     public Card GetByName(string name)
     {
+        if (!cardDictionary.ContainsKey(name))
+        {
+            Debug.LogError(string.Format("不存在名为{0}的卡牌", name));
+            return null;
+        }
         return cardDictionary[name];
     }
 

@@ -17,7 +17,7 @@ public class Status
     public int DecreaseOnTurnEnd = 0;
 
     [XmlIgnore]
-    public bool Stackable = false;
+    public bool Stackable = true;
 
     [XmlIgnore]
     public bool AllowNegative = false;

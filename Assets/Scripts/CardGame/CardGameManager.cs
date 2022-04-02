@@ -7,13 +7,27 @@ using SemanticTree;
 
 public class CardGameManager : MonoBehaviour
 {
+    [SerializeField]
+    private int turn = 0;
+    [SerializeField]
+    private TendencyTable tendencyTable;
+    [SerializeField]
+    private ChooseSystem chooseSystem;
+    [SerializeField]
+    private UnityEvent OnGameStart;
+
+
+    public bool WaitGUI;
+    private EffectList effectList;
+
     private static CardGameManager instance = null;
-    public UnityEvent OnStartGame = new UnityEvent();
-    public int turn = 0;
     public static CardGameManager Instance
     {
         get => instance;
     }
+
+    public ChooseSystem ChooseSystem { get { return chooseSystem; } }
+    public int Turn { get => turn;}
 
     public Card GetCardCopy(Card prefab)
     {
@@ -31,15 +45,17 @@ public class CardGameManager : MonoBehaviour
     {
         instance = this;
         ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
+        tendencyTable.gameObject.SetActive(false);
     }
 
     public void OpenTendencyChoosePanel(HashSet<PersonalityType> types,int value)
     {
-        throw new System.NotImplementedException();
+        WaitGUI = true;
+        tendencyTable.Open(types, value);
     }
 
     /// <summary>
-    /// 选择很少且只选一张
+    /// 【发现】
     /// </summary>
     /// <param name="cards"></param>
     /// <param name="action"></param>
@@ -59,7 +75,7 @@ public class CardGameManager : MonoBehaviour
 
     public void DisableInput()
     {
-        Debug.Log("禁用卡牌操作 未实现");
+        WaitGUI = true;
     }
 
     public void EnableInput()
@@ -69,25 +85,51 @@ public class CardGameManager : MonoBehaviour
 
     public void OpenHandChoosePanel(ICondition condition,int num,IEffect action)
     {
+        WaitGUI = true;
         HandSelectSystem.Instance.Open(CardPlayerState.Instance.Hand, num, action);
     }
 
     public void OpenPileChoosePanel(List<Card> cards, int num, IEffect action)
     {
+        WaitGUI = true;
         PileSelectSystem.Instance.Open(cards, num, action);
     }
 
     public void OpenPileChoosePanel(List<Card> cards, int num, EffectList action)
     {
-        Debug.LogWarning("效果未完成");
+        WaitGUI = true;
         PileSelectSystem.Instance.Open(cards, num, action);
     }
 
     public void OpenSlotSelectPanel(EffectList action)
     {
-        //Context.statusCounterStack.Push();
-        //Context.statusCounterStack.Pop();
+        //与其他GUI界面不统一
+        WaitGUI = true;
+        effectList = action;
+    }
+
+    public void OpenConditionNerfPanel(int value)
+    {
         throw new System.NotImplementedException();
+    }
+
+    public void SlotSelectCallback(ChoiceSlot slot)
+    {
+        if (WaitGUI)
+        {
+            Context.choiceSlotStack.Push(slot);
+            effectList?.Execute();
+            Context.choiceSlotStack.Pop();
+            effectList = null;
+            WaitGUI = false;
+        }
+        else
+        {
+            if (CardPlayerState.Instance.CanChoose(slot))
+            {
+                DialogSystem.Instance.ForceSelectChoice(slot.Choice, CardPlayerState.Instance.JudgeChooseSuccess(slot));
+            }
+        }
     }
 
     /// <summary>
@@ -96,7 +138,7 @@ public class CardGameManager : MonoBehaviour
     public void StartGame()
     {
         turn = 0;
-        OnStartGame.Invoke();
+        OnGameStart.Invoke();
     }
     /// <summary>
     /// 结束当前回合

@@ -15,10 +15,8 @@ GameObject:
   - component: {fileID: 8661359477304739637}
   - component: {fileID: 8272276035132219618}
   - component: {fileID: 2057728378944601323}
-  - component: {fileID: 1875586594541274703}
   - component: {fileID: 3371542720626072471}
-  - component: {fileID: 8218450923179392090}
-  - component: {fileID: 3560512343968968033}
+  - component: {fileID: 8082868348872230707}
   m_Layer: 5
   m_Name: Base
   m_TagString: Untagged
@@ -138,27 +136,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9991cb190144df87ebc8b19b4b870c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  meme: 
-  cost: 0
-  category: 0
   info:
-    title: 
-    desc: 
-    meme: 
-    cost: 0
+    Name: 
+    Title: 
+    ConditionDesc: 
+    EffectDesc: 
+    Meme: 
+    BaseCost: 1
+    Exhaust: 0
     category: 0
-    hold_effect: []
-    condition: []
-    effect: []
-    pull_effect: []
-    effectDesc: 
-    condtionDesc: 
-    hold_effect_scale: 
-    condition_scale: 
-    effect_scale: 
-    post_effect_scale: 
-    pull_effect_scale: 
+    Personality:
+      p0: 0
+      p1: 0
+      p2: 0
+      p3: 0
+  temporaryActivate: 0
+  permanentActivate: 0
 --- !u!114 &2057728378944601323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,18 +168,6 @@ MonoBehaviour:
   cdtDescText: {fileID: 497905060138803925}
   eftDescText: {fileID: 8637981448201224406}
   memeText: {fileID: 7074561758052921547}
---- !u!114 &1875586594541274703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023823458827782089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe508fcdde1016e46a2f7baea4b36724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &3371542720626072471
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -199,7 +180,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &8218450923179392090
+--- !u!114 &8082868348872230707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,20 +189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4023823458827782089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26f2c6060d74b4340895dae4e8141b92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
---- !u!114 &3560512343968968033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023823458827782089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 90a3702878fa3b047a47cb3223ff906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []

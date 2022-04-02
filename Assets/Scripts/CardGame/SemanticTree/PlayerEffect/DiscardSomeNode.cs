@@ -1,5 +1,6 @@
 ﻿using ExpressionAnalyser;
 using SemanticTree.CardEffects;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -13,16 +14,28 @@ namespace SemanticTree.PlayerEffect
 
         [XmlElement(ElementName = "num")]
         public string NumExpression { get; set; }
-        private IExpression num;
+        private IExpression numExpression;
 
         public override void Execute()
         {
-            CardGameManager.Instance.OpenHandChoosePanel(null, num.Value, new DiscardCard());
+            int num = numExpression.Value;
+            if (Context.PlayerContext.Hand.Count <= num)
+            {
+                var cp=new List<Card>( Context.PlayerContext.Hand);
+                foreach (var hand in cp)
+                {
+                    Context.PlayerContext.DiscardCard(hand);
+                }
+            }
+            else
+            {
+                CardGameManager.Instance.OpenHandChoosePanel(null, numExpression.Value, new DiscardCard());
+            }
         }
 
         public override void Construct()
         {
-            num = ExpressionParser.AnalayseExpression(NumExpression);
+            numExpression = ExpressionParser.AnalayseExpression(NumExpression);
         }
     }
 }

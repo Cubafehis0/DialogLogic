@@ -9,10 +9,12 @@ namespace SemanticTree
     public class Context : IVariableAdapter
     {
         private static readonly Stack<CardPlayerState> playerContext = new Stack<CardPlayerState>();
+        public static CardPlayerState Target;
         private static readonly Stack<Card> cardStack = new Stack<Card>();
         private static readonly Stack<List<Card>> pileStack = new Stack<List<Card>>();
         public static readonly Stack<StatusCounter> statusCounterStack = new Stack<StatusCounter>();
         public static readonly Stack<ChoiceSlot> choiceSlotStack = new Stack<ChoiceSlot>();
+        public static readonly Dictionary<string, int> variableTable = new Dictionary<string, int>();
         public static List<Card> PileContext
         {
             get
@@ -70,46 +72,20 @@ namespace SemanticTree
         {
             get
             {
+                if(variableTable.ContainsKey(name)) return variableTable[name];
                 List<string> t = name.Split('.').ToList();
-                if (t.Count == 2 && t[0].Equals("status"))
+                if (t.Count==2 && t[0].Equals("target"))
                 {
-                    return PlayerContext.StatusManager.GetStatusValue(t[1]);
+                    return Target.GetPlayerProp(t[1]);
                 }
-                if (t.Count == 2 && t[0].Equals("recorder"))
+                if (t.Count == 1)
                 {
-                    return t[1] switch
-                    {
-                        "preach_total" =>
-                        (from x in CardRecorder.Instance.cardLogs
-                         where x.Name == name
-                         && x.LogType == CardLogEntryEnum.PlayCard
-                         select x).Count(),
-                        "preach_thisturn" =>
-                        (from x in CardRecorder.Instance.cardLogs
-                        where x.Name == name
-                        && x.LogType == CardLogEntryEnum.PlayCard
-                        && x.Turn==CardGameManager.Instance.turn
-                        select x).Count(),
-                        _ => throw new SemanticException()
-                    };
+                    return PlayerContext.GetPlayerProp(t[0]);
                 }
-                return name switch
-                {
-                    "inner" => PlayerContext.FinalPersonality.Inner,
-                    "outside" => PlayerContext.FinalPersonality.Outside,
-                    "logic" => PlayerContext.FinalPersonality.Logic,
-                    "spritial" => PlayerContext.FinalPersonality.Spritial,
-                    "moral" => PlayerContext.FinalPersonality.Moral,
-                    "immoral" => PlayerContext.FinalPersonality.Immoral,
-                    "roundabout" => PlayerContext.FinalPersonality.Roundabout,
-                    "aggressive" => PlayerContext.FinalPersonality.Aggressive,
-                    "hand_count" => PlayerContext.Hand.Count,
-                    "draw_count" => PlayerContext.DrawPile.Count,
-                    "discard_count" => PlayerContext.DiscardPile.Count,
-                    _ => throw new SemanticException()
-                };
+                throw new SemanticException();
             }
         }
+
         public bool Contains(string name)
         {
             try

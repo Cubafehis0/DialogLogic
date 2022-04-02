@@ -7,9 +7,10 @@ using UnityEngine;
 public class ChoiceSlot
 {
     [SerializeField]
-    private Choice choice;
-    [SerializeField]
     private bool locked = false;
+    [SerializeField]
+    private Choice choice;
+
     [SerializeField]
     private HashSet<PersonalityType> revealMask = new HashSet<PersonalityType>();
 
@@ -33,7 +34,11 @@ public class ChoiceSlot
 
     public PersonalityType[] PickupAllUnmasked()
     {
-        var candidate = Personality.PositiveSet;
+        HashSet<PersonalityType> candidate = new HashSet<PersonalityType>();
+        foreach (PersonalityType x in Enum.GetValues(typeof(PersonalityType)))
+        {
+            if(choice.JudgeValue[x]>0) candidate.Add(x);
+        }
         candidate.ExceptWith(RevealMask);
         if (candidate.Count == 0) return null;
         PersonalityType[] ret = new PersonalityType[candidate.Count];

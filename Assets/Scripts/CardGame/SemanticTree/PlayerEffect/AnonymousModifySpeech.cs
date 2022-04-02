@@ -10,7 +10,7 @@ namespace SemanticTree.PlayerEffect
     public class AnonymousModifySpeech : Effect
     {
         [XmlElement(ElementName = "Modifer")]
-        public SpeechArt Modifier;
+        public SpeechArtExpression Modifier;
 
         [XmlElement(ElementName = "duration")]
         public string DurationExpression;
@@ -22,7 +22,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddAnonymousSpeechModifer(Modifier, duration.Value);
+            Context.PlayerContext.StatusManager.AddAnonymousSpeechModifer(Modifier.Value, duration.Value);
         }
     }
 }

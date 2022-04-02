@@ -8,44 +8,31 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.GlobalEffect
 {
-    public class SetVariableNode : Effect
+    public class SetGlobalVar : Effect
     {
-        [XmlElement(ElementName ="name")]
-        public string Name { get; set; }
+        [XmlElement(ElementName = "name")]
+        public string Name;
 
-        [XmlElement(ElementName ="value")]
-        public string Expression { get; set; }
-
+        [XmlElement(ElementName = "value")]
+        public string Expression;
         private IExpression exp;
-
-        public SetVariableNode()
-        {
-            Name = "";
-            Expression = "";
-        }
-
-        public SetVariableNode(string name, string exp)
-        {
-            this.Name = name;
-            this.Expression = exp;
-        }
 
         public override void Execute()
         {
-            throw new NotImplementedException();
-            //if (variableDictionary.ContainsKey(name))
-            //{
-            //    variableDictionary[name] = exp.Value;
-            //}
-            //else
-            //{
-            //    variableDictionary.Add(name, exp.Value);
-            //}
+            if (Context.variableTable.ContainsKey(Name))
+            {
+                Context.variableTable[Name] = exp.Value;
+            }
+            else
+            {
+                throw new SemanticException();
+            }
         }
 
         public override void Construct()
         {
-            exp = ExpressionAnalyser.ExpressionParser.AnalayseExpression(Expression);
+            Context.variableTable.Add(Name, 0);
+            exp = ExpressionParser.AnalayseExpression(Expression);
         }
     }
 }

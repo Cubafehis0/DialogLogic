@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 namespace Ink2Unity
 {
+    [Serializable]
     public class Content
     {
         /// <summary>

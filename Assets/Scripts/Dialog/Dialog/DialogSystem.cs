@@ -87,7 +87,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     /// <param name="success"></param>
     public void ForceSelectChoice(Choice choice, bool success)
     {
-        ChooseSystem.Instance.gameObject.SetActive(false);
+        CardGameManager.Instance.ChooseSystem.gameObject.SetActive(false);
         CardGameManager.Instance.EndTurn();
         DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
@@ -109,7 +109,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
             List<Choice> choices = inkStory.CurrentChoices();
             if (choices != null && choices.Count != 0)
             {
-                ChooseSystem.Instance.Open(choices);
+                CardGameManager.Instance.ChooseSystem.Open(choices);
                 CardGameManager.Instance.StartTurn();
                 AutoPlay = false;
             }

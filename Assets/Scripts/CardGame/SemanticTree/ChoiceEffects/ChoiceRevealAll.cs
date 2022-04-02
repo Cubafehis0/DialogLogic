@@ -8,21 +8,17 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.ChoiceEffects
 {
-    internal class ChoiceRevealAll : Effect
+    public class ChoiceRevealAll : Effect
     {
-        [XmlElement(ElementName = "num")]
-        public string NumExpression;
-        private IExpression numExpression;
         public override void Construct()
         {
-            numExpression = ExpressionParser.AnalayseExpression(NumExpression);
+           
         }
 
         public override void Execute()
         {
             var cs = Context.choiceSlotStack.Peek();
-            int num = numExpression.Value;
-            for (int i = 0; i < num; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (cs.PickupAllUnmasked() == null) return;
                 var p = cs.PickupAllUnmasked();

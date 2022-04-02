@@ -7,11 +7,11 @@ using System.Xml.Serialization;
 public enum SpeechType
 {
     [XmlEnum(Name ="normal")]
-    Normal,
+    Normal=3,
     [XmlEnum(Name = "cheat")]
-    Cheat,
+    Cheat=0,
     [XmlEnum(Name = "threaten")]
-    Threaten,
+    Threaten=2,
     [XmlEnum(Name = "persuade")]
-    Persuade
+    Persuade=1
 }

@@ -1,6 +1,8 @@
 ﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace SemanticTree.CardEffects
 {
@@ -18,7 +20,9 @@ namespace SemanticTree.CardEffects
 
             for (int i = 0; i < num.Value && !Context.PlayerContext.IsHandFull; i++)
             {
+                //有问题
                 Card newCard = CardGameManager.Instance.GetCardCopy(Context.CardContext);
+                newCard.GetComponent<Image>().SetNativeSize();
                 Context.PlayerContext.Hand.Add(newCard);
             }
         }

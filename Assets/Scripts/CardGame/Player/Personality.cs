@@ -22,13 +22,13 @@ public enum PersonalityType
 public class Personality
 {
     [SerializeField]
-    private int p0;
+    private int inner;
     [SerializeField]
-    private int p1;
+    private int logic;
     [SerializeField]
-    private int p2;
+    private int moral;
     [SerializeField]
-    private int p3;
+    private int roundabout;
 
     public int this[int index]
     {
@@ -36,10 +36,10 @@ public class Personality
         {
             return index switch
             {
-                0 => p0,
-                1 => p1,
-                2 => p2,
-                3 => p3,
+                0 => inner,
+                1 => logic,
+                2 => moral,
+                3 => roundabout,
                 _ => throw new System.IndexOutOfRangeException(),
             };
         }
@@ -48,16 +48,16 @@ public class Personality
             switch (index)
             {
                 case 0:
-                    p0 = value;
+                    inner = value;
                     break;
                 case 1:
-                    p1 = value;
+                    logic = value;
                     break;
                 case 2:
-                    p2 = value;
+                    moral = value;
                     break;
                 case 3:
-                    p3 = value;
+                    roundabout = value;
                     break;
                 default:
                     throw new System.IndexOutOfRangeException();
@@ -72,21 +72,21 @@ public class Personality
             switch (type)
             {
                 case PersonalityType.Inside:
-                    return p0;
+                    return inner;
                 case PersonalityType.Outside:
-                    return -p0;
+                    return -inner;
                 case PersonalityType.Logic:
-                    return p1;
+                    return logic;
                 case PersonalityType.Passion:
-                    return -p1;
+                    return -logic;
                 case PersonalityType.Moral:
-                    return p2;
+                    return moral;
                 case PersonalityType.Unethic:
-                    return -p2;
+                    return -moral;
                 case PersonalityType.Detour:
-                    return p3;
+                    return roundabout;
                 case PersonalityType.Strong:
-                    return -p3;
+                    return -roundabout;
                 default:
                     throw new IndexOutOfRangeException();
             }
@@ -96,28 +96,28 @@ public class Personality
             switch (type)
             {
                 case PersonalityType.Inside:
-                    p0 = value;
+                    inner = value;
                     break;
                 case PersonalityType.Outside:
-                    p0 = -value;
+                    inner = -value;
                     break;
                 case PersonalityType.Logic:
-                    p1 = value;
+                    logic = value;
                     break;
                 case PersonalityType.Passion:
-                    p1 = -value;
+                    logic = -value;
                     break;
                 case PersonalityType.Moral:
-                    p2 = value;
+                    moral = value;
                     break;
                 case PersonalityType.Unethic:
-                    p2 = -value;
+                    moral = -value;
                     break;
                 case PersonalityType.Detour:
-                    p3 = value;
+                    roundabout = value;
                     break;
                 case PersonalityType.Strong:
-                    p3 = -value;
+                    roundabout = -value;
                     break;
                 default:
                     break;
@@ -127,36 +127,36 @@ public class Personality
 
     public Personality()
     {
-        p0 = p1 = p2 = p3 = 0;
+        inner = logic = moral = roundabout = 0;
     }
     public Personality(int p0, int p1, int p2, int p3)
     {
-        this.p0 = p0;
-        this.p1 = p1;
-        this.p2 = p2;
-        this.p3 = p3;
+        this.inner = p0;
+        this.logic = p1;
+        this.moral = p2;
+        this.roundabout = p3;
     }
 
     public Personality(Personality origin)
     {
-        this.p0 = origin.p0;
-        this.p1 = origin.p1;
-        this.p2 = origin.p2;
-        this.p3 = origin.p3;
+        this.inner = origin.inner;
+        this.logic = origin.logic;
+        this.moral = origin.moral;
+        this.roundabout = origin.roundabout;
     }
     public Personality(List<int> l)
     {
-        this.p0 = l[0];
-        this.p1 = l[1];
-        this.p2 = l[2];
-        this.p3 = l[3];
+        this.inner = l[0];
+        this.logic = l[1];
+        this.moral = l[2];
+        this.roundabout = l[3];
     }
 
     [XmlElement(ElementName ="inner")]
     public int Inner
     {
-        get => p0;
-        set => p0 = value;
+        get => inner;
+        set => inner = value;
     }
     [XmlIgnore]
     public bool InnerSpecified { 
@@ -168,8 +168,8 @@ public class Personality
     [XmlElement(ElementName = "outside")]
     public int Outside
     {
-        get => -p0;
-        set => p0 = -value;
+        get => -inner;
+        set => inner = -value;
     }
     [XmlIgnore]
     public bool OutsideSpecified
@@ -182,8 +182,8 @@ public class Personality
     [XmlElement(ElementName = "logic")]
     public int Logic
     {
-        get => p1;
-        set => p1 = value;
+        get => logic;
+        set => logic = value;
     }
     [XmlIgnore]
     public bool LogicSpecified
@@ -196,8 +196,8 @@ public class Personality
     [XmlElement(ElementName = "spritial")]
     public int Spritial
     {
-        get => -p1;
-        set => p1 = -value;
+        get => -logic;
+        set => logic = -value;
     }
     [XmlIgnore]
     public bool SpritialSpecified
@@ -210,8 +210,8 @@ public class Personality
     [XmlElement(ElementName = "moral")]
     public int Moral
     {
-        get => p2;
-        set => p2 = value;
+        get => moral;
+        set => moral = value;
     }
     [XmlIgnore]
     public bool MoralSpecified
@@ -224,8 +224,8 @@ public class Personality
     [XmlElement(ElementName = "immoral")]
     public int Immoral
     {
-        get => -p2;
-        set => p2 = -value;
+        get => -moral;
+        set => moral = -value;
     }
     [XmlIgnore]
     public bool ImmoralSpecified
@@ -239,8 +239,8 @@ public class Personality
     [XmlElement(ElementName = "roundabout")]
     public int Roundabout
     {
-        get => p3;
-        set => p3 = value;
+        get => roundabout;
+        set => roundabout = value;
     }
     [XmlIgnore]
     public bool RoundaboutSpecified
@@ -253,8 +253,8 @@ public class Personality
     [XmlElement(ElementName = "aggressive")]
     public int Aggressive
     {
-        get => -p3;
-        set => p3 = -value;
+        get => -roundabout;
+        set => roundabout = -value;
     }
     [XmlIgnore]
     public bool AggressiveSpecified
@@ -268,10 +268,10 @@ public class Personality
     {
         Personality ret = new Personality
         {
-            p0 = a.p0 + b.p0,
-            p1 = a.p1 + b.p1,
-            p2 = a.p2 + b.p2,
-            p3 = a.p3 + b.p3
+            inner = a.inner + b.inner,
+            logic = a.logic + b.logic,
+            moral = a.moral + b.moral,
+            roundabout = a.roundabout + b.roundabout
         };
         return ret;
     }
@@ -279,10 +279,10 @@ public class Personality
     public static int MaxDistance(Personality a, Personality b)
     {
         int ret = 0;
-        ret = Mathf.Max(Mathf.Abs(a.p0 - b.p0), ret);
-        ret = Mathf.Max(Mathf.Abs(a.p1 - b.p1), ret);
-        ret = Mathf.Max(Mathf.Abs(a.p2 - b.p2), ret);
-        ret = Mathf.Max(Mathf.Abs(a.p3 - b.p3), ret);
+        ret = Mathf.Max(Mathf.Abs(a.inner - b.inner), ret);
+        ret = Mathf.Max(Mathf.Abs(a.logic - b.logic), ret);
+        ret = Mathf.Max(Mathf.Abs(a.moral - b.moral), ret);
+        ret = Mathf.Max(Mathf.Abs(a.roundabout - b.roundabout), ret);
         return ret;
     }
 

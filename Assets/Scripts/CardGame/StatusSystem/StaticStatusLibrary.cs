@@ -11,12 +11,17 @@ public static class StaticStatusLibrary
     private static int anonymousCnt;
     public static Status GetByName(string name)
     {
+        if (!statusDictionary.ContainsKey(name))
+        {
+            Debug.LogError(string.Format("未找到{0}状态",name));
+        }
+            
         return statusDictionary[name];
     }
 
     public static void DeclareStatus(string name, Status status)
     {
-        if (statusDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义状态");
+        if (statusDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义状态"+name);
         statusDictionary.Add(name, status);
     }
 

@@ -9,15 +9,34 @@ using System.Xml.Serialization;
 [Serializable]
 public class Modifier
 {
+    [XmlElement(ElementName ="personality_linear")]
     public Personality PersonalityLinear { get; set; }
+
+    [XmlElement(ElementName = "personality_factor")]
     public float[] PersonalityMul { get; set; }
+
+    [XmlElement(ElementName = "focus")]
     public SpeechType? Focus { get; set; }
+
+    [XmlElement(ElementName = "speech")]
     public SpeechArt SpeechLinear { get; set; }
+
+    [XmlElement(ElementName ="cost_modifier")]
     public CostModifier CostModifier { get; set; }
+    
+    [XmlElement(ElementName ="on_turn_start")]
     public EffectList OnTurnStart { get; set; }
+
+    [XmlElement(ElementName ="on_play_card")]
     public EffectList OnPlayCard { get; set; }
+
+    [XmlElement(ElementName ="on_buff")]
     public EffectList OnBuff { get; set; }
+
+    [XmlElement(ElementName ="additional_energy")]
     public int AdditionalEnergy { get; set; }
+
+    [XmlElement(ElementName ="additional_draw")]
     public int AdditionalDraw { get; set; }
     
     [XmlIgnore]
@@ -28,9 +47,9 @@ public class Modifier
     public bool AdditionalDrawSpecified { get { return Focus != null; } }
 
     public void Construct() {
-        CostModifier.Construct();
-        OnTurnStart.Construct();
-        OnPlayCard.Construct();
+        CostModifier?.Construct();
+        OnTurnStart?.Construct();
+        OnPlayCard?.Construct();
     }
 }
 

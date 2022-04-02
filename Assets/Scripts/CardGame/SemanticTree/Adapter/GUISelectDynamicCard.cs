@@ -11,7 +11,7 @@ namespace SemanticTree.Adapter
         public PileType type = 0;
 
         [XmlElement(ElementName = "num")]
-        public string NumExpression = null;
+        public string NumExpression = "1";
         private IExpression num;
 
         [XmlElement(ElementName = "condition")]
@@ -42,7 +42,6 @@ namespace SemanticTree.Adapter
                 Context.PopCardContext();
             }
             CardGameManager.Instance.OpenPileChoosePanel(res, num.Value, Actions);
-            CardGameManager.Instance.DisableInput();
         }
     }
 }

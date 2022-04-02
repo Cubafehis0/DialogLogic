@@ -34,6 +34,7 @@ public class DragHandPileObject : MonoBehaviour
     private void OnAdd(Card card)
     {
         card.transform.SetParent(transform, true);
+        card.transform.localPosition = Vector3.zero;
         CardObject cardObject = card.GetComponent<CardObject>();
         if (cardObject)
         {

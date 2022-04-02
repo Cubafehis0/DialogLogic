@@ -77,6 +77,7 @@ public class HandSelectSystem : MonoBehaviour
             Context.PopPlayerContext();
             cardCandidate.Clear();
             cardSelected.Clear();
+            CardGameManager.Instance.WaitGUI = false;
         }
     }
 

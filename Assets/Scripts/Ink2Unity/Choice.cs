@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 namespace Ink2Unity
 {
+    [Serializable]
     public class Choice
     {
-        private readonly int index;
-        private readonly Content content;
-        private SpeechType speechType = SpeechType.Normal;
-        private Personality judgeValue = new Personality(999, 999, 999, 999);
-        private int success_desc = 0;
-        private int fail_add = 0;
+        private int index;
+        public Content content;
+        public SpeechType speechType = SpeechType.Normal;
+        public Personality judgeValue = new Personality(0, 0, 0, 0);
+        public int success_desc = 0;
+        public int fail_add = 0;
 
 
         public Choice(Content content, int index)

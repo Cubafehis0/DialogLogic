@@ -7,16 +7,24 @@ using System.Xml.Serialization;
 public class SpeechArt
 {
     [XmlElement(ElementName = "normal")]
-    public int Normal { get; set; }
+    public int Normal { get; set; } = 0;
+    [XmlIgnore]
+    public bool NormalSpecified { get => Normal != 0; }
 
     [XmlElement(ElementName = "cheat")]
     public int Cheat { get; set; }
+    [XmlIgnore]
+    public bool CheatSpecified { get => Cheat != 0; }
 
     [XmlElement(ElementName = "threaten")]
     public int Threat { get; set; }
+    [XmlIgnore]
+    public bool ThreatSpecified { get => Threat != 0; }
 
     [XmlElement(ElementName = "persuade")]
     public int Persuade { get; set; }
+    [XmlIgnore]
+    public bool PersuadeSpecified { get => Persuade != 0; }
 
     public int this[SpeechType type]
     {

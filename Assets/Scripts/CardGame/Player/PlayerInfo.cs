@@ -12,17 +12,20 @@ public class PlayerInfo
     [SerializeField]
     private Personality personality = null;
     [SerializeField]
-    private int num;
+    private int baseMaxCardNum=10;
     [SerializeField]
-    private int drawCardNum;
+    private int drawNum=4;
     [SerializeField]
-    private int basePressure;
+    private int pressure;
     [SerializeField]
     private int maxPressure;
     [SerializeField]
-    private int health;
+    private int maxHealth;
     [SerializeField]
     private int energy;
+    [SerializeField]
+    private int everyTurnEnergy;
+
     [SerializeField]
     private List<string> cardSet;
 
@@ -30,23 +33,22 @@ public class PlayerInfo
     public Personality Personality { get => personality; set => personality = value; }
 
     [XmlElement(ElementName = "maxCardNum")]
-    public int Num { get => num; set => num = value; }
+    public int MaxCardNum { get => baseMaxCardNum; set => baseMaxCardNum = value; }
 
     [XmlElement(ElementName = "drawCardNum")]
-    public int DrawCardNum { get => drawCardNum; set => drawCardNum = value; }
-
-    [XmlElement(ElementName = "basePressure")]
-    public int BasePressure { get => basePressure; set => basePressure = value; }
+    public int DrawNum { get => drawNum; set => drawNum = value; }
 
     [XmlElement(ElementName = "maxPressure")]
     public int MaxPressure { get => maxPressure; set => maxPressure = value; }
 
     [XmlElement(ElementName = "health")]
-    public int Health { get => health; set => health = value; }
+    public int Health { get => maxHealth; set => maxHealth = value; }
 
     [XmlElement(ElementName = "energy")]
-    public int Energy { get => energy; set => energy = value; }
+    public int BaseEnergy { get => everyTurnEnergy; set => everyTurnEnergy = value; }
 
     [XmlArray(ElementName = "card")]
     public List<string> CardSet { get => cardSet; set => cardSet = value; }
+    public int Energy { get => energy; set => energy = value; }
+    public int Pressure { get => pressure; set => pressure = value; }
 }

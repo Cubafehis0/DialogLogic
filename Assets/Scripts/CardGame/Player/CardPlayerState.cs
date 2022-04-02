@@ -7,35 +7,14 @@ using SemanticTree;
 using System;
 using System.Xml.Serialization;
 using CardGame.Recorder;
-
-[Serializable]
-public class Timer<T>
-{
-    public T value;
-    public int? cd;
-
-    public Timer(T value, int? cd)
-    {
-        this.value = value;
-        this.cd = cd;
-    }
-}
-
+using System.Linq;
 
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGet
 {
     [SerializeField]
     private Player player = null;
     [SerializeField]
-    private int energy = 0;
-    [SerializeField]
-    private int pressure = 0;
-    [SerializeField]
-    private Personality additionalPersonality = new Personality();
-    [SerializeField]
-    private int drawNum = 5;
-    [SerializeField]
-    private uint handCardMaxNum = 10;
+    private ChooseSystem chooseSystem = null;
     [SerializeField]
     private bool drawBan = false;
 
@@ -57,11 +36,21 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
     public ModifierGroup Modifiers = new ModifierGroup();
-
     public static CardPlayerState Instance { get => instance; }
+
+    public ChooseSystem ChooseSystem { get => chooseSystem; }
+
     public Personality FinalPersonality
     {
-        get => player.PlayerInfo.Personality + AdditionalPersonality + Modifiers.PersonalityLinear;
+        get
+        {
+            var res = player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
+            //foreach (var card in Hand)
+            //{
+            //    res += card.info.handModifier.PersonalityLinear;
+            //}
+            return res;
+        }
     }
     public SpeechArt FinalSpeechArt
     {
@@ -73,42 +62,43 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     }
     public int Energy
     {
-        get => energy;
+        get => player.PlayerInfo.Energy;
         set
         {
-            energy = value;
+            player.PlayerInfo.Energy = value;
             OnEnergyChange.Invoke();
         }
     }
 
-    public int Pressure { get => pressure; set => pressure = value; }
+    public int Pressure { get => player.PlayerInfo.Pressure; set => player.PlayerInfo.Pressure = value; }
     public Pile<Card> Hand { get => hand; }
     public Pile<Card> DrawPile { get => drawPile; }
     public Pile<Card> DiscardPile { get => discardPile; }
     public StatusManager StatusManager => GetComponent<StatusManager>();
-    public int DrawNum { get => (int)drawNum; set => drawNum = value; }
-    public bool IsHandFull => Hand.Count == handCardMaxNum;
+    public int DrawNum { get => player.PlayerInfo.DrawNum; set => player.PlayerInfo.DrawNum = value; }
+    public bool IsHandFull => Hand.Count == player.PlayerInfo.MaxCardNum;
     public UnityEvent OnValueChange => onPersonalityChange;
     public bool DrawBan { get => drawBan; set => drawBan = value; }
     public Player Player { get => player; }
-    public Personality AdditionalPersonality { get => additionalPersonality; set => additionalPersonality = value; }
 
     private void Awake()
     {
         instance = this;
+        Hand.OnAdd.AddListener(x => Modifiers.Add(x.info.handModifier));
+        Hand.OnRemove.AddListener(x => Modifiers.Remove(x.info.handModifier));
     }
 
     public void AddModifier(Modifier script)
     {
         if (script.OnPlayCard != null) OnPlayCard.AddListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnPlayCard.AddListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) OnStartTurn.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);
     }
 
     public void RemoveModifier(Modifier script)
     {
         if (script.OnPlayCard != null) OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnPlayCard.RemoveListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) OnStartTurn.RemoveListener(script.OnTurnStart.Execute);
         Modifiers.Remove(script);
     }
 
@@ -173,6 +163,14 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     /// <returns>是否成功出牌</returns>
     public void PlayCard(Card card)
     {
+        if (!CardGameManager.Instance.WaitGUI)
+        {
+            StartCoroutine(PlayCardEnumerator(card));
+        }
+    }
+
+    public IEnumerator PlayCardEnumerator(Card card)
+    {
         if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
         if (card.info == null) throw new ArgumentNullException("CardPlayerState.PlayCard card未构建");
         if (Energy < card.FinalCost)
@@ -193,15 +191,16 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
                 {
                     Name = card.info.Name,
                     IsActive = card.Activated,
-                    LogType = CardLogEntryEnum.PlayCard,
-                    Turn = CardGameManager.Instance.turn,
+                    LogType = ActionTypeEnum.PlayCard,
+                    Turn = CardGameManager.Instance.Turn,
                     CardCategory = card.info.category,
                 };
                 CardRecorder.Instance.AddRecordEntry(log);
+                Hand.MigrateTo(card, discardPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
                 card.info.Effects.Execute();
-                Hand.MigrateTo(card, discardPile);
+                yield return new WaitUntil(() => CardGameManager.Instance.WaitGUI == false);
             }
             else
             {
@@ -228,24 +227,17 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         throw new System.NotImplementedException();
     }
 
-    public void SelectChoice(ChoiceSlot slot)
+    public bool CanChoose(ChoiceSlot slot)
     {
         //判断是否可选
-        if (slot.Locked || (FocusSpeechType != null && FocusSpeechType == slot.Choice.SpeechType))
-        {
-            return;
-        }
-        else
-        {
-            RawSelectChoice(slot);
-        }
+        return !(slot.Locked || (FocusSpeechType != null && FocusSpeechType == slot.Choice.SpeechType));
     }
 
     /// <summary>
     /// 不判断是否可选，强制选择选项
     /// </summary>
     /// <param name="slot"></param>
-    public void RawSelectChoice(ChoiceSlot slot)
+    public bool JudgeChooseSuccess(ChoiceSlot slot)
     {
         int dis = Personality.MaxDistance(FinalPersonality, slot.Choice.JudgeValue);
         SpeechArt speech = FinalSpeechArt;
@@ -258,7 +250,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             _ => 0,
         };
         int randomEPS = MyMath.GetRandomJudge(jp);
-        DialogSystem.Instance.ForceSelectChoice(slot.Choice, dis <= randomEPS + modifier);
+        return dis <= randomEPS + modifier;
     }
 
 
@@ -268,7 +260,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         Debug.Log("我的回合，抽卡！！！");
         OnStartTurn.Invoke();
         Energy = 4;
-        Draw((uint)drawNum);
+        Draw((uint)player.PlayerInfo.DrawNum);
     }
 
     public void EndTurn()
@@ -281,7 +273,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
             card.TemporaryActivate = false;
     }
 
-    public void OnStartGame()
+    public void Init()
     {
         Debug.Log("init");
         foreach (string name in Player.PlayerInfo.CardSet)
@@ -302,4 +294,86 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         }
         StatusManager.AddAnonymousPersonalityModifier(delta, turn);
     }
+
+    public int GetPlayerProp(string name)
+    {
+        try
+        {
+            return GetBaseProp(name);
+        }
+        catch (PropNotFoundException) { }
+        try
+        {
+            return GetRecorderProp(name);
+        }
+        catch (PropNotFoundException) { }
+        return GetStatusProp(name);
+    }
+
+    private int GetBaseProp(string name)
+    {
+        return name switch
+        {
+            "inner" => FinalPersonality.Inner,
+            "outside" => FinalPersonality.Outside,
+            "logic" => FinalPersonality.Logic,
+            "spritial" => FinalPersonality.Spritial,
+            "moral" => FinalPersonality.Moral,
+            "immoral" => FinalPersonality.Immoral,
+            "roundabout" => FinalPersonality.Roundabout,
+            "aggressive" => FinalPersonality.Aggressive,
+            "hand_count" => Hand.Count,
+            "draw_count" => DrawPile.Count,
+            "discard_count" => DiscardPile.Count,
+            "normal_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
+            "threat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
+            "persuade_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),
+            "cheat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Cheat).Count(),
+            "focus_count" => FocusSpeechType.HasValue ? 1 : 0,
+            _ => throw new PropNotFoundException(),
+        };
+    }
+
+    private int GetRecorderProp(string name)
+    {
+        return name switch
+        {
+            "preach_total" =>
+            (from x in CardRecorder.Instance.cardLogs
+             where x.Name == name
+             && x.LogType == ActionTypeEnum.PlayCard
+             select x).Count(),
+            "preach_thisturn" =>
+            (from x in CardRecorder.Instance.cardLogs
+             where x.Name == name
+         && x.LogType == ActionTypeEnum.PlayCard
+         && x.Turn == CardGameManager.Instance.Turn
+             select x).Count(),
+            "activate_count" => CardRecorder.Instance.QueryTotalActive(),
+            "logic_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Lgc),
+            "immoral_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Imm),
+            "spirital_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Spt),
+            "moral_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Mrl),
+            _ => throw new PropNotFoundException()
+        };
+    }
+
+    private int GetStatusProp(string name)
+    {
+        return StatusManager.GetStatusValue(name);
+    }
+
+    [Serializable]
+    public class PropNotFoundException : Exception
+    {
+        public PropNotFoundException() { }
+        public PropNotFoundException(string message) : base(message) { }
+        public PropNotFoundException(string message, Exception inner) : base(message, inner) { }
+        protected PropNotFoundException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
+
+
 }
