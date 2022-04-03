@@ -7,6 +7,19 @@ public interface IGameSaveAndLoadPanel
 {
 
 }
+
+public class Save
+{
+    public static void SaveGame(int index, string name) { throw new System.NotImplementedException(); }
+}
+
+public class Load
+{
+    public void LoadGame(int index) { throw new System.NotImplementedException(); }
+
+    public List<string> LoadMessage() { throw new System.NotImplementedException(); }
+}
+
 public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
 {
     private GameObject gameSaveAndLoadPanel;
@@ -59,9 +72,9 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         }
         else
         {
-            //Load load = new Load();
-            //load.LoadGame(index);
-            //gameSaveAndLoadPanel.SetActive(false);
+            Load load = new Load();
+            load.LoadGame(index);
+            gameSaveAndLoadPanel.SetActive(false);
         }
     }
 
@@ -83,7 +96,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     private void OnSubmit()
     {
         Debug.Log(inputText.text);
-        SaveAndLoad.SaveGame(index, inputText.text);
+        Save.SaveGame(index, inputText.text);
         inputSaveInformation.gameObject.SetActive(false);
         gameSaveAndLoadPanel.SetActive(false);
     }
@@ -94,7 +107,8 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
 
     private void GetInformation()
     {
-        List<string> list = SaveAndLoad.LoadMessage();
+        Load load = new Load();
+        List<string> list = load.LoadMessage();
         if (list.Count > 1)
             saveAndLoadButton1.GetComponentInChildren<Text>().text = list[1];
         if (list.Count > 2)
