@@ -23,10 +23,10 @@ public class GameManager : MonoBehaviour
         {
             commons.Add(Deserialize<Common>(file.text));
         }
-        commons.ForEach(x => x.Declare());
-            commons.ForEach(x => x.Define());
+        //commons.ForEach(x => x.Declare());
+        //commons.ForEach(x => x.Define());
         
-        CardGameManager.Instance.StartGame();
+        //CardGameManager.Instance.StartGame();
     }
 
     private T Deserialize<T>(string s)

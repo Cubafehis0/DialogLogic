@@ -6,8 +6,6 @@ using System.Linq;
 using System.Xml.Serialization;
 
 
-
-
 [Serializable]
 public class CardInfo
 {

@@ -475,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xmlFiles:
   - {fileID: 4900000, guid: d54d010dae298ad4c9a20992e12a6de2, type: 3}
+  - {fileID: 4900000, guid: d54d010dae298ad4c9a20992e12a6de2, type: 3}
 --- !u!114 &18281529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3636,7 +3637,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000041076848}
+  m_AnchoredPosition: {x: 0, y: 0.0000393584}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1019761665
