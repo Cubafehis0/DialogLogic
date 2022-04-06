@@ -145,11 +145,6 @@ MonoBehaviour:
     BaseCost: 1
     Exhaust: 0
     category: 0
-    Personality:
-      p0: 0
-      p1: 0
-      p2: 0
-      p3: 0
   temporaryActivate: 0
   permanentActivate: 0
 --- !u!114 &2057728378944601323
@@ -350,7 +345,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0\n\u63CF\u8FF0"
+  m_Text: 3+5
 --- !u!1 &5099763137916476615
 GameObject:
   m_ObjectHideFlags: 0

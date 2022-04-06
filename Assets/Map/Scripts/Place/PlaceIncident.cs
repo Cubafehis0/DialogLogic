@@ -1,14 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public interface IPlaceIncident
-{
-    public string GetIncident();
-    public void AddIncident(string incidentName);
-    public void DeleteIncident(string incidentName);
-
-}
-public  class PlaceIncident : IPlaceIncident
+public class PlaceIncident
 {
     [SerializeField]
     protected List<string> incidents = new List<string>();

@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MapChooseState : MapStateScript
 {
+
+    
     public override void OnMouseDown()
     {
         //Debug.Log("click choose");
-        SceneManager.LoadScene(1);
+        //djc:修改为用名字搜寻
+        SceneManager.LoadScene("PlaceScene");
     }
 
     public override void OnMouseEnter()

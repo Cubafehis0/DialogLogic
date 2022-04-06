@@ -13,6 +13,8 @@ public class MapScript : MonoBehaviour
     private static MapScript instance;
     public static MapScript Instance { get => instance; }
     private MapState mapState = MapState.MapDay;
+
+    //djc:如果不public的话，UnityEvent是不必要的，内部直接调用就可以了
     private UnityEvent OnChooseState = new UnityEvent();
     public MapState MapState
     {
@@ -23,6 +25,7 @@ public class MapScript : MonoBehaviour
             OnChooseState.Invoke();
         }
     }
+    //djc：考虑用animation的状态机
     private Dictionary<MapState, Sprite> mapSpriteDictionnary = new Dictionary<MapState, Sprite>();
     [SerializeField]
     private Sprite[] mapSprites;

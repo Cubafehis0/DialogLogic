@@ -374,16 +374,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3978138802518745905, guid: d8f5ef22e6d17604a89d59d48f66a5ab,
-        type: 3}
-      propertyPath: loadButton
-      value: 
-      objectReference: {fileID: 406497263}
-    - target: {fileID: 3978138802518745905, guid: d8f5ef22e6d17604a89d59d48f66a5ab,
-        type: 3}
-      propertyPath: saveButton
-      value: 
-      objectReference: {fileID: 1562801255}
     - target: {fileID: 3978138802518745907, guid: d8f5ef22e6d17604a89d59d48f66a5ab,
         type: 3}
       propertyPath: m_Name
@@ -545,6 +535,7 @@ GameObject:
   - component: {fileID: 319132467}
   - component: {fileID: 319132466}
   - component: {fileID: 319132465}
+  - component: {fileID: 319132468}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -617,6 +608,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &319132468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319132464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &406497263
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +705,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 406497266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1910846514}
+        m_TargetAssemblyTypeName: GameSaveAndLoadPanel, Assembly-CSharp
+        m_MethodName: OnClickLoadButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &406497266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,7 +833,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1116,7 +1135,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1562801258}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1910846514}
+        m_TargetAssemblyTypeName: GameSaveAndLoadPanel, Assembly-CSharp
+        m_MethodName: OnClickSaveButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1562801258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,6 +1299,18 @@ MonoBehaviour:
   gearSprites:
   - {fileID: 21300000, guid: 2490002d560b93649a95a1f0cce8684f, type: 3}
   - {fileID: 21300000, guid: faef3d45cd799ca47b1e57aae26c49d0, type: 3}
+--- !u!114 &1910846514 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3978138802518745905, guid: d8f5ef22e6d17604a89d59d48f66a5ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 125248924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7279977fc78ec8542b3a77c357beaee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2077618366
 GameObject:
   m_ObjectHideFlags: 0

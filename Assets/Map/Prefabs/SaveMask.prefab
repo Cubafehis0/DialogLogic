@@ -1025,7 +1025,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3978138802116462406}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3978138802518745905}
+        m_TargetAssemblyTypeName: GameSaveAndLoadPanel, Assembly-CSharp
+        m_MethodName: OnClickCloseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3978138802336112503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,9 +1210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputSaveInformation: {fileID: 3978138801531569810}
   inputText: {fileID: 3978138801935780580}
-  saveButton: {fileID: 0}
-  loadButton: {fileID: 0}
-  closeButton: {fileID: 3978138802116462427}
   saveAndLoadButton1: {fileID: 3978138801443715835}
   saveAndLoadButton2: {fileID: 3978138800667550464}
   saveAndLoadButton3: {fileID: 3978138801393568804}

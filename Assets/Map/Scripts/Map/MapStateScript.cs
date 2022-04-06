@@ -9,6 +9,7 @@ public abstract class MapStateScript : MonoBehaviour
     {
         mapScript = MapScript.Instance;
     }
+    //djc:下面的定义是不需要的
     public abstract void OnMouseDown();
     public abstract void OnMouseEnter();
     public abstract void OnMouseExit();

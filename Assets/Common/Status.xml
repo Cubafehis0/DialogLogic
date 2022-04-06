@@ -60,11 +60,11 @@
         <binding_modifier>
             <on_turn_start>
                 <modify_health>
-                    <num>通灵版</num>
+                    <num>1</num>
                 </modify_health>
                 <modify_personality>
                     <personality>
-                        <outside>通灵版</outside>
+                        <outside>1</outside>
                     </personality>
                     <duration>-1</duration>
                 </modify_personality>

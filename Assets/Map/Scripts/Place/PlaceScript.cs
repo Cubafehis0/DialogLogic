@@ -6,24 +6,23 @@ using UnityEngine.SceneManagement;
 public class PlaceScript : MonoBehaviour
 {
 
-        [SerializeField]
-        private PlaceIncident placeIncident = null;
-        public string placeName;
-        private void Awake()
+    [SerializeField]
+    private PlaceIncident placeIncident = null;
+    [SerializeField]
+    private string placeName;
+    private void Awake()
+    {
+        placeIncident = new PlaceIncident(placeName);
+    }
+
+    public void OnMouseDown()
+    {
+        if (placeIncident != null)
         {
-            placeIncident = new PlaceIncident(placeName);
+            string s = placeIncident.GetIncident();
+            SceneManager.LoadScene(s);
         }
-
-        public void OnMouseDown()
-        {
-            if (placeIncident != null)
-            {
-                string s = placeIncident.GetIncident();
-                SceneManager.LoadScene(s);
-            }
-            else
-                Debug.Log(name + "lost placeIncident");
-        }
-
-
+        else
+            Debug.Log(name + "lost placeIncident");
+    }
 }

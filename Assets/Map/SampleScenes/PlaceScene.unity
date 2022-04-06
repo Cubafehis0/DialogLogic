@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276c8a41e2222af419a508b54b5bc97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeName: 2
+  placeName: ControllerSampleScene
 --- !u!212 &292089798
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -898,7 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276c8a41e2222af419a508b54b5bc97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeName: 1
+  placeName: ControllerSampleScene
 --- !u!1 &1257380126
 GameObject:
   m_ObjectHideFlags: 0

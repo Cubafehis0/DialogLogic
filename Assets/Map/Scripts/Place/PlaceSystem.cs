@@ -15,7 +15,7 @@ public interface IPlaceSystem
 }
 public class PlaceSystem : MonoBehaviour, IPlaceSystem
 {
-    private Dictionary<string, PlaceIncident> placesDic = null;
+    private Dictionary<string, PlaceIncident> placesDic = new Dictionary<string, PlaceIncident>();
 
     private static IPlaceSystem instance = null;
     public static IPlaceSystem Instance
@@ -25,10 +25,13 @@ public class PlaceSystem : MonoBehaviour, IPlaceSystem
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
-        else 
+        }
+        else
+        {
             Destroy(this);
-        placesDic = new Dictionary<string, PlaceIncident>();
+        }
     }
     public void AddPlace(PlaceIncident placeIncident)
     {

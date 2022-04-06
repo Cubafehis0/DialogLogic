@@ -662,6 +662,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528b5f03847357c40910c9d56cbcf63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeText: {fileID: 1091312725348716951}
+  incidentText: {fileID: 5883394197046294201}
+  expandButton: {fileID: 7712961339061302414}
+  expandPanel: {fileID: 1548642689987960930}
+  expandPanelContent: {fileID: 2127614409946153989}
+  missionPrefab: {fileID: 0}
+  missions: []
 --- !u!1 &1548642689987960930
 GameObject:
   m_ObjectHideFlags: 0

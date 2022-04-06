@@ -28,12 +28,6 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     [SerializeField]
     private Text inputText;
     [SerializeField]
-    private GameObject saveButton;
-    [SerializeField]
-    private GameObject loadButton;
-    [SerializeField]
-    private GameObject closeButton;
-    [SerializeField]
     private GameObject saveAndLoadButton1;
     [SerializeField]
     private GameObject saveAndLoadButton2;
@@ -52,9 +46,6 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         //inputSaveInformation = this.transform.Find("InputSaveInformation").GetComponent<InputField>();
         //inputText = inputSaveInformation.transform.Find("Text").GetComponent<Text>();
         inputSaveInformation.onEndEdit.AddListener(delegate { OnSubmit(); });
-        closeButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickCloseButton(); });
-        saveButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveButton(); });
-        loadButton.GetComponent<Button>().onClick.AddListener(delegate { OnClickLoadButton(); });
         saveAndLoadButton1.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(1); });
         saveAndLoadButton2.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(2); });
         saveAndLoadButton3.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(3); });
@@ -63,7 +54,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     }
 
 
-    private void OnClickSaveAndLoadButton(int Buttonindex)
+    public void OnClickSaveAndLoadButton(int Buttonindex)
     {
         index = Buttonindex;
         if (isSaveOrLoad)
@@ -78,7 +69,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         }
     }
 
-    private void OnClickSaveButton()
+    public void OnClickSaveButton()
     {
         isSaveOrLoad = true;
         gameSaveAndLoadPanel.SetActive(true);
@@ -86,7 +77,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         inputSaveInformation.text = "";
         GetInformation();
     }
-    private void OnClickLoadButton()
+    public void OnClickLoadButton()
     {
         isSaveOrLoad = false;
         gameSaveAndLoadPanel.SetActive(true);
@@ -100,7 +91,7 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         inputSaveInformation.gameObject.SetActive(false);
         gameSaveAndLoadPanel.SetActive(false);
     }
-    private void OnClickCloseButton()
+    public void OnClickCloseButton()
     {
         gameSaveAndLoadPanel.SetActive(false);
     }

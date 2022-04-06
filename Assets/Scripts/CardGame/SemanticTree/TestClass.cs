@@ -18,6 +18,10 @@ namespace SemanticTree
             //SerializeCondition();
         }
 
+        public void Fun()
+        {
+            Debug.Log("test fun");
+        }
 
         private void SerializePersonality()
         {
