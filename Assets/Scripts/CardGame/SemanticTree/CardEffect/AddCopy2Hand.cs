@@ -18,12 +18,12 @@ namespace SemanticTree.CardEffects
         public override void Execute()
         {
 
-            for (int i = 0; i < num.Value && !Context.PlayerContext.cardManager.IsHandFull; i++)
+            for (int i = 0; i < num.Value && !Context.PlayerContext.IsHandFull; i++)
             {
                 //有问题
                 Card newCard = CardGameManager.Instance.GetCardCopy(Context.CardContext);
                 newCard.GetComponent<Image>().SetNativeSize();
-                Context.PlayerContext.cardManager.Hand.Add(newCard);
+                Context.PlayerContext.AddCard(PileType.Hand,newCard);
             }
         }
         public override void Construct()

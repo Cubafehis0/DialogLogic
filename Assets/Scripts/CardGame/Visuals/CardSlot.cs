@@ -11,7 +11,7 @@ public class CardSlot : MonoBehaviour,IDropHandler
             Card card = eventData.pointerDrag.GetComponent<Card>();
             if (card)
             {
-                CardGameManager.Instance.player.cardManager.PlayCard(card);
+                CardGameManager.Instance.player.PlayCard(card);
             }
         }
     }

@@ -16,10 +16,10 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            List<Card> cards = new List<Card>(Context.PlayerContext.cardManager.Hand);
+            List<Card> cards = new List<Card>(Context.PlayerContext.Hand);
             foreach (Card card in cards)
             {
-                Context.PlayerContext.cardManager.DiscardCard(card);
+                Context.PlayerContext.DiscardCard(card);
             }
         }
     }

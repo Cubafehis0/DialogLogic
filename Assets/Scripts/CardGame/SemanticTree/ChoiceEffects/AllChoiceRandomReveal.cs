@@ -20,8 +20,8 @@ namespace SemanticTree.ChoiceEffects
 
         public override void Execute()
         {
-            if (SpeechTypeSpecified) Context.PlayerContext.RandomReveal(SpeechType, num.Value);
-            else Context.PlayerContext.RandomReveal(num.Value);
+            if (SpeechTypeSpecified) Context.PlayerContext.ChooseSystem.RandomReveal(SpeechType, num.Value);
+            else Context.PlayerContext.ChooseSystem.RandomReveal(num.Value);
         }
 
         public override void Construct()

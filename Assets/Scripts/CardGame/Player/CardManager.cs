@@ -5,8 +5,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface ICardManager
+{
+    IReadonlyPile<Card> DiscardPile { get; }
+    IReadonlyPile<Card> DrawPile { get; }
+    IReadonlyPile<Card> Hand { get; }
+    bool IsHandFull { get; }
+    void AddCard(PileType pileType, Card card);
+    void AddCardSet2DrawPile(List<string> cardset);
+    bool CanDraw();
+    void ClearTemporaryActivateFlags();
+    void Discard2Draw();
+    void DiscardAll();
+    void DiscardCard(Card cid);
+    void Draw(uint num);
+    void Draw2Full();
+    int? GetPileProp(string name);
+    void PlayCard(Card card);
+}
+
 [RequireComponent(typeof(CardPlayerState))]
-public class CardManager : MonoBehaviour
+public class CardManager : MonoBehaviour, ICardManager
 {
     private CardPlayerState cardPlayerState;
     private Pile<Card> hand = new Pile<Card>();
@@ -14,15 +33,17 @@ public class CardManager : MonoBehaviour
     private Pile<Card> discardPile = new Pile<Card>();
     private Pile<Card> exhaustPile = new Pile<Card>();
 
-    public Pile<Card> Hand { get => hand; }
-    public Pile<Card> DrawPile { get => drawPile; }
-    public Pile<Card> DiscardPile { get => discardPile; }
+    public IReadonlyPile<Card> Hand { get => hand; }
+    public IReadonlyPile<Card> DrawPile { get => drawPile; }
+    public IReadonlyPile<Card> DiscardPile { get => discardPile; }
 
     public bool IsHandFull => Hand.Count == cardPlayerState.Player.PlayerInfo.MaxCardNum;
 
     private void Awake()
     {
         cardPlayerState = GetComponent<CardPlayerState>();
+        Hand.OnAdd.AddListener(x => cardPlayerState.Modifiers.Add(x.info.handModifier));
+        Hand.OnRemove.AddListener(x => cardPlayerState.Modifiers.Remove(x.info.handModifier));
     }
 
     public bool CanDraw()
@@ -54,7 +75,7 @@ public class CardManager : MonoBehaviour
                 //洗牌
                 Discard2Draw();
             }
-            drawPile.MigrateTo(drawPile[0], Hand);
+            drawPile.MigrateTo(drawPile[0], hand);
         }
     }
 
@@ -69,12 +90,12 @@ public class CardManager : MonoBehaviour
 
     public void DiscardCard(Card cid)
     {
-        Hand.MigrateTo(cid, discardPile);
+        hand.MigrateTo(cid, discardPile);
     }
 
     public void DiscardAll()
     {
-        Hand.MigrateAllTo(discardPile);
+        hand.MigrateAllTo(discardPile);
     }
 
     public void Discard2Draw()
@@ -97,7 +118,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayCardEnumerator(Card card)
+    private IEnumerator PlayCardEnumerator(Card card)
     {
         if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
         if (card.info == null) throw new ArgumentNullException("CardPlayerState.PlayCard card未构建");
@@ -124,7 +145,7 @@ public class CardManager : MonoBehaviour
                     CardCategory = card.info.category,
                 };
                 CardRecorder.Instance.AddRecordEntry(log);
-                Hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
+                hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
                 cardPlayerState.OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
                 card.info.Effects.Execute();
@@ -137,6 +158,60 @@ public class CardManager : MonoBehaviour
             Context.PopCardContext();
             Context.PopPlayerContext();
         }
+    }
+
+    public void ClearTemporaryActivateFlags()
+    {
+        foreach (Card card in Hand)
+        {
+            card.TemporaryActivate = false;
+        }
+        foreach (Card card in DiscardPile)
+        {
+            card.TemporaryActivate = false;
+        }
+        foreach (Card card in DrawPile)
+        {
+            card.TemporaryActivate = false;
+        }
+    }
+
+    public void AddCardSet2DrawPile(List<string> cardset)
+    {
+
+        foreach (string name in cardset)
+        {
+            Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
+            drawPile.Add(newCard);
+        }
+        drawPile.Shuffle();
+    }
+
+    public void AddCard(PileType pileType, Card card)
+    {
+        switch (pileType)
+        {
+            case PileType.Hand:
+                hand.Add(card);
+                break;
+            case PileType.DrawDeck:
+                drawPile.Add(card);
+                break;
+            case PileType.DiscardDeck:
+                discardPile.Add(card);
+                break;
+        }
+    }
+
+    public int? GetPileProp(string name)
+    {
+            return name switch
+            {
+                "hand_count" => Hand.Count,
+                "draw_count" => DrawPile.Count,
+                "discard_count" => DiscardPile.Count,
+                _ => null
+            };
     }
 
 }

@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Pile<T> : List<T>
+public interface IReadonlyPile<T>:IReadOnlyList<T>
+{
+    public UnityEvent<T> OnAdd { get;}
+    public UnityEvent<T> OnRemove { get;}
+}
+
+public class Pile<T> : List<T>,IReadonlyPile<T>
 {
     private UnityEvent<T> onAdd = new UnityEvent<T>();
     private UnityEvent<T> onRemove = new UnityEvent<T>();

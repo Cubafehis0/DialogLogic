@@ -22,10 +22,10 @@ namespace SemanticTree.PlayerEffect
         {
             int b = num.Value;
             //feature 如果手牌满了则不会加入
-            for (int i = 0; i < b && !Context.PlayerContext.cardManager.IsHandFull; i++)
+            for (int i = 0; i < b && !Context.PlayerContext.IsHandFull; i++)
             {
                 Card newCard = CardGameManager.Instance.GetCardCopy(prefab);
-                Context.PlayerContext.cardManager.Hand.Add(newCard);
+                Context.PlayerContext.AddCard(PileType.Hand,newCard);
             }
         }
         public override void Construct()

@@ -32,13 +32,14 @@ public class HandSelectSystem : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool Open(List<Card> cards, int num, IEffect action)
+    public bool Open(IReadOnlyList<Card> cards, int num, IEffect action)
     {
         if (gameObject.activeSelf) return false;
         gameObject.SetActive(true);
-        cards.ForEach(item => { 
-            cardCandidate.Add(item);
-        });
+        foreach (Card card in cards)
+        {
+            cardCandidate.Add(card);
+        }
         minOccurs = num;
         maxOccurs = num;
         this.action = action;

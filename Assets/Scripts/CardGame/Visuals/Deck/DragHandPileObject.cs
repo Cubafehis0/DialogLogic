@@ -41,9 +41,9 @@ public class DragHandPileObject : MonoBehaviour
         CardObject cardObject = card.GetComponent<CardObject>();
         if (cardObject)
         {
-            int index = player.Hand.IndexOf(card);
+            //int index = player.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
-            cardObject.transform.SetSiblingIndex(index);
+            //cardObject.transform.SetSiblingIndex(index);
             cardObject.transform.rotation = Quaternion.identity;
             cardObject.transform.localScale = Vector3.one;
             Draggable draggable = cardObject.GetComponent<Draggable>();
@@ -63,7 +63,10 @@ public class DragHandPileObject : MonoBehaviour
     public void TakeoverAllCard()
     {
         Debug.Log("takeover");
-        player.Hand.ForEach(item => item.transform.SetParent(transform, true));
+        foreach(Card card in player.Hand)
+        {
+            card.transform.SetParent(transform, true);
+        }
     }
 
 }

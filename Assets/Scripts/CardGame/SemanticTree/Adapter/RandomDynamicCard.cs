@@ -39,9 +39,9 @@ namespace SemanticTree.Adapter
         public override void Execute()
         {
             List<Card> tmp = new List<Card>();
-            if ((PileType.Hand & type) > 0) tmp.AddRange(Context.PlayerContext.cardManager.Hand);
-            if ((PileType.DrawDeck & type) > 0) tmp.AddRange(Context.PlayerContext.cardManager.DrawPile);
-            if ((PileType.DiscardDeck & type) > 0) tmp.AddRange(Context.PlayerContext.cardManager.DiscardPile);
+            if ((PileType.Hand & type) > 0) tmp.AddRange(Context.PlayerContext.Hand);
+            if ((PileType.DrawDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DrawPile);
+            if ((PileType.DiscardDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DiscardPile);
             MyMath.Shuffle(tmp);
             foreach (Card card in tmp.GetRange(0, num.Value))
             {

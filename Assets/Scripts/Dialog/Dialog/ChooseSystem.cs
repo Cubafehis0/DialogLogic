@@ -42,6 +42,15 @@ public class ChooseSystem : MonoBehaviour
         UpdateVisuals();
     }
 
+    public void RandomReveal(int num)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RandomReveal(SpeechType type, int num)
+    {
+        throw new System.NotImplementedException();
+    }
     public void UpdateVisuals()
     {
         if (chooseButtons.Count == 0) return;

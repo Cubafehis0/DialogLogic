@@ -15,7 +15,7 @@ namespace SemanticTree.CardEffects
 
         public override void Execute()
         {
-            Context.PlayerContext.cardManager.DiscardCard(Context.CardContext);
+            Context.PlayerContext.DiscardCard(Context.CardContext);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace SemanticTree.PlayerEffect
         public override void Execute()
         {
             int num = numExpression.Value;
-            if (Context.PlayerContext.cardManager.Hand.Count <= num)
+            if (Context.PlayerContext.Hand.Count <= num)
             {
-                var cp=new List<Card>( Context.PlayerContext.cardManager.Hand);
+                var cp=new List<Card>( Context.PlayerContext.Hand);
                 foreach (var hand in cp)
                 {
-                    Context.PlayerContext.cardManager.DiscardCard(hand);
+                    Context.PlayerContext.DiscardCard(hand);
                 }
             }
             else

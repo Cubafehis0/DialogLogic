@@ -9,14 +9,14 @@ using System.Xml.Serialization;
 using CardGame.Recorder;
 using System.Linq;
 
-public class CardPlayerState : MonoBehaviour, IPlayerStateChange
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
 {
     [SerializeField]
     private Player player = null;
     [SerializeField]
     private ChooseSystem chooseSystem = null;
     [SerializeField]
-    public CardManager cardManager = null;
+    private CardManager cardManager = null;
 
     [SerializeField]
     private bool drawBan = false;
@@ -74,11 +74,13 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     public bool DrawBan { get => drawBan; set => drawBan = value; }
     public Player Player { get => player; }
 
-    private void Awake()
-    {
-        cardManager.Hand.OnAdd.AddListener(x => Modifiers.Add(x.info.handModifier));
-        cardManager.Hand.OnRemove.AddListener(x => Modifiers.Remove(x.info.handModifier));
-    }
+    public IReadonlyPile<Card> DiscardPile => ((ICardManager)cardManager).DiscardPile;
+
+    public IReadonlyPile<Card> DrawPile => ((ICardManager)cardManager).DrawPile;
+
+    public IReadonlyPile<Card> Hand => ((ICardManager)cardManager).Hand;
+
+    public bool IsHandFull => ((ICardManager)cardManager).IsHandFull;
 
     public void AddModifier(Modifier script)
     {
@@ -95,26 +97,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    public void RandomReveal(int num)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void RandomReveal(SpeechType type, int num)
-    {
-        throw new System.NotImplementedException();
-    }
 
     public bool CanChoose(ChoiceSlot slot)
     {
@@ -157,30 +139,13 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
         Debug.Log("回合结束");
         OnEndTurn.Invoke();
         onPersonalityChange.Invoke();
-        foreach (Card card in cardManager.Hand)
-        {
-            card.TemporaryActivate = false;
-        }
-        foreach (Card card in cardManager.DiscardPile)
-        {
-            card.TemporaryActivate = false;
-        }
-        foreach (Card card in cardManager.DrawPile)
-        {
-            card.TemporaryActivate = false;
-        }
+        cardManager.ClearTemporaryActivateFlags();
     }
 
     public void Init()
     {
         Debug.Log("玩家初始化");
-        foreach (string name in Player.PlayerInfo.CardSet)
-        {
-            Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
-            newCard.player = this;
-            cardManager.DrawPile.Add(newCard);
-        }
-        cardManager.DrawPile.Shuffle();
+        cardManager.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
     }
 
     public void StateChange(Personality delta, int turn)
@@ -210,6 +175,8 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
 
     private int GetBaseProp(string name)
     {
+        int? pileVar = cardManager.GetPileProp(name);
+        if (pileVar.HasValue) return pileVar.Value;
         return name switch
         {
             "inner" => FinalPersonality[PersonalityType.Inside],
@@ -220,9 +187,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
             "immoral" => FinalPersonality[PersonalityType.Unethic],
             "roundabout" => FinalPersonality[PersonalityType.Detour],
             "aggressive" => FinalPersonality[PersonalityType.Strong],
-            "hand_count" => cardManager.Hand.Count,
-            "draw_count" => cardManager.DrawPile.Count,
-            "discard_count" => cardManager.DiscardPile.Count,
             "normal_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
             "threat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
             "persuade_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),
@@ -241,6 +205,63 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     {
         return StatusManager.GetStatusValue(name);
     }
+
+    #region ICardManager接口
+    public void AddCard(PileType pileType, Card card)
+    {
+        ((ICardManager)cardManager).AddCard(pileType, card);
+    }
+
+    public void AddCardSet2DrawPile(List<string> cardset)
+    {
+        ((ICardManager)cardManager).AddCardSet2DrawPile(cardset);
+    }
+
+    public bool CanDraw()
+    {
+        return ((ICardManager)cardManager).CanDraw();
+    }
+
+    public void ClearTemporaryActivateFlags()
+    {
+        ((ICardManager)cardManager).ClearTemporaryActivateFlags();
+    }
+
+    public void Discard2Draw()
+    {
+        ((ICardManager)cardManager).Discard2Draw();
+    }
+
+    public void DiscardAll()
+    {
+        ((ICardManager)cardManager).DiscardAll();
+    }
+
+    public void DiscardCard(Card cid)
+    {
+        ((ICardManager)cardManager).DiscardCard(cid);
+    }
+
+    public void Draw(uint num)
+    {
+        ((ICardManager)cardManager).Draw(num);
+    }
+
+    public void Draw2Full()
+    {
+        ((ICardManager)cardManager).Draw2Full();
+    }
+
+    public int? GetPileProp(string name)
+    {
+        return ((ICardManager)cardManager).GetPileProp(name);
+    }
+
+    public void PlayCard(Card card)
+    {
+        ((ICardManager)cardManager).PlayCard(card);
+    }
+    #endregion
 
     [Serializable]
     public class PropNotFoundException : Exception
