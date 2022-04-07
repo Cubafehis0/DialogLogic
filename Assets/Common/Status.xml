@@ -76,12 +76,15 @@
         <name>恐慌</name>
     </define_status>
     <define_status>
+        <!-- 动摇-->
         <name>skeptical</name>
     </define_status>
     <define_status>
+        <!-- 信任-->
         <name>trust</name>
     </define_status>
     <define_status>
+        <!-- 每次buff压力减少-->
         <name>恶酿</name>
     </define_status>
 </Common>

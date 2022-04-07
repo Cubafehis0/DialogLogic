@@ -13,9 +13,9 @@ public class CardGameManager : MonoBehaviour
     private TendencyTable tendencyTable;
     [SerializeField]
     private ChooseSystem chooseSystem;
-    [SerializeField]
-    private UnityEvent OnGameStart;
 
+    public CardPlayerState player;
+    public CardPlayerState enemy;
 
     public bool WaitGUI;
     private EffectList effectList;
@@ -86,7 +86,7 @@ public class CardGameManager : MonoBehaviour
     public void OpenHandChoosePanel(ICondition condition,int num,IEffect action)
     {
         WaitGUI = true;
-        HandSelectSystem.Instance.Open(CardPlayerState.Instance.Hand, num, action);
+        HandSelectSystem.Instance.Open(player.Hand, num, action);
     }
 
     public void OpenPileChoosePanel(List<Card> cards, int num, IEffect action)
@@ -125,9 +125,9 @@ public class CardGameManager : MonoBehaviour
         }
         else
         {
-            if (CardPlayerState.Instance.CanChoose(slot))
+            if (player.CanChoose(slot))
             {
-                DialogSystem.Instance.ForceSelectChoice(slot.Choice, CardPlayerState.Instance.JudgeChooseSuccess(slot));
+                DialogSystem.Instance.ForceSelectChoice(slot.Choice, player.JudgeChooseSuccess(slot));
             }
         }
     }
@@ -138,14 +138,13 @@ public class CardGameManager : MonoBehaviour
     public void StartGame()
     {
         turn = 0;
-        OnGameStart.Invoke();
     }
     /// <summary>
     /// 结束当前回合
     /// </summary>
     public void EndTurn()
     {
-        CardPlayerState.Instance.EndTurn();
+        player.EndTurn();
     }
 
     /// <summary>
@@ -154,6 +153,6 @@ public class CardGameManager : MonoBehaviour
     public void StartTurn()
     {
         turn++;
-        CardPlayerState.Instance.StartTurn();
+        player.StartTurn();
     }
 }

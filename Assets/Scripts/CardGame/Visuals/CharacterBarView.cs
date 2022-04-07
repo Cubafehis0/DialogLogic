@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public interface ICharacterView
-{
-    void UpdateAll();
-}
 
-
-public class CharacterBarView : MonoBehaviour, ICharacterView
+public class CharacterBarView : MonoBehaviour
 {
     [SerializeField]
     private CardPlayerState character = null;

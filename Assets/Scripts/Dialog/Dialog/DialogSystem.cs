@@ -72,7 +72,6 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     public void CreateNewDialog(TextAsset textAsset)
     {
         inkStory = new InkStory(textAsset);
-        inkStory.BindPlayerInfo(CardPlayerState.Instance.OnValueChange);
     }
 
     private void OnClickDialogButton(RichButton button)

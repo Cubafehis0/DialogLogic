@@ -3,11 +3,6 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
 {
-    /// <summary>
-    /// Effect
-    /// 有缺陷,只能常数
-    /// Personality参数
-    /// </summary>
     public class AnonymousModifyPersonality : Effect
     {
         [XmlElement(ElementName = "personality")]

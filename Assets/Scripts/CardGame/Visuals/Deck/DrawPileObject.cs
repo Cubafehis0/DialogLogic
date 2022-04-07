@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class DrawPileObject : MonoBehaviour
 {
-    public static DrawPileObject instance = null;
+    [SerializeField]
+    private CardPlayerState player;
 
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-        else Destroy(this);
-    }
 
     private void OnEnable()
     {
-        CardPlayerState.Instance.DrawPile.OnAdd.AddListener(OnAdd);
+        player.DrawPile.OnAdd.AddListener(OnAdd);
     }
 
     private void OnAdd(Card newCard)

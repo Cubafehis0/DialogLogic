@@ -16,7 +16,6 @@ public class SpeechTypeSpriteDictionary : SerializableDictionary<SpeechType, Spr
 [Serializable]
 public class PersonalityTypeSpriteDictionary : SerializableDictionary<PersonalityType, Sprite> { }
 
-[ExecuteAlways]
 public class GameManager : MonoBehaviour
 {
 

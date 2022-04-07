@@ -33,7 +33,7 @@ public class MissionSystem : MonoBehaviour, IMissionSystem
 
     private void UpdateMission()
     {
-        Dictionary<string, Mission>.ValueCollection missions = this.missionsNotFinished.Values;
+        Dictionary<string, Mission>.ValueCollection missions = missionsNotFinished.Values;
         foreach (Mission mission in missions)
         {
             MissionState missionState = mission.CheckMissionState();

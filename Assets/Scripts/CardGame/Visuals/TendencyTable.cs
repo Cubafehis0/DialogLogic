@@ -55,7 +55,7 @@ public class TendencyTable : MonoBehaviour
             case PersonalityType.Strong:
                 Personality modifier = new Personality();
                 modifier[addon.Value] = 1;
-                CardPlayerState.Instance.Player.PlayerInfo.Personality += modifier;
+                CardGameManager.Instance.player.Player.PlayerInfo.Personality += modifier;
                 num--;
                 break;
             default:

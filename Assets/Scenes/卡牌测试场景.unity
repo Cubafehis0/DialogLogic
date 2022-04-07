@@ -432,21 +432,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5560102a73c6e374cbb687ad2f797975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStartGame:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2034699589}
-        m_TargetAssemblyTypeName: CardPlayerState, Assembly-CSharp
-        m_MethodName: OnStartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  turn: 0
+  tendencyTable: {fileID: 0}
+  chooseSystem: {fileID: 0}
+  player: {fileID: 0}
+  enemy: {fileID: 0}
+  WaitGUI: 0
 --- !u!4 &18281526
 Transform:
   m_ObjectHideFlags: 0
@@ -475,6 +466,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xmlFiles:
   - {fileID: 4900000, guid: 159c0ee764a487c4f85824a1bb71a682, type: 3}
+  choiceSprites:
+    m_keys: 
+    m_values: []
+  conditonCover: {fileID: 0}
+  conditionIcons:
+    m_keys: 
+    m_values: []
 --- !u!114 &18281529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,6 +1179,7 @@ GameObject:
   - component: {fileID: 200259788}
   - component: {fileID: 200259789}
   - component: {fileID: 200259790}
+  - component: {fileID: 200259791}
   m_Layer: 5
   m_Name: "\u624B\u724C\u5806"
   m_TagString: Untagged
@@ -1219,6 +1218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e3de0a146ffae4b9503b651ecf1d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &200259789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,6 +1337,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &200259791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200259786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef357f4370d5e4046b69f9024b829f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &227469089
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,6 +2580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa591e09a5d86ea4292a046e0d128cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIText: {fileID: 0}
   handPile: {fileID: 1936098702}
   selectedCardPile: {fileID: 1359349283}
   minOccurs: 0
@@ -2626,18 +2640,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3303592216670328287}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &724102625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3303592216014469182, guid: f35cdbadeea24d746ac306d105748d4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3303592216670328287}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &772264612 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4134262078014248333, guid: a637de4b6c86bbc478943e7c23000c09,
@@ -3548,7 +3550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00091901317}
+  m_AnchoredPosition: {x: 0, y: 0.00012107243}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1019761665
@@ -4362,12 +4364,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1119923624}
   m_CullTransparentMesh: 1
---- !u!1 &1143774879 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 269206420255047680, guid: 894e14e2669ac4447b9874b84767a730,
-    type: 3}
-  m_PrefabInstance: {fileID: 269206421532381333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1147182742
 GameObject:
   m_ObjectHideFlags: 0
@@ -4778,12 +4774,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312607651}
   m_CullTransparentMesh: 1
---- !u!1 &1314310593 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 269206420474865749, guid: 894e14e2669ac4447b9874b84767a730,
-    type: 3}
-  m_PrefabInstance: {fileID: 269206421532381333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1332979186
 GameObject:
   m_ObjectHideFlags: 0
@@ -5522,9 +5512,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputSaveInformation: {fileID: 14258020}
   inputText: {fileID: 2016527122}
-  saveButton: {fileID: 1314310593}
-  loadButton: {fileID: 1143774879}
-  closeButton: {fileID: 1677512365}
   saveAndLoadButton1: {fileID: 468022029}
   saveAndLoadButton2: {fileID: 878291702}
   saveAndLoadButton3: {fileID: 417744338}
@@ -5807,7 +5794,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 360789663}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999956
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6328,6 +6315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e9762398a9f24c9c13aad5cf238ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   speed: 10000
 --- !u!114 &1860205047
 MonoBehaviour:
@@ -7192,6 +7180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928026b98df0db84b901fd2f1d79e858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &2032536054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7267,7 +7256,6 @@ GameObject:
   - component: {fileID: 2034699591}
   - component: {fileID: 2034699590}
   - component: {fileID: 2034699589}
-  - component: {fileID: 2034699588}
   - component: {fileID: 2034699587}
   - component: {fileID: 2034699586}
   m_Layer: 5
@@ -7307,32 +7295,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerInfo:
     personality:
-      p0: 0
-      p1: 0
-      p2: 0
-      p3: 0
-    num: 0
-    drawCardNum: 0
-    basePressure: 0
+      inner: 0
+      logic: 0
+      moral: 0
+      roundabout: 0
+    baseMaxCardNum: 10
+    drawNum: 4
+    pressure: 0
     maxPressure: 0
-    health: 0
+    maxHealth: 0
     energy: 0
+    everyTurnEnergy: 0
     cardSet:
     - empty
     - empty
---- !u!114 &2034699588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2034699585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48607311d0587b74283082c6bdf23e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  energyText: {fileID: 724102625}
 --- !u!114 &2034699589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7346,10 +7322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2034699587}
-  energy: 0
-  pressure: 0
-  drawNum: 5
-  handCardMaxNum: 10
+  chooseSystem: {fileID: 0}
   drawBan: 0
   OnEnergyChange:
     m_PersistentCalls:
@@ -7819,6 +7792,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -2286994922085014920, guid: 276bb27074551164294c6f0c5d44d9ec,
         type: 3}
+    - target: {fileID: 995769798115966373, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995769798115966373, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 995769798115966373, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045405555562257198, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045405555562257198, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045405555562257198, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1091312725588847302, guid: 5ef2b17261d1dcc41b4cbc183110034e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -7928,6 +7931,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Timer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285298229930618623, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1285298229930618623, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833463650725551530, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833463650725551530, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ef2b17261d1dcc41b4cbc183110034e, type: 3}

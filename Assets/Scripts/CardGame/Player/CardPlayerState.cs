@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 using CardGame.Recorder;
 using System.Linq;
 
-public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGet
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange
 {
     [SerializeField]
     private Player player = null;
@@ -21,9 +21,8 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     private Pile<Card> hand = new Pile<Card>();
     private Pile<Card> drawPile = new Pile<Card>();
     private Pile<Card> discardPile = new Pile<Card>();
+    private Pile<Card> exhaustPile = new Pile<Card>();
     private UnityEvent onPersonalityChange = new UnityEvent();
-
-    private static CardPlayerState instance = null;
 
     [HideInInspector]
     public UnityEvent OnEnergyChange = new UnityEvent();
@@ -35,8 +34,8 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
+
     public ModifierGroup Modifiers = new ModifierGroup();
-    public static CardPlayerState Instance { get => instance; }
 
     public ChooseSystem ChooseSystem { get => chooseSystem; }
 
@@ -45,10 +44,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         get
         {
             var res = player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
-            //foreach (var card in Hand)
-            //{
-            //    res += card.info.handModifier.PersonalityLinear;
-            //}
             return res;
         }
     }
@@ -83,7 +78,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
 
     private void Awake()
     {
-        instance = this;
         Hand.OnAdd.AddListener(x => Modifiers.Add(x.info.handModifier));
         Hand.OnRemove.AddListener(x => Modifiers.Remove(x.info.handModifier));
     }
@@ -196,7 +190,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
                     CardCategory = card.info.category,
                 };
                 CardRecorder.Instance.AddRecordEntry(log);
-                Hand.MigrateTo(card, discardPile);
+                Hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
                 card.info.Effects.Execute();
@@ -270,15 +264,26 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
         DiscardAll();
         onPersonalityChange.Invoke();
         foreach (Card card in Hand)
+        {
             card.TemporaryActivate = false;
+        }
+        foreach (Card card in DiscardPile)
+        {
+            card.TemporaryActivate = false;
+        }
+        foreach (Card card in DrawPile)
+        {
+            card.TemporaryActivate = false;
+        }
     }
 
     public void Init()
     {
-        Debug.Log("init");
+        Debug.Log("玩家初始化");
         foreach (string name in Player.PlayerInfo.CardSet)
         {
             Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
+            newCard.player = this;
             drawPile.Add(newCard);
         }
 
@@ -314,14 +319,14 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
     {
         return name switch
         {
-            "inner" => FinalPersonality.Inner,
-            "outside" => FinalPersonality.Outside,
-            "logic" => FinalPersonality.Logic,
-            "spritial" => FinalPersonality.Spritial,
-            "moral" => FinalPersonality.Moral,
-            "immoral" => FinalPersonality.Immoral,
-            "roundabout" => FinalPersonality.Roundabout,
-            "aggressive" => FinalPersonality.Aggressive,
+            "inner" => FinalPersonality[PersonalityType.Inside],
+            "outside" => FinalPersonality[PersonalityType.Outside],
+            "logic" => FinalPersonality[PersonalityType.Logic],
+            "spritial" => FinalPersonality[PersonalityType.Passion],
+            "moral" => FinalPersonality[PersonalityType.Moral],
+            "immoral" => FinalPersonality[PersonalityType.Unethic],
+            "roundabout" => FinalPersonality[PersonalityType.Detour],
+            "aggressive" => FinalPersonality[PersonalityType.Strong],
             "hand_count" => Hand.Count,
             "draw_count" => DrawPile.Count,
             "discard_count" => DiscardPile.Count,
@@ -336,26 +341,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
 
     private int GetRecorderProp(string name)
     {
-        return name switch
-        {
-            "preach_total" =>
-            (from x in CardRecorder.Instance.cardLogs
-             where x.Name == name
-             && x.LogType == ActionTypeEnum.PlayCard
-             select x).Count(),
-            "preach_thisturn" =>
-            (from x in CardRecorder.Instance.cardLogs
-             where x.Name == name
-         && x.LogType == ActionTypeEnum.PlayCard
-         && x.Turn == CardGameManager.Instance.Turn
-             select x).Count(),
-            "activate_count" => CardRecorder.Instance.QueryTotalActive(),
-            "logic_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Lgc),
-            "immoral_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Imm),
-            "spirital_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Spt),
-            "moral_combo" => CardRecorder.Instance.QueryCombo(CardCategory.Mrl),
-            _ => throw new PropNotFoundException()
-        };
+        return CardRecorder.Instance[name];
     }
 
     private int GetStatusProp(string name)
@@ -373,7 +359,4 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, IPersonalityGe
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
-
-
-
 }

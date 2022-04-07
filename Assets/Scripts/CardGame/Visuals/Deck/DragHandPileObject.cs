@@ -9,6 +9,9 @@ public class DragHandPileObject : MonoBehaviour
 {
     public static DragHandPileObject instance;
 
+    [SerializeField]
+    private CardPlayerState player;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -21,14 +24,14 @@ public class DragHandPileObject : MonoBehaviour
 
     private void OnEnable()
     {
-        CardPlayerState.Instance.Hand.OnAdd.AddListener(OnAdd);
-        CardPlayerState.Instance.Hand.OnRemove.AddListener(OnRemove);
+        player.Hand.OnAdd.AddListener(OnAdd);
+        player.Hand.OnRemove.AddListener(OnRemove);
     }
 
     private void OnDisable()
     {
-        CardPlayerState.Instance.Hand.OnAdd.RemoveListener(OnAdd);
-        CardPlayerState.Instance.Hand.OnRemove.RemoveListener(OnRemove);
+        player.Hand.OnAdd.RemoveListener(OnAdd);
+        player.Hand.OnRemove.RemoveListener(OnRemove);
     }
 
     private void OnAdd(Card card)
@@ -38,7 +41,7 @@ public class DragHandPileObject : MonoBehaviour
         CardObject cardObject = card.GetComponent<CardObject>();
         if (cardObject)
         {
-            int index = CardPlayerState.Instance.Hand.IndexOf(card);
+            int index = player.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
             cardObject.transform.SetSiblingIndex(index);
             cardObject.transform.rotation = Quaternion.identity;
@@ -60,7 +63,7 @@ public class DragHandPileObject : MonoBehaviour
     public void TakeoverAllCard()
     {
         Debug.Log("takeover");
-        CardPlayerState.Instance.Hand.ForEach(item => item.transform.SetParent(transform, true));
+        player.Hand.ForEach(item => item.transform.SetParent(transform, true));
     }
 
 }

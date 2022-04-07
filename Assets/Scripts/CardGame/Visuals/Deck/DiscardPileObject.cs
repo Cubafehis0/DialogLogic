@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class DiscardPileObject : MonoBehaviour
 {
-    public static DiscardPileObject instance = null;
+    [SerializeField]
+    private CardPlayerState player;
     [SerializeField]
     private float speed = 50f;
 
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-        else Destroy(this);
-    }
-
     private void OnEnable()
     {
-        CardPlayerState.Instance.DiscardPile.OnAdd.AddListener(OnAdd);
+        player.DiscardPile.OnAdd.AddListener(OnAdd);
     }
     private void OnDisable()
     {
-        CardPlayerState.Instance.DiscardPile.OnRemove.AddListener(OnAdd);
+        player.DiscardPile.OnRemove.AddListener(OnAdd);
     }
     IEnumerator Discard(Card card)
     {

@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class Mission : MonoBehaviour
 {
+    [XmlIgnore]
     public MissionState missionState = MissionState.Unopened;
 
+    [XmlElement(ElementName = "name")]
     public string missionName;
+
+    [XmlElement(ElementName = "type")]
     public MissionType missionType;
+
+    [XmlElement(ElementName = "description")]
     public string description;
+
+    [XmlElement(ElementName = "promulgator")]
+    //·¢²¼Õß
     public string promulgator;
+
+    [XmlArray(ElementName = "relevantIncident")]
     public List<string> relevantIncident;
 
+    [XmlElement(ElementName ="trigger_date")]
     public int triggerDate;
+
+    [XmlElement(ElementName ="")]
     public List<string> triggerIncident;
 
     public List<string> conditionIncident;
@@ -28,19 +43,14 @@ public class Mission : MonoBehaviour
 
     public Award award;
 
-    public Mission(string missionName, MissionType missionType, string description, string promulgator, string relevantIncident,
-        int triggerDate, string triggerIncident, string conditionIncident, string conditionKey, string conditionFavor, string conditionReputation,
-        int deadline, string deadIncident, string missionKey, string missionIncident)
-    {
-
-    }
 
     public MissionState CheckMissionState()
     {
         MissionState state = this.missionState;
 
         if (IsDead()) this.missionState = MissionState.Expired;
-        switch (this.missionState){
+        switch (this.missionState)
+        {
             case MissionState.Unopened:
                 if (IncidentSystem.Instance.IsFinishedAllIncidents(triggerIncident))
                 {
@@ -81,7 +91,7 @@ public class Mission : MonoBehaviour
 
         return this.missionState;
     }
-    
+
     private bool CheckFinshedCondition()
     {
         if (IncidentSystem.Instance.IsFinishedAllIncidents(missionIncident))
@@ -90,7 +100,7 @@ public class Mission : MonoBehaviour
         }
         return false;
     }
-    
+
     private bool IsDead()
     {
         if (IncidentSystem.Instance.IsFinishedAllIncidents(deadIncident))

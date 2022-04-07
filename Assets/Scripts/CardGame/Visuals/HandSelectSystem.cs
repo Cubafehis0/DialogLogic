@@ -70,7 +70,7 @@ public class HandSelectSystem : MonoBehaviour
 
             gameObject.SetActive(false);
             DragHandPileObject.instance.TakeoverAllCard();
-            Context.PushPlayerContext(CardPlayerState.Instance);
+            Context.PushPlayerContext(CardGameManager.Instance.player);
             //ÓÐÈ±ÏÝ
             Context.PushPileContext(cardSelected);
             foreach(Card card in cardSelected)

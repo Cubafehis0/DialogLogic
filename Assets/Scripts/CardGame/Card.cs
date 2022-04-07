@@ -10,6 +10,8 @@ using CardGame.Recorder;
 
 public class Card : MonoBehaviour
 {
+
+    public CardPlayerState player;
     //卡牌基本信息
     public CardInfo info;
 
@@ -18,15 +20,13 @@ public class Card : MonoBehaviour
     [SerializeField]
     private bool permanentActivate = false;
 
-    private Dictionary<string, IExpression> cardVars=new Dictionary<string, IExpression>();
-
     public int FinalCost
     {
         get
         {
             if (Activated) return 0;
             int ret = info.BaseCost;
-            foreach (var modifer in CardPlayerState.Instance.Modifiers)//有缺陷
+            foreach (var modifer in player.Modifiers)//有缺陷
             {
                 CostModifier m = modifer.CostModifier;
                 if (m != null && (m.Condition?.Value ?? true))

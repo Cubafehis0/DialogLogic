@@ -23,15 +23,15 @@ public class PileObject : MonoBehaviour
         }
     }
 
-    protected virtual void OnAdd(Card card)
+    private void OnAdd(Card card)
     {
         card.transform.SetParent(transform, true);
         CardObject cardObject = card.GetComponent<CardObject>();
         if (cardObject)
         {
-            int index = CardPlayerState.Instance.Hand.IndexOf(card);
+            //int index = CardPlayerState.Instance.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
-            cardObject.transform.SetSiblingIndex(index);
+            //cardObject.transform.SetSiblingIndex(index);
         }
     }
 }

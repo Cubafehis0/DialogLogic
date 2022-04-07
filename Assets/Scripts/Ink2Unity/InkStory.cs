@@ -104,7 +104,7 @@ namespace Ink2Unity
                 }
             }
             if(rs.personalityModifier != null)
-            CardPlayerState.Instance.StateChange(rs.personalityModifier, rs.changeTurn);
+            CardGameManager.Instance.player.StateChange(rs.personalityModifier, rs.changeTurn);
             return rs;
         }
 
@@ -141,9 +141,9 @@ namespace Ink2Unity
         {
             Choice cs = CurrentChoices()[index];
             story.variablesState["judgeSuccess"] = success;
-            CardPlayerState.Instance.Pressure += success ? -cs.Success_desc : cs.Fail_add;
+            CardGameManager.Instance.player.Pressure += success ? -cs.Success_desc : cs.Fail_add;
             if (cs.Content.personalityModifier != null)
-                CardPlayerState.Instance.StateChange(cs.Content.personalityModifier, cs.Content.changeTurn);
+                CardGameManager.Instance.player.StateChange(cs.Content.personalityModifier, cs.Content.changeTurn);
             story.ChooseChoiceIndex(index);
             // 进行判定的过程
             // 忽略原本内容
@@ -170,14 +170,14 @@ namespace Ink2Unity
 
         private void BindExternalFunction()
         {
-            story.BindExternalFunction("InnIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Inside, l, r));
-            story.BindExternalFunction("ExtIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Outside, l, r));
-            story.BindExternalFunction("LgcIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Logic, l, r));
-            story.BindExternalFunction("SptIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Passion, l, r));
-            story.BindExternalFunction("MrlIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Moral, l, r));
-            story.BindExternalFunction("UtcIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Unethic, l, r));
-            story.BindExternalFunction("RdbIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Detour, l, r));
-            story.BindExternalFunction("AgsIsIn", (int l, int r) => InBound(CardPlayerState.Instance.FinalPersonality, PersonalityType.Strong, l, r));
+            story.BindExternalFunction("InnIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Inside, l, r));
+            story.BindExternalFunction("ExtIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Outside, l, r));
+            story.BindExternalFunction("LgcIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Logic, l, r));
+            story.BindExternalFunction("SptIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Passion, l, r));
+            story.BindExternalFunction("MrlIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Moral, l, r));
+            story.BindExternalFunction("UtcIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Unethic, l, r));
+            story.BindExternalFunction("RdbIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Detour, l, r));
+            story.BindExternalFunction("AgsIsIn", (int l, int r) => InBound(CardGameManager.Instance.player.FinalPersonality, PersonalityType.Strong, l, r));
         }
 
         private bool InBound(Personality personality, PersonalityType type, int l, int r)
@@ -192,7 +192,7 @@ namespace Ink2Unity
 
         private void UpdateInkPlayerInfo()
         {
-            Personality personality = CardPlayerState.Instance.FinalPersonality;
+            Personality personality = CardGameManager.Instance.player.FinalPersonality;
             story.variablesState["inn"] = personality.Inner;
             story.variablesState["ext"] = personality.Outside;
             story.variablesState["lgc"] = personality.Logic;
