@@ -33,6 +33,12 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
     private GameObject saveAndLoadButton2;
     [SerializeField]
     private GameObject saveAndLoadButton3;
+    [SerializeField]
+    private Button closeButton;
+    [SerializeField]
+    private Button saveButton;
+    [SerializeField]
+    private Button loadButton;
     private int index = 0;
     /// <summary>
     /// Save:True
@@ -49,7 +55,9 @@ public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
         saveAndLoadButton1.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(1); });
         saveAndLoadButton2.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(2); });
         saveAndLoadButton3.GetComponent<Button>().onClick.AddListener(delegate { OnClickSaveAndLoadButton(3); });
-
+        closeButton.onClick.AddListener(OnClickCloseButton);
+        saveButton.onClick.AddListener(OnClickSaveButton);
+        loadButton.onClick.AddListener(OnClickLoadButton);
         gameSaveAndLoadPanel.SetActive(false);
     }
 

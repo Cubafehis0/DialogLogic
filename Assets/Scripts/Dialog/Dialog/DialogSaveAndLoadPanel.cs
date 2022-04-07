@@ -21,7 +21,6 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
     private Transform content;
     [SerializeField] 
     private Text text;
-
     private string path;
     private List<DialogTextSave_Content> textList = new List<DialogTextSave_Content>();
 
@@ -55,7 +54,7 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
         if(controllButton) controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
         //HideChildren(this.gameObject);
         ClearTextFile(path);
-        gameObject.SetActive(false);
+        showHistoricalDialog.SetActive(false);
     }
 
     private Color ChooseColor(string speaker)
