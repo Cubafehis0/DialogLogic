@@ -86,7 +86,7 @@ public class CardGameManager : MonoBehaviour
     public void OpenHandChoosePanel(ICondition condition,int num,IEffect action)
     {
         WaitGUI = true;
-        HandSelectSystem.Instance.Open(player.Hand, num, action);
+        HandSelectSystem.Instance.Open(player.cardManager.Hand, num, action);
     }
 
     public void OpenPileChoosePanel(List<Card> cards, int num, IEffect action)

@@ -10,7 +10,7 @@ public class DragHandPileObject : MonoBehaviour
     public static DragHandPileObject instance;
 
     [SerializeField]
-    private CardPlayerState player;
+    private CardManager player;
 
     private void Awake()
     {

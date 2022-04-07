@@ -16,12 +16,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     [SerializeField]
     private ChooseSystem chooseSystem = null;
     [SerializeField]
+    public CardManager cardManager = null;
+
+    [SerializeField]
     private bool drawBan = false;
 
-    private Pile<Card> hand = new Pile<Card>();
-    private Pile<Card> drawPile = new Pile<Card>();
-    private Pile<Card> discardPile = new Pile<Card>();
-    private Pile<Card> exhaustPile = new Pile<Card>();
+
     private UnityEvent onPersonalityChange = new UnityEvent();
 
     [HideInInspector]
@@ -66,20 +66,18 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     }
 
     public int Pressure { get => player.PlayerInfo.Pressure; set => player.PlayerInfo.Pressure = value; }
-    public Pile<Card> Hand { get => hand; }
-    public Pile<Card> DrawPile { get => drawPile; }
-    public Pile<Card> DiscardPile { get => discardPile; }
+
     public StatusManager StatusManager => GetComponent<StatusManager>();
     public int DrawNum { get => player.PlayerInfo.DrawNum; set => player.PlayerInfo.DrawNum = value; }
-    public bool IsHandFull => Hand.Count == player.PlayerInfo.MaxCardNum;
+
     public UnityEvent OnValueChange => onPersonalityChange;
     public bool DrawBan { get => drawBan; set => drawBan = value; }
     public Player Player { get => player; }
 
     private void Awake()
     {
-        Hand.OnAdd.AddListener(x => Modifiers.Add(x.info.handModifier));
-        Hand.OnRemove.AddListener(x => Modifiers.Remove(x.info.handModifier));
+        cardManager.Hand.OnAdd.AddListener(x => Modifiers.Add(x.info.handModifier));
+        cardManager.Hand.OnRemove.AddListener(x => Modifiers.Remove(x.info.handModifier));
     }
 
     public void AddModifier(Modifier script)
@@ -96,120 +94,17 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
         Modifiers.Remove(script);
     }
 
-    public bool CanDraw()
-    {
-        if (DrawBan) return false;
-        if (IsHandFull) return false;
-        if (drawPile.Count == 0 && discardPile.Count == 0) return false;
-        return true;
-    }
-
-    public void Draw(uint num)
-    {
-        if (DrawBan) return;
-        for (int i = 0; i < num; i++)
-        {
-            if (IsHandFull)
-            {
-                //手牌满了
-                return;
-            }
-            if (drawPile.Count == 0)
-            {
-                //抽牌堆为空
-                if (discardPile.Count == 0)
-                {
-                    //没有牌可抽
-                    return;
-                }
-                //洗牌
-                Discard2Draw();
-            }
-            drawPile.MigrateTo(drawPile[0], Hand);
-        }
-    }
 
 
 
-    public void Draw2Full()
-    {
-        for (int i = 0; i < 20; i++)
-        {
-            if (!CanDraw()) break;
-            Draw(1);
-        }
-    }
 
-    public void DiscardCard(Card cid)
-    {
-        Hand.MigrateTo(cid, discardPile);
-    }
 
-    public void DiscardAll()
-    {
-        Hand.MigrateAllTo(discardPile);
-    }
 
-    /// <summary>
-    /// 出牌
-    /// </summary>
-    /// <param name="cardID">出牌id</param>
-    /// <returns>是否成功出牌</returns>
-    public void PlayCard(Card card)
-    {
-        if (!CardGameManager.Instance.WaitGUI)
-        {
-            StartCoroutine(PlayCardEnumerator(card));
-        }
-    }
 
-    public IEnumerator PlayCardEnumerator(Card card)
-    {
-        if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
-        if (card.info == null) throw new ArgumentNullException("CardPlayerState.PlayCard card未构建");
-        if (Energy < card.FinalCost)
-        {
-            //能量不足
-            Debug.Log("能量不足");
-        }
-        else
-        {
-            Context.PushPlayerContext(this);
-            Context.PushCardContext(card);
-            if (card.Activated || (card.info.Requirements?.Value ?? true))
-            {
-                //目标有效且可以使用
-                Energy -= card.FinalCost;
-                Debug.Log("使用卡牌： " + card.info.Title);
-                CardLogEntry log = new CardLogEntry
-                {
-                    Name = card.info.Name,
-                    IsActive = card.Activated,
-                    LogType = ActionTypeEnum.PlayCard,
-                    Turn = CardGameManager.Instance.Turn,
-                    CardCategory = card.info.category,
-                };
-                CardRecorder.Instance.AddRecordEntry(log);
-                Hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
-                OnPlayCard.Invoke();
-                if (card.info.Effects == null) Debug.Log("空效果");
-                card.info.Effects.Execute();
-                yield return new WaitUntil(() => CardGameManager.Instance.WaitGUI == false);
-            }
-            else
-            {
-                Debug.Log("无法使用卡牌：" + card.info.Title);
-            }
-            Context.PopCardContext();
-            Context.PopPlayerContext();
-        }
-    }
 
-    public void Discard2Draw()
-    {
-        discardPile.MigrateAllTo(drawPile);
-        drawPile.Shuffle();
-    }
+
+
+
 
     public void RandomReveal(int num)
     {
@@ -254,24 +149,23 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
         Debug.Log("我的回合，抽卡！！！");
         OnStartTurn.Invoke();
         Energy = 4;
-        Draw((uint)player.PlayerInfo.DrawNum);
+        cardManager.Draw((uint)player.PlayerInfo.DrawNum);
     }
 
     public void EndTurn()
     {
         Debug.Log("回合结束");
         OnEndTurn.Invoke();
-        DiscardAll();
         onPersonalityChange.Invoke();
-        foreach (Card card in Hand)
+        foreach (Card card in cardManager.Hand)
         {
             card.TemporaryActivate = false;
         }
-        foreach (Card card in DiscardPile)
+        foreach (Card card in cardManager.DiscardPile)
         {
             card.TemporaryActivate = false;
         }
-        foreach (Card card in DrawPile)
+        foreach (Card card in cardManager.DrawPile)
         {
             card.TemporaryActivate = false;
         }
@@ -284,10 +178,9 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
         {
             Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
             newCard.player = this;
-            drawPile.Add(newCard);
+            cardManager.DrawPile.Add(newCard);
         }
-
-        drawPile.Shuffle();
+        cardManager.DrawPile.Shuffle();
     }
 
     public void StateChange(Personality delta, int turn)
@@ -327,9 +220,9 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
             "immoral" => FinalPersonality[PersonalityType.Unethic],
             "roundabout" => FinalPersonality[PersonalityType.Detour],
             "aggressive" => FinalPersonality[PersonalityType.Strong],
-            "hand_count" => Hand.Count,
-            "draw_count" => DrawPile.Count,
-            "discard_count" => DiscardPile.Count,
+            "hand_count" => cardManager.Hand.Count,
+            "draw_count" => cardManager.DrawPile.Count,
+            "discard_count" => cardManager.DiscardPile.Count,
             "normal_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
             "threat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
             "persuade_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),

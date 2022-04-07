@@ -5,7 +5,7 @@ using UnityEngine;
 public class DrawPileObject : MonoBehaviour
 {
     [SerializeField]
-    private CardPlayerState player;
+    private CardManager player;
 
 
     private void OnEnable()
