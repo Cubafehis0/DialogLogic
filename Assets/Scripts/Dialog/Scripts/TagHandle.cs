@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+
 namespace Ink2Unity
 {
     public abstract class TagHandle
     {
-        static string tagParttern = @"^([^:]+)(:)([^:]+)";
-        static string choiceTagParttern = @"([^@]*)(@.+)";
-
-        static string conditionParttern;
-        static string stateParrern;
+        private static string tagParttern = @"^([^:]+)(:)([^:]+)";
+        private static string choiceTagParttern = @"([^@]*)(@.+)";
+        private static string conditionParttern;
+        private static string stateParrern;
         public static bool GetPropertyNameAndValue(string str, out string name, out string content)
         {
             var match = Regex.Match(str, tagParttern);

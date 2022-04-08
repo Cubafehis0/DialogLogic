@@ -12,6 +12,7 @@ public class CardGameManager : MonoBehaviour
 
     public CardPlayerState player;
     public CardPlayerState enemy;
+    public bool isPlayerTurn=false;
 
 
     private static CardGameManager instance = null;
@@ -70,7 +71,9 @@ public class CardGameManager : MonoBehaviour
     {
         if (player.CanChoose(slot))
         {
+            isPlayerTurn = false;
             DialogSystem.Instance.ForceSelectChoice(slot.Choice, player.JudgeChooseSuccess(slot));
+        
         }
     }
 
@@ -96,6 +99,8 @@ public class CardGameManager : MonoBehaviour
     public void StartTurn()
     {
         turn++;
+        isPlayerTurn = true;
         player.StartTurn();
+
     }
 }

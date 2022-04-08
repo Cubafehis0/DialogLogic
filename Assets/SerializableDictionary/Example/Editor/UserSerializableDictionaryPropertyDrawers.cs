@@ -8,6 +8,7 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(StringColorArrayDictionary))]
 [CustomPropertyDrawer(typeof(SpeechTypeSpriteDictionary))]
 [CustomPropertyDrawer(typeof(PersonalityTypeSpriteDictionary))]
+[CustomPropertyDrawer(typeof(SpeakerGameObjectDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}
 
 [CustomPropertyDrawer(typeof(ColorArrayStorage))]
