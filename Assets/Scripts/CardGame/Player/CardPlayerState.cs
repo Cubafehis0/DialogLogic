@@ -1,33 +1,26 @@
 using Ink2Unity;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using SemanticTree;
 using System;
-using System.Xml.Serialization;
 using CardGame.Recorder;
 using System.Linq;
 
-public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 {
     [SerializeField]
     private Player player = null;
     [SerializeField]
-    private ChooseSystem chooseSystem = null;
+    private ChooseGUISystem chooseGUISystem = null;
     [SerializeField]
-    private CardManager cardManager = null;
-
+    private CardController cardManager = null;
     [SerializeField]
-    private bool drawBan = false;
-
+    private StatusManager statusManager = null;
 
     private UnityEvent onPersonalityChange = new UnityEvent();
 
     [HideInInspector]
     public UnityEvent OnEnergyChange = new UnityEvent();
-    [HideInInspector]
-    public UnityEvent OnPlayCard = new UnityEvent();
     [HideInInspector]
     public UnityEvent OnStartTurn = new UnityEvent();
     [HideInInspector]
@@ -37,7 +30,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
 
     public ModifierGroup Modifiers = new ModifierGroup();
 
-    public ChooseSystem ChooseSystem { get => chooseSystem; }
+    public ChooseGUISystem ChooseGUISystem { get => chooseGUISystem; }
 
     public Personality FinalPersonality
     {
@@ -67,31 +60,32 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
 
     public int Pressure { get => player.PlayerInfo.Pressure; set => player.PlayerInfo.Pressure = value; }
 
-    public StatusManager StatusManager => GetComponent<StatusManager>();
+    public StatusManager StatusManager => statusManager;
     public int DrawNum { get => player.PlayerInfo.DrawNum; set => player.PlayerInfo.DrawNum = value; }
 
     public UnityEvent OnValueChange => onPersonalityChange;
-    public bool DrawBan { get => drawBan; set => drawBan = value; }
     public Player Player { get => player; }
 
-    public IReadonlyPile<Card> DiscardPile => ((ICardManager)cardManager).DiscardPile;
+    public IReadonlyPile<Card> DiscardPile => ((ICardController)cardManager).DiscardPile;
 
-    public IReadonlyPile<Card> DrawPile => ((ICardManager)cardManager).DrawPile;
+    public IReadonlyPile<Card> DrawPile => ((ICardController)cardManager).DrawPile;
 
-    public IReadonlyPile<Card> Hand => ((ICardManager)cardManager).Hand;
+    public IReadonlyPile<Card> Hand => ((ICardController)cardManager).Hand;
 
-    public bool IsHandFull => ((ICardManager)cardManager).IsHandFull;
+    public bool IsHandFull => ((ICardController)cardManager).IsHandFull;
+
+    public bool DrawBan { get => ((ICardController)cardManager).DrawBan; set => ((ICardController)cardManager).DrawBan = value; }
 
     public void AddModifier(Modifier script)
     {
-        if (script.OnPlayCard != null) OnPlayCard.AddListener(script.OnPlayCard.Execute);
+        if (script.OnPlayCard != null && cardManager) cardManager.OnPlayCard.AddListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnStartTurn.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);
     }
 
     public void RemoveModifier(Modifier script)
     {
-        if (script.OnPlayCard != null) OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
+        if (script.OnPlayCard != null && cardManager) cardManager.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnStartTurn.RemoveListener(script.OnTurnStart.Execute);
         Modifiers.Remove(script);
     }
@@ -187,10 +181,10 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
             "immoral" => FinalPersonality[PersonalityType.Unethic],
             "roundabout" => FinalPersonality[PersonalityType.Detour],
             "aggressive" => FinalPersonality[PersonalityType.Strong],
-            "normal_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
-            "threat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
-            "persuade_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),
-            "cheat_count" => chooseSystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Cheat).Count(),
+            "normal_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
+            "threat_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
+            "persuade_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),
+            "cheat_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Cheat).Count(),
             "focus_count" => FocusSpeechType.HasValue ? 1 : 0,
             _ => throw new PropNotFoundException(),
         };
@@ -209,57 +203,57 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardManager
     #region ICardManager½Ó¿Ú
     public void AddCard(PileType pileType, Card card)
     {
-        ((ICardManager)cardManager).AddCard(pileType, card);
+        ((ICardController)cardManager).AddCard(pileType, card);
     }
 
     public void AddCardSet2DrawPile(List<string> cardset)
     {
-        ((ICardManager)cardManager).AddCardSet2DrawPile(cardset);
+        ((ICardController)cardManager).AddCardSet2DrawPile(cardset);
     }
 
     public bool CanDraw()
     {
-        return ((ICardManager)cardManager).CanDraw();
+        return ((ICardController)cardManager).CanDraw();
     }
 
     public void ClearTemporaryActivateFlags()
     {
-        ((ICardManager)cardManager).ClearTemporaryActivateFlags();
+        ((ICardController)cardManager).ClearTemporaryActivateFlags();
     }
 
     public void Discard2Draw()
     {
-        ((ICardManager)cardManager).Discard2Draw();
+        ((ICardController)cardManager).Discard2Draw();
     }
 
     public void DiscardAll()
     {
-        ((ICardManager)cardManager).DiscardAll();
+        ((ICardController)cardManager).DiscardAll();
     }
 
     public void DiscardCard(Card cid)
     {
-        ((ICardManager)cardManager).DiscardCard(cid);
+        ((ICardController)cardManager).DiscardCard(cid);
     }
 
     public void Draw(uint num)
     {
-        ((ICardManager)cardManager).Draw(num);
+        ((ICardController)cardManager).Draw(num);
     }
 
     public void Draw2Full()
     {
-        ((ICardManager)cardManager).Draw2Full();
+        ((ICardController)cardManager).Draw2Full();
     }
 
     public int? GetPileProp(string name)
     {
-        return ((ICardManager)cardManager).GetPileProp(name);
+        return ((ICardController)cardManager).GetPileProp(name);
     }
 
     public void PlayCard(Card card)
     {
-        ((ICardManager)cardManager).PlayCard(card);
+        ((ICardController)cardManager).PlayCard(card);
     }
     #endregion
 

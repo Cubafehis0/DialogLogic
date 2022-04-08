@@ -21,7 +21,7 @@ namespace SemanticTree.ChoiceEffects
         {
             SpeechType? focus = Context.PlayerContext.FocusSpeechType;
             if (focus==null) return;
-            List<ChoiceSlot> slots= Context.PlayerContext.ChooseSystem.GetChoiceSlot(focus.Value);
+            List<ChoiceSlot> slots= Context.PlayerContext.ChooseGUISystem.GetChoiceSlot(focus.Value);
             foreach (ChoiceSlot slot in slots)
             {
                 Context.choiceSlotStack.Push(slot);

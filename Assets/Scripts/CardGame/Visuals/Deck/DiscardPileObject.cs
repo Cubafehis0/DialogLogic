@@ -4,7 +4,7 @@ using UnityEngine;
 public class DiscardPileObject : MonoBehaviour
 {
     [SerializeField]
-    private CardManager player;
+    private CardController player;
     [SerializeField]
     private float speed = 50f;
 

@@ -23,7 +23,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            CardGameManager.Instance.OpenTendencyChoosePanel(types, num.Value);
+            GUISystemManager.Instance.OpenTendencyChoosePanel(types, num.Value);
         }
     }
 }

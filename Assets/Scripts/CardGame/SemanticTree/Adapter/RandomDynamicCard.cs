@@ -54,8 +54,8 @@ namespace SemanticTree.Adapter
         public override void Construct()
         { 
             num = ExpressionParser.AnalayseExpression(NumExpression);
-            Condition.Construct();
-            Actions.Execute();
+            Condition?.Construct();
+            Actions.Construct();
         }
     }
 }

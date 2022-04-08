@@ -9,11 +9,6 @@ public interface IDialogSystem
 {
     void MoveNext();
 }
-
-
-
-
-
 public class DialogSystem : MonoBehaviour, IDialogSystem
 {
     [SerializeField]
@@ -24,9 +19,9 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     private RichTypeButton Player_Dialog = null;
     [SerializeField]
     private RichTypeButton narratageDialogButton = null;
-    [SerializeField]
-    private TextAsset testAsset = null;
 
+    //[SerializeField]
+    //private TextAsset testAsset = null;
     private static DialogSystem instance = null;
     public static DialogSystem Instance { get => instance; }
 
@@ -41,31 +36,29 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     {
         Debug.LogWarning("暂停未实现");
     }
-    public void SetInkStoryAsset(string name)
+
+    //private void Start()
+    //{
+    //    NPC_Dialog.OnClick.AddListener(OnClickDialogButton);
+    //    Player_Dialog.OnClick.AddListener(OnClickDialogButton);
+    //    narratageDialogButton.OnClick.AddListener(OnClickDialogButton);
+    //    CreateNewDialog(testAsset);
+    //    if (AutoPlay) MoveNext();
+    //}
+
+    public void Open(TextAsset textAsset)
     {
-        string InkStoryPath = Path.Combine(Application.dataPath, "InkStory");
-        if (!Directory.Exists(InkStoryPath))
+        if (textAsset != null)
         {
-            Debug.LogError("Asset目录下不存在InkStory文件");
-            return;
-        }
-        string[] filePath = Directory.GetFiles(InkStoryPath, name+".json", SearchOption.AllDirectories);
-        if (filePath.Length <= 0)
-        {
-            Debug.LogError($"InkStory目录下不存在名为{name}的文件");
-            return;
-        }
-        testAsset = new TextAsset(File.ReadAllText(filePath[0]));
-    }
-    private void Start()
-    {
-        NPC_Dialog.OnClick.AddListener(OnClickDialogButton);
-        Player_Dialog.OnClick.AddListener(OnClickDialogButton);
-        narratageDialogButton.OnClick.AddListener(OnClickDialogButton);
-        if (testAsset)
-        {
-            CreateNewDialog(testAsset);
+            NPC_Dialog.OnClick.AddListener(OnClickDialogButton);
+            Player_Dialog.OnClick.AddListener(OnClickDialogButton);
+            narratageDialogButton.OnClick.AddListener(OnClickDialogButton);
+            CreateNewDialog(textAsset);
             if (AutoPlay) MoveNext();
+        }
+        else
+        {
+            throw new System.ArgumentNullException();
         }
     }
 
@@ -86,9 +79,9 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     /// <param name="success"></param>
     public void ForceSelectChoice(Choice choice, bool success)
     {
-        CardGameManager.Instance.ChooseSystem.gameObject.SetActive(false);
+        GUISystemManager.Instance.chooseSystem.Close();
         CardGameManager.Instance.EndTurn();
-        DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
+        //DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
         MoveNext();
         AutoPlay = true;
@@ -101,14 +94,14 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         {
             Content content = inkStory.NextContent(); ;
             SpeakSystem.Instance.Speak(content.richText, content.speaker);
-            DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
+            //DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
         }
         else
         {
             List<Choice> choices = inkStory.CurrentChoices();
             if (choices != null && choices.Count != 0)
             {
-                CardGameManager.Instance.ChooseSystem.Open(choices);
+                GUISystemManager.Instance.chooseSystem.Open(choices);
                 CardGameManager.Instance.StartTurn();
                 AutoPlay = false;
             }

@@ -41,7 +41,7 @@ namespace SemanticTree.Adapter
                 if (Condition?.Value ?? true) res.Add(card);
                 Context.PopCardContext();
             }
-            CardGameManager.Instance.OpenPileChoosePanel(res, num.Value, Actions);
+            GUISystemManager.Instance.OpenPileChoosePanel(res, num.Value, Actions);
         }
     }
 }

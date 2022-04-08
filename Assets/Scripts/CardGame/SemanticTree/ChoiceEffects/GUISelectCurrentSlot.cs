@@ -20,7 +20,7 @@ namespace SemanticTree.ChoiceEffects
 
         public override void Execute()
         {
-            CardGameManager.Instance.OpenSlotSelectPanel(action);
+            GUISystemManager.Instance.OpenSlotSelectPanel(action);
         }
     }
 }

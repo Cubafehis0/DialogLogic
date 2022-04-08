@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[SerializeField]
+using System;
+using System.Xml.Serialization;
+
+[Serializable]
 public class LevelConfig:ScriptableObject
 {
-    public int[] playerCharacter=new int[4];
+    [XmlElement(ElementName ="player_character")]
+    public Personality playerCharacter;
+
+    [XmlElement(ElementName = "max_hand_num")]
     public int maxCardNum;
+
+    [XmlElement(ElementName = "draw_num")]
     public int drawCardNum;
 }

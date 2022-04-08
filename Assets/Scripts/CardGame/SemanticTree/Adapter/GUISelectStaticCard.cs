@@ -31,8 +31,7 @@ namespace SemanticTree.Adapter
 
         public override void Execute()
         {
-            CardGameManager.Instance.OpenPileChoosePanel(cards, num.Value, Actions);
-            CardGameManager.Instance.DisableInput();
+            GUISystemManager.Instance.OpenPileChoosePanel(cards, num.Value, Actions);
         }
     }
 }

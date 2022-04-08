@@ -29,7 +29,7 @@ namespace SemanticTree.PlayerEffect
             }
             else
             {
-                CardGameManager.Instance.OpenHandChoosePanel(null, numExpression.Value, new DiscardCard());
+                GUISystemManager.Instance.OpenHandChoosePanel(Context.PlayerContext, null, numExpression.Value, new DiscardCard());
             }
         }
 

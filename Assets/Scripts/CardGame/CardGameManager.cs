@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using SemanticTree;
-
+using System.IO;
 
 public class CardGameManager : MonoBehaviour
 {
     [SerializeField]
     private int turn = 0;
-    [SerializeField]
-    private TendencyTable tendencyTable;
-    [SerializeField]
-    private ChooseSystem chooseSystem;
 
     public CardPlayerState player;
     public CardPlayerState enemy;
 
-    public bool WaitGUI;
-    private EffectList effectList;
 
     private static CardGameManager instance = null;
     public static CardGameManager Instance
@@ -26,12 +20,36 @@ public class CardGameManager : MonoBehaviour
         get => instance;
     }
 
-    public ChooseSystem ChooseSystem { get { return chooseSystem; } }
-    public int Turn { get => turn;}
+    public void SetGameConfig(GameConfig config)
+    {
+        SetInkStoryAsset(config.StoryName);
+        player.Player.PlayerInfo = config.PlayerInfo;
+        //enemy.Player.PlayerInfo.Personality = config.enemyPersonality;
+    }
+
+    private void SetInkStoryAsset(string name)
+    {
+        string InkStoryPath = Path.Combine(Application.streamingAssetsPath, "InkStories");
+        if (!Directory.Exists(InkStoryPath))
+        {
+            Debug.LogError("Asset目录下不存在InkStory文件");
+            return;
+        }
+        string[] filePath = Directory.GetFiles(InkStoryPath, name + ".json", SearchOption.AllDirectories);
+        if (filePath.Length <= 0)
+        {
+            Debug.LogError($"InkStory目录下不存在名为{name}的文件");
+            return;
+        }
+        DialogSystem.Instance.Open(new TextAsset(File.ReadAllText(filePath[0])));
+    }
+
+
+    public int Turn { get => turn; }
 
     public Card GetCardCopy(Card prefab)
     {
-        Card ret=Instantiate(prefab.gameObject).GetComponent<Card>();
+        Card ret = Instantiate(prefab.gameObject).GetComponent<Card>();
         ret.Construct(prefab);
         ret.player = player;
         return ret;
@@ -46,90 +64,13 @@ public class CardGameManager : MonoBehaviour
     {
         instance = this;
         ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
-        tendencyTable.gameObject.SetActive(false);
-    }
-
-    public void OpenTendencyChoosePanel(HashSet<PersonalityType> types,int value)
-    {
-        WaitGUI = true;
-        tendencyTable.Open(types, value);
-    }
-
-    /// <summary>
-    /// 【发现】
-    /// </summary>
-    /// <param name="cards"></param>
-    /// <param name="action"></param>
-    public void OpenCardChoosePanel(List<Card> cards, int num,IEffect action)
-    {
-        //参数不能改成CardInfo
-        throw new System.NotImplementedException();
-        //Debug.Log("打开卡牌选择面板");
-        //List<Card> cardObjects = new List<Card>();
-        //foreach(Card card in cards)
-        //{
-        //    Card newCard = Instantiate(card, transform);
-        //    newCard.gameObject.SetActive(true);
-        //    cardObjects.Add(newCard);
-        //}
-    }
-
-    public void DisableInput()
-    {
-        WaitGUI = true;
-    }
-
-    public void EnableInput()
-    {
-        Debug.Log("启用卡牌操作 未实现");
-    }
-
-    public void OpenHandChoosePanel(ICondition condition,int num,IEffect action)
-    {
-        WaitGUI = true;
-        HandSelectSystem.Instance.Open(player.Hand, num, action);
-    }
-
-    public void OpenPileChoosePanel(List<Card> cards, int num, IEffect action)
-    {
-        WaitGUI = true;
-        PileSelectSystem.Instance.Open(cards, num, action);
-    }
-
-    public void OpenPileChoosePanel(List<Card> cards, int num, EffectList action)
-    {
-        WaitGUI = true;
-        PileSelectSystem.Instance.Open(cards, num, action);
-    }
-
-    public void OpenSlotSelectPanel(EffectList action)
-    {
-        //与其他GUI界面不统一
-        WaitGUI = true;
-        effectList = action;
-    }
-
-    public void OpenConditionNerfPanel(int value)
-    {
-        throw new System.NotImplementedException();
     }
 
     public void SlotSelectCallback(ChoiceSlot slot)
     {
-        if (WaitGUI)
+        if (player.CanChoose(slot))
         {
-            Context.choiceSlotStack.Push(slot);
-            effectList?.Execute();
-            Context.choiceSlotStack.Pop();
-            effectList = null;
-            WaitGUI = false;
-        }
-        else
-        {
-            if (player.CanChoose(slot))
-            {
-                DialogSystem.Instance.ForceSelectChoice(slot.Choice, player.JudgeChooseSuccess(slot));
-            }
+            DialogSystem.Instance.ForceSelectChoice(slot.Choice, player.JudgeChooseSuccess(slot));
         }
     }
 
@@ -139,6 +80,7 @@ public class CardGameManager : MonoBehaviour
     public void StartGame()
     {
         turn = 0;
+        player.Init();
     }
     /// <summary>
     /// 结束当前回合

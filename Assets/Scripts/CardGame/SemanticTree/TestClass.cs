@@ -58,22 +58,5 @@ namespace SemanticTree
             ser.Serialize(writer, effect);
             writer.Close();
         }
-        public static T Deserialize<T>(string s)
-        {
-            XmlSerializer ser = new XmlSerializer(typeof(T));
-            using var stream = StreamString2Stream(s);
-            return (T)ser.Deserialize(stream);
-        }
-
-        public static Stream StreamString2Stream(string s)
-        {
-            MemoryStream stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
     }
 }

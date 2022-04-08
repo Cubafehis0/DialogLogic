@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<Common>
+
+    <define_status>
+        <name>free</name>
+        <decrease_on_turn_end>99</decrease_on_turn_end>
+        <binding_modifier>
+            <cost_modifier>
+                <factor>0</factor>
+            </cost_modifier>
+            <on_play_card>
+                <add_status>
+                    <name>free</name>
+                    <value>-1</value>
+                </add_status>
+            </on_play_card>
+        </binding_modifier>
+    </define_status>
+
+    <define_status>
+        <name>shaken</name>
+    </define_status>
+
+    <define_status>
+        <name>speech_book</name>
+        <binding_modifier>
+            <on_turn_start>
+                <add_card_to_hand>
+                    <name>preach</name>
+                    <num>1</num>
+                </add_card_to_hand>
+            </on_turn_start>
+        </binding_modifier>
+    </define_status>
+
+    <define_status>
+        <name>draw_near</name>
+        <binding_modifier>
+            <on_play_card>
+                <potantial>
+                    <condition>
+                        <requirement>是说教未完成</requirement>
+                    </condition>
+                    <action>
+                        <modify_personality>
+                            <personality>
+                                <outside>draw_near</outside>
+                            </personality>
+                            <duration>-1</duration>
+                        </modify_personality>
+                    </action>
+                </potantial>
+            </on_play_card>
+        </binding_modifier>
+    </define_status>
+
+    <define_status>
+        <name>mysticism</name>
+        <binding_modifier>
+            <on_turn_start>
+                <modify_health>
+                    <num>mysticism</num>
+                </modify_health>
+                <modify_personality>
+                    <personality>
+                        <outside>mysticism</outside>
+                    </personality>
+                    <duration>-1</duration>
+                </modify_personality>
+            </on_turn_start>
+        </binding_modifier>
+    </define_status>
+
+    <define_status>
+        <name>panic</name>
+    </define_status>
+    <define_status>
+        <name>skeptical</name>
+    </define_status>
+    <define_status>
+        <name>trust</name>
+    </define_status>
+    <define_status>
+        <name>evil_consequence</name>
+    </define_status>
+    <!-- 牧羊：下一次说服判定增加n-->
+    <define_status>
+        <name>shepherd</name>
+    </define_status>
+</Common>

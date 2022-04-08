@@ -22,7 +22,7 @@ namespace SemanticTree.ChoiceEffects
 
         public override void Execute()
         {
-            CardGameManager.Instance.OpenConditionNerfPanel(expression.Value);
+            GUISystemManager.Instance.OpenConditionNerfPanel(expression.Value);
         }
     }
 }

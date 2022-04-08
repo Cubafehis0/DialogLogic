@@ -52,7 +52,7 @@ namespace ExpressionAnalyser
     {
         readonly static List<KeyValuePair<LexType, string>> LexRegular = new List<KeyValuePair<LexType, string>>()
         {
-            new KeyValuePair<LexType, string>(LexType.Identify,@"[a-zA-Z_][a-zA-Z0-9_]*"),
+            new KeyValuePair<LexType, string>(LexType.Identify,@"[a-zA-Z_][a-zA-Z0-9_\.]*"),
 
             new KeyValuePair<LexType, string>(LexType.Plus,@"\+"),
             new KeyValuePair<LexType, string>(LexType.Minus,@"-" ),
@@ -87,6 +87,7 @@ namespace ExpressionAnalyser
         }
         private static void IsValid(string s)
         {
+            //Debug.Log(s.Length);
             for (int i = 0; i < s.Length; i++)
             {
                 if (!char.IsWhiteSpace(s[i]))

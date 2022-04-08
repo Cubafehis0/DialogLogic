@@ -414,6 +414,8 @@ GameObject:
   - component: {fileID: 18281529}
   - component: {fileID: 18281531}
   - component: {fileID: 18281528}
+  - component: {fileID: 18281530}
+  - component: {fileID: 18281532}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -434,11 +436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 0
-  tendencyTable: {fileID: 1087869716}
-  chooseSystem: {fileID: 1991228639}
-  player: {fileID: 0}
+  player: {fileID: 2034699589}
   enemy: {fileID: 0}
-  WaitGUI: 0
 --- !u!4 &18281526
 Transform:
   m_ObjectHideFlags: 0
@@ -465,10 +464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca79ac3cc415ea3498aefabfc90ccb7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xmlFiles:
-  - {fileID: 4900000, guid: 0a6e4c64cc3f3284e942287ad3819938, type: 3}
-  - {fileID: 4900000, guid: 8f0d97fed4b9ddc4da735bfdabcaa07b, type: 3}
-  - {fileID: 4900000, guid: 6aa31cf72fee4c444b28f43eb862e309, type: 3}
   choiceSprites:
     m_keys: 00000000020000000100000003000000
     m_values:
@@ -517,7 +512,24 @@ MonoBehaviour:
   NPC_Dialog: {fileID: 83915472}
   Player_Dialog: {fileID: 1514881457}
   narratageDialogButton: {fileID: 1283991167746657976}
-  testAsset: {fileID: 4900000, guid: 17cb5ba85847ae04795d884d8f1f0579, type: 3}
+--- !u!114 &18281530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18281524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4953ea4eeee7bd4083c3af20ef43534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chooseSystem: {fileID: 1991228639}
+  tendencySelectGUISystem: {fileID: 1087869716}
+  conditionSelectGUISystem: {fileID: 1462719812}
+  handSelectGUISystem: {fileID: 650806974}
+  pileSelectGUISystem: {fileID: 1514054541}
+  slotGUISystem: {fileID: 1846966969}
 --- !u!114 &18281531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,6 +545,18 @@ MonoBehaviour:
   NPC_Dialog: {fileID: 83915472}
   Player_Dialog: {fileID: 1514881457}
   Narratage_Dialog: {fileID: 1283991167746657976}
+--- !u!114 &18281532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18281524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 458cbf6f523f0b649986d1740453937c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &31395866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4434,7 +4458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000016754202}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1019761665
@@ -4886,7 +4910,7 @@ GameObject:
   - component: {fileID: 1087869712}
   - component: {fileID: 1087869716}
   m_Layer: 5
-  m_Name: TendencyCanvas
+  m_Name: "\u52A0\u70B9\u753B\u5E03"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6255,6 +6279,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430479759}
   m_CullTransparentMesh: 1
+--- !u!1 &1462719811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462719813}
+  - component: {fileID: 1462719812}
+  m_Layer: 0
+  m_Name: "\u9009\u62E9\u6761\u4EF6"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1462719812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462719811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9671f42eeebbb94f98a0e9f7ec37e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1462719813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462719811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514054536
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,7 +7035,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 360789664}
   m_HandleRect: {fileID: 360789663}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7331,6 +7398,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809842413}
   m_CullTransparentMesh: 1
+--- !u!1 &1846966968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846966970}
+  - component: {fileID: 1846966969}
+  m_Layer: 0
+  m_Name: "\u9009\u62E9\u9009\u9879"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1846966969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846966968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef9f6030b16b9f0409d5f89f1a45280b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1846966970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846966968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857715583
 GameObject:
   m_ObjectHideFlags: 0
@@ -8676,14 +8786,7 @@ MonoBehaviour:
     maxHealth: 0
     energy: 0
     everyTurnEnergy: 0
-    cardSet:
-    - "\u7A7A"
-    - "\u7A7A"
-    - "\u7A7A"
-    - "\u903B\u8F91\u5B66\u5165\u95E8"
-    - logic4
-    - "\u9012\u8FDB"
-    - "\u7A7A"
+    cardSet: []
 --- !u!114 &2034699588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8696,6 +8799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f11c5303ca2ded4c9e3f23534d09eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlayCard:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2034699589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8709,13 +8815,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2034699587}
-  chooseSystem: {fileID: 0}
+  chooseGUISystem: {fileID: 1991228639}
   cardManager: {fileID: 2034699588}
-  drawBan: 0
+  statusManager: {fileID: 2034699586}
   OnEnergyChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPlayCard:
     m_PersistentCalls:
       m_Calls: []
   OnStartTurn:
@@ -9432,6 +9535,11 @@ PrefabInstance:
     - target: {fileID: 6833463650725551530, guid: 5ef2b17261d1dcc41b4cbc183110034e,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833463650725551530, guid: 5ef2b17261d1dcc41b4cbc183110034e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

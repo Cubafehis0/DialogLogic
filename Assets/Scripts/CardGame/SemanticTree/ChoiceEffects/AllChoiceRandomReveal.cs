@@ -12,7 +12,6 @@ namespace SemanticTree.ChoiceEffects
         [XmlElement(ElementName = "num")]
         public string NumExpression = null;
         private IExpression num = null;
-
         [XmlElement(ElementName = "speech_type")]
         public SpeechType SpeechType = SpeechType.Normal;
         [XmlIgnore]
@@ -20,8 +19,8 @@ namespace SemanticTree.ChoiceEffects
 
         public override void Execute()
         {
-            if (SpeechTypeSpecified) Context.PlayerContext.ChooseSystem.RandomReveal(SpeechType, num.Value);
-            else Context.PlayerContext.ChooseSystem.RandomReveal(num.Value);
+            if (SpeechTypeSpecified) Context.PlayerContext.ChooseGUISystem.RandomReveal(SpeechType, num.Value);
+            else Context.PlayerContext.ChooseGUISystem.RandomReveal(num.Value);
         }
 
         public override void Construct()

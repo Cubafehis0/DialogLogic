@@ -25,7 +25,8 @@ public class StaticCardLibrary : MonoBehaviour
 
     public void DeclareCard(string name)
     {
-        if (cardDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义卡牌");
+        if (cardDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义卡牌" + name);
+        //else Debug.Log("加载卡牌:" + name);
         Card newCard = Instantiate(sampleCard);
         newCard.transform.SetParent(transform, false);
         newCard.gameObject.SetActive(false);
