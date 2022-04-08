@@ -24,11 +24,11 @@ public class Mission : MonoBehaviour
     [XmlArray(ElementName = "relevantIncident")]
     public List<string> relevantIncident;
 
-    [XmlElement(ElementName ="trigger_date")]
+    [XmlElement(ElementName = "trigger_date")]
     public int triggerDate;
 
-    [XmlElement(ElementName ="")]
-    public List<string> triggerIncident;
+    [XmlElement(ElementName = "")]
+    public List<Incident> triggerIncident;
 
     public List<string> conditionIncident;
     public List<string> conditionKey;
@@ -36,10 +36,10 @@ public class Mission : MonoBehaviour
     public List<string> conditionReputation;
 
     public int deadline;
-    public List<string> deadIncident;
+    public List<Incident> deadIncident;
 
     public List<string> missionKey;
-    public List<string> missionIncident;
+    public List<Incident> missionIncident;
 
     public Award award;
 
@@ -52,7 +52,7 @@ public class Mission : MonoBehaviour
         switch (this.missionState)
         {
             case MissionState.Unopened:
-                if (IncidentSystem.Instance.IsFinishedAllIncidents(triggerIncident))
+                if (triggerIncident.TrueForAll(x => x.Finished))
                 {
                     this.missionState = MissionState.Opened;
                 }
@@ -94,17 +94,11 @@ public class Mission : MonoBehaviour
 
     private bool CheckFinshedCondition()
     {
-        if (IncidentSystem.Instance.IsFinishedAllIncidents(missionIncident))
-        {
-            return true;
-        }
-        return false;
+        return missionIncident.TrueForAll(x => x.Finished);
     }
 
     private bool IsDead()
     {
-        if (IncidentSystem.Instance.IsFinishedAllIncidents(deadIncident))
-            return true;
-        return false;
+        return deadIncident.TrueForAll(x => x.Finished);
     }
 }

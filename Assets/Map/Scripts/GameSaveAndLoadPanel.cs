@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Ink2Unity;
-public interface IGameSaveAndLoadPanel
-{
-
-}
 
 public class Save
 {
@@ -20,7 +16,7 @@ public class Load
     public List<string> LoadMessage() { throw new System.NotImplementedException(); }
 }
 
-public class GameSaveAndLoadPanel : MonoBehaviour, IGameSaveAndLoadPanel
+public class GameSaveAndLoadPanel : MonoBehaviour
 {
     private GameObject gameSaveAndLoadPanel;
     [SerializeField]

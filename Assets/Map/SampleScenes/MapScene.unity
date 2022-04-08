@@ -199,9 +199,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 47866276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02addc4bf0bd4bd46aa8df75f7d93c0d, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsChoose
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsChoose
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1028549231}
+          m_TargetAssemblyTypeName: MySceneManager, Assembly-CSharp
+          m_MethodName: LoadPlace
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &125248924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,9 +570,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 258751649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b505b3170ababc4faa1303f480469e0, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsRest
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsRest
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapAnimator, Assembly-CSharp
+          m_MethodName: SwitchDayNight
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &319132464
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +956,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1028549230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028549232}
+  - component: {fileID: 1028549231}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1028549231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028549230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673209b891527f4498b3a2d2674ecaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1028549232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028549230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1226701672
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,9 +1071,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1226701672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dae9dfaea23c614ea20ca047d6df5ae, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsInventor
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1607414697}
+          m_TargetAssemblyTypeName: MapScript, Assembly-CSharp
+          m_MethodName: set_IsInventor
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1265014625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,15 +1461,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSpriteRenderer: {fileID: 1607414693}
   gearImage: {fileID: 2077618369}
-  mapSprites:
-  - {fileID: 21300000, guid: 705b141901f96fc44a41bf636418e393, type: 3}
-  - {fileID: 21300000, guid: f31a4836d0ab4c74bb51126d669371e7, type: 3}
-  - {fileID: 21300000, guid: bbe3c1f24c758404faa6abf3f8684d62, type: 3}
-  - {fileID: 21300000, guid: 4039f3f04220b4f47864e448c33b2f77, type: 3}
-  - {fileID: 21300000, guid: 1b50123debaa6b54d80d7551ba2b9dd7, type: 3}
-  - {fileID: 21300000, guid: f337b8a88f4035649b43d5e6d98ae1a6, type: 3}
-  - {fileID: 21300000, guid: ffac883e0b1ef434a801423946fed313, type: 3}
-  - {fileID: 21300000, guid: d038810b719124b4283d9fc9e40c7fb5, type: 3}
+  dayMapSpriteDictionnary:
+    m_keys: 00000000010000000200000003000000
+    m_values:
+    - {fileID: 21300000, guid: 705b141901f96fc44a41bf636418e393, type: 3}
+    - {fileID: 21300000, guid: f31a4836d0ab4c74bb51126d669371e7, type: 3}
+    - {fileID: 21300000, guid: bbe3c1f24c758404faa6abf3f8684d62, type: 3}
+    - {fileID: 21300000, guid: 4039f3f04220b4f47864e448c33b2f77, type: 3}
+  nightMapSpriteDictionnary:
+    m_keys: 00000000010000000200000003000000
+    m_values:
+    - {fileID: 21300000, guid: 1b50123debaa6b54d80d7551ba2b9dd7, type: 3}
+    - {fileID: 21300000, guid: f337b8a88f4035649b43d5e6d98ae1a6, type: 3}
+    - {fileID: 21300000, guid: ffac883e0b1ef434a801423946fed313, type: 3}
+    - {fileID: 21300000, guid: d038810b719124b4283d9fc9e40c7fb5, type: 3}
   gearSprites:
   - {fileID: 21300000, guid: 2490002d560b93649a95a1f0cce8684f, type: 3}
   - {fileID: 21300000, guid: faef3d45cd799ca47b1e57aae26c49d0, type: 3}

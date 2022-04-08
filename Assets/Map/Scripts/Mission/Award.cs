@@ -9,6 +9,4 @@ public class Award : MonoBehaviour
     public List<string> awardReputation;
     public List<string> awardFavor;
     public List<string> awardInformation;
-
-
 }
