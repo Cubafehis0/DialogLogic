@@ -36,8 +36,8 @@ namespace SemanticTree
 
         private void SerializeCondition()
         {
-            XmlSerializer ser = new XmlSerializer(typeof(ConditionList));
-            ConditionList effect = new AllNode()
+            XmlSerializer ser = new XmlSerializer(typeof(ComplexCondition));
+            ComplexCondition effect = new AllNode()
             {
                 conditions = new List<object>()
                 {

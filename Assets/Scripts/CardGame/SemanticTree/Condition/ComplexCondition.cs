@@ -1,14 +1,13 @@
-﻿using SemanticTree.Condition;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace SemanticTree
+namespace SemanticTree.Condition
 {
-    public abstract class ConditionList
+    public abstract class ComplexCondition : ICondition
     {
         [XmlElement(typeof(string), ElementName = "requirement")]
         [XmlElement(typeof(AllNode), ElementName = "all")]
@@ -36,6 +35,6 @@ namespace SemanticTree
                 else throw new SemanticException();
             }
         }
-        public abstract bool Value{get; } 
+        public abstract bool Value { get; }
     }
 }

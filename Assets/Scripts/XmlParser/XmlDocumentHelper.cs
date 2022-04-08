@@ -1,4 +1,3 @@
-using SemanticTree;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -6,6 +5,7 @@ using System.Xml.Schema;
 using UnityEngine;
 using SemanticTree.PlayerEffect;
 using ExpressionAnalyser;
+using SemanticTree.Condition;
 
 public class XmlDocumentHelper
 {

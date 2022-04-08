@@ -2,7 +2,7 @@
 
 namespace SemanticTree.Condition
 {
-    public class NoneNode : ConditionList
+    public class NoneNode : ComplexCondition
     {
         public override bool Value
         {

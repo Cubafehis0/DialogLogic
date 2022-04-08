@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SemanticTree
+namespace SemanticTree.Condition
 {
-    public abstract class ConditionNode : ICondition
+    public abstract class SingleCondition : ICondition
     {
         public abstract void Construct();
         public abstract bool Value { get; }

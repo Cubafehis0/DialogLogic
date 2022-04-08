@@ -12,7 +12,7 @@ namespace SemanticTree.Condition
         NE,
     }
 
-    public class CountRequirement : ConditionNode
+    public class CountRequirement : SingleCondition
     {
 
         [XmlElement(ElementName = "compare_type")]
@@ -22,7 +22,7 @@ namespace SemanticTree.Condition
         public int target;
 
         [XmlElement(ElementName = "requirements")]
-        public ConditionList conditions;
+        public ComplexCondition conditions;
         public override bool Value
         {
             get

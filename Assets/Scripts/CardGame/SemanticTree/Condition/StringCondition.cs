@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.Condition
 {
-    public class StringCondition : ConditionNode
+    public class StringCondition : SingleCondition
     {
         [XmlElement]
         public string ConditionExpression;

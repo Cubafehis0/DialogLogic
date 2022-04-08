@@ -1,5 +1,6 @@
 ﻿using ExpressionAnalyser;
 using SemanticTree;
+using SemanticTree.Condition;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ public class CostModifier
     public string Name;
 
     [XmlElement(ElementName = "condition")]
-    public ConditionNode Condition;
+    public SingleCondition Condition;
 
     [XmlElement(ElementName = "factor")]
     public string NumExpression;

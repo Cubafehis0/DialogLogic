@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.Condition
 {
-    public class AllNode : ConditionList
+    public class AllNode : ComplexCondition
     {
         public override bool Value
         {
