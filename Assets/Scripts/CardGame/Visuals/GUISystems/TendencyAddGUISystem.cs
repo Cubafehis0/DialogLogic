@@ -79,7 +79,7 @@ public class TendencyAddGUISystem : ForegoundGUISystem
             case PersonalityType.Strong:
                 Personality modifier = new Personality();
                 modifier[addon.Value] = 1;
-                CardGameManager.Instance.player.Player.PlayerInfo.Personality += modifier;
+                CardGameManager.Instance.playerState.Player.PlayerInfo.Personality += modifier;
                 num--;
                 break;
             default:

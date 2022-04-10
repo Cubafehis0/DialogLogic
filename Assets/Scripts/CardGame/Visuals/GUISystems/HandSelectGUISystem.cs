@@ -89,7 +89,7 @@ public class HandSelectGUISystem : ForegoundGUISystem
 
             gameObject.SetActive(false);
             DragHandPileObject.instance.TakeoverAllCard();
-            Context.PushPlayerContext(CardGameManager.Instance.player);
+            Context.PushPlayerContext(CardGameManager.Instance.playerState);
             //ÓÐÈ±ÏÝ
             Context.PushPileContext(cardSelected);
             foreach(Card card in cardSelected)

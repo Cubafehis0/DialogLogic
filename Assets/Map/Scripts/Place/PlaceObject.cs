@@ -5,5 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlaceObject : MonoBehaviour
 {
-    public Place placeIncident = null;
+    public Place place = null;
+
+    private void OnMouseUpAsButton()
+    {
+        Debug.Log("click");
+    }
 }

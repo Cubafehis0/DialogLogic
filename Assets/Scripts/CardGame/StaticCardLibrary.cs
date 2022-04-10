@@ -23,6 +23,31 @@ public class StaticCardLibrary : MonoBehaviour
         else Destroy(this);
     }
 
+    public void Construct(List<Common> commons)
+    {
+        foreach (Common common in commons)
+        {
+            DeclareCard(common.CardInfos);
+        }
+        foreach (Common common in commons)
+        {
+            DefineCard(common.CardInfos);
+        }
+    }
+
+    public void DeclareCard(List<CardInfo> cardInfos)
+    {
+        foreach (CardInfo cardInfo in cardInfos)
+        {
+            DeclareCard(cardInfo);
+        }
+    }
+
+    public void DeclareCard(CardInfo cardInfo)
+    {
+        DeclareCard(cardInfo.Name);
+    }
+
     public void DeclareCard(string name)
     {
         if (cardDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义卡牌" + name);
@@ -32,6 +57,21 @@ public class StaticCardLibrary : MonoBehaviour
         newCard.gameObject.SetActive(false);
         newCard.gameObject.name = name;
         cardDictionary.Add(name, newCard);
+    }
+
+    public void DefineCard(List<CardInfo> cardInfos)
+    {
+        foreach(CardInfo cardInfo in cardInfos)
+        {
+            DefineCard(cardInfo);
+        }
+    }
+    public void DefineCard(CardInfo info)
+    {
+        string name = info.Name;
+        if (!cardDictionary.ContainsKey(name)) DeclareCard(name);
+        cardDictionary[name].Construct(info);
+        info.Construct();
     }
 
     public Card GetByName(string name)
@@ -52,11 +92,4 @@ public class StaticCardLibrary : MonoBehaviour
         return gameObject.GetComponent<CardObject>();
     }
 
-    public void DefineCard(CardInfo info)
-    {
-        string name = info.Name;
-        if (!cardDictionary.ContainsKey(name)) DeclareCard(name);
-        cardDictionary[name].Construct(info);
-        info.Construct();
-    }
 }

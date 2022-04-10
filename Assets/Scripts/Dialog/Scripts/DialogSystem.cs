@@ -60,7 +60,6 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
 
     public void MoveNext()
-        
     {
         
         if (CardGameManager.Instance.isPlayerTurn) return;
@@ -82,6 +81,14 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         else if (inkStory.NextState == InkState.Finish)
         {
 
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //MoveNext();
         }
     }
 

@@ -9,6 +9,9 @@ public static class StaticStatusLibrary
     private static Dictionary<string, Status> statusDictionary = new Dictionary<string, Status>();
 
     private static int anonymousCnt;
+
+
+
     public static Status GetByName(string name)
     {
         if (!statusDictionary.ContainsKey(name))

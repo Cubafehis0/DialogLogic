@@ -23,9 +23,10 @@ public class Place
 
     public void Enter()
     {
-        SceneManager.LoadScene(name);
+        SceneManager.LoadScene("ControllerSampleScene");
         //加载事件未完成
         var incident = IncidentTool.Pickup(incidents);
+        GameManager.Instance.currentStory = incident.incidentName;
     }
 
 

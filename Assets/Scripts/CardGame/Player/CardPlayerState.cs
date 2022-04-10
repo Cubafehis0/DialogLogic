@@ -8,12 +8,11 @@ using System.Linq;
 
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 {
-    [SerializeField]
-    private Player player = null;
+    
     [SerializeField]
     private ChooseGUISystem chooseGUISystem = null;
     [SerializeField]
-    private CardController cardManager = null;
+    private CardController cardController = null;
     [SerializeField]
     private StatusManager statusManager = null;
 
@@ -30,13 +29,15 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 
     public ModifierGroup Modifiers = new ModifierGroup();
 
+    public Player Player { get; private set; }
+
     public ChooseGUISystem ChooseGUISystem { get => chooseGUISystem; }
 
     public Personality FinalPersonality
     {
         get
         {
-            var res = player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
+            var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
             return res;
         }
     }
@@ -50,42 +51,48 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     }
     public int Energy
     {
-        get => player.PlayerInfo.Energy;
+        get => Player.PlayerInfo.Energy;
         set
         {
-            player.PlayerInfo.Energy = value;
+            Player.PlayerInfo.Energy = value;
             OnEnergyChange.Invoke();
         }
     }
 
-    public int Pressure { get => player.PlayerInfo.Pressure; set => player.PlayerInfo.Pressure = value; }
+    public int Pressure { get => Player.PlayerInfo.Pressure; set => Player.PlayerInfo.Pressure = value; }
 
     public StatusManager StatusManager => statusManager;
-    public int DrawNum { get => player.PlayerInfo.DrawNum; set => player.PlayerInfo.DrawNum = value; }
+    public int DrawNum { get => Player.PlayerInfo.DrawNum; set => Player.PlayerInfo.DrawNum = value; }
 
     public UnityEvent OnValueChange => onPersonalityChange;
-    public Player Player { get => player; }
 
-    public IReadonlyPile<Card> DiscardPile => ((ICardController)cardManager).DiscardPile;
+    public IReadonlyPile<Card> DiscardPile => ((ICardController)cardController).DiscardPile;
 
-    public IReadonlyPile<Card> DrawPile => ((ICardController)cardManager).DrawPile;
+    public IReadonlyPile<Card> DrawPile => ((ICardController)cardController).DrawPile;
 
-    public IReadonlyPile<Card> Hand => ((ICardController)cardManager).Hand;
+    public IReadonlyPile<Card> Hand => ((ICardController)cardController).Hand;
 
-    public bool IsHandFull => ((ICardController)cardManager).IsHandFull;
+    public bool IsHandFull => ((ICardController)cardController).IsHandFull;
 
-    public bool DrawBan { get => ((ICardController)cardManager).DrawBan; set => ((ICardController)cardManager).DrawBan = value; }
+    public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
+
+    public void Init(Player player)
+    {
+        Debug.Log("玩家初始化");
+        Player = player;
+        cardController.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
+    }
 
     public void AddModifier(Modifier script)
     {
-        if (script.OnPlayCard != null && cardManager) cardManager.OnPlayCard.AddListener(script.OnPlayCard.Execute);
+        if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnStartTurn.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);
     }
 
     public void RemoveModifier(Modifier script)
     {
-        if (script.OnPlayCard != null && cardManager) cardManager.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
+        if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnStartTurn.RemoveListener(script.OnTurnStart.Execute);
         Modifiers.Remove(script);
     }
@@ -125,22 +132,17 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
         Debug.Log("我的回合，抽卡！！！");
         OnStartTurn.Invoke();
         Energy = 4;
-        cardManager.Draw((uint)player.PlayerInfo.DrawNum);
+        cardController.Draw((uint)Player.PlayerInfo.DrawNum);
     }
 
     public void EndTurn()
     {
         Debug.Log("回合结束");
         OnEndTurn.Invoke();
-        onPersonalityChange.Invoke();
-        cardManager.ClearTemporaryActivateFlags();
+        cardController.ClearTemporaryActivateFlags();
     }
 
-    public void Init()
-    {
-        Debug.Log("玩家初始化");
-        cardManager.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
-    }
+
 
     public void StateChange(Personality delta, int turn)
     {
@@ -169,7 +171,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 
     private int GetBaseProp(string name)
     {
-        int? pileVar = cardManager.GetPileProp(name);
+        int? pileVar = cardController.GetPileProp(name);
         if (pileVar.HasValue) return pileVar.Value;
         return name switch
         {
@@ -203,57 +205,57 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     #region ICardManager接口
     public void AddCard(PileType pileType, Card card)
     {
-        ((ICardController)cardManager).AddCard(pileType, card);
+        ((ICardController)cardController).AddCard(pileType, card);
     }
 
     public void AddCardSet2DrawPile(List<string> cardset)
     {
-        ((ICardController)cardManager).AddCardSet2DrawPile(cardset);
+        ((ICardController)cardController).AddCardSet2DrawPile(cardset);
     }
 
     public bool CanDraw()
     {
-        return ((ICardController)cardManager).CanDraw();
+        return ((ICardController)cardController).CanDraw();
     }
 
     public void ClearTemporaryActivateFlags()
     {
-        ((ICardController)cardManager).ClearTemporaryActivateFlags();
+        ((ICardController)cardController).ClearTemporaryActivateFlags();
     }
 
     public void Discard2Draw()
     {
-        ((ICardController)cardManager).Discard2Draw();
+        ((ICardController)cardController).Discard2Draw();
     }
 
     public void DiscardAll()
     {
-        ((ICardController)cardManager).DiscardAll();
+        ((ICardController)cardController).DiscardAll();
     }
 
     public void DiscardCard(Card cid)
     {
-        ((ICardController)cardManager).DiscardCard(cid);
+        ((ICardController)cardController).DiscardCard(cid);
     }
 
     public void Draw(uint num)
     {
-        ((ICardController)cardManager).Draw(num);
+        ((ICardController)cardController).Draw(num);
     }
 
     public void Draw2Full()
     {
-        ((ICardController)cardManager).Draw2Full();
+        ((ICardController)cardController).Draw2Full();
     }
 
     public int? GetPileProp(string name)
     {
-        return ((ICardController)cardManager).GetPileProp(name);
+        return ((ICardController)cardController).GetPileProp(name);
     }
 
     public void PlayCard(Card card)
     {
-        ((ICardController)cardManager).PlayCard(card);
+        ((ICardController)cardController).PlayCard(card);
     }
     #endregion
 

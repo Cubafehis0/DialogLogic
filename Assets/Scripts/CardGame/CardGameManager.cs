@@ -10,9 +10,9 @@ public class CardGameManager : MonoBehaviour
     [SerializeField]
     private int turn = 0;
 
-    public CardPlayerState player;
+    public CardPlayerState playerState;
     public CardPlayerState enemy;
-    public bool isPlayerTurn=false;
+    public bool isPlayerTurn = false;
 
 
     private static CardGameManager instance = null;
@@ -21,28 +21,41 @@ public class CardGameManager : MonoBehaviour
         get => instance;
     }
 
+    private void Start()
+    {
+        if (GameManager.Instance.currentStory == null)
+        {
+            Debug.LogError("没有设定当前故事");
+            return;
+        }
+
+
+        turn = 0;
+        DialogSystem.Instance.Open(GetInkStoryAsset(GameManager.Instance.currentStory));
+        playerState.Init(GameManager.Instance.localPlayer);
+    }
+
     public void SetGameConfig(GameConfig config)
     {
-        SetInkStoryAsset(config.StoryName);
-        player.Player.PlayerInfo = config.PlayerInfo;
+        playerState.Player.PlayerInfo = config.PlayerInfo;
         //enemy.Player.PlayerInfo.Personality = config.enemyPersonality;
     }
 
-    private void SetInkStoryAsset(string name)
+    private TextAsset GetInkStoryAsset(string name)
     {
         string InkStoryPath = Path.Combine(Application.streamingAssetsPath, "InkStories");
         if (!Directory.Exists(InkStoryPath))
         {
             Debug.LogError("Asset目录下不存在InkStory文件");
-            return;
+            return null;
         }
         string[] filePath = Directory.GetFiles(InkStoryPath, name + ".json", SearchOption.AllDirectories);
         if (filePath.Length <= 0)
         {
             Debug.LogError($"InkStory目录下不存在名为{name}的文件");
-            return;
+            return null;
         }
-        DialogSystem.Instance.Open(new TextAsset(File.ReadAllText(filePath[0])));
+        return new TextAsset(File.ReadAllText(filePath[0]));
     }
 
 
@@ -52,7 +65,7 @@ public class CardGameManager : MonoBehaviour
     {
         Card ret = Instantiate(prefab.gameObject).GetComponent<Card>();
         ret.Construct(prefab);
-        ret.player = player;
+        ret.player = playerState;
         return ret;
     }
 
@@ -69,28 +82,19 @@ public class CardGameManager : MonoBehaviour
 
     public void SlotSelectCallback(ChoiceSlot slot)
     {
-        if (player.CanChoose(slot))
+        if (playerState.CanChoose(slot))
         {
             isPlayerTurn = false;
-            DialogSystem.Instance.ForceSelectChoice(slot.Choice, player.JudgeChooseSuccess(slot));
-        
-        }
-    }
+            DialogSystem.Instance.ForceSelectChoice(slot.Choice, playerState.JudgeChooseSuccess(slot));
 
-    /// <summary>
-    /// 开启一局游戏
-    /// </summary>
-    public void StartGame()
-    {
-        turn = 0;
-        player.Init();
+        }
     }
     /// <summary>
     /// 结束当前回合
     /// </summary>
     public void EndTurn()
     {
-        player.EndTurn();
+        playerState.EndTurn();
     }
 
     /// <summary>
@@ -100,7 +104,7 @@ public class CardGameManager : MonoBehaviour
     {
         turn++;
         isPlayerTurn = true;
-        player.StartTurn();
+        playerState.StartTurn();
 
     }
 }

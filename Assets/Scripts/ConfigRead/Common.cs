@@ -11,16 +11,4 @@ public class Common
     public List<CardInfo> CardInfos;
     [XmlElement(ElementName = "define_status")]
     public List<Status> Statuss;
-    
-    public void Declare()
-    {
-        CardInfos?.ForEach(x => StaticCardLibrary.Instance.DeclareCard(x.Name));
-        Statuss?.ForEach(x => StaticStatusLibrary.DeclareStatus(x.Name,x));
-    }
-
-    public void Define()
-    {
-        CardInfos?.ForEach(x => StaticCardLibrary.Instance.DefineCard(x));
-        Statuss?.ForEach(x => x.Construct());
-    }
 }
