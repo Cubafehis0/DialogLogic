@@ -19,8 +19,15 @@ public class StaticCardLibrary : MonoBehaviour
     }
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(this);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Construct(List<Common> commons)

@@ -61,7 +61,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
     public void MoveNext()
     {
-        
+
         if (CardGameManager.Instance.isPlayerTurn) return;
         if (inkStory.NextState == InkState.Content)
         {
@@ -69,7 +69,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
             speakSystem.Speak(content.richText, content.speaker);
             //DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
         }
-        else if(inkStory.NextState == InkState.Choice)
+        else if (inkStory.NextState == InkState.Choice)
         {
             List<Choice> choices = inkStory.CurrentChoices();
             if (choices != null && choices.Count != 0)
@@ -83,13 +83,4 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
         }
     }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //MoveNext();
-        }
-    }
-
 }

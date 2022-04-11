@@ -1,27 +1,26 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ConditionGUISystem : ForegoundGUISystem
 {
-    public int? nerfNum = null;
+    [SerializeField]
+    private int nerfNum = 0;
+    [SerializeField]
+    private Text title;
 
     public override void Open(object msg)
     {
         base.Open(msg);
         if (!(msg is int nerfNum)) return;
         this.nerfNum = nerfNum;
+        title.text = string.Format("选择1个已揭示条件判定-{0}", nerfNum);
     }
 
     public override void Close()
     {
         base.Close();
-        nerfNum = null;
-    }
-
-    private void Awake()
-    {
-        enabled = false;
     }
 
     private void Update()
@@ -35,7 +34,7 @@ public class ConditionGUISystem : ForegoundGUISystem
             ChoiceSlotObject p = c.GetComponentInParent<ChoiceSlotObject>();
             if (p == null) return;
             Personality modifier = new Personality();
-            modifier[c.Type] = nerfNum.Value;
+            modifier[c.Type] = nerfNum;
             p.ChoiceSlot.Choice.JudgeValue += modifier;
             Close();
         }

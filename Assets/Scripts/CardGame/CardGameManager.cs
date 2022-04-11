@@ -86,7 +86,6 @@ public class CardGameManager : MonoBehaviour
         {
             isPlayerTurn = false;
             DialogSystem.Instance.ForceSelectChoice(slot.Choice, playerState.JudgeChooseSuccess(slot));
-
         }
     }
     /// <summary>

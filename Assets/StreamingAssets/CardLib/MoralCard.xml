@@ -4,8 +4,8 @@
     <define_card>
         <name>morning_paper</name>
         <title>早报</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>持有时道德增加1；打出后道德增加3</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -27,8 +27,8 @@
     <define_card>
         <name>morning_lecture</name>
         <title>晨间讲座</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>持有时道德增加1；打出后向手牌中增加3张“说教“卡牌</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -51,8 +51,8 @@
     <define_card>
         <name>preach</name>
         <title>说教</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>打出后在逻辑、道德、迂回中选择一个增加1</effect_desc>
         <meme></meme>
         <cost>0</cost>
         <category>moral</category>
@@ -70,7 +70,7 @@
     <define_card>
         <name>speech_book</name>
         <title>演讲册子</title>
-        <condition_desc></condition_desc>
+        <condition_desc>持有时道德增加1；打出后，每一回合开始时获得一张说教牌</condition_desc>
         <effect_desc></effect_desc>
         <meme></meme>
         <cost>1</cost>
@@ -91,8 +91,8 @@
     <define_card>
         <name>advanced_deeds</name>
         <title>先进事迹</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>道德大于5</condition_desc>
+        <effect_desc>持有时道德增加5；打出后道德增加2</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -117,8 +117,8 @@
     <define_card>
         <name>echical_philosophy</name>
         <title>伦理哲学</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>本回合打出过5张说教牌</condition_desc>
+        <effect_desc>持有时道德增加3；抽取时向手牌中增加2张说教卡；打出后下一次说服判定增加[打出过的说教牌数量除以2取整]的判定值</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -149,8 +149,8 @@
     <define_card>
         <name>reconstruction</name>
         <title>重建</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>持有时道德增加1；打出后丢弃当前所有手牌，向手牌中加入弃牌数量的“说教”</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -176,8 +176,8 @@
     <define_card>
         <name>draw_near</name>
         <title>逼近</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>本回合打出过3张说教牌</condition_desc>
+        <effect_desc>持有时道德增加2；打出后，[持续]每打出一张说教牌，增加1点外感</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>

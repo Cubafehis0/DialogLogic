@@ -5,7 +5,7 @@
         <name>debase</name>
         <title>贬低</title>
         <condition_desc>当对方动摇时</condition_desc>
-        <effect_desc>选择一个已揭示判定-4</effect_desc>
+        <effect_desc>打出后选择一个已揭示判定-4</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -23,7 +23,7 @@
         <name>malicious_question</name>
         <title>恶意质疑</title>
         <condition_desc>有欺骗项，道德大于0</condition_desc>
-        <effect_desc>给予2层动摇；锁定威胁选项3回合；无忌+5；强势+5</effect_desc>
+        <effect_desc>打出后给予2层动摇；锁定威胁选项3回合；无忌+5；强势+5</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -55,7 +55,7 @@
         <name>shepherd</name>
         <title>牧羊</title>
         <condition_desc>对方处于信任</condition_desc>
-        <effect_desc>持有无忌+6；无忌+5；下一次说服+3；锁定说服3回合；</effect_desc>
+        <effect_desc>持有时无忌+6；打出后无忌+5，下一次说服判定+3，锁定说服3回合。</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -89,8 +89,8 @@
     <define_card>
         <name>door_in_the_face</name>
         <title>以退为进</title>
-        <condition_desc></condition_desc>
-        <effect_desc>动摇1回合；抽牌3</effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>打出后动摇1回合；抽牌3</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -108,8 +108,8 @@
     <define_card>
         <name>bad_blood</name>
         <title>恶感</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>打出后使自己动摇2回合，随机激活1张手牌</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -133,8 +133,8 @@
     <define_card>
         <name>baseless_denouncement</name>
         <title>无端指责</title>
-        <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc>无</condition_desc>
+        <effect_desc>持有时无忌+3；打出后使对方恐慌1回合</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -156,7 +156,7 @@
         <name>brainwash</name>
         <title>洗脑</title>
         <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <effect_desc>打出时对方进入动摇2回合</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>
@@ -175,7 +175,7 @@
     <define_card>
         <name>evil_consequence</name>
         <title>恶酿</title>
-        <condition_desc></condition_desc>
+        <condition_desc>持有时对方每获得一次负面状态，压力减小10</condition_desc>
         <effect_desc></effect_desc>
         <meme></meme>
         <cost>1</cost>
@@ -189,7 +189,7 @@
         <name>word_intro</name>
         <title>话引子</title>
         <condition_desc></condition_desc>
-        <effect_desc></effect_desc>
+        <effect_desc>持有时无忌增加5；打出后选择一个选项并随机揭示其中的1个判定条件</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>immoral</category>

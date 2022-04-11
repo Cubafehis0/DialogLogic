@@ -28,7 +28,6 @@ public class MapObject : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             var o = EventSystem.current.currentSelectedGameObject;
-            Debug.Log(o);
             if (o == null) return;
             var c = o.GetComponent<PlaceObject>();
             if (c == null) return;

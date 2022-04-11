@@ -7,7 +7,7 @@ public class ForegoundGUISystem :MonoBehaviour, IGUISystem
 
     private void Awake()
     {
-        enabled = false;
+        gameObject.SetActive(false);
     }
 
     public virtual void Open(object msg)
@@ -15,7 +15,7 @@ public class ForegoundGUISystem :MonoBehaviour, IGUISystem
         if (current == null)
         {
             current = this;
-            enabled = true;
+            gameObject.SetActive(true);
         }
         else
         {

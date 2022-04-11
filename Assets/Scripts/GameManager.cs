@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
-        //这里应该是loadScene
         LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));
     }

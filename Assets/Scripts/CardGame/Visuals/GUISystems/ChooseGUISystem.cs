@@ -99,8 +99,20 @@ public class ChooseGUISystem : MonoBehaviour,IGUISystem
         UpdateVisuals();
     }
 
+    public void DelayActivate()
+    {
+        StartCoroutine(DelayAct());
+    }
+
+    private IEnumerator DelayAct()
+    {
+        yield return new WaitForSeconds(0.1f);
+        enabled = true;
+    }
+
     public void SelectChoice()
     {
+        if(!enabled) return;
         GameObject o = EventSystem.current.currentSelectedGameObject;
         if (o == null) return;
         ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();

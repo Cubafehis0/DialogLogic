@@ -10,17 +10,17 @@
         <max_health>10</max_health>
         <everry_turn_energy>10</everry_turn_energy>
         <cards>
-            <string>distribution</string>
-            <string>distribution</string>
-            <string>distribution</string>
-            <string>extension</string>
-            <string>extension</string>
-            <string>extension</string>
-            <string>junior_logics</string>
-            <string>junior_logics</string>
-            <string>junior_logics</string>
-            <string>thoughtful</string>
-            <string>sound_out</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
+            <string>conprehend</string>
         </cards>
     </player>
     <enemy>

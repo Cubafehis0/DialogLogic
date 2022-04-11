@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SlotGUIContext
 {
@@ -16,6 +17,10 @@ public class SlotGUISystem : ForegoundGUISystem
 {
     private SlotGUIContext context;
 
+    [SerializeField]
+    private Text title;
+
+
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -24,14 +29,17 @@ public class SlotGUISystem : ForegoundGUISystem
     public override void Open(object msg)
     {
         base.Open(msg);
+        GUISystemManager.Instance.chooseSystem.enabled = false;
         gameObject.SetActive(true);
         if (!(msg is SlotGUIContext context)) return;
         this.context = context;
+        title.text = "选择一个选项";
     }
 
     public override void Close()
     {
         base.Close();
+        GUISystemManager.Instance.chooseSystem.DelayActivate();
         gameObject.SetActive(false);
     }
 
@@ -39,13 +47,14 @@ public class SlotGUISystem : ForegoundGUISystem
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var o = EventSystem.current.currentSelectedGameObject;
+            GameObject o = EventSystem.current.currentSelectedGameObject;
             if (o == null) return;
-            ChoiceSlot c = o.GetComponent<ChoiceSlot>();
+            ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();
             if (c == null) return;
-            Context.choiceSlotStack.Push(c);
+            Context.choiceSlotStack.Push(c.ChoiceSlot);
             context.actions?.Execute();
             Context.choiceSlotStack.Pop();
+            Close();
         }
     }
 }
