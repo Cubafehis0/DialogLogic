@@ -16,7 +16,7 @@ public class DiscardPileObject : MonoBehaviour
     {
         player.DiscardPile.OnRemove.AddListener(OnAdd);
     }
-    IEnumerator Discard(Card card)
+    IEnumerator Discard(GameObject card)
     {
         float jumpHeight = Random.Range(1f, 2f);
         float ax = 0f;
@@ -36,7 +36,12 @@ public class DiscardPileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-        card.transform.SetParent(transform, true);
-        StartCoroutine(Discard(card));
+        CardObject c = StaticCardLibrary.Instance.GetCardObject(card);
+        if (c == null)
+        {
+            throw new System.NotImplementedException();
+        }
+        c.transform.SetParent(transform, true);
+        StartCoroutine(Discard(c.gameObject));
     }
 }

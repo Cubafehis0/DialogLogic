@@ -21,8 +21,8 @@ namespace SemanticTree.CardEffects
             for (int i = 0; i < num.Value && !Context.PlayerContext.IsHandFull; i++)
             {
                 //有问题
-                Card newCard = CardGameManager.Instance.GetCardCopy(Context.CardContext);
-                newCard.GetComponent<Image>().SetNativeSize();
+                Card newCard = new Card(Context.CardContext);
+                //newCard.GetComponent<Image>().SetNativeSize();
                 Context.PlayerContext.AddCard(PileType.Hand,newCard);
             }
         }

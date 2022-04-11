@@ -13,7 +13,7 @@ public class SlotGUIContext
     }
 }
 
-public class SlotGUISystem : ForegoundGUISystem
+public class SlotGUISystem : ForegoundGUISystem,IChoiceSlotReciver
 {
     private SlotGUIContext context;
 
@@ -29,7 +29,7 @@ public class SlotGUISystem : ForegoundGUISystem
     public override void Open(object msg)
     {
         base.Open(msg);
-        GUISystemManager.Instance.chooseSystem.enabled = false;
+        GUISystemManager.Instance.BorrowSlots(transform);
         gameObject.SetActive(true);
         if (!(msg is SlotGUIContext context)) return;
         this.context = context;
@@ -39,22 +39,16 @@ public class SlotGUISystem : ForegoundGUISystem
     public override void Close()
     {
         base.Close();
-        GUISystemManager.Instance.chooseSystem.DelayActivate();
+        GUISystemManager.Instance.ReturnSlots();
         gameObject.SetActive(false);
     }
 
-    private void Update()
+    public void ChoiceSlotReciver(object msg)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameObject o = EventSystem.current.currentSelectedGameObject;
-            if (o == null) return;
-            ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();
-            if (c == null) return;
-            Context.choiceSlotStack.Push(c.ChoiceSlot);
-            context.actions?.Execute();
-            Context.choiceSlotStack.Pop();
-            Close();
-        }
+        ChoiceSlot choiceSlot = (ChoiceSlot)msg;
+        Context.choiceSlotStack.Push(choiceSlot);
+        context.actions?.Execute();
+        Context.choiceSlotStack.Pop();
+        Close();
     }
 }

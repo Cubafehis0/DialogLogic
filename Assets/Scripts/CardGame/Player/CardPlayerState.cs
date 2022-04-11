@@ -27,7 +27,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
 
-    public ModifierGroup Modifiers = new ModifierGroup();
+    private ModifierGroup modifiers = new ModifierGroup();
 
     public Player Player { get; private set; }
 
@@ -75,6 +75,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     public bool IsHandFull => ((ICardController)cardController).IsHandFull;
 
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
+    public ModifierGroup Modifiers { get => modifiers; set => modifiers = value; }
 
     public void Init(Player player)
     {
@@ -85,6 +86,11 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 
     public void AddModifier(Modifier script)
     {
+        if (script == null)
+        {
+            Debug.LogError("modifer is null");
+            return;
+        }
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnStartTurn.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);

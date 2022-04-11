@@ -15,8 +15,13 @@ public class DrawPileObject : MonoBehaviour
 
     private void OnAdd(Card newCard)
     {
-        newCard.transform.SetParent(transform, true);
-        newCard.transform.localPosition = Vector3.zero;
-        newCard.gameObject.SetActive(false);
+        CardObject o=StaticCardLibrary.Instance.GetCardObject(newCard);
+        if (o == null) 
+        {
+            throw new System.NotImplementedException();
+        }
+        o.transform.SetParent(transform, true);
+        o.transform.localPosition = Vector3.zero;
+        o.gameObject.SetActive(false);
     }
 }

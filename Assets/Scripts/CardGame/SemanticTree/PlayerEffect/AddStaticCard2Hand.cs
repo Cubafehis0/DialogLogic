@@ -24,8 +24,8 @@ namespace SemanticTree.PlayerEffect
             //feature 如果手牌满了则不会加入
             for (int i = 0; i < b && !Context.PlayerContext.IsHandFull; i++)
             {
-                Card newCard = CardGameManager.Instance.GetCardCopy(prefab);
-                Context.PlayerContext.AddCard(PileType.Hand,newCard);
+                Card newCard = new Card(prefab);
+                Context.PlayerContext.AddCard(PileType.Hand, newCard);
             }
         }
         public override void Construct()

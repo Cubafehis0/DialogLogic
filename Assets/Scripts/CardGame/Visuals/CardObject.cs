@@ -7,11 +7,11 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Card))]//Card未来可能改成非Mono
 [RequireComponent(typeof(Canvas))]
 public class CardObject : MonoBehaviour
 {
-
+    [SerializeField]
+    private Card card = null;
     [SerializeField]
     private Text titleText;
     [SerializeField]
@@ -20,14 +20,11 @@ public class CardObject : MonoBehaviour
     private Text eftDescText;
     [SerializeField]
     private Text memeText;
-
-    private Card card = null;
     private Canvas cardUICanvas = null;
     private int orderInLayer = 0;
 
     private void Awake()
     {
-        card = GetComponent<Card>();
         cardUICanvas = GetComponent<Canvas>();
     }
 
@@ -42,10 +39,11 @@ public class CardObject : MonoBehaviour
         }
     }
 
-    public Card Card { get => card; }
+    public Card Card { get => card; set => card = value; }
 
     public void UpdateVisuals()
     {
+        if (card == null) return;
         if (titleText) titleText.text = card.info.Title;
         if (cdtDescText) cdtDescText.text = card.info.ConditionDesc;
         if (eftDescText) eftDescText.text = card.info.EffectDesc;
@@ -55,10 +53,5 @@ public class CardObject : MonoBehaviour
     private void OnEnable()
     {
         UpdateVisuals();
-    }
-
-    public void GetCardComponent()
-    {
-        card = GetComponent<Card>();
     }
 }

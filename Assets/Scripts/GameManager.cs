@@ -87,9 +87,9 @@ public class GameManager : MonoBehaviour
                 StaticStatusLibrary.DeclareStatus(status.Name, status);
             }
         }
+        StaticCardLibrary.Instance.Construct();
         foreach (Common common in commons)
         {
-            StaticCardLibrary.Instance.DefineCard(common.CardInfos);
             foreach (Status status in common.Statuss)
             {
                 status.Construct();

@@ -47,6 +47,25 @@ public class CardInfo
     [XmlElement(ElementName = "on_play_card")]
     public EffectList Effects;
 
+    public CardInfo() { }
+
+    public CardInfo(CardInfo origin)
+    {
+        Name = origin.Name;
+        Title = origin.Title;
+        ConditionDesc = origin.ConditionDesc;
+        EffectDesc = origin.EffectDesc;
+        Meme = origin.Meme;
+        BaseCost    =origin.BaseCost;
+        Exhaust=origin.Exhaust;
+        category = origin.category;
+        //以下是浅拷贝
+        handModifier = origin.handModifier;
+        Requirements = origin.Requirements;
+        DrawEffects = origin.DrawEffects;
+        Effects = origin.Effects;
+    }
+
     public void Construct()
     {
         Requirements?.Construct();

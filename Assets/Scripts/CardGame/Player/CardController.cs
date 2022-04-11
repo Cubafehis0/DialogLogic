@@ -47,8 +47,16 @@ public class CardController : MonoBehaviour, ICardController
     private void Awake()
     {
         cardPlayerState = GetComponent<CardPlayerState>();
-        Hand.OnAdd.AddListener(x => cardPlayerState.Modifiers.Add(x.info.handModifier));
-        Hand.OnRemove.AddListener(x => cardPlayerState.Modifiers.Remove(x.info.handModifier));
+        Hand.OnAdd.AddListener(x =>
+        {
+            if (x.info.handModifier != null)
+                cardPlayerState.Modifiers.Add(x.info.handModifier);
+        });
+        Hand.OnRemove.AddListener(x =>
+        {
+            if (x.info.handModifier != null)
+                cardPlayerState.Modifiers.Remove(x.info.handModifier);
+        });
     }
 
     public bool CanDraw()
@@ -186,7 +194,8 @@ public class CardController : MonoBehaviour, ICardController
 
         foreach (string name in cardset)
         {
-            Card newCard = CardGameManager.Instance.GetCardCopy(StaticCardLibrary.Instance.GetByName(name));
+            Card newCard = StaticCardLibrary.Instance.GetByName(name);
+            StaticCardLibrary.Instance.GetNewCardObject(newCard);
             drawPile.Add(newCard);
         }
         drawPile.Shuffle();
@@ -210,13 +219,13 @@ public class CardController : MonoBehaviour, ICardController
 
     public int? GetPileProp(string name)
     {
-            return name switch
-            {
-                "hand_count" => Hand.Count,
-                "draw_count" => DrawPile.Count,
-                "discard_count" => DiscardPile.Count,
-                _ => null
-            };
+        return name switch
+        {
+            "hand_count" => Hand.Count,
+            "draw_count" => DrawPile.Count,
+            "discard_count" => DiscardPile.Count,
+            _ => null
+        };
     }
 
 }

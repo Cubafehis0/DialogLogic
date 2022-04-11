@@ -60,15 +60,6 @@ public class CardGameManager : MonoBehaviour
 
 
     public int Turn { get => turn; }
-
-    public Card GetCardCopy(Card prefab)
-    {
-        Card ret = Instantiate(prefab.gameObject).GetComponent<Card>();
-        ret.Construct(prefab);
-        ret.player = playerState;
-        return ret;
-    }
-
     public void ReturnCardObject(CardObject cardObject)
     {
         Destroy(cardObject.gameObject);
@@ -93,6 +84,7 @@ public class CardGameManager : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
+        isPlayerTurn = false;
         playerState.EndTurn();
     }
 

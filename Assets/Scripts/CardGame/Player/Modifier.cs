@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 public class Modifier
 {
     [XmlElement(ElementName ="personality_linear")]
-    public Personality PersonalityLinear { get; set; }
+    public Personality PersonalityLinear { get; set; }=new Personality();
 
     [XmlElement(ElementName = "personality_factor")]
     public float[] PersonalityMul { get; set; }

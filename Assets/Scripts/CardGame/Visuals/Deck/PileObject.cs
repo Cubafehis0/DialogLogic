@@ -25,10 +25,11 @@ public class PileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-        card.transform.SetParent(transform, true);
-        CardObject cardObject = card.GetComponent<CardObject>();
+       
+        CardObject cardObject = StaticCardLibrary.Instance.GetCardObject(card);
         if (cardObject)
         {
+            cardObject.transform.SetParent(transform, true);
             //int index = CardPlayerState.Instance.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
             //cardObject.transform.SetSiblingIndex(index);

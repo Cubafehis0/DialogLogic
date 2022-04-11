@@ -14,7 +14,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
     [SerializeField]
     private Text title;
     [SerializeField]
-    private List<Card> cardObjects;
+    private List<CardObject> cardObjects;
 
     public override void Open(object msg)
     {
@@ -27,7 +27,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
             cardObjects[i].gameObject.SetActive(i < context.cards.Count);
             if(i < context.cards.Count)
             {
-                cardObjects[i].Construct(context.cards[i]);
+                cardObjects[i].Card=context.cards[i];
             }
         }
     }
@@ -36,11 +36,11 @@ public class GUIDiscoverCard : ForegoundGUISystem
     {
         GameObject o = EventSystem.current.currentSelectedGameObject;
         if (o == null) return;
-        Card c = o.GetComponentInParent<Card>();
+        CardObject c = o.GetComponentInParent<CardObject>();
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
-            GameManager.Instance.localPlayer.PlayerInfo.CardSet.Add(c.info.Name);
+            GameManager.Instance.localPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
         }
     }
 }

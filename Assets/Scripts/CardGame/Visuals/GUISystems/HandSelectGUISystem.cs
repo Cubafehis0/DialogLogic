@@ -67,10 +67,10 @@ public class HandSelectGUISystem : ForegoundGUISystem
 
     public void SelectCard(BaseEventData eventData)
     {
-        Card card = ((PointerEventData)eventData).pointerClick.GetComponent<Card>();
+        CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (cardSelected.Count == maxOccurs) return;
-        cardCandidate.Remove(card);
-        cardSelected.Add(card);
+        cardCandidate.Remove(c.Card);
+        cardSelected.Add(c.Card);
         UpdateVisuals();
     }
 

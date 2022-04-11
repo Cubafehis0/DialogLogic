@@ -61,7 +61,8 @@ public class PileSelectGUISystem : ForegoundGUISystem
     }
     public void ClickCard(BaseEventData eventData)
     {
-        var card = ((PointerEventData)eventData).pointerClick.GetComponent<Card>();
+        CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
+        Card card = c.Card;
         if (cardSelected.Contains(card))
         {
             cardSelected.Remove(card);

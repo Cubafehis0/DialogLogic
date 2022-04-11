@@ -55,7 +55,6 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         //DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
         MoveNext();
-
     }
 
 

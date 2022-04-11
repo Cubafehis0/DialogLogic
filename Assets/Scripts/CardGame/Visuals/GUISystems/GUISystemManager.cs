@@ -8,7 +8,6 @@ public class GUISystemManager : MonoBehaviour
 {
     [SerializeField]
     public ChooseGUISystem chooseSystem;
-
     [SerializeField]
     private ForegoundGUISystem tendencySelectGUISystem;
     [SerializeField]
@@ -19,6 +18,8 @@ public class GUISystemManager : MonoBehaviour
     private ForegoundGUISystem pileSelectGUISystem;
     [SerializeField]
     private ForegoundGUISystem slotGUISystem;
+    [SerializeField]
+    private GUIDialogChoose dialogChooseGUISystem;
 
     private static GUISystemManager instance = null;
     public static GUISystemManager Instance { get => instance; }
@@ -51,6 +52,16 @@ public class GUISystemManager : MonoBehaviour
     public void OpenTendencyChoosePanel(HashSet<PersonalityType> types, int value)
     {
         tendencySelectGUISystem.Open(new TendencyAddGUIContext(types, value));
+    }
+
+    public void BorrowSlots(Transform borrower)
+    {
+        chooseSystem.transform.SetParent(borrower);
+    }
+
+    public void ReturnSlots()
+    {
+        chooseSystem.transform.SetParent(dialogChooseGUISystem.transform);
     }
 
 }

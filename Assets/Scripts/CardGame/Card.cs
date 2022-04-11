@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using ExpressionAnalyser;
 using CardGame.Recorder;
 
-public class Card : MonoBehaviour
+public class Card
 {
 
     public CardPlayerState player;
@@ -56,6 +56,33 @@ public class Card : MonoBehaviour
             permanentActivate = value;
             if (value == true) CardRecorder.Instance.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
         }
+    }
+
+    public static int CardCount;
+
+    public Card() 
+    {
+        CardCount++;
+        Debug.Log("当前Card数量:" + CardCount);
+    }
+
+    public Card(CardInfo info):this()
+    {
+        this.info = new CardInfo(info);
+        temporaryActivate = false;
+        permanentActivate = false;
+    }
+
+    public Card(Card origin):this()
+    {
+        this.info = new CardInfo(origin.info);
+        temporaryActivate = origin.temporaryActivate;
+        permanentActivate = origin.permanentActivate;
+    }
+
+    public void Construct()
+    {
+        info.Construct();
     }
 
     public void Construct(Card prefab)

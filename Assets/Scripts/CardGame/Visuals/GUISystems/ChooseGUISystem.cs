@@ -6,6 +6,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
+public interface IChoiceSlotReciver
+{
+    void ChoiceSlotReciver(object msg);
+}
+
 public class ChooseGUISystem : MonoBehaviour,IGUISystem
 {
     [SerializeField]
@@ -99,28 +104,13 @@ public class ChooseGUISystem : MonoBehaviour,IGUISystem
         UpdateVisuals();
     }
 
-    public void DelayActivate()
-    {
-        StartCoroutine(DelayAct());
-    }
-
-    private IEnumerator DelayAct()
-    {
-        yield return new WaitForSeconds(0.1f);
-        enabled = true;
-    }
-
     public void SelectChoice()
     {
-        if(!enabled) return;
         GameObject o = EventSystem.current.currentSelectedGameObject;
         if (o == null) return;
         ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();
         if (c == null) return;
         Debug.Log("Select Choice " + c.ChoiceSlot.Choice.Content);
-        if (chooseButtons.Contains(c))
-        {
-            onChoose.Invoke(c.ChoiceSlot);
-        }
+        SendMessageUpwards(nameof(IChoiceSlotReciver.ChoiceSlotReciver), c.ChoiceSlot, SendMessageOptions.RequireReceiver);
     }
 }

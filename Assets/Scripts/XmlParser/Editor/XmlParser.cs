@@ -30,7 +30,7 @@ public class XmlParser
         foreach (var card in cards)
         {
             //cardObject.GetComponent<Card>().Construct(card);
-            cardObject.GetComponent<CardObject>().GetCardComponent();
+            //cardObject.GetComponent<CardObject>().GetCardComponent();
             cardObject.GetComponent<CardObject>().UpdateVisuals();
             string fileName = card.info.Title + ".prefab";
             string filePath = Path.Combine(cardDirPath, fileName);

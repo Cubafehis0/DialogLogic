@@ -8,9 +8,11 @@ using SemanticTree;
 public class StaticCardLibrary : MonoBehaviour
 {
     [SerializeField]
-    private Dictionary<string, Card> cardDictionary = new Dictionary<string, Card>();
+    private Dictionary<string, Card> cardDic = new Dictionary<string, Card>();
     [SerializeField]
-    private Card sampleCard;
+    private Dictionary<Card, CardObject> cardDictionary = new Dictionary<Card, CardObject>();
+    [SerializeField]
+    private CardObject sampleCard;
 
     private static StaticCardLibrary instance = null;
     public static StaticCardLibrary Instance
@@ -30,18 +32,6 @@ public class StaticCardLibrary : MonoBehaviour
         }
     }
 
-    public void Construct(List<Common> commons)
-    {
-        foreach (Common common in commons)
-        {
-            DeclareCard(common.CardInfos);
-        }
-        foreach (Common common in commons)
-        {
-            DefineCard(common.CardInfos);
-        }
-    }
-
     public void DeclareCard(List<CardInfo> cardInfos)
     {
         foreach (CardInfo cardInfo in cardInfos)
@@ -52,51 +42,38 @@ public class StaticCardLibrary : MonoBehaviour
 
     public void DeclareCard(CardInfo cardInfo)
     {
-        DeclareCard(cardInfo.Name);
+        if (cardDic.ContainsKey(cardInfo.Name)) throw new SemanticException("不能重复定义卡牌" + name);
+        cardDic[cardInfo.Name] = new Card(cardInfo);
     }
 
-    public void DeclareCard(string name)
+    public void Construct()
     {
-        if (cardDictionary.ContainsKey(name)) throw new SemanticException("不能重复定义卡牌" + name);
-        //else Debug.Log("加载卡牌:" + name);
-        Card newCard = Instantiate(sampleCard);
-        newCard.transform.SetParent(transform, false);
-        newCard.gameObject.SetActive(false);
-        newCard.gameObject.name = name;
-        cardDictionary.Add(name, newCard);
-    }
-
-    public void DefineCard(List<CardInfo> cardInfos)
-    {
-        foreach(CardInfo cardInfo in cardInfos)
+        foreach (Card card in cardDic.Values)
         {
-            DefineCard(cardInfo);
+            card.Construct();
         }
-    }
-    public void DefineCard(CardInfo info)
-    {
-        string name = info.Name;
-        if (!cardDictionary.ContainsKey(name)) DeclareCard(name);
-        cardDictionary[name].Construct(info);
-        info.Construct();
     }
 
     public Card GetByName(string name)
     {
-        if (!cardDictionary.ContainsKey(name))
+        if (cardDic.ContainsKey(name))
         {
-            Debug.LogError(string.Format("不存在名为{0}的卡牌", name));
-            return null;
+            return new Card(cardDic[name]);
         }
-        return cardDictionary[name];
+        return null;
     }
 
     public CardObject GetCardObject(Card card)
     {
-        GameObject gameObject = Instantiate(card.gameObject);
-        gameObject.transform.localScale = Vector3.one;
-        gameObject.transform.rotation = Quaternion.identity;
-        return gameObject.GetComponent<CardObject>();
+        return cardDictionary[card];
+    }
+
+    public CardObject GetNewCardObject(Card card)
+    {
+        cardDictionary[card] = Instantiate(sampleCard);
+        cardDictionary[card].Card = card;
+        card.player = CardGameManager.Instance.playerState;
+        return cardDictionary[card];
     }
 
 }
