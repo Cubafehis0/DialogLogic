@@ -84,10 +84,6 @@ public class CardGameManager : MonoBehaviour
 
 
     public int Turn { get => turn; }
-    public void ReturnCardObject(CardObject cardObject)
-    {
-        Destroy(cardObject.gameObject);
-    }
 
     void Awake()
     {

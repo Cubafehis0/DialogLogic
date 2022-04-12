@@ -36,7 +36,7 @@ public class CharacterLabelView : MonoBehaviour
         if (moralText) moralText.text = personality.Moral.ToString();
         if (immoralText) immoralText.text = personality.Immoral.ToString();
         if (roundaboutText) roundaboutText.text = personality.Roundabout.ToString();
-        if (strongText) strongText.text = personality.Roundabout.ToString();
+        if (strongText) strongText.text = personality.Aggressive.ToString();
     }
 
     private void Update()

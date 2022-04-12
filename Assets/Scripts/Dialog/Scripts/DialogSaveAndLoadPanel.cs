@@ -133,6 +133,6 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
             showHistoricalDialog.gameObject.SetActive(true);
             CreateHistricalDialog(path);
         }
-        DialogSystem.Pause();
+        //DialogSystem.Pause();
     }
 }

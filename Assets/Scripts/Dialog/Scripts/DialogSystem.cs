@@ -16,13 +16,9 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     private SpeakSystem speakSystem;
 
     private InkStory inkStory;
-
     public InkState NextState { get => inkStory.NextState; }
 
-    public static void Pause()
-    {
-        Debug.LogWarning("暂停未实现");
-    }
+    public bool ChoiceTrigger { get; set; } = false;
 
     public void Open(TextAsset textAsset)
     {
@@ -37,6 +33,8 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         }
     }
 
+
+
     /// <summary>
     /// 不判断是否可选，强制判定成功/失败
     /// </summary>
@@ -44,21 +42,18 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     /// <param name="success"></param>
     public void ForceSelectChoice(Choice choice, bool success)
     {
-        GUISystemManager.Instance.chooseSystem.Close();
-        //DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
+        ChoiceTrigger = false;
         MoveNext();
+
     }
     public List<Choice> CurrentChoices()
     {
         return inkStory.CurrentChoices();
     }
 
-
-
     public void MoveNext()
     {
-
         if (CardGameManager.Instance.isPlayerTurn) return;
         if (inkStory.NextState == InkState.Content)
         {
@@ -66,17 +61,9 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
             speakSystem.Speak(content.richText, content.speaker);
             //DialogSaveAndLoadPanel.Instance.SaveTextToFile(content);
         }
-        else if (inkStory.NextState == InkState.Choice)
+        else if(inkStory.NextState == InkState.Choice)
         {
-            //List<Choice> choices = inkStory.CurrentChoices();
-            //if (choices != null && choices.Count != 0)
-            //{
-            //    GUISystemManager.Instance.chooseSystem.Open(choices);
-            //}
-        }
-        else if (inkStory.NextState == InkState.Finish)
-        {
-
+            ChoiceTrigger = true;
         }
     }
 }

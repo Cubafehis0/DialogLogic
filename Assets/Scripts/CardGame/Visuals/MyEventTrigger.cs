@@ -34,7 +34,7 @@ public class MyEventTrigger : EventTrigger
     }
     private void Start()
     {
-        //group = transform.parent.GetComponentInParent<EventTriggerGroup>();
+        group = transform.parent.GetComponentInParent<EventTriggerGroup>();
     }
 
     private void OnTransformParentChanged()

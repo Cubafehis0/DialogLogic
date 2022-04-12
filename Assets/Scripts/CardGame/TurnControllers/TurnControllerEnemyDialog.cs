@@ -10,7 +10,7 @@ public class TurnControllerEnemyDialog : TurnController
     {
         get
         {
-            return dialogSystem.NextState != Ink2Unity.InkState.Content;
+            return dialogSystem.ChoiceTrigger;
         }
     }
 

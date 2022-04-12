@@ -65,7 +65,12 @@ public class StaticCardLibrary : MonoBehaviour
 
     public CardObject GetCardObject(Card card)
     {
-        return cardDictionary[card];
+        if (card == null) return null;
+        if (cardDictionary[card] != null)
+        {
+            return cardDictionary[card];
+        }
+        else return GetNewCardObject(card);
     }
 
     public CardObject GetNewCardObject(Card card)
@@ -74,6 +79,26 @@ public class StaticCardLibrary : MonoBehaviour
         cardDictionary[card].Card = card;
         card.player = CardGameManager.Instance.playerState;
         return cardDictionary[card];
+    }
+
+    public Card CopyCard(Card card)
+    {
+        Card newCard= new Card(card);
+        cardDictionary[newCard] = null;
+        return newCard;
+    }
+
+    public void DestroyCard(Card card)
+    {
+        if(cardDictionary[card] != null)
+        {
+            Destroy(cardDictionary[card]);
+            cardDictionary.Remove(card);
+        }
+        else
+        {
+            Debug.LogError("Î´ÖªµÄ¿¨ÅÆ");
+        }
     }
 
 }

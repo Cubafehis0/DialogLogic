@@ -38,18 +38,18 @@ public class Card
         }
     }
     public bool Activated { get => TemporaryActivate || PermanentActivate; }
-    public bool TemporaryActivate 
+    public bool TemporaryActivate
     {
-        get => temporaryActivate; 
-        set 
+        get => temporaryActivate;
+        set
         {
             temporaryActivate = value;
             if (value == true) CardRecorder.Instance.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
         }
     }
 
-    public bool PermanentActivate 
-    { 
+    public bool PermanentActivate
+    {
         get => permanentActivate;
         set
         {
@@ -60,21 +60,23 @@ public class Card
 
     public static int CardCount;
 
-    public Card() 
+    public Card()
     {
         CardCount++;
-        Debug.Log("当前Card数量:" + CardCount);
+
     }
 
-    public Card(CardInfo info):this()
+    public Card(CardInfo info) : this()
     {
+        Debug.Log(string.Format("生成Card类,Title={0},当前Card数量:{1}", info.Title, CardCount));
         this.info = new CardInfo(info);
         temporaryActivate = false;
         permanentActivate = false;
     }
 
-    public Card(Card origin):this()
+    public Card(Card origin) : this()
     {
+        Debug.Log(string.Format("生成Card拷贝,Title={0},当前Card数量:{1}",origin.info.Title, CardCount));
         this.info = new CardInfo(origin.info);
         temporaryActivate = origin.temporaryActivate;
         permanentActivate = origin.permanentActivate;

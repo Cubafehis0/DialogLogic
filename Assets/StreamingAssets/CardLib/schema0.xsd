@@ -156,6 +156,7 @@
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_condition_nerf" type="GUISelectNerfCondition" />
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_choice" type="GUISelectCurrentSlot" />
         <xs:element minOccurs="0" maxOccurs="1" name="all_random_reveal" type="AllChoiceRandomReveal" />
+        <xs:element minOccurs="0" maxOccurs="1" name="choice_remove_condition" type="ChoiceRemoveCondition" />
         <xs:element minOccurs="0" maxOccurs="1" name="choice_reveal" type="ChoiceReveal" />
         <xs:element minOccurs="0" maxOccurs="1" name="choice_reveal_all" type="ChoiceRevealAll" />
         <xs:element minOccurs="0" maxOccurs="1" name="choice_reveal_random" type="ChoiceRevealRandom" />
@@ -217,6 +218,15 @@
       <xs:enumeration value="Strong" />
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="ChoiceRemoveCondition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="include" type="PersonalityType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="ChoiceEffect" abstract="true">
     <xs:complexContent mixed="false">
       <xs:extension base="Effect" />
@@ -528,6 +538,50 @@
       <xs:element minOccurs="1" maxOccurs="1" name="draw_num" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="IncidentInfo" nillable="true" type="IncidentInfo" />
+  <xs:complexType name="IncidentInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="type" type="IncidentType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="story" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="times" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="prerequisite" type="ArrayOfString" />
+      <xs:element minOccurs="1" maxOccurs="1" name="priority" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bonus_start" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bonus_end" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="IncidentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="main" />
+      <xs:enumeration value="branch" />
+      <xs:enumeration value="daily" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="IncidentType" type="IncidentType" />
+  <xs:element name="MapInfo" nillable="true" type="MapInfo" />
+  <xs:complexType name="MapInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="places" type="ArrayOfPlaceInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfPlaceInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="place" nillable="true" type="PlaceInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PlaceInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="incidents" type="ArrayOfIncidentInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfIncidentInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="incident" nillable="true" type="IncidentInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlaceInfo" nillable="true" type="PlaceInfo" />
   <xs:element name="PersonalityType" type="PersonalityType" />
   <xs:element name="Personality" nillable="true" type="Personality" />
   <xs:element name="PlayerInfo" nillable="true" type="PlayerInfo" />
@@ -607,6 +661,7 @@
   <xs:element name="ExecuteCard" nillable="true" type="ExecuteCard" />
   <xs:element name="AllChoiceRandomReveal" nillable="true" type="AllChoiceRandomReveal" />
   <xs:element name="ChoiceEffect" nillable="true" type="ChoiceEffect" />
+  <xs:element name="ChoiceRemoveCondition" nillable="true" type="ChoiceRemoveCondition" />
   <xs:element name="ChoiceReveal" nillable="true" type="ChoiceReveal" />
   <xs:element name="ChoiceRevealAll" nillable="true" type="ChoiceRevealAll" />
   <xs:element name="ChoiceRevealRandom" nillable="true" type="ChoiceRevealRandom" />

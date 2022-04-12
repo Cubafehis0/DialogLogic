@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Canvas))]
 public class CardObject : MonoBehaviour
 {
     [SerializeField]
@@ -20,12 +19,12 @@ public class CardObject : MonoBehaviour
     private Text eftDescText;
     [SerializeField]
     private Text memeText;
-    private Canvas cardUICanvas = null;
+    //private Canvas cardUICanvas = null;
     private int orderInLayer = 0;
 
     private void Awake()
     {
-        cardUICanvas = GetComponent<Canvas>();
+        //cardUICanvas = GetComponent<Canvas>();
     }
 
     public int OrderInLayer
@@ -33,13 +32,21 @@ public class CardObject : MonoBehaviour
         get => orderInLayer;
         set
         {
-            if (cardUICanvas == null) cardUICanvas = GetComponent<Canvas>();
-            cardUICanvas.sortingOrder = value + 10;
+            //if (cardUICanvas == null) cardUICanvas = GetComponent<Canvas>();
+            //cardUICanvas.sortingOrder = value + 10;
             orderInLayer = value;
         }
     }
 
-    public Card Card { get => card; set => card = value; }
+    public Card Card 
+    { 
+        get => card;
+        set
+        {
+            card = value;
+            UpdateVisuals();
+        }
+    }
 
     public void UpdateVisuals()
     {

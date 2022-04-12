@@ -177,7 +177,7 @@
                 <include>Unethic</include>
                 <include>Detour</include>
                 <include>Strong</include>
-                <value>1</value>
+                <value>4</value>
             </GUI_tendency_add>
         </on_play_card>
     </define_card>
@@ -263,9 +263,9 @@
             </current_focus>
             <current_focus>
                 <action>
-                    <choice_reveal>
+                    <choice_remove_condition>
                         <include>Logic</include>
-                    </choice_reveal>
+                    </choice_remove_condition>
                 </action>
             </current_focus>
         </on_play_card>

@@ -51,6 +51,11 @@ public class ChoiceSlot
         RevealMask.Add(type);
     }
 
+    public void RemoveCondition(PersonalityType type)
+    {
+        choice.JudgeValue[type] = 0;
+    }
+
     public void OpenSelectConditionPanel(PersonalityType[] condition)
     {
         throw new System.NotImplementedException();

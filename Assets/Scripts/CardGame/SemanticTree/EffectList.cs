@@ -45,6 +45,7 @@ namespace SemanticTree
 
         [XmlElement(typeof(GUISelectCurrentSlot), ElementName = "GUI_select_choice")]
         [XmlElement(typeof(AllChoiceRandomReveal), ElementName = "all_random_reveal")]
+        [XmlElement(typeof(ChoiceRemoveCondition), ElementName ="choice_remove_condition")]
         [XmlElement(typeof(ChoiceReveal), ElementName = "choice_reveal")]
         [XmlElement(typeof(ChoiceRevealAll), ElementName = "choice_reveal_all")]
         [XmlElement(typeof(ChoiceRevealRandom), ElementName = "choice_reveal_random")]

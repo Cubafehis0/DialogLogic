@@ -22,27 +22,33 @@ namespace Ink2Unity
         void StateChange(Personality delta, int duration);
     }
 
-    public interface IInkStory
-    {
-        InkState NextState { get; }
-        List<Choice> CurrentChoices();
-        Content CurrentContent();
-        Content NextContent();
-        Content SelectChoice(Choice choice, bool success);
-        Content SelectChoice(int index, bool success);
-    }
-
     public interface ISavable
     {
         void LoadStory(string state);
         string NowState2Json();
     }
 
+    public interface IInkStory
+    {
+        InkState NextState { get; }
+
+        void BindPlayerInfo(UnityEvent uevent);
+        List<Choice> CurrentChoices();
+        Content CurrentContent();
+        void Load(SaveInfo saveInfo);
+        void LoadStory(string state);
+        Content NextContent();
+        string NowState2Json();
+        void Save(SaveInfo saveInfo);
+        Content SelectChoice(Choice choice, bool success);
+        Content SelectChoice(int index, bool success);
+    }
+
 
     /// <summary>
     /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
-    public class InkStory : IInkStory,ISavable,ISaveAndLoad
+    public class InkStory : ISavable, ISaveAndLoad, IInkStory
     {
         private static InkStory _nowStory;
         public static InkStory NowStory { get => _nowStory; }
@@ -103,8 +109,8 @@ namespace Ink2Unity
                     ParseValue(rs, name, value);
                 }
             }
-            if(rs.personalityModifier != null)
-            CardGameManager.Instance.playerState.StateChange(rs.personalityModifier, rs.changeTurn);
+            if (rs.personalityModifier != null)
+                CardGameManager.Instance.playerState.StateChange(rs.personalityModifier, rs.changeTurn);
             return rs;
         }
 
@@ -258,7 +264,7 @@ namespace Ink2Unity
         public void Load(SaveInfo saveInfo)
         {
             string state = saveInfo.GetSaveInfo(typeof(InkStory)) as string;
-            if(state==null)
+            if (state == null)
             {
                 Debug.LogError("存档信息有误，无法读取InkStory的存档信息");
                 return;

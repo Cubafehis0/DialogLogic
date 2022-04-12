@@ -40,6 +40,7 @@ public class CardController : MonoBehaviour, ICardController
     public IReadonlyPile<Card> Hand { get => hand; }
     public IReadonlyPile<Card> DrawPile { get => drawPile; }
     public IReadonlyPile<Card> DiscardPile { get => discardPile; }
+    public IReadonlyPile<Card> ExhaustPile { get => exhaustPile; }
 
     public bool DrawBan { get => drawBan; set => drawBan = value; }
     public bool IsHandFull => Hand.Count == cardPlayerState.Player.PlayerInfo.MaxCardNum;
@@ -161,7 +162,7 @@ public class CardController : MonoBehaviour, ICardController
                 hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("¿ÕÐ§¹û");
-                card.info.Effects.Execute();
+                else card.info.Effects.Execute();
                 yield return new WaitUntil(() => ForegoundGUISystem.current == false);
             }
             else

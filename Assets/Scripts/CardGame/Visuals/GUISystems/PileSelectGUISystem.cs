@@ -30,38 +30,28 @@ public class PileSelectGUISystem : ForegoundGUISystem
     private List<Card> cardSelected = new List<Card>();
 
 
-    private void Awake()
-    {
-        gameObject.SetActive(false);
-    }
     public override void Open(object msg)
     {
         base.Open(msg);
         if (!(msg is PileSelectGUIContext context)) return;
-        if (gameObject.activeSelf) return;
-        gameObject.SetActive(true);
         cardObjects.Clear();
         cardSelected.Clear();
-        this.minOccurs = context.num;
-        this.maxOccurs = context.num;
-        this.action = context.action;
+        minOccurs = context.num;
+        maxOccurs = context.num;
+        action = context.action;
         context.cards.ForEach(t =>
         {
-            CardObject item = StaticCardLibrary.Instance.GetCardObject(t);
+            Card tmpCard = StaticCardLibrary.Instance.CopyCard(t);
+            CardObject item = StaticCardLibrary.Instance.GetCardObject(tmpCard);
             item.gameObject.SetActive(true);
             item.transform.SetParent(content, true);
             cardObjects.Add(item);
         });
     }
-
-    public override void Close()
-    {
-        base.Close();
-        gameObject.SetActive(false);
-    }
     public void ClickCard(BaseEventData eventData)
     {
-        CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
+        CardObject c = ((PointerEventData)eventData).pointerClick.GetComponentInParent<CardObject>();
+        if (c == null) return;
         Card card = c.Card;
         if (cardSelected.Contains(card))
         {
@@ -83,7 +73,10 @@ public class PileSelectGUISystem : ForegoundGUISystem
                 action?.Execute();
                 Context.PopCardContext();
             }
-            cardObjects.ForEach(item => CardGameManager.Instance.ReturnCardObject(item));
+            foreach(CardObject cardObject in cardObjects)
+            {
+                StaticCardLibrary.Instance.DestroyCard(cardObject.Card);
+            }
             cardObjects.Clear();
             cardSelected.Clear();
             gameObject.SetActive(false);

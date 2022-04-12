@@ -10,15 +10,7 @@
         <max_health>10</max_health>
         <everry_turn_energy>10</everry_turn_energy>
         <cards>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
-            <string>conprehend</string>
+            <string>guide_thought</string>
             <string>conprehend</string>
             <string>conprehend</string>
         </cards>
