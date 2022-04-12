@@ -9,11 +9,17 @@ public class CardGameManager : MonoBehaviour
 {
     [SerializeField]
     private int turn = 0;
+    [SerializeField]
+    private TurnController playerController;
+    [SerializeField]
+    private TurnController enemyController;
+
 
     public CardPlayerState playerState;
     public CardPlayerState enemy;
     public bool isPlayerTurn = false;
-
+    [SerializeField]
+    public DialogSystem dialogSystem;
 
     private static CardGameManager instance = null;
     public static CardGameManager Instance
@@ -23,17 +29,35 @@ public class CardGameManager : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.currentStory == null)
+        if (GameManager.Instance.CurrentStory == null)
         {
             Debug.LogError("没有设定当前故事");
             return;
         }
-
-
         turn = 0;
-        DialogSystem.Instance.Open(GetInkStoryAsset(GameManager.Instance.currentStory));
-        playerState.Init(GameManager.Instance.localPlayer);
+        dialogSystem.Open(GetInkStoryAsset(GameManager.Instance.CurrentStory));
+        StartCoroutine(TurnCoroutine());
+        playerState.Init(GameManager.Instance.LocalPlayer);
     }
+
+    private IEnumerator TurnCoroutine()
+    {
+        enemyController.StartTurn();
+        for (int i = 0; i < 100; i++)
+        {
+            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
+            turn++;
+            isPlayerTurn = false;
+            enemyController.StartTurn();
+            yield return new WaitUntil(() => enemyController.EndTurnTrigger);
+            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
+            isPlayerTurn = true;
+            playerController.StartTurn();
+            yield return new WaitUntil(() => playerController.EndTurnTrigger);
+        }
+        Debug.LogWarning("回合数达到上限100");
+    }
+
 
     public void SetGameConfig(GameConfig config)
     {
@@ -69,33 +93,5 @@ public class CardGameManager : MonoBehaviour
     {
         instance = this;
         ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
-    }
-
-    public void SlotSelectCallback(ChoiceSlot slot)
-    {
-        if (playerState.CanChoose(slot))
-        {
-            isPlayerTurn = false;
-            DialogSystem.Instance.ForceSelectChoice(slot.Choice, playerState.JudgeChooseSuccess(slot));
-        }
-    }
-    /// <summary>
-    /// 结束当前回合
-    /// </summary>
-    public void EndTurn()
-    {
-        isPlayerTurn = false;
-        playerState.EndTurn();
-    }
-
-    /// <summary>
-    /// 开启一个回合
-    /// </summary>
-    public void StartTurn()
-    {
-        turn++;
-        isPlayerTurn = true;
-        playerState.StartTurn();
-
     }
 }

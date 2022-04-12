@@ -588,6 +588,7 @@ GameObject:
   - component: {fileID: 20855274}
   - component: {fileID: 20855273}
   - component: {fileID: 20855272}
+  - component: {fileID: 20855278}
   m_Layer: 0
   m_Name: CardGameManager
   m_TagString: Untagged
@@ -670,9 +671,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 0
+  playerController: {fileID: 0}
+  enemyController: {fileID: 0}
   playerState: {fileID: 2034699589}
   enemy: {fileID: 0}
   isPlayerTurn: 0
+  dialogSystem: {fileID: 20855275}
 --- !u!4 &20855277
 Transform:
   m_ObjectHideFlags: 0
@@ -687,6 +691,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &20855278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20855271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc27daf83f2c2c45ae98176544f34cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTurnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogSystem: {fileID: 20855275}
 --- !u!1001 &31395866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6977,6 +7000,7 @@ GameObject:
   - component: {fileID: 1383529759}
   - component: {fileID: 1383529758}
   - component: {fileID: 1383529757}
+  - component: {fileID: 1383529761}
   m_Layer: 5
   m_Name: "NPC\u753B\u5E03"
   m_TagString: Untagged
@@ -7066,6 +7090,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1383529761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383529756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc27daf83f2c2c45ae98176544f34cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTurnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogSystem: {fileID: 20855275}
 --- !u!1 &1419115480
 GameObject:
   m_ObjectHideFlags: 0
@@ -9805,6 +9848,7 @@ GameObject:
   - component: {fileID: 2034699589}
   - component: {fileID: 2034699586}
   - component: {fileID: 2034699588}
+  - component: {fileID: 2034699587}
   m_Layer: 5
   m_Name: "\u73A9\u5BB6\u753B\u5E03"
   m_TagString: Untagged
@@ -9828,6 +9872,49 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   statusList: []
+--- !u!114 &2034699587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034699585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 988e83216f0e9684d837e8cc7924c81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTurnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034699589}
+        m_TargetAssemblyTypeName: CardPlayerState, Assembly-CSharp
+        m_MethodName: StartTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTurnEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2034699589}
+        m_TargetAssemblyTypeName: CardPlayerState, Assembly-CSharp
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  dialogSystem: {fileID: 20855275}
 --- !u!114 &2034699588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9855,13 +9942,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbce236fc97770d4f8d8a59eade66c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnController: {fileID: 2034699587}
   chooseGUISystem: {fileID: 1991228639}
   cardController: {fileID: 2034699588}
   statusManager: {fileID: 2034699586}
   OnEnergyChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStartTurn:
     m_PersistentCalls:
       m_Calls: []
   OnEndTurn:

@@ -12,8 +12,8 @@ public class HealthSliderView : MonoBehaviour
 
     private void Update()
     {
-        healthSlider.value= GameManager.Instance.localPlayer.PlayerInfo.Health;
-        sanSlider.value = GameManager.Instance.localPlayer.PlayerInfo.san;
+        healthSlider.value= GameManager.Instance.LocalPlayer.PlayerInfo.Health;
+        sanSlider.value = GameManager.Instance.LocalPlayer.PlayerInfo.san;
     }
 
 }

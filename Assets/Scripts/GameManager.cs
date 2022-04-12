@@ -1,15 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Ink2Unity;
-using System.Xml;
-using System.Reflection;
 using System;
-using System.Xml.Serialization;
 using System.IO;
-using SemanticTree.PlayerEffect;
-using SemanticTree;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 [Serializable]
 public class SpeechTypeSpriteDictionary : SerializableDictionary<SpeechType, Sprite> { }
 
@@ -25,11 +19,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PersonalityTypeSpriteDictionary conditionIcons;
     [SerializeField]
-    public Player localPlayer;
+    private Player localPlayer;
+    [SerializeField]
+    private string currentStory = null;
 
+    private Map map = null;
 
-    public Map map = null;
-    public string currentStory = null;
 
 
     private static GameManager instance;
@@ -38,13 +33,16 @@ public class GameManager : MonoBehaviour
     public PersonalityTypeSpriteDictionary ConditionIcons { get => conditionIcons; set => conditionIcons = value; }
     public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
-
+    public Player LocalPlayer { get => localPlayer; set => localPlayer = value; }
+    public Map Map { get => map; set => map = value; }
+    public string CurrentStory { get => currentStory; set => currentStory = value; }
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            localPlayer=GetComponent<Player>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -95,21 +93,35 @@ public class GameManager : MonoBehaviour
                 status.Construct();
             }
         }
-
     }
-
     private void LoadGameConfig(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
         GameConfig config = XmlUtilty.Deserialize<GameConfig>(fs);
-        localPlayer.PlayerInfo = config.PlayerInfo;
+        LocalPlayer.PlayerInfo = config.PlayerInfo;
     }
 
     private void Loadmaps(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
+        Map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
     }
 
+    public void EnterPlace(Place place)
+    {
+        EnterIncident(IncidentTool.Pickup(place.incidents));
+    }
+
+    public void EnterIncident(Incident incident)
+    {
+        CurrentStory = incident.incidentName;
+        SceneManager.LoadScene("ControllerSampleScene");
+    }
+
+    public void EnterStory(string story)
+    {
+        CurrentStory = story; 
+        SceneManager.LoadScene("ControllerSampleScene");
+    }
 
 }

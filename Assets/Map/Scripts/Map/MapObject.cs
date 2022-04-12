@@ -12,7 +12,7 @@ public class MapObject : MonoBehaviour
 
     private void Start()
     {
-        map = GameManager.Instance.map;
+        map = GameManager.Instance.Map;
         for(int i = 0; i < mapObjects.Count; i++)
         {
             mapObjects[i].gameObject.SetActive(i < map.placesDic.Count);
@@ -31,7 +31,7 @@ public class MapObject : MonoBehaviour
             if (o == null) return;
             var c = o.GetComponent<PlaceObject>();
             if (c == null) return;
-            c.place.Enter();
+            GameManager.Instance.EnterPlace(c.place);
         }
     }
 }

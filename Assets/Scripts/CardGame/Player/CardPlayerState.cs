@@ -6,9 +6,10 @@ using System;
 using CardGame.Recorder;
 using System.Linq;
 
-public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardController, ITurnController
 {
-    
+    [SerializeField]
+    private TurnController turnController;
     [SerializeField]
     private ChooseGUISystem chooseGUISystem = null;
     [SerializeField]
@@ -20,8 +21,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
 
     [HideInInspector]
     public UnityEvent OnEnergyChange = new UnityEvent();
-    [HideInInspector]
-    public UnityEvent OnStartTurn = new UnityEvent();
     [HideInInspector]
     public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
@@ -77,6 +76,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
     public ModifierGroup Modifiers { get => modifiers; set => modifiers = value; }
 
+    public bool EndTurnTrigger => ((ITurnController)turnController).EndTurnTrigger;
+
+    public UnityEvent OnTurnStart => ((ITurnController)turnController).OnTurnStart;
+
+    public UnityEvent OnTurnEnd => ((ITurnController)turnController).OnTurnEnd;
+
     public void Init(Player player)
     {
         Debug.Log("玩家初始化");
@@ -92,14 +97,14 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
             return;
         }
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnStartTurn.AddListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) OnTurnStart.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);
     }
 
     public void RemoveModifier(Modifier script)
     {
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnStartTurn.RemoveListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) OnTurnStart.RemoveListener(script.OnTurnStart.Execute);
         Modifiers.Remove(script);
     }
 
@@ -136,7 +141,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     public void StartTurn()
     {
         Debug.Log("我的回合，抽卡！！！");
-        OnStartTurn.Invoke();
         Energy = 4;
         cardController.Draw((uint)Player.PlayerInfo.DrawNum);
     }
@@ -144,7 +148,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange,ICardController
     public void EndTurn()
     {
         Debug.Log("回合结束");
-        OnEndTurn.Invoke();
         cardController.ClearTemporaryActivateFlags();
     }
 

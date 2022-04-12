@@ -9,21 +9,15 @@ public interface IDialogSystem
 {
     void MoveNext();
 }
+
 public class DialogSystem : MonoBehaviour, IDialogSystem
-{ 
+{
     [SerializeField]
     private SpeakSystem speakSystem;
 
-
-    private static DialogSystem instance = null;
-    public static DialogSystem Instance { get => instance; }
-
     private InkStory inkStory;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    public InkState NextState { get => inkStory.NextState; }
 
     public static void Pause()
     {
@@ -51,11 +45,15 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     public void ForceSelectChoice(Choice choice, bool success)
     {
         GUISystemManager.Instance.chooseSystem.Close();
-        CardGameManager.Instance.EndTurn();
         //DialogSaveAndLoadPanel.Instance.SaveTextToFile(choice.Content, true);
         inkStory.SelectChoice(choice, success);
         MoveNext();
     }
+    public List<Choice> CurrentChoices()
+    {
+        return inkStory.CurrentChoices();
+    }
+
 
 
     public void MoveNext()
@@ -70,12 +68,11 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         }
         else if (inkStory.NextState == InkState.Choice)
         {
-            List<Choice> choices = inkStory.CurrentChoices();
-            if (choices != null && choices.Count != 0)
-            {
-                GUISystemManager.Instance.chooseSystem.Open(choices);
-                CardGameManager.Instance.StartTurn();
-            }
+            //List<Choice> choices = inkStory.CurrentChoices();
+            //if (choices != null && choices.Count != 0)
+            //{
+            //    GUISystemManager.Instance.chooseSystem.Open(choices);
+            //}
         }
         else if (inkStory.NextState == InkState.Finish)
         {

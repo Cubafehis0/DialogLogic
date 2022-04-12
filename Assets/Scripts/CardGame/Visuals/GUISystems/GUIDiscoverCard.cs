@@ -40,7 +40,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
-            GameManager.Instance.localPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
+            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
         }
     }
 }

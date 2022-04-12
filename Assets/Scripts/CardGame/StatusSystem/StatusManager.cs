@@ -146,7 +146,7 @@ public class StatusManager : MonoBehaviour
 
     private void Start()
     {
-        player.OnStartTurn.AddListener(OnStartTurn);
+        player.OnTurnStart.AddListener(OnStartTurn);
         player.OnEndTurn.AddListener(OnEndTurn);
     }
 

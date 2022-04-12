@@ -20,17 +20,6 @@ public class Place
         name = origin.name;
         incidents = origin.incidents.ConvertAll(x => new Incident(x));
     }
-
-    public void Enter()
-    {
-        SceneManager.LoadScene("ControllerSampleScene");
-        //加载事件未完成
-        var incident = IncidentTool.Pickup(incidents);
-        GameManager.Instance.currentStory = incident.incidentName;
-    }
-
-
-
 }
 
 
