@@ -51,12 +51,12 @@ public class CardController : MonoBehaviour, ICardController
         Hand.OnAdd.AddListener(x =>
         {
             if (x.info.handModifier != null)
-                cardPlayerState.Modifiers.Add(x.info.handModifier);
+                cardPlayerState.AddModifier(x.info.handModifier);
         });
         Hand.OnRemove.AddListener(x =>
         {
             if (x.info.handModifier != null)
-                cardPlayerState.Modifiers.Remove(x.info.handModifier);
+                cardPlayerState.RemoveModifier(x.info.handModifier);
         });
     }
 
@@ -89,9 +89,14 @@ public class CardController : MonoBehaviour, ICardController
                 //Ï´ÅÆ
                 Discard2Draw();
             }
+
             Card card = drawPile[0];
+            Context.PushPlayerContext(cardPlayerState);
+            Context.PushCardContext(card);
             drawPile.MigrateTo(card, hand);
             card.info.DrawEffects?.Execute();
+            Context.PopCardContext();
+            Context.PopPlayerContext();
         }
     }
 

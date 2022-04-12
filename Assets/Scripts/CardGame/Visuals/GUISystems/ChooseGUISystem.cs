@@ -11,7 +11,7 @@ public interface IChoiceSlotReciver
     void ChoiceSlotReciver(object msg);
 }
 
-public class ChooseGUISystem : MonoBehaviour,IGUISystem
+public class ChooseGUISystem : MonoBehaviour, IGUISystem
 {
     [SerializeField]
     private List<ChoiceSlotObject> chooseButtons = new List<ChoiceSlotObject>();
@@ -44,7 +44,7 @@ public class ChooseGUISystem : MonoBehaviour,IGUISystem
         {
             allChoices.Add(new ChoiceSlot { Choice = choice });
         }
-        
+
         UpdateVisuals();
     }
 
@@ -53,14 +53,55 @@ public class ChooseGUISystem : MonoBehaviour,IGUISystem
         gameObject.SetActive(false);
     }
 
+
+    private class ChoiceConditionPair
+    {
+        public ChoiceSlot choice;
+        public PersonalityType speechType;
+    }
     public void RandomReveal(int num)
     {
-        throw new System.NotImplementedException();
+        List<ChoiceConditionPair> l = new List<ChoiceConditionPair>();
+        foreach (ChoiceSlot choice in allChoices)
+        {
+            var unmasked = choice.PickupAllUnmasked();
+            if(unmasked != null)
+            {
+                foreach (PersonalityType type in unmasked)
+                {
+                    l.Add(new ChoiceConditionPair { choice = choice, speechType = type });
+                }
+            }
+        }
+        for (int i = 0; i < num && l.Count > 0; i++)
+        {
+            ChoiceConditionPair luck = l[Random.Range(0, l.Count)];
+            luck.choice.AddMask(luck.speechType);
+            l.Remove(luck);
+        }
     }
 
     public void RandomReveal(SpeechType type, int num)
     {
-        throw new System.NotImplementedException();
+        List<ChoiceConditionPair> l = new List<ChoiceConditionPair>();
+        foreach (ChoiceSlot choice in allChoices)
+        {
+            if (choice.Choice.SpeechType != type) return;
+            var unmasked = choice.PickupAllUnmasked();
+            if (unmasked != null)
+            {
+                foreach (PersonalityType p in unmasked)
+                {
+                    l.Add(new ChoiceConditionPair { choice = choice, speechType = p });
+                }
+            }
+        }
+        for (int i = 0; i < num && l.Count > 0; i++)
+        {
+            ChoiceConditionPair luck = l[Random.Range(0, l.Count)];
+            luck.choice.AddMask(luck.speechType);
+            l.Remove(luck);
+        }
     }
     public void UpdateVisuals()
     {

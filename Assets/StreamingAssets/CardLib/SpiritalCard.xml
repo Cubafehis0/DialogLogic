@@ -101,15 +101,14 @@
                 </personality>
                 <duration>-1</duration>
             </modify_personality>
-            <GUI_select_dynamic_card>
-                <include>hand</include>
+            <GUI_select_hand>
                 <num>1</num>
                 <action>
                     <activate>
                         <permanent>false</permanent>
                     </activate>
                 </action>
-            </GUI_select_dynamic_card>
+            </GUI_select_hand>
         </on_play_card>
     </define_card>
     

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System;
 using CardGame.Recorder;
 using System.Linq;
+using SemanticTree;
 
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardController, ITurnController
 {
@@ -74,6 +75,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
     public bool IsHandFull => ((ICardController)cardController).IsHandFull;
 
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
+    //最好写readonly
     public ModifierGroup Modifiers { get => modifiers; set => modifiers = value; }
 
     public bool EndTurnTrigger => ((ITurnController)turnController).EndTurnTrigger;
@@ -97,7 +99,8 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
             return;
         }
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnTurnStart.AddListener(script.OnTurnStart.Execute);
+        if (script.OnTurnStart != null) 
+            OnTurnStart.AddListener(script.OnTurnStart.Execute);
         Modifiers.Add(script);
     }
 
@@ -143,12 +146,14 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
         Debug.Log("我的回合，抽卡！！！");
         Energy = 4;
         cardController.Draw((uint)Player.PlayerInfo.DrawNum);
+        Context.PushPlayerContext(this);
     }
 
     public void EndTurn()
     {
         Debug.Log("回合结束");
         cardController.ClearTemporaryActivateFlags();
+        Context.PopPlayerContext();
     }
 
 
@@ -187,7 +192,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
             "inner" => FinalPersonality[PersonalityType.Inside],
             "outside" => FinalPersonality[PersonalityType.Outside],
             "logic" => FinalPersonality[PersonalityType.Logic],
-            "spritial" => FinalPersonality[PersonalityType.Passion],
+            "spirital" => FinalPersonality[PersonalityType.Passion],
             "moral" => FinalPersonality[PersonalityType.Moral],
             "immoral" => FinalPersonality[PersonalityType.Unethic],
             "roundabout" => FinalPersonality[PersonalityType.Detour],

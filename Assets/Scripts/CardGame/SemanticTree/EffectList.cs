@@ -30,6 +30,7 @@ namespace SemanticTree
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
 
+        [XmlElement(typeof(GUISelectHand), ElementName ="GUI_select_hand")]
         [XmlElement(typeof(GUISelectDynamicCard), ElementName = "GUI_select_dynamic_card")]
         [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]
         [XmlElement(typeof(RandomDynamicCard), ElementName = "random_dynamic_card")]

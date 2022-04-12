@@ -49,6 +49,6 @@ public class CharacterBarView : MonoBehaviour
         if (outsideSlider) outsideSlider.value = personality.Outside;
         if (passionSlider) passionSlider.value = personality.Spritial;
         if (unethicSlider) unethicSlider.value = personality.Immoral;
-        if (detourSlider) strongSlider.value = personality.Roundabout;
+        if (detourSlider) detourSlider.value = personality.Roundabout;
     }
 }

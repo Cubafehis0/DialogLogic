@@ -69,6 +69,7 @@ public class CardInfo
     public void Construct()
     {
         Requirements?.Construct();
+        handModifier?.Construct();
         DrawEffects?.Construct();
         Effects?.Construct();
     }

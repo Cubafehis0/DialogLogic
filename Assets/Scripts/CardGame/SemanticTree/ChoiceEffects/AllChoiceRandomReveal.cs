@@ -1,6 +1,7 @@
 ﻿using ExpressionAnalyser;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine;
 
 namespace SemanticTree.ChoiceEffects
 {
@@ -12,6 +13,7 @@ namespace SemanticTree.ChoiceEffects
         [XmlElement(ElementName = "num")]
         public string NumExpression = null;
         private IExpression num = null;
+
         [XmlElement(ElementName = "speech_type")]
         public SpeechType SpeechType = SpeechType.Normal;
         [XmlIgnore]
@@ -19,6 +21,8 @@ namespace SemanticTree.ChoiceEffects
 
         public override void Execute()
         {
+            Debug.Log(Context.PlayerContext);
+
             if (SpeechTypeSpecified) Context.PlayerContext.ChooseGUISystem.RandomReveal(SpeechType, num.Value);
             else Context.PlayerContext.ChooseGUISystem.RandomReveal(num.Value);
         }

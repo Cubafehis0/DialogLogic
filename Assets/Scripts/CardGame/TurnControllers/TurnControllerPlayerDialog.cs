@@ -16,7 +16,7 @@ public class TurnControllerPlayerDialog : TurnController
 
     public override void StartTurn()
     {
-        base.StartTurn();
         GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.CurrentChoices());
+        base.StartTurn();
     }
 }

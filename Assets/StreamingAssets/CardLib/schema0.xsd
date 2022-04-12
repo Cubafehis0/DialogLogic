@@ -142,6 +142,7 @@
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_tendency_add" type="GUISelectTendencyAdd" />
         <xs:element minOccurs="0" maxOccurs="1" name="modify_health" type="ModifyHealth" />
         <xs:element minOccurs="0" maxOccurs="1" name="set_draw_ban" type="SetDrawBan" />
+        <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_hand" type="GUISelectHand" />
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_dynamic_card" type="GUISelectDynamicCard" />
         <xs:element minOccurs="0" maxOccurs="1" name="GUI_select_static_card" type="GUISelectStaticCard" />
         <xs:element minOccurs="0" maxOccurs="1" name="random_dynamic_card" type="RandomDynamicCard" />
@@ -364,6 +365,17 @@
       <xs:extension base="Effect">
         <xs:sequence>
           <xs:element minOccurs="1" maxOccurs="1" name="include" type="PileType" />
+          <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="condition" type="AllNode" />
+          <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GUISelectHand">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
           <xs:element minOccurs="0" maxOccurs="1" name="num" type="xs:string" />
           <xs:element minOccurs="0" maxOccurs="1" name="condition" type="AllNode" />
           <xs:element minOccurs="0" maxOccurs="1" name="action" type="EffectList" />
@@ -670,6 +682,7 @@
   <xs:element name="GUISelectNerfCondition" nillable="true" type="GUISelectNerfCondition" />
   <xs:element name="ForEachDynamicCard" nillable="true" type="ForEachDynamicCard" />
   <xs:element name="GUISelectDynamicCard" nillable="true" type="GUISelectDynamicCard" />
+  <xs:element name="GUISelectHand" nillable="true" type="GUISelectHand" />
   <xs:element name="GUISelectStaticCard" nillable="true" type="GUISelectStaticCard" />
   <xs:element name="RandomDynamicCard" nillable="true" type="RandomDynamicCard" />
 </xs:schema>
