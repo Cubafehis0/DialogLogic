@@ -89,7 +89,9 @@ public class CardController : MonoBehaviour, ICardController
                 //Ï´ÅÆ
                 Discard2Draw();
             }
-            drawPile.MigrateTo(drawPile[0], hand);
+            Card card = drawPile[0];
+            drawPile.MigrateTo(card, hand);
+            card.info.DrawEffects?.Execute();
         }
     }
 

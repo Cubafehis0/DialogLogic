@@ -8,11 +8,13 @@ public class TendencyAddGUIContext
 {
     public HashSet<PersonalityType> mask;
     public int num;
+    public bool packed;
 
-    public TendencyAddGUIContext(HashSet<PersonalityType> mask, int num)
+    public TendencyAddGUIContext(HashSet<PersonalityType> mask, int num, bool packed)
     {
         this.mask = mask;
         this.num = num;
+        this.packed = packed;
     }
 }
 public class TendencyAddGUISystem : ForegoundGUISystem
@@ -33,8 +35,12 @@ public class TendencyAddGUISystem : ForegoundGUISystem
     private Button insideButton = null;
     [SerializeField]
     private Button outsideButton = null;
+
+
     [SerializeField]
     private int num;
+
+    private bool packed = true;
 
     private void Awake()
     {
@@ -47,7 +53,8 @@ public class TendencyAddGUISystem : ForegoundGUISystem
         gameObject.SetActive(true);
         if (!(msg is TendencyAddGUIContext context)) return;
         if (context.num <= 0) return;
-        this.num = context.num;
+        num = context.num;
+        packed = context.packed;
         insideButton.interactable = context.mask.Contains(PersonalityType.Inside);
         outsideButton.interactable = context.mask.Contains(PersonalityType.Outside);
         logicButton.interactable = context.mask.Contains(PersonalityType.Logic);
@@ -78,9 +85,9 @@ public class TendencyAddGUISystem : ForegoundGUISystem
             case PersonalityType.Detour:
             case PersonalityType.Strong:
                 Personality modifier = new Personality();
-                modifier[addon.Value] = 1;
+                modifier[addon.Value] = packed ? num : 1; ;
                 CardGameManager.Instance.playerState.Player.PlayerInfo.Personality += modifier;
-                num--;
+                num = packed ? 0 : num - 1;
                 break;
             default:
                 break;
