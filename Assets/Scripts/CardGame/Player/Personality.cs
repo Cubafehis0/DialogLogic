@@ -152,17 +152,18 @@ public class Personality
         this.roundabout = l[3];
     }
 
-    [XmlElement(ElementName ="inner")]
+    [XmlElement(ElementName = "inner")]
     public int Inner
     {
         get => inner;
         set => inner = value;
     }
     [XmlIgnore]
-    public bool InnerSpecified { 
+    public bool InnerSpecified
+    {
         get { return Inner != 0; }
         [Obsolete("仅供xml识别，无需设置")]
-        set { } 
+        set { }
     }
 
     [XmlElement(ElementName = "outside")]
@@ -194,7 +195,7 @@ public class Personality
     }
 
     [XmlElement(ElementName = "spritial")]
-    public int Spritial
+    public int Spiritial
     {
         get => -logic;
         set => logic = -value;
@@ -202,7 +203,7 @@ public class Personality
     [XmlIgnore]
     public bool SpritialSpecified
     {
-        get { return Spritial != 0; }
+        get { return Spiritial != 0; }
         [Obsolete("仅供xml识别，无需设置")]
         set { }
     }
@@ -262,6 +263,19 @@ public class Personality
         get { return Aggressive != 0; }
         [Obsolete("仅供xml识别，无需设置")]
         set { }
+    }
+
+    public void Strengthen(int value)
+    {
+        if (value <= 0) return;
+        Inner += Inner > 0 ? value : 0;
+        Outside += Outside > 0 ? value : 0;
+        Logic += Logic > 0 ? value : 0;
+        Spiritial += Spiritial > 0 ? value : 0;
+        Moral += Moral > 0 ? value : 0;
+        Immoral += Immoral > 0 ? value : 0;
+        Roundabout += Roundabout > 0 ? value : 0;
+        Aggressive += Aggressive > 0 ? value : 0;
     }
 
     public static Personality operator +(Personality a, Personality b)

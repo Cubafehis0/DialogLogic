@@ -32,7 +32,7 @@ public class CharacterLabelView : MonoBehaviour
         if (insideText) insideText.text = personality.Inner.ToString();
         if (outsideText) outsideText.text = personality.Outside.ToString();
         if (logicText) logicText.text = personality.Logic.ToString();
-        if (spiritalText) spiritalText.text = personality.Spritial.ToString();
+        if (spiritalText) spiritalText.text = personality.Spiritial.ToString();
         if (moralText) moralText.text = personality.Moral.ToString();
         if (immoralText) immoralText.text = personality.Immoral.ToString();
         if (roundaboutText) roundaboutText.text = personality.Roundabout.ToString();

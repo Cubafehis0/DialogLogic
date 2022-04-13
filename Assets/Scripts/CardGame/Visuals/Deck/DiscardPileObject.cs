@@ -31,7 +31,7 @@ public class DiscardPileObject : MonoBehaviour
             card.transform.position = Vector3.MoveTowards(card.transform.position, transform.position, Time.deltaTime * speed);
             yield return null;
         }
-        card.gameObject.SetActive(false);
+        card.SetActive(false);
     }
 
     private void OnAdd(Card card)
@@ -42,6 +42,6 @@ public class DiscardPileObject : MonoBehaviour
             throw new System.NotImplementedException();
         }
         c.transform.SetParent(transform, true);
-        StartCoroutine(Discard(c.gameObject));
+        AnimationManager.Instance.AddAnimation(Discard(c.gameObject));
     }
 }

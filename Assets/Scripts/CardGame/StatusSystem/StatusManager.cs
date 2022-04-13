@@ -5,6 +5,12 @@ using UnityEngine;
 using SemanticTree;
 using UnityEngine.Events;
 
+public enum DMGType
+{
+    Normal,
+    Magic
+}
+
 [RequireComponent(typeof(CardPlayerState))]
 public class StatusManager : MonoBehaviour
 {
@@ -14,12 +20,17 @@ public class StatusManager : MonoBehaviour
 
     private CardPlayerState player;
 
-    public void AddAnonymousPersonalityModifier(Personality personality, int timer)
+    public void AddAnonymousPersonalityModifier(Personality personality, int timer, DMGType type = DMGType.Normal)
     {
         if (timer == 0) return;
         if (timer < 0)
         {
             player.Player.PlayerInfo.Personality += personality;
+            if (type == DMGType.Magic)
+            {
+                player.Player.PlayerInfo.Personality.Strengthen(player.Strength);
+                player.Strength = 0;
+            }
         }
         else
         {

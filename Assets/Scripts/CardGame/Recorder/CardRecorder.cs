@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static CardPlayerState;
 
 namespace CardGame.Recorder
 {
@@ -13,6 +12,7 @@ namespace CardGame.Recorder
     {
         public List<CardLogEntry> cardLogs = new List<CardLogEntry>();
         public static CardRecorder Instance { get; set; }
+
 
         private void Awake()
         {
@@ -38,7 +38,7 @@ namespace CardGame.Recorder
                     "immoral_combo" => QueryCombo(CardCategory.Imm),
                     "spirital_combo" => QueryCombo(CardCategory.Spt),
                     "moral_combo" => QueryCombo(CardCategory.Mrl),
-                    _ => throw new PropNotFoundException()
+                    _ => throw new CardPlayerState.PropNotFoundException()
                 };
             }
         }

@@ -36,8 +36,6 @@ public class DragHandPileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-        
-
         CardObject cardObject = StaticCardLibrary.Instance.GetCardObject(card);
         if (cardObject)
         {

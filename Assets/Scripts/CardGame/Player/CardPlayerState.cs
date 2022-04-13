@@ -41,6 +41,8 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         }
     }
 
+    public int Strength;
+
     public int Pressure { get => Player.PlayerInfo.Pressure; set => Player.PlayerInfo.Pressure = value; }
 
     public StatusManager StatusManager => statusManager;

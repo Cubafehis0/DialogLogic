@@ -120,7 +120,7 @@ public class HandLayout : MonoBehaviour
 
     private void Update()
     {
-        RecalculatePosition();
+        //RecalculatePosition();
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -133,6 +133,8 @@ public class HandLayout : MonoBehaviour
             }
         }
     }
+
+
 
     public void Focus(BaseEventData eventData)
     {

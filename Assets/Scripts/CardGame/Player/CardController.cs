@@ -27,6 +27,15 @@ public interface ICardController
     void PlayCard(Card card);
 }
 
+public class PlayingPile : Pile<Card>
+{
+    public PlayingPile() : base()
+    {
+        OnAdd.AddListener(x => Context.PushCardContext(x));
+        OnRemove.AddListener(x => Context.PopCardContext());
+    }
+}
+
 [RequireComponent(typeof(CardPlayerState))]
 public class CardController : MonoBehaviour, ICardController
 {
@@ -35,6 +44,8 @@ public class CardController : MonoBehaviour, ICardController
     private Pile<Card> drawPile = new Pile<Card>();
     private Pile<Card> discardPile = new Pile<Card>();
     private Pile<Card> exhaustPile = new Pile<Card>();
+    private Pile<Card> playingPile = new PlayingPile();
+
     private bool drawBan = false;
     public UnityEvent OnPlayCard = new UnityEvent();
     public IReadonlyPile<Card> Hand { get => hand; }
@@ -135,7 +146,7 @@ public class CardController : MonoBehaviour, ICardController
     {
         if (!ForegoundGUISystem.current)
         {
-            StartCoroutine(PlayCardEnumerator(card));
+            AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card));
         }
     }
 
@@ -151,7 +162,6 @@ public class CardController : MonoBehaviour, ICardController
         else
         {
             Context.PushPlayerContext(cardPlayerState);
-            Context.PushCardContext(card);
             if (card.Activated || (card.info.Requirements?.Value ?? true))
             {
                 //目标有效且可以使用
@@ -166,17 +176,17 @@ public class CardController : MonoBehaviour, ICardController
                     CardCategory = card.info.category,
                 };
                 CardRecorder.Instance.AddRecordEntry(log);
-                hand.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
+                hand.MigrateTo(card, playingPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
                 else card.info.Effects.Execute();
+                playingPile.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
                 yield return new WaitUntil(() => ForegoundGUISystem.current == false);
             }
             else
             {
                 Debug.Log("无法使用卡牌：" + card.info.Title);
             }
-            Context.PopCardContext();
             Context.PopPlayerContext();
         }
     }

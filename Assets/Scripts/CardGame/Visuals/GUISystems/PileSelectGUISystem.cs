@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PileSelectGUIContext
 {
@@ -22,6 +23,8 @@ public class PileSelectGUISystem : ForegoundGUISystem
 {
     [SerializeField]
     private RectTransform content;
+    [SerializeField]
+    private Text title;
 
     private int minOccurs = 0;
     private int maxOccurs = 0;
@@ -47,6 +50,12 @@ public class PileSelectGUISystem : ForegoundGUISystem
             item.transform.SetParent(content, true);
             cardObjects.Add(item);
         });
+        UpdateVisuals();
+    }
+
+    public void UpdateVisuals()
+    {
+        title.text = string.Format("选择{0}张，已选择{1}张", minOccurs, cardSelected.Count);
     }
     public void ClickCard(BaseEventData eventData)
     {
@@ -56,10 +65,12 @@ public class PileSelectGUISystem : ForegoundGUISystem
         if (cardSelected.Contains(card))
         {
             cardSelected.Remove(card);
+            UpdateVisuals();
         }
         else
         {
             cardSelected.Add(card);
+            UpdateVisuals();
         }
     }
 

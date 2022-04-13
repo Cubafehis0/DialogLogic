@@ -62,7 +62,7 @@ namespace SemanticTree
                 if (insideExp != null) res.Inner = insideExp.Value;
                 if (outsideExp != null) res.Outside = outsideExp.Value;
                 if (logicExp != null) res.Logic = logicExp.Value;
-                if (spiritalExp != null) res.Spritial = spiritalExp.Value;
+                if (spiritalExp != null) res.Spiritial = spiritalExp.Value;
                 if (immoralExp != null) res.Immoral = immoralExp.Value;
                 if (moralExp != null) res.Moral = moralExp.Value;
                 if (roundaboutExp != null) res.Roundabout = roundaboutExp.Value;

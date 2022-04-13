@@ -202,7 +202,7 @@ namespace Ink2Unity
             story.variablesState["inn"] = personality.Inner;
             story.variablesState["ext"] = personality.Outside;
             story.variablesState["lgc"] = personality.Logic;
-            story.variablesState["spt"] = personality.Spritial;
+            story.variablesState["spt"] = personality.Spiritial;
             story.variablesState["mrl"] = personality.Moral;
             story.variablesState["utc"] = personality.Immoral;
             story.variablesState["rdb"] = personality.Roundabout;
