@@ -7,40 +7,22 @@ using CardGame.Recorder;
 using System.Linq;
 using SemanticTree;
 
-public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardController, ITurnController
+public class CardPlayerState : CardActorState, IPlayerStateChange, ICardController, ITurnController
 {
-    [SerializeField]
-    private TurnController turnController;
     [SerializeField]
     private ChooseGUISystem chooseGUISystem = null;
     [SerializeField]
     private CardController cardController = null;
-    [SerializeField]
-    private StatusManager statusManager = null;
 
     private UnityEvent onPersonalityChange = new UnityEvent();
 
     [HideInInspector]
     public UnityEvent OnEnergyChange = new UnityEvent();
-    [HideInInspector]
-    public UnityEvent OnEndTurn = new UnityEvent();
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
 
-    private ModifierGroup modifiers = new ModifierGroup();
-
-    public Player Player { get; private set; }
-
     public ChooseGUISystem ChooseGUISystem { get => chooseGUISystem; }
 
-    public Personality FinalPersonality
-    {
-        get
-        {
-            var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
-            return res;
-        }
-    }
     public SpeechArt FinalSpeechArt
     {
         get => Modifiers.SpeechLinear;
@@ -75,8 +57,6 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
     public bool IsHandFull => ((ICardController)cardController).IsHandFull;
 
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
-    //最好写readonly
-    public ModifierGroup Modifiers { get => modifiers; set => modifiers = value; }
 
     public bool EndTurnTrigger => ((ITurnController)turnController).EndTurnTrigger;
 
@@ -87,7 +67,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
     public void Init(Player player)
     {
         Debug.Log("玩家初始化");
-        Player = player;
+        this.player = player;
         cardController.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
     }
 
@@ -101,14 +81,14 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) 
             OnTurnStart.AddListener(script.OnTurnStart.Execute);
-        Modifiers.Add(script);
+        modifiers.Add(script);
     }
 
     public void RemoveModifier(Modifier script)
     {
         if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
         if (script.OnTurnStart != null) OnTurnStart.RemoveListener(script.OnTurnStart.Execute);
-        Modifiers.Remove(script);
+        modifiers.Remove(script);
     }
 
 
@@ -185,8 +165,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange, ICardControlle
 
     private int GetBaseProp(string name)
     {
-        int? pileVar = cardController.GetPileProp(name);
-        if (pileVar.HasValue) return pileVar.Value;
+        if (cardController)
+        {
+            int? pileVar = cardController.GetPileProp(name);
+            if (pileVar.HasValue) return pileVar.Value;
+
+        }
         return name switch
         {
             "inner" => FinalPersonality[PersonalityType.Inside],

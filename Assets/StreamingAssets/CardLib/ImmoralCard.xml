@@ -10,7 +10,7 @@
         <cost>1</cost>
         <category>immoral</category>
         <requirements>
-            <requirement>target.skeptical > 0</requirement>
+            <requirement>target.panic > 0</requirement>
         </requirements>
         <on_play_card>
             <GUI_select_condition_nerf>

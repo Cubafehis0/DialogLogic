@@ -13,7 +13,6 @@ public class StatusManager : MonoBehaviour
     private List<StatusCounter> statusList = new List<StatusCounter>();
 
     private CardPlayerState player;
-    private static Dictionary<string, Status> statusDictionary = new Dictionary<string, Status>();
 
     public void AddAnonymousPersonalityModifier(Personality personality, int timer)
     {
@@ -93,14 +92,14 @@ public class StatusManager : MonoBehaviour
                 Context.statusCounterStack.Pop();
             }
         }
-        StatusCounter s= statusList.Find(x => x.status == status && x.status.Stackable);
-        if(s != null)
+        StatusCounter s = statusList.Find(x => x.status == status && x.status.Stackable);
+        if (s != null)
         {
             s.value += value;
             if (s.value <= 0 && !s.status.AllowNegative)
             {
                 s.status.OnRemove?.Execute();
-                player.RemoveModifier(s.status.Modifier);
+                if (status.Modifier != null) player.RemoveModifier(s.status.Modifier);
                 statusList.Remove(s);
             }
         }
@@ -109,7 +108,7 @@ public class StatusManager : MonoBehaviour
             if (value > 0 || status.AllowNegative)
             {
                 statusList.Add(st);
-                player.AddModifier(status.Modifier);
+                if (status.Modifier != null) player.AddModifier(status.Modifier);
                 status.OnAdd?.Execute();
             }
 
@@ -117,14 +116,11 @@ public class StatusManager : MonoBehaviour
         Context.PopPlayerContext();
     }
 
-    public static Status GetStatus(string name)
-    {
-        return statusDictionary.ContainsKey(name) ? statusDictionary[name] : null;
-    }
 
     public int GetStatusValue(string name)
     {
-        return statusDictionary.ContainsKey(name) ? GetStatusValue(statusDictionary[name]) : 0;
+        Status status = StaticStatusLibrary.GetByName(name) ?? throw new SemanticException();
+        return GetStatusValue(status);
     }
 
     public int GetStatusValue(Status status)
@@ -147,7 +143,7 @@ public class StatusManager : MonoBehaviour
     private void Start()
     {
         player.OnTurnStart.AddListener(OnStartTurn);
-        player.OnEndTurn.AddListener(OnEndTurn);
+        player.OnTurnEnd.AddListener(OnEndTurn);
     }
 
 

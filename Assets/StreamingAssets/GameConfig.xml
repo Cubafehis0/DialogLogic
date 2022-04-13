@@ -10,7 +10,8 @@
         <max_health>10</max_health>
         <everry_turn_energy>10</everry_turn_energy>
         <cards>
-            <string>sensitivity</string>
+            <string>debase</string>
+            <string>baseless_denouncement</string>
         </cards>
     </player>
     <enemy>

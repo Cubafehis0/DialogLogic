@@ -48,12 +48,22 @@ public class CardGameManager : MonoBehaviour
             if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
             turn++;
             isPlayerTurn = false;
+            Context.PushPlayerContext(enemy);
+            Context.Target = playerState;
             enemyController.StartTurn();
             yield return new WaitUntil(() => enemyController.EndTurnTrigger);
+            Context.Target = null;
+            Context.PopPlayerContext();
+
+
             if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
             isPlayerTurn = true;
+            Context.PushPlayerContext(playerState);
+            Context.Target = enemy;
             playerController.StartTurn();
             yield return new WaitUntil(() => playerController.EndTurnTrigger);
+            Context.Target = null;
+            Context.PopPlayerContext();
         }
         Debug.LogWarning("回合数达到上限100");
     }

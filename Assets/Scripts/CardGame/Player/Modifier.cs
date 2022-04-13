@@ -9,8 +9,8 @@ using System.Xml.Serialization;
 [Serializable]
 public class Modifier
 {
-    [XmlElement(ElementName ="personality_linear")]
-    public Personality PersonalityLinear { get; set; }=new Personality();
+    [XmlElement(ElementName = "personality_linear")]
+    public Personality PersonalityLinear { get; set; } = new Personality();
 
     [XmlElement(ElementName = "personality_factor")]
     public float[] PersonalityMul { get; set; }
@@ -21,46 +21,56 @@ public class Modifier
     [XmlElement(ElementName = "speech")]
     public SpeechArt SpeechLinear { get; set; }
 
-    [XmlElement(ElementName ="cost_modifier")]
+    [XmlElement(ElementName = "cost_modifier")]
     public CostModifier CostModifier { get; set; }
-    
-    [XmlElement(ElementName ="on_turn_start")]
+
+    [XmlElement(ElementName = "on_turn_start")]
     public EffectList OnTurnStart { get; set; }
 
-    [XmlElement(ElementName ="on_play_card")]
+    [XmlElement(ElementName = "on_play_card")]
     public EffectList OnPlayCard { get; set; }
 
-    [XmlElement(ElementName ="on_buff")]
+    [XmlElement(ElementName = "on_buff")]
     public EffectList OnBuff { get; set; }
 
-    [XmlElement(ElementName ="additional_energy")]
+    [XmlElement(ElementName = "additional_energy")]
     public int AdditionalEnergy { get; set; }
 
-    [XmlElement(ElementName ="additional_draw")]
+    [XmlElement(ElementName = "additional_draw")]
     public int AdditionalDraw { get; set; }
-    
+
     [XmlIgnore]
-    public bool FocusSpecified { get { return Focus != null; }}
+    public bool FocusSpecified { get { return Focus != null; } }
     [XmlIgnore]
     public bool AdditionalEnergySpecified { get { return Focus != null; } }
     [XmlIgnore]
     public bool AdditionalDrawSpecified { get { return Focus != null; } }
 
-    public void Construct() {
+    public void Construct()
+    {
         CostModifier?.Construct();
         OnTurnStart?.Construct();
         OnPlayCard?.Construct();
     }
 }
 
-public class ModifierGroup : List<Modifier>
+public interface IReadonlyModifierGroup : IReadOnlyList<Modifier>
+{
+    Personality PersonalityLinear { get; }
+    SpeechType? Focus { get; }
+    SpeechArt SpeechLinear { get; }
+    int AdditionalEnergy { get; }
+    int AdditionalDraw { get; }
+}
+
+public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
 {
     public Personality PersonalityLinear
     {
-        get 
+        get
         {
-            Personality res=new Personality();
-            foreach(Modifier modifier in this)
+            Personality res = new Personality();
+            foreach (Modifier modifier in this)
             {
                 var entry = modifier.PersonalityLinear;
                 if (entry != null)
@@ -69,9 +79,9 @@ public class ModifierGroup : List<Modifier>
             return res;
         }
     }
-    public SpeechType? Focus 
+    public SpeechType? Focus
     {
-        get 
+        get
         {
             SpeechType? res = null;
             foreach (Modifier modifier in this)
@@ -83,7 +93,7 @@ public class ModifierGroup : List<Modifier>
             return res;
         }
     }
-    public SpeechArt SpeechLinear 
+    public SpeechArt SpeechLinear
     {
         get
         {
@@ -105,7 +115,7 @@ public class ModifierGroup : List<Modifier>
             foreach (Modifier modifier in this)
             {
                 var entry = modifier.AdditionalEnergy;
-                    res += entry;
+                res += entry;
             }
             return res;
         }
