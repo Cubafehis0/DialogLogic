@@ -6,22 +6,22 @@ public class EnergyLabelView : MonoBehaviour
 {
     [SerializeField]
     private CardPlayerState player;
-
+    [SerializeField]
     private Text text;
-    private void Awake()
-    {
-        text = GetComponentInChildren<Text>();
-    }
 
     private void OnEnable()
     {
         player.OnEnergyChange.AddListener(UpdateLabel);
-        UpdateLabel();
     }
 
     private void OnDisable()
     {
         player.OnEnergyChange.RemoveListener(UpdateLabel);
+    }
+
+    private void Start()
+    {
+        UpdateLabel();
     }
 
     private void UpdateLabel()

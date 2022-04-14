@@ -44,8 +44,10 @@ namespace SemanticTree
         [XmlElement(typeof(IF), ElementName = "if")]
         [XmlElement(typeof(SetGlobalVar), ElementName = "set_global_variable")]
 
+        [XmlElement(typeof(GUISelectNerfCondition), ElementName = "GUI_select_condition_nerf")]
         [XmlElement(typeof(GUISelectCurrentSlot), ElementName = "GUI_select_choice")]
         [XmlElement(typeof(AllChoiceRandomReveal), ElementName = "all_random_reveal")]
+
         [XmlElement(typeof(ChoiceRemoveCondition), ElementName ="choice_remove_condition")]
         [XmlElement(typeof(ChoiceReveal), ElementName = "choice_reveal")]
         [XmlElement(typeof(ChoiceRevealAll), ElementName = "choice_reveal_all")]

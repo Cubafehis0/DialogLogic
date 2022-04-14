@@ -18,11 +18,6 @@ public class ConditionGUISystem : ForegoundGUISystem
         title.text = string.Format("选择1个已揭示条件判定-{0}", nerfNum);
     }
 
-    public override void Close()
-    {
-        base.Close();
-    }
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -34,7 +29,7 @@ public class ConditionGUISystem : ForegoundGUISystem
             ChoiceSlotObject p = c.GetComponentInParent<ChoiceSlotObject>();
             if (p == null) return;
             Personality modifier = new Personality();
-            modifier[c.Type] = nerfNum;
+            modifier[c.Type] = -nerfNum;
             p.ChoiceSlot.Choice.JudgeValue += modifier;
             Close();
         }

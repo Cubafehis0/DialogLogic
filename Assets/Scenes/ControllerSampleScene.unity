@@ -466,6 +466,7 @@ MonoBehaviour:
     - {fileID: -5439979525158351322, guid: 2657df68c4458b04c9a6a356038da822, type: 3}
   localPlayer: {fileID: 18281533}
   currentStory: EG1-1
+  cardLibrary: {fileID: 619566916}
 --- !u!114 &18281533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 20855271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae48fa5558775d4cb8b2edd5457a072, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a3f8b7d4a46894397385aeac505784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &20855273
@@ -6433,7 +6434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nerfNum: 0
-  title: {fileID: 0}
+  title: {fileID: 1925299758}
 --- !u!114 &1277539743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10098,7 +10099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbce236fc97770d4f8d8a59eade66c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 18281533}
   turnController: {fileID: 2034699587}
   statusManager: {fileID: 2034699586}
   chooseGUISystem: {fileID: 1991228639}
@@ -11171,8 +11172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -430.83643, y: -372}
-  m_SizeDelta: {x: 513.3769, y: 256.8518}
+  m_AnchoredPosition: {x: -626, y: -128.43}
+  m_SizeDelta: {x: 652.5124, y: 256.8518}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2041896107767182639
 GameObject:
@@ -11252,7 +11253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.4951019, y: 0}
+  m_AnchoredPosition: {x: 1.4951172, y: 0}
   m_SizeDelta: {x: -57.3996, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2041896107989297309
@@ -11411,11 +11412,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Energy
-      objectReference: {fileID: 0}
-    - target: {fileID: 3303592216040513641, guid: f35cdbadeea24d746ac306d105748d4c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35cdbadeea24d746ac306d105748d4c, type: 3}

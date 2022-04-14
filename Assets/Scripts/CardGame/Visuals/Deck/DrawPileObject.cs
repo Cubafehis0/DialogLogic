@@ -15,7 +15,7 @@ public class DrawPileObject : MonoBehaviour
 
     private void OnAdd(Card newCard)
     {
-        CardObject o=StaticCardLibrary.Instance.GetCardObject(newCard);
+        CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         if (o == null) 
         {
             throw new System.NotImplementedException();

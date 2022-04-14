@@ -14,7 +14,7 @@ public class ExhaustPileObject : MonoBehaviour
 
     private void OnAdd(Card newCard)
     {
-        CardObject o = StaticCardLibrary.Instance.GetCardObject(newCard);
+        CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         o.transform.SetParent(transform, true);
         o.transform.localPosition = Vector3.zero;
         o.gameObject.SetActive(false);

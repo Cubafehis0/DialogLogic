@@ -912,6 +912,8 @@ MonoBehaviour:
     - {fileID: -3501970536496395052, guid: d7843b60fc177cd40ac4f71152f69eda, type: 3}
     - {fileID: -5439979525158351322, guid: 2657df68c4458b04c9a6a356038da822, type: 3}
   localPlayer: {fileID: 1059980285}
+  currentStory: 
+  cardLibrary: {fileID: 1622693261}
 --- !u!4 &1059980287
 Transform:
   m_ObjectHideFlags: 0

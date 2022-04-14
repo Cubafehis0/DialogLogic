@@ -26,7 +26,7 @@ public class PileObject : MonoBehaviour
     private void OnAdd(Card card)
     {
        
-        CardObject cardObject = StaticCardLibrary.Instance.GetCardObject(card);
+        CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
         {
             cardObject.transform.SetParent(transform, true);

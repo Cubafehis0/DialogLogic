@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PersonalityTypeSpriteDictionary conditionIcons;
     [SerializeField]
-    private Player localPlayer;
+    private PlayerPacked localPlayer;
     [SerializeField]
     private string currentStory = null;
+    [SerializeField]
+    private StaticCardLibrary cardLibrary;
 
     private Map map = null;
 
@@ -30,10 +32,12 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
+    public ICardLibrary CardLibrary { get { return cardLibrary; } }
+    public ICardObjectLibrary CardObjectLibrary { get { return cardLibrary; } }
     public PersonalityTypeSpriteDictionary ConditionIcons { get => conditionIcons; set => conditionIcons = value; }
     public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
-    public Player LocalPlayer { get => localPlayer; set => localPlayer = value; }
+    public PlayerPacked LocalPlayer { get => localPlayer; set => localPlayer = value; }
     public Map Map { get => map; set => map = value; }
     public string CurrentStory { get => currentStory; set => currentStory = value; }
 
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            localPlayer=GetComponent<Player>();
+            localPlayer = GetComponent<PlayerPacked>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -79,13 +83,13 @@ public class GameManager : MonoBehaviour
         }
         foreach (Common common in commons)
         {
-            StaticCardLibrary.Instance.DeclareCard(common.CardInfos);
+            CardLibrary.DeclareCard(common.CardInfos);
             foreach (Status status in common.Statuss)
             {
                 StaticStatusLibrary.DeclareStatus(status.Name, status);
             }
         }
-        StaticCardLibrary.Instance.Construct();
+        CardLibrary.Construct();
         foreach (Common common in commons)
         {
             foreach (Status status in common.Statuss)
@@ -120,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void EnterStory(string story)
     {
-        CurrentStory = story; 
+        CurrentStory = story;
         SceneManager.LoadScene("ControllerSampleScene");
     }
 

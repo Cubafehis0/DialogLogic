@@ -36,7 +36,7 @@ public class DragHandPileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-        CardObject cardObject = StaticCardLibrary.Instance.GetCardObject(card);
+        CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
         {
             cardObject.transform.SetParent(transform, true);
@@ -53,7 +53,7 @@ public class DragHandPileObject : MonoBehaviour
     }
     protected virtual void OnRemove(Card card)
     {
-        CardObject cardObject = StaticCardLibrary.Instance.GetCardObject(card);
+        CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
         {
             Destroy(cardObject.GetComponent<Draggable>());
@@ -65,7 +65,7 @@ public class DragHandPileObject : MonoBehaviour
         Debug.Log("takeover");
         foreach(Card card in player.Hand)
         {
-            CardObject o=StaticCardLibrary.Instance.GetCardObject(card);
+            CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
             o.transform.SetParent(transform, true);
         }
     }

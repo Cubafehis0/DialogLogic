@@ -26,6 +26,7 @@ public class ForegoundGUISystem :MonoBehaviour, IGUISystem
 
     public virtual void Close()
     {
+        gameObject.SetActive(false);
         enabled = false;
         current = null;
     }

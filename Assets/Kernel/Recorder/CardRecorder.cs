@@ -8,17 +8,9 @@ namespace CardGame.Recorder
     /// <summary>
     /// 管理卡牌日志，以供查阅使用
     /// </summary>
-    public class CardRecorder : MonoBehaviour
+    public class CardRecorder
     {
         public List<CardLogEntry> cardLogs = new List<CardLogEntry>();
-        public static CardRecorder Instance { get; set; }
-
-
-        private void Awake()
-        {
-            Destroy(Instance);
-            Instance = this;
-        }
 
         public void AddRecordEntry(CardLogEntry entry)
         {
@@ -80,7 +72,7 @@ namespace CardGame.Recorder
         public int QueryPreachTotal()
         {
             return (from x in cardLogs
-                    where x.Name == name
+                    where x.Name == "preach"
                     && x.LogType == ActionTypeEnum.PlayCard
                     select x).Count();
         }
@@ -88,7 +80,7 @@ namespace CardGame.Recorder
         public int QueryPreachThisTurn()
         {
             return (from x in cardLogs
-                    where x.Name == name
+                    where x.Name == "preach"
                 && x.LogType == ActionTypeEnum.PlayCard
                 && x.Turn == CardGameManager.Instance.Turn
                     select x).Count();

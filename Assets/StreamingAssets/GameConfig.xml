@@ -5,13 +5,16 @@
     <player>
         <personality></personality>
         <max_card_num>10</max_card_num>
-        <draw_num>3</draw_num>
+        <draw_num>10</draw_num>
         <max_pressure>10</max_pressure>
         <max_health>10</max_health>
         <everry_turn_energy>10</everry_turn_energy>
         <cards>
-            <string>debase</string>
-            <string>baseless_denouncement</string>
+            <string>repeated_proof</string>
+            <string>inspired</string>
+            <string>inspired</string>
+            <string>inspired</string>
+            <string>inspired</string>
         </cards>
     </player>
     <enemy>

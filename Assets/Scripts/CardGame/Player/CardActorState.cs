@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardActorState : MonoBehaviour
 {
     [SerializeField]
-    protected Player player;
+    protected PlayerPacked player;
     [SerializeField]
     protected TurnController turnController;
     [SerializeField]
@@ -13,16 +13,13 @@ public class CardActorState : MonoBehaviour
     [SerializeField]
     protected ModifierGroup modifiers = new ModifierGroup();
 
-    public IReadonlyModifierGroup Modifiers { get => modifiers; }
-    public Player Player { get => player; private set => player = value; }
+    public ModifierGroup Modifiers { get => modifiers; }
+    public PlayerPacked Player { get => player; private set => player = value; }
 
-    public Personality FinalPersonality
+    public Personality GetFinalPersonality()
     {
-        get
-        {
-            var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
-            return res;
-        }
+        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
+        return res;
     }
 
 

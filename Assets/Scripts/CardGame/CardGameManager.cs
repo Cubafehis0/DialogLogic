@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using SemanticTree;
 using System.IO;
+using CardGame.Recorder;
 
 public class CardGameManager : MonoBehaviour
 {
@@ -18,8 +19,12 @@ public class CardGameManager : MonoBehaviour
     public CardPlayerState playerState;
     public CardPlayerState enemy;
     public bool isPlayerTurn = false;
+
     [SerializeField]
     public DialogSystem dialogSystem;
+    [SerializeField]
+    public CardRecorder CardRecorder = new CardRecorder();
+
 
     private static CardGameManager instance = null;
     public static CardGameManager Instance

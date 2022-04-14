@@ -38,7 +38,10 @@ public class PlayerInfo
     public int MaxPressure { get => maxPressure; set => maxPressure = value; }
 
     [XmlElement(ElementName = "max_health")]
-    public int Health { get => maxHealth; set => maxHealth = value; }
+    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+
+    [XmlIgnore]
+    public int Health { get; set; }
 
     [XmlElement(ElementName = "everry_turn_energy")]
     public int BaseEnergy { get => everyTurnEnergy; set => everyTurnEnergy = value; }

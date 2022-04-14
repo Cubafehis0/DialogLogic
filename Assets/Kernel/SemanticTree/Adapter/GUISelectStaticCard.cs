@@ -25,7 +25,7 @@ namespace SemanticTree.Adapter
         public override void Construct()
         {
             num = ExpressionParser.AnalayseExpression(NumExpression);
-            CardList.ForEach(x => cards.Add(StaticCardLibrary.Instance.GetByName(x)));
+            CardList.ForEach(x => cards.Add(GameManager.Instance.CardLibrary.GetCopyByName(x)));
             Actions?.Construct();
         }
 

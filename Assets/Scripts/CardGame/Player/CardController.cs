@@ -62,12 +62,12 @@ public class CardController : MonoBehaviour, ICardController
         Hand.OnAdd.AddListener(x =>
         {
             if (x.info.handModifier != null)
-                cardPlayerState.AddModifier(x.info.handModifier);
+                cardPlayerState.Modifiers.Add(x.info.handModifier);
         });
         Hand.OnRemove.AddListener(x =>
         {
             if (x.info.handModifier != null)
-                cardPlayerState.RemoveModifier(x.info.handModifier);
+                cardPlayerState.Modifiers.Remove(x.info.handModifier);
         });
     }
 
@@ -175,7 +175,7 @@ public class CardController : MonoBehaviour, ICardController
                     Turn = CardGameManager.Instance.Turn,
                     CardCategory = card.info.category,
                 };
-                CardRecorder.Instance.AddRecordEntry(log);
+                CardGameManager.Instance.CardRecorder.AddRecordEntry(log);
                 hand.MigrateTo(card, playingPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("¿ÕÐ§¹û");
@@ -212,8 +212,8 @@ public class CardController : MonoBehaviour, ICardController
 
         foreach (string name in cardset)
         {
-            Card newCard = StaticCardLibrary.Instance.GetByName(name);
-            StaticCardLibrary.Instance.GetNewCardObject(newCard);
+            Card newCard = GameManager.Instance.CardLibrary.GetCopyByName(name);
+            GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
             drawPile.Add(newCard);
         }
         drawPile.Shuffle();

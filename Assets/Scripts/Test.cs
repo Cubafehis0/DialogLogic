@@ -18,7 +18,7 @@ public class Test : MonoBehaviour,IPlayableAsset
     {
         GameObject go = new GameObject();
         go.AddComponent<StaticCardLibrary>();
-        go.AddComponent<Player>();
+        go.AddComponent<PlayerPacked>();
         go.AddComponent<GameManager>();
         //GameManager.Instance.LocalPlayer.PlayerInfo.CardSet = new List<string> { };
     }

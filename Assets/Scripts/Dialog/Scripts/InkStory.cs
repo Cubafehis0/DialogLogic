@@ -176,14 +176,14 @@ namespace Ink2Unity
 
         private void BindExternalFunction()
         {
-            story.BindExternalFunction("InnIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Inside, l, r));
-            story.BindExternalFunction("ExtIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Outside, l, r));
-            story.BindExternalFunction("LgcIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Logic, l, r));
-            story.BindExternalFunction("SptIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Passion, l, r));
-            story.BindExternalFunction("MrlIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Moral, l, r));
-            story.BindExternalFunction("UtcIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Unethic, l, r));
-            story.BindExternalFunction("RdbIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Detour, l, r));
-            story.BindExternalFunction("AgsIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.FinalPersonality, PersonalityType.Strong, l, r));
+            story.BindExternalFunction("InnIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Inside, l, r));
+            story.BindExternalFunction("ExtIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Outside, l, r));
+            story.BindExternalFunction("LgcIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Logic, l, r));
+            story.BindExternalFunction("SptIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Passion, l, r));
+            story.BindExternalFunction("MrlIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Moral, l, r));
+            story.BindExternalFunction("UtcIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Unethic, l, r));
+            story.BindExternalFunction("RdbIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Detour, l, r));
+            story.BindExternalFunction("AgsIsIn", (int l, int r) => InBound(CardGameManager.Instance.playerState.GetFinalPersonality(), PersonalityType.Strong, l, r));
         }
 
         private bool InBound(Personality personality, PersonalityType type, int l, int r)
@@ -198,7 +198,7 @@ namespace Ink2Unity
 
         private void UpdateInkPlayerInfo()
         {
-            Personality personality = CardGameManager.Instance.playerState.FinalPersonality;
+            Personality personality = CardGameManager.Instance.playerState.GetFinalPersonality();
             story.variablesState["inn"] = personality.Inner;
             story.variablesState["ext"] = personality.Outside;
             story.variablesState["lgc"] = personality.Logic;

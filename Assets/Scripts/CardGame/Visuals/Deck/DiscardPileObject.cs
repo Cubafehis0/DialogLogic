@@ -36,7 +36,7 @@ public class DiscardPileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-        CardObject c = StaticCardLibrary.Instance.GetCardObject(card);
+        CardObject c = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (c == null)
         {
             throw new System.NotImplementedException();

@@ -5,62 +5,49 @@ using UnityEngine;
 using System;
 using SemanticTree;
 
-public class StaticCardLibrary : MonoBehaviour
+
+public interface ICardObjectLibrary
+{
+    CardObject GetCardObject(Card card);
+    void DestroyCard(Card card);
+}
+
+public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
 {
     [SerializeField]
-    private Dictionary<string, Card> cardDic = new Dictionary<string, Card>();
+    private CardLibrary library = new CardLibrary();
     [SerializeField]
     private Dictionary<Card, CardObject> cardDictionary = new Dictionary<Card, CardObject>();
     [SerializeField]
     private CardObject sampleCard;
 
-    private static StaticCardLibrary instance = null;
-    public static StaticCardLibrary Instance
+    public void Construct()
     {
-        get => instance;
-    }
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void DeclareCard(List<CardInfo> cardInfos)
-    {
-        foreach (CardInfo cardInfo in cardInfos)
-        {
-            DeclareCard(cardInfo);
-        }
+        ((ICardLibrary)library).Construct();
     }
 
     public void DeclareCard(CardInfo cardInfo)
     {
-        if (cardDic.ContainsKey(cardInfo.Name)) throw new SemanticException("不能重复定义卡牌" + name);
-        cardDic[cardInfo.Name] = new Card(cardInfo);
+        ((ICardLibrary)library).DeclareCard(cardInfo);
     }
 
-    public void Construct()
+    public void DeclareCard(List<CardInfo> cardInfos)
     {
-        foreach (Card card in cardDic.Values)
-        {
-            card.Construct();
-        }
+        ((ICardLibrary)library).DeclareCard(cardInfos);
     }
 
-    public Card GetByName(string name)
+    public Card GetCopyByName(string name)
     {
-        if (cardDic.ContainsKey(name))
-        {
-            return new Card(cardDic[name]);
-        }
-        return null;
+        Card card = ((ICardLibrary)library).GetCopyByName(name);
+        cardDictionary[card] = null;
+        return card;
+    }
+
+    public Card CopyCard(Card card)
+    {
+        Card newCard = ((ICardLibrary)library).CopyCard(card);
+        cardDictionary[newCard] = null;
+        return newCard;
     }
 
     public CardObject GetCardObject(Card card)
@@ -81,16 +68,11 @@ public class StaticCardLibrary : MonoBehaviour
         return cardDictionary[card];
     }
 
-    public Card CopyCard(Card card)
-    {
-        Card newCard= new Card(card);
-        cardDictionary[newCard] = null;
-        return newCard;
-    }
+
 
     public void DestroyCard(Card card)
     {
-        if(cardDictionary[card] != null)
+        if (cardDictionary[card] != null)
         {
             Destroy(cardDictionary[card]);
             cardDictionary.Remove(card);
@@ -100,5 +82,6 @@ public class StaticCardLibrary : MonoBehaviour
             Debug.LogError("未知的卡牌");
         }
     }
+
 
 }

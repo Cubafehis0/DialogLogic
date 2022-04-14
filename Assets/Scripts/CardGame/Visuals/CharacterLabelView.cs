@@ -28,7 +28,7 @@ public class CharacterLabelView : MonoBehaviour
     public void UpdateVisuals()
     {
         if (character == null) return;
-        Personality personality = character.FinalPersonality;
+        Personality personality = character.GetFinalPersonality();
         if (insideText) insideText.text = personality.Inner.ToString();
         if (outsideText) outsideText.text = personality.Outside.ToString();
         if (logicText) logicText.text = personality.Logic.ToString();

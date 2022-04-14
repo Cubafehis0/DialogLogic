@@ -41,7 +41,7 @@ public class CharacterBarView : MonoBehaviour
     public void UpdateAll()
     {
         if (character == null) return;
-        Personality personality = character.FinalPersonality;
+        Personality personality = character.GetFinalPersonality();
         if (insideSlider) insideSlider.value = personality.Inner;
         if (logicSlider) logicSlider.value = personality.Logic;
         if (moralSlider) moralSlider.value = personality.Moral;

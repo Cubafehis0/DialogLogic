@@ -11,6 +11,22 @@ public enum DMGType
     Magic
 }
 
+public class ModifierManager
+{
+    [SerializeField]
+    protected ModifierGroup modifiers = new ModifierGroup();
+    public IReadonlyModifierGroup Modifiers { get => modifiers; }
+
+    public Personality GetFinalPersonality(Personality basePersonality)
+    {
+        var res = basePersonality + Modifiers.PersonalityLinear;
+        return res;
+    }
+}
+
+
+
+
 [RequireComponent(typeof(CardPlayerState))]
 public class StatusManager : MonoBehaviour
 {
@@ -23,14 +39,14 @@ public class StatusManager : MonoBehaviour
     public void AddAnonymousPersonalityModifier(Personality personality, int timer, DMGType type = DMGType.Normal)
     {
         if (timer == 0) return;
+        if (type == DMGType.Magic)
+        {
+            personality.Strengthen(player.Strength);
+            player.Strength = 0;
+        }
         if (timer < 0)
         {
-            player.Player.PlayerInfo.Personality += personality;
-            if (type == DMGType.Magic)
-            {
-                player.Player.PlayerInfo.Personality.Strengthen(player.Strength);
-                player.Strength = 0;
-            }
+            player.Modifiers.AddAnonymousPersonality(personality);
         }
         else
         {
@@ -110,7 +126,7 @@ public class StatusManager : MonoBehaviour
             if (s.value <= 0 && !s.status.AllowNegative)
             {
                 s.status.OnRemove?.Execute();
-                if (status.Modifier != null) player.RemoveModifier(s.status.Modifier);
+                if (status.Modifier != null) player.Modifiers.Remove(s.status.Modifier);
                 statusList.Remove(s);
             }
         }
@@ -119,7 +135,7 @@ public class StatusManager : MonoBehaviour
             if (value > 0 || status.AllowNegative)
             {
                 statusList.Add(st);
-                if (status.Modifier != null) player.AddModifier(status.Modifier);
+                if (status.Modifier != null) player.Modifiers.Add(status.Modifier);
                 status.OnAdd?.Execute();
             }
 
@@ -181,7 +197,7 @@ public class StatusManager : MonoBehaviour
             {
                 Context.PushPlayerContext(player);
                 sig.status.OnRemove?.Execute();
-                player.RemoveModifier(sig.status.Modifier);
+                player.Modifiers.Remove(sig.status.Modifier);
                 Context.PopPlayerContext();
                 statusList.Remove(sig);
             }

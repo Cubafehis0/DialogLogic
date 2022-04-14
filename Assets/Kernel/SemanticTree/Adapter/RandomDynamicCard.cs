@@ -43,7 +43,7 @@ namespace SemanticTree.Adapter
             if ((PileType.DrawDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DrawPile);
             if ((PileType.DiscardDeck & type) > 0) tmp.AddRange(Context.PlayerContext.DiscardPile);
             MyMath.Shuffle(tmp);
-            foreach (Card card in tmp.GetRange(0, num.Value))
+            foreach (Card card in tmp.GetRange(0, Math.Min(num.Value, tmp.Count)))
             {
                 Context.PushCardContext(card);
                 if (Condition?.Value ?? true) Actions?.Execute();
@@ -52,7 +52,7 @@ namespace SemanticTree.Adapter
         }
 
         public override void Construct()
-        { 
+        {
             num = ExpressionParser.AnalayseExpression(NumExpression);
             Condition?.Construct();
             Actions.Construct();

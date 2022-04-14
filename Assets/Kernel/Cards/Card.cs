@@ -44,7 +44,7 @@ public class Card
         set
         {
             temporaryActivate = value;
-            if (value == true) CardRecorder.Instance.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
+            if (value == true) CardGameManager.Instance.CardRecorder.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
         }
     }
 
@@ -54,7 +54,7 @@ public class Card
         set
         {
             permanentActivate = value;
-            if (value == true) CardRecorder.Instance.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
+            if (value == true) CardGameManager.Instance.CardRecorder.AddRecordEntry(new CardLogEntry { LogType = ActionTypeEnum.ActivateCard });
         }
     }
 

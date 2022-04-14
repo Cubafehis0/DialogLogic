@@ -66,34 +66,18 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public UnityEvent OnTurnEnd => ((ITurnController)turnController).OnTurnEnd;
 
-    public void Init(Player player)
+    public void Init(PlayerPacked player)
     {
         Debug.Log("Íæ¼Ò³õÊ¼»¯");
         this.player = player;
         cardController.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
     }
 
-    public void AddModifier(Modifier script)
+    private void Awake()
     {
-        if (script == null)
-        {
-            Debug.LogError("modifer is null");
-            return;
-        }
-        if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.AddListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) 
-            OnTurnStart.AddListener(script.OnTurnStart.Execute);
-        modifiers.Add(script);
+        if(cardController) cardController.OnPlayCard.AddListener(modifiers.OnPlayCard);
+        OnTurnStart.AddListener(modifiers.OnTurnStart);
     }
-
-    public void RemoveModifier(Modifier script)
-    {
-        if (script.OnPlayCard != null && cardController) cardController.OnPlayCard.RemoveListener(script.OnPlayCard.Execute);
-        if (script.OnTurnStart != null) OnTurnStart.RemoveListener(script.OnTurnStart.Execute);
-        modifiers.Remove(script);
-    }
-
-
 
     public bool CanChoose(ChoiceSlot slot)
     {
@@ -107,7 +91,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     /// <param name="slot"></param>
     public bool JudgeChooseSuccess(ChoiceSlot slot)
     {
-        int dis = Personality.MaxDistance(FinalPersonality, slot.Choice.JudgeValue);
+        int dis = Personality.MaxDistance(GetFinalPersonality(), slot.Choice.JudgeValue);
         SpeechArt speech = FinalSpeechArt;
         int modifier = slot.Choice.SpeechType switch
         {
@@ -175,14 +159,14 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         }
         return name switch
         {
-            "inner" => FinalPersonality[PersonalityType.Inside],
-            "outside" => FinalPersonality[PersonalityType.Outside],
-            "logic" => FinalPersonality[PersonalityType.Logic],
-            "spirital" => FinalPersonality[PersonalityType.Passion],
-            "moral" => FinalPersonality[PersonalityType.Moral],
-            "immoral" => FinalPersonality[PersonalityType.Unethic],
-            "roundabout" => FinalPersonality[PersonalityType.Detour],
-            "aggressive" => FinalPersonality[PersonalityType.Strong],
+            "inner" => GetFinalPersonality()[PersonalityType.Inside],
+            "outside" => GetFinalPersonality()[PersonalityType.Outside],
+            "logic" => GetFinalPersonality()[PersonalityType.Logic],
+            "spirital" => GetFinalPersonality()[PersonalityType.Passion],
+            "moral" => GetFinalPersonality()[PersonalityType.Moral],
+            "immoral" => GetFinalPersonality()[PersonalityType.Unethic],
+            "roundabout" => GetFinalPersonality()[PersonalityType.Detour],
+            "aggressive" => GetFinalPersonality()[PersonalityType.Strong],
             "normal_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Normal).Count(),
             "threat_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Threaten).Count(),
             "persuade_count" => chooseGUISystem.Choices.Select(x => x.Choice.SpeechType == SpeechType.Persuade).Count(),
@@ -194,7 +178,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     private int GetRecorderProp(string name)
     {
-        return CardRecorder.Instance[name];
+        return CardGameManager.Instance.CardRecorder[name];
     }
 
     private int GetStatusProp(string name)

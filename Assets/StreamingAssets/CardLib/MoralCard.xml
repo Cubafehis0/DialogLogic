@@ -70,8 +70,8 @@
     <define_card>
         <name>speech_book</name>
         <title>演讲册子</title>
-        <condition_desc>持有时道德增加1；打出后，每一回合开始时获得一张说教牌</condition_desc>
-        <effect_desc></effect_desc>
+        <condition_desc></condition_desc>
+        <effect_desc>持有时道德增加1；打出后，每一回合开始时获得一张说教牌</effect_desc>
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
@@ -98,7 +98,7 @@
         <category>moral</category>
         <in_hand_modifier>
             <personality_linear>
-                <moral>3</moral>
+                <moral>5</moral>
             </personality_linear>
         </in_hand_modifier>
         <requirements>
@@ -162,7 +162,7 @@
         <on_play_card>
             <set_global_variable>
                 <name>tmp</name>
-                <value>hand-1</value>
+                <value>hand_count</value>
             </set_global_variable>
             <discard_all_hand />
             <add_card_to_hand>

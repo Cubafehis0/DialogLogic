@@ -167,7 +167,7 @@
         </in_hand_modifier>
         <requirements>
             <requirement>spirital>20</requirement>
-            <requirement>inside>10</requirement>
+            <requirement>inner>10</requirement>
             <requirement>aggressive>10</requirement>
             <requirement>immoral>10</requirement>
         </requirements>
@@ -281,13 +281,9 @@
             <requirement>spirital_combo>0</requirement>
         </requirements>
         <on_draw>
-            <GUI_select_dynamic_card>
-                <include>hand</include>
+            <discard_some_hand>
                 <num>2</num>
-                <action>
-                    <discard />
-                </action>
-            </GUI_select_dynamic_card>
+            </discard_some_hand>
         </on_draw>
         <on_play_card>
             <modify_personality>
