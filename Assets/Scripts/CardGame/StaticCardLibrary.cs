@@ -74,7 +74,7 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
     {
         if (cardDictionary[card] != null)
         {
-            Destroy(cardDictionary[card]);
+            Destroy(cardDictionary[card].gameObject);
             cardDictionary.Remove(card);
         }
         else

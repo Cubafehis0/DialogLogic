@@ -11,30 +11,12 @@ public enum DMGType
     Magic
 }
 
-public class ModifierManager
-{
-    [SerializeField]
-    protected ModifierGroup modifiers = new ModifierGroup();
-    public IReadonlyModifierGroup Modifiers { get => modifiers; }
-
-    public Personality GetFinalPersonality(Personality basePersonality)
-    {
-        var res = basePersonality + Modifiers.PersonalityLinear;
-        return res;
-    }
-}
-
-
-
-
-[RequireComponent(typeof(CardPlayerState))]
 public class StatusManager : MonoBehaviour
 {
-    public UnityEvent<StatusCounter> OnBuff = new UnityEvent<StatusCounter>();
+    [SerializeField]
+    private CardPlayerState player;
     [SerializeField]
     private List<StatusCounter> statusList = new List<StatusCounter>();
-
-    private CardPlayerState player;
 
     public void AddAnonymousPersonalityModifier(Personality personality, int timer, DMGType type = DMGType.Normal)
     {
@@ -160,17 +142,6 @@ public class StatusManager : MonoBehaviour
             }
         }
         return 0;
-    }
-
-    private void Awake()
-    {
-        player = GetComponent<CardPlayerState>();
-    }
-
-    private void Start()
-    {
-        player.OnTurnStart.AddListener(OnStartTurn);
-        player.OnTurnEnd.AddListener(OnEndTurn);
     }
 
 

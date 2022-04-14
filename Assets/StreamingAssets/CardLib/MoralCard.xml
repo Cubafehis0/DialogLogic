@@ -37,9 +37,6 @@
                 <moral>1</moral>
             </personality_linear>
         </in_hand_modifier>
-        <requirements>
-            <requirement>moral>3</requirement>
-        </requirements>
         <on_play_card>
             <add_card_to_hand>
                 <name>preach</name>
@@ -181,11 +178,16 @@
         <meme></meme>
         <cost>1</cost>
         <category>moral</category>
+
+
         <in_hand_modifier>
             <personality_linear>
                 <moral>2</moral>
             </personality_linear>
         </in_hand_modifier>
+        <!-- <requirements>
+            <requirement>preach_thisturn>=3</requirement>
+        </requirements> -->
         <on_play_card>
             <add_status>
                 <name>draw_near</name>

@@ -281,9 +281,9 @@
             <requirement>spirital_combo>0</requirement>
         </requirements>
         <on_draw>
-            <discard_some_hand>
+            <!-- <discard_some_hand>
                 <num>2</num>
-            </discard_some_hand>
+            </discard_some_hand> -->
         </on_draw>
         <on_play_card>
             <modify_personality>

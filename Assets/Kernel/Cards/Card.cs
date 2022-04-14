@@ -87,14 +87,8 @@ public class Card
         info.Construct();
     }
 
-    public void Construct(Card prefab)
+    public int GetProp(string name)
     {
-        //浅拷贝
-        info = prefab.info;
-    }
-
-    public void Construct(CardInfo info)
-    {
-        this.info = info;
+        throw new NotImplementedException();
     }
 }

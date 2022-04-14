@@ -24,7 +24,7 @@ public class CardGameManager : MonoBehaviour
     public DialogSystem dialogSystem;
     [SerializeField]
     public CardRecorder CardRecorder = new CardRecorder();
-
+    public DragHandPileObject handPileObject;
 
     private static CardGameManager instance = null;
     public static CardGameManager Instance

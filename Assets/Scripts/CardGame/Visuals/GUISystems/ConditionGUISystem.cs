@@ -28,6 +28,7 @@ public class ConditionGUISystem : ForegoundGUISystem
             if (c == null) return;
             ChoiceSlotObject p = c.GetComponentInParent<ChoiceSlotObject>();
             if (p == null) return;
+            if (!c.Reveal) return;
             Personality modifier = new Personality();
             modifier[c.Type] = -nerfNum;
             p.ChoiceSlot.Choice.JudgeValue += modifier;

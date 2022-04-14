@@ -30,9 +30,7 @@ public class PileObject : MonoBehaviour
         if (cardObject)
         {
             cardObject.transform.SetParent(transform, true);
-            //int index = CardPlayerState.Instance.Hand.IndexOf(card);
             cardObject.gameObject.SetActive(true);
-            //cardObject.transform.SetSiblingIndex(index);
         }
     }
 }

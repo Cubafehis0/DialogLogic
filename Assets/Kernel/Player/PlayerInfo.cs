@@ -19,6 +19,8 @@ public class PlayerInfo
     [SerializeField]
     private int maxHealth;
     [SerializeField]
+    private int health;
+    [SerializeField]
     private int energy;
     [SerializeField]
     private int everyTurnEnergy;
@@ -41,7 +43,7 @@ public class PlayerInfo
     public int MaxHealth { get => maxHealth; set => maxHealth = value; }
 
     [XmlIgnore]
-    public int Health { get; set; }
+    public int Health { get => health; set => health = value; }
 
     [XmlElement(ElementName = "everry_turn_energy")]
     public int BaseEnergy { get => everyTurnEnergy; set => everyTurnEnergy = value; }
@@ -57,4 +59,5 @@ public class PlayerInfo
 
     [XmlIgnore]
     public int san;
+
 }

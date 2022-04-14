@@ -14,6 +14,7 @@ namespace SemanticTree.Condition
         [XmlElement(typeof(AnyNode), ElementName = "any")]
         [XmlElement(typeof(NoneNode), ElementName = "none")]
         [XmlElement(typeof(CountRequirement), ElementName = "count_requirement")]
+        [XmlElement(typeof(IsCardName),ElementName ="is_card_name")]
         public List<object> conditions = new List<object>();
 
         [XmlIgnore]

@@ -490,6 +490,7 @@ MonoBehaviour:
     pressure: 0
     maxPressure: 0
     maxHealth: 0
+    health: 0
     energy: 0
     everyTurnEnergy: 0
     cardSet:
@@ -677,6 +678,7 @@ MonoBehaviour:
   enemy: {fileID: 1383529765}
   isPlayerTurn: 0
   dialogSystem: {fileID: 20855275}
+  handPileObject: {fileID: 200259788}
 --- !u!4 &20855277
 Transform:
   m_ObjectHideFlags: 0
@@ -7170,10 +7172,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onTurnStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1383529764}
+        m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
+        m_MethodName: OnStartTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTurnEnd:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1383529764}
+        m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
+        m_MethodName: OnEndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   dialogSystem: {fileID: 20855275}
 --- !u!114 &1383529762
 MonoBehaviour:
@@ -7217,6 +7243,7 @@ MonoBehaviour:
     pressure: 0
     maxPressure: 0
     maxHealth: 0
+    health: 0
     energy: 0
     everyTurnEnergy: 0
     cardSet: []
@@ -7233,9 +7260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac708b4f11264824f8263c83e53c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnBuff:
-    m_PersistentCalls:
-      m_Calls: []
+  player: {fileID: 1383529765}
   statusList: []
 --- !u!114 &1383529765
 MonoBehaviour:
@@ -8164,6 +8189,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1753627862}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1623742447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1623742448}
+  - component: {fileID: 1623742449}
+  m_Layer: 5
+  m_Name: "\u4F7F\u7528\u5806"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1623742448
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623742447}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1857715584}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1623742449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623742447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3629605402056f346b9a443bf257895f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2034699588}
 --- !u!1 &1677512365
 GameObject:
   m_ObjectHideFlags: 0
@@ -8600,6 +8674,7 @@ RectTransform:
   - {fileID: 1860205049}
   - {fileID: 200259787}
   - {fileID: 775699563}
+  - {fileID: 1623742448}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10025,9 +10100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac708b4f11264824f8263c83e53c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnBuff:
-    m_PersistentCalls:
-      m_Calls: []
+  player: {fileID: 2034699589}
   statusList: []
 --- !u!114 &2034699587
 MonoBehaviour:
@@ -10056,12 +10129,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2034699586}
+        m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
+        m_MethodName: OnStartTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTurnEnd:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2034699589}
         m_TargetAssemblyTypeName: CardPlayerState, Assembly-CSharp
         m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2034699586}
+        m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
+        m_MethodName: OnEndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

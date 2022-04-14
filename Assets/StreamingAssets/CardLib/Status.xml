@@ -40,7 +40,9 @@
             <on_play_card>
                 <potantial>
                     <condition>
-                        <requirement>是说教未完成</requirement>
+                        <is_card_name>
+                            <name>preach</name>
+                        </is_card_name>
                     </condition>
                     <action>
                         <modify_personality>
@@ -60,7 +62,7 @@
         <binding_modifier>
             <on_turn_start>
                 <modify_health>
-                    <num>mysticism</num>
+                    <num>-mysticism</num>
                 </modify_health>
                 <modify_personality>
                     <personality>

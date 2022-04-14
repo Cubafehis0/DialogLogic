@@ -41,7 +41,7 @@ namespace SemanticTree
         [XmlElement(typeof(DiscardCard), ElementName = "discard")]
         [XmlElement(typeof(ExecuteCard), ElementName = "execute")]
 
-        [XmlElement(typeof(IF), ElementName = "if")]
+        [XmlElement(typeof(IF), ElementName = "potantial")]
         [XmlElement(typeof(SetGlobalVar), ElementName = "set_global_variable")]
 
         [XmlElement(typeof(GUISelectNerfCondition), ElementName = "GUI_select_condition_nerf")]

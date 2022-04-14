@@ -79,6 +79,15 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ConditionNode" abstract="true" />
+  <xs:complexType name="IsCardName">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ConditionNode">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="CountRequirement">
     <xs:complexContent mixed="false">
       <xs:extension base="ConditionNode">
@@ -108,6 +117,7 @@
         <xs:element minOccurs="0" maxOccurs="1" name="any" type="AnyNode" />
         <xs:element minOccurs="0" maxOccurs="1" name="none" type="NoneNode" />
         <xs:element minOccurs="0" maxOccurs="1" name="count_requirement" type="CountRequirement" />
+        <xs:element minOccurs="0" maxOccurs="1" name="is_card_name" type="IsCardName" />
       </xs:choice>
     </xs:sequence>
   </xs:complexType>
@@ -457,7 +467,8 @@
       <xs:extension base="Effect">
         <xs:sequence>
           <xs:element minOccurs="0" maxOccurs="1" name="personality" type="PersonalityExpression" />
-          <xs:element minOccurs="1" maxOccurs="1" name="duration" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="duration" type="xs:int" />
+          <xs:element minOccurs="0" maxOccurs="1" name="dmg_type" type="DMGType" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -474,6 +485,12 @@
       <xs:element minOccurs="0" maxOccurs="1" name="aggressive" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="DMGType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal" />
+      <xs:enumeration value="Magic" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="AnonymousModifyFocus">
     <xs:complexContent mixed="false">
       <xs:extension base="Effect">
@@ -635,6 +652,7 @@
   <xs:element name="AnonymousModifyFocus" nillable="true" type="AnonymousModifyFocus" />
   <xs:element name="GUISelectTendencyAdd" nillable="true" type="GUISelectTendencyAdd" />
   <xs:element name="ModifyHealth" nillable="true" type="ModifyHealth" />
+  <xs:element name="DMGType" type="DMGType" />
   <xs:element name="AnonymousModifyPersonality" nillable="true" type="AnonymousModifyPersonality" />
   <xs:element name="AnonymousModifySpeech" nillable="true" type="AnonymousModifySpeech" />
   <xs:element name="SetDrawBan" nillable="true" type="SetDrawBan" />
@@ -645,6 +663,7 @@
   <xs:element name="AnyNode" nillable="true" type="AnyNode" />
   <xs:element name="CompareType" type="CompareType" />
   <xs:element name="CountRequirement" nillable="true" type="CountRequirement" />
+  <xs:element name="IsCardName" nillable="true" type="IsCardName" />
   <xs:element name="NoneNode" nillable="true" type="NoneNode" />
   <xs:element name="PreviousIsCategory" nillable="true" type="PreviousIsCategory" />
   <xs:complexType name="PreviousIsCategory">

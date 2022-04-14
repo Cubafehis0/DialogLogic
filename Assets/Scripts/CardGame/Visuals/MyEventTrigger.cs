@@ -34,12 +34,12 @@ public class MyEventTrigger : EventTrigger
     }
     private void Start()
     {
-        group = transform.parent.GetComponentInParent<EventTriggerGroup>();
+        if(transform.parent) group = transform.parent.GetComponentInParent<EventTriggerGroup>();
     }
 
     private void OnTransformParentChanged()
     {
-        group = transform.parent.GetComponentInParent<EventTriggerGroup>();
+        if (transform.parent) group = transform.parent.GetComponentInParent<EventTriggerGroup>();
     }
 
     public override void OnPointerClick(PointerEventData eventData)

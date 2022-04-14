@@ -53,12 +53,26 @@ public class PileSelectGUISystem : ForegoundGUISystem
         UpdateVisuals();
     }
 
+    public override void Close()
+    {
+        
+        foreach (CardObject cardObject in cardObjects)
+        {
+            GameManager.Instance.CardObjectLibrary.DestroyCard(cardObject.Card);
+        }
+        cardObjects.Clear();
+        cardSelected.Clear();
+        gameObject.SetActive(false);
+        base.Close();
+    }
+
     public void UpdateVisuals()
     {
         title.text = string.Format("选择{0}张，已选择{1}张", minOccurs, cardSelected.Count);
     }
     public void ClickCard(BaseEventData eventData)
     {
+        if (cardSelected.Count >= maxOccurs) return;
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponentInParent<CardObject>();
         if (c == null) return;
         Card card = c.Card;
@@ -84,13 +98,6 @@ public class PileSelectGUISystem : ForegoundGUISystem
                 action?.Execute();
                 Context.PopCardContext();
             }
-            foreach(CardObject cardObject in cardObjects)
-            {
-                GameManager.Instance.CardObjectLibrary.DestroyCard(cardObject.Card);
-            }
-            cardObjects.Clear();
-            cardSelected.Clear();
-            gameObject.SetActive(false);
             Close();
         }
     }

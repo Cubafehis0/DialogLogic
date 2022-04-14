@@ -78,7 +78,11 @@ namespace SemanticTree
                 {
                     return Target.GetPlayerProp(t[1]);
                 }
-                if (t.Count == 1)
+                else if (t.Count == 2 && t[0].Equals("card"))
+                {
+
+                }
+                else if (t.Count == 1)
                 {
                     return PlayerContext.GetPlayerProp(t[0]);
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
 [RequireComponent(typeof(HandLayout))]
 [RequireComponent(typeof(EventTriggerGroup))]
 public class DragHandPileObject : MonoBehaviour
@@ -37,20 +38,31 @@ public class DragHandPileObject : MonoBehaviour
     private void OnAdd(Card card)
     {
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
-        if (cardObject)
-        {
-            cardObject.transform.SetParent(transform, true);
-            cardObject.transform.localPosition = Vector3.zero;
-            //int index = player.Hand.IndexOf(card);
-            cardObject.gameObject.SetActive(true);
-            //cardObject.transform.SetSiblingIndex(index);
-            cardObject.transform.rotation = Quaternion.identity;
-            cardObject.transform.localScale = Vector3.one;
-            Draggable draggable = cardObject.GetComponent<Draggable>();
-            if (draggable == null) cardObject.gameObject.AddComponent<Draggable>();
-        }
-
+        AnimationManager.Instance.AddAnimation(Animating(cardObject.gameObject));
     }
+
+    private IEnumerator Animating(GameObject cardObject)
+    {
+        cardObject.SetActive(true);
+        cardObject.transform.SetParent(transform, true);
+        cardObject.transform.localPosition = Vector3.zero;
+        cardObject.transform.rotation = Quaternion.identity;
+        cardObject.transform.localScale = Vector3.one;
+        Draggable draggable = cardObject.GetComponent<Draggable>();
+        if (draggable == null) cardObject.AddComponent<Draggable>();
+        yield return null;
+    }
+
+    public void SetEnableDragging(bool value)
+    {
+        foreach(var card in player.Hand)
+        {
+            CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
+            Draggable c=o.GetComponent<Draggable>();
+            if (c != null) c.enabled = value;
+        }
+    }
+
     protected virtual void OnRemove(Card card)
     {
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);

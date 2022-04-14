@@ -56,18 +56,21 @@ public class HandSelectGUISystem : ForegoundGUISystem
         minOccurs = context.num;
         maxOccurs = context.num;
         action = context.action;
+        CardGameManager.Instance.handPileObject.SetEnableDragging(false);
         UpdateVisuals();
     }
 
     public override void Close()
     {
         base.Close();
+        CardGameManager.Instance.handPileObject.SetEnableDragging(true);
         gameObject.SetActive(false);
     }
 
     public void SelectCard(BaseEventData eventData)
     {
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
+        if (c == null) return;
         if (cardSelected.Count == maxOccurs) return;
         cardCandidate.Remove(c.Card);
         cardSelected.Add(c.Card);
@@ -76,9 +79,10 @@ public class HandSelectGUISystem : ForegoundGUISystem
 
     public void CancelCard(BaseEventData eventData)
     {
-        Card card = ((PointerEventData)eventData).pointerClick.GetComponent<Card>();
-        cardSelected.Remove(card);
-        cardCandidate.Add(card);
+        CardObject cardObject = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
+        if (cardObject == null) return;
+        cardSelected.Remove(cardObject.Card);
+        cardCandidate.Add(cardObject.Card);
         UpdateVisuals();
     }
 
