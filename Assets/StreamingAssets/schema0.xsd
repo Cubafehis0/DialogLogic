@@ -140,6 +140,7 @@
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element minOccurs="0" maxOccurs="1" name="add_pressure" type="AddPressure" />
+        <xs:element minOccurs="0" maxOccurs="1" name="add_strength" type="AddStrength" />
         <xs:element minOccurs="0" maxOccurs="1" name="add_card_to_hand" type="AddStaticCard2Hand" />
         <xs:element minOccurs="0" maxOccurs="1" name="add_status" type="AddStatus" />
         <xs:element minOccurs="0" maxOccurs="1" name="add_cost_modifier" type="AnonymousModifyCost" />
@@ -538,6 +539,15 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="AddStrength">
+    <xs:complexContent mixed="false">
+      <xs:extension base="Effect">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="IFELSE" />
   <xs:element name="CostModifier" nillable="true" type="CostModifier" />
   <xs:element name="GameConfig" nillable="true" type="GameConfig" />
@@ -572,7 +582,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="type" type="IncidentType" />
-      <xs:element minOccurs="0" maxOccurs="1" name="story" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="times" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="1" name="prerequisite" type="ArrayOfString" />
       <xs:element minOccurs="1" maxOccurs="1" name="priority" type="xs:int" />
@@ -644,6 +653,7 @@
   <xs:element name="TargetTypeEnum" type="TargetTypeEnum" />
   <xs:element name="AddPressure" nillable="true" type="AddPressure" />
   <xs:element name="AddStaticCard2Hand" nillable="true" type="AddStaticCard2Hand" />
+  <xs:element name="AddStrength" nillable="true" type="AddStrength" />
   <xs:element name="AnonymousModifyCost" nillable="true" type="AnonymousModifyCost" />
   <xs:element name="AddStatus" nillable="true" type="AddStatus" />
   <xs:element name="DiscardAllHand" nillable="true" type="DiscardAllHand" />

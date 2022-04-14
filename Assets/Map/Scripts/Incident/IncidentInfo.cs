@@ -11,17 +11,14 @@ public class IncidentInfo
     [XmlElement(ElementName = "type")]
     public IncidentType incidentType;
 
-    [XmlElement(ElementName = "story", IsNullable = false)]
-    public string story;
+    //[XmlElement(ElementName = "story", IsNullable = false)]
+    //public string story;
 
     [XmlElement(ElementName = "times")]
     public int repeatTimes;
 
-    [XmlIgnore]
-    public string incidentPlace;
-
     [XmlArray(ElementName = "prerequisite")]
-    public List<string> conditionMain;
+    public List<string> prerequisites;
 
     [XmlElement(ElementName = "priority")]
     public int priorityInitial;
@@ -42,8 +39,7 @@ public class IncidentInfo
         incidentName = origin.incidentName;
         incidentType = origin.incidentType;
         repeatTimes = origin.repeatTimes;
-        incidentPlace = origin.incidentPlace;
-        conditionMain = origin.conditionMain;
+        prerequisites = origin.prerequisites;
         priorityInitial = origin.priorityInitial;
         bonusStartTime = origin.bonusStartTime;
         bonusEndTime = origin.bonusEndTime;

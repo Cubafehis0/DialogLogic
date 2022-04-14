@@ -16,7 +16,13 @@ public static class IncidentTool
     {
         var res = from incident in incidents
                   where incident.incidentType == IncidentType.Main
+                  && incident.Finished == false
+                  && CheckPrerequisite(incident)
                   select incident;
+        if (res.Count() > 1)
+        {
+            Debug.LogWarning("主线不是单线");
+        }
         return res.Count() > 0 ? res.First() : null;
     }
 
@@ -24,6 +30,8 @@ public static class IncidentTool
     {
         var res = from incident in incidents
                   where incident.incidentType == IncidentType.Branch
+                  && incident.Finished == false
+                  && CheckPrerequisite(incident)
                   orderby CalculateIncidentPriority(incident) descending
                   select incident;
         return res.Count() > 0 ? res.First() : null;
@@ -54,5 +62,21 @@ public static class IncidentTool
         if (dailyIncidents == null || dailyIncidents.Count() == 0) return null;
         Debug.LogError("待实现");
         return dailyIncidents.First();
+    }
+
+    private static bool CheckPrerequisite(Incident incident)
+    {
+        foreach (string name in incident.prerequisites)
+        {
+            if (GameManager.Instance.Map.TryFindIncident(name, out incident))
+            {
+                if (!incident.Finished) return false;
+            }
+            else
+            {
+                Debug.LogWarning("未识别的先决条件");
+            }
+        }
+        return true;
     }
 }

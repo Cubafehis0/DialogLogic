@@ -7,4 +7,6 @@ public interface ICardLibrary
     void DeclareCard(CardInfo cardInfo);
     void DeclareCard(List<CardInfo> cardInfos);
     Card GetCopyByName(string name);
+
+    List<string> GetAllCards();
 }

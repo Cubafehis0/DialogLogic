@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerPacked localPlayer;
     [SerializeField]
-    private string currentStory = null;
+    private Incident currentIncident = null;
     [SerializeField]
     private StaticCardLibrary cardLibrary;
 
@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
     public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
     public PlayerPacked LocalPlayer { get => localPlayer; set => localPlayer = value; }
-    public Map Map { get => map; set => map = value; }
-    public string CurrentStory { get => currentStory; set => currentStory = value; }
+    public Map Map { get => map;}
+    public string CurrentStory { get => currentIncident.incidentName;}
 
     private void Awake()
     {
@@ -108,24 +108,31 @@ public class GameManager : MonoBehaviour
     private void Loadmaps(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        Map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
+        map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
     }
 
     public void EnterPlace(Place place)
     {
-        EnterIncident(IncidentTool.Pickup(place.incidents));
+        Incident incident = IncidentTool.Pickup(place.incidents);
+        if(incident != null)
+        {
+            EnterIncident(incident);
+        }
+        else
+        {
+            Debug.Log("无可用事件");
+        }
     }
 
     public void EnterIncident(Incident incident)
     {
-        CurrentStory = incident.incidentName;
+        currentIncident = incident;
         SceneManager.LoadScene("ControllerSampleScene");
     }
 
-    public void EnterStory(string story)
+    public void CompleteCurrentIncident()
     {
-        CurrentStory = story;
-        SceneManager.LoadScene("ControllerSampleScene");
+        currentIncident.remainingTimes--;
+        SceneManager.LoadScene("PlaceScene");
     }
-
 }

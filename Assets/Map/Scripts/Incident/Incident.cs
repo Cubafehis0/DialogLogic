@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
-
+[Serializable]
 public class Incident : IncidentInfo
 {
-
-    private int remainingTimes;
+    [SerializeField]
+    public int remainingTimes;
 
     public bool Finished
     {
@@ -16,21 +17,5 @@ public class Incident : IncidentInfo
     public Incident(IncidentInfo info) : base(info) 
     {
         remainingTimes = repeatTimes;
-    }
-
-
-
-    public bool CheckCondition()
-    {
-        Debug.LogWarning("´ýÍê³É");
-        return true;
-    }
-
-    public void FinishedIncident()
-    {
-        if (remainingTimes > 0 && --remainingTimes == 0)
-        {
-            //IncidentSystem.Instance.RemoveIncidentsFromNotFinished(this.incidentName);
-        }
     }
 }

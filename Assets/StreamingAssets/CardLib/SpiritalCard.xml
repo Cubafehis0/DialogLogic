@@ -19,7 +19,7 @@
                 <personality>
                     <spirital>5</spirital>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <draw>
                 <num>3</num>
@@ -91,7 +91,7 @@
                 <personality>
                     <immoral>4</immoral>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Normal</dmg_type>
             </modify_personality>
         </on_draw>
         <on_play_card>
@@ -99,7 +99,7 @@
                 <personality>
                     <spirital>3</spirital>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <GUI_select_hand>
                 <num>1</num>
@@ -187,7 +187,7 @@
                 <personality>
                     <inside>-8</inside>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <GUI_select_dynamic_card>
                 <include>draw_pile</include>
@@ -223,7 +223,7 @@
                 <personality>
                     <logic>3</logic>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Normal</dmg_type>
             </modify_personality>
         </on_draw>
         <on_play_card>
@@ -258,7 +258,7 @@
                     <immoral>6</immoral>
                     <aggressive>8</aggressive>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -290,7 +290,7 @@
                 <personality>
                     <spirital>8</spirital>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <draw>
                 <num>2</num>
@@ -341,7 +341,7 @@
                 <personality>
                     <spirital>5</spirital>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -365,7 +365,7 @@
                 <personality>
                     <outside>1</outside>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -391,7 +391,7 @@
                 <personality>
                     <outside>2</outside>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>

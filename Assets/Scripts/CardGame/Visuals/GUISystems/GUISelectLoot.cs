@@ -1,15 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class GUIDiscoverInfo
-{
-    public List<string> cards;
-}
-
-public class GUIDiscoverCard : ForegoundGUISystem
+public class GUISelectLoot : ForegoundGUISystem
 {
     [SerializeField]
     private Text title;
@@ -19,15 +14,19 @@ public class GUIDiscoverCard : ForegoundGUISystem
     public override void Open(object msg)
     {
         base.Open(msg);
-        if (!(msg is GUIDiscoverInfo context)) return;
-        if (context.cards == null) return;
-        title.text = "ѡ��һ�ż����ƿ�";
-        for(int i = 0; i < cardObjects.Count; i++)
+        if (!(msg is List<string> context)) return;
+        if (context == null) return;
+        title.text = "选择一张加入牌库";
+        if (context.Count > cardObjects.Count)
         {
-            cardObjects[i].gameObject.SetActive(i < context.cards.Count);
-            if(i < context.cards.Count)
+            Debug.LogWarning("战利品格数不足，可能有未显示");
+        }
+        for (int i = 0; i < cardObjects.Count; i++)
+        {
+            cardObjects[i].gameObject.SetActive(i < context.Count);
+            if (i < context.Count)
             {
-                cardObjects[i].Card=GameManager.Instance.CardLibrary.GetCopyByName(context.cards[i]);
+                cardObjects[i].Card = GameManager.Instance.CardLibrary.GetCopyByName(context[i]);
             }
         }
     }

@@ -19,6 +19,8 @@ public class GUISystemManager : MonoBehaviour
     [SerializeField]
     private ForegoundGUISystem slotGUISystem;
     [SerializeField]
+    private ForegoundGUISystem selectLootGUISystem;
+    [SerializeField]
     private GUIDialogChoose dialogChooseGUISystem;
 
     private static GUISystemManager instance = null;
@@ -52,6 +54,11 @@ public class GUISystemManager : MonoBehaviour
     public void OpenTendencyChoosePanel(HashSet<PersonalityType> types, int value)
     {
         tendencySelectGUISystem.Open(new TendencyAddGUIContext(types, value,true));
+    }
+
+    public void OpenSelectLootGUISystem(List<string> loots)
+    {
+        selectLootGUISystem.Open(loots);
     }
 
     public void BorrowSlots(Transform borrower)

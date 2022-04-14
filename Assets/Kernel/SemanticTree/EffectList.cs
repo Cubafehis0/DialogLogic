@@ -17,6 +17,7 @@ namespace SemanticTree
     public class EffectList : IEffect
     {
         [XmlElement(typeof(AddPressure), ElementName = "add_pressure")]
+        [XmlElement(typeof(AddStrength), ElementName = "add_strength")]
         [XmlElement(typeof(AddStaticCard2Hand), ElementName = "add_card_to_hand")]
         [XmlElement(typeof(AddStatus), ElementName = "add_status")]
         [XmlElement(typeof(AnonymousModifyCost), ElementName = "add_cost_modifier")]
@@ -30,7 +31,7 @@ namespace SemanticTree
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
 
-        [XmlElement(typeof(GUISelectHand), ElementName ="GUI_select_hand")]
+        [XmlElement(typeof(GUISelectHand), ElementName = "GUI_select_hand")]
         [XmlElement(typeof(GUISelectDynamicCard), ElementName = "GUI_select_dynamic_card")]
         [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]
         [XmlElement(typeof(RandomDynamicCard), ElementName = "random_dynamic_card")]
@@ -48,7 +49,7 @@ namespace SemanticTree
         [XmlElement(typeof(GUISelectCurrentSlot), ElementName = "GUI_select_choice")]
         [XmlElement(typeof(AllChoiceRandomReveal), ElementName = "all_random_reveal")]
 
-        [XmlElement(typeof(ChoiceRemoveCondition), ElementName ="choice_remove_condition")]
+        [XmlElement(typeof(ChoiceRemoveCondition), ElementName = "choice_remove_condition")]
         [XmlElement(typeof(ChoiceReveal), ElementName = "choice_reveal")]
         [XmlElement(typeof(ChoiceRevealAll), ElementName = "choice_reveal_all")]
         [XmlElement(typeof(ChoiceRevealRandom), ElementName = "choice_reveal_random")]

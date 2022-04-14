@@ -48,9 +48,10 @@ public class CardGameManager : MonoBehaviour
     private IEnumerator TurnCoroutine()
     {
         enemyController.StartTurn();
-        for (int i = 0; i < 100; i++)
+        int i;
+        for (i = 0; i < 100; i++)
         {
-            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
+            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
             turn++;
             isPlayerTurn = false;
             Context.PushPlayerContext(enemy);
@@ -61,7 +62,7 @@ public class CardGameManager : MonoBehaviour
             Context.PopPlayerContext();
 
 
-            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) yield break;
+            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
             isPlayerTurn = true;
             Context.PushPlayerContext(playerState);
             Context.Target = enemy;
@@ -70,7 +71,17 @@ public class CardGameManager : MonoBehaviour
             Context.Target = null;
             Context.PopPlayerContext();
         }
-        Debug.LogWarning("回合数达到上限100");
+        if (i == 100) Debug.LogWarning("回合数达到上限100");
+        GUISystemManager.Instance.OpenSelectLootGUISystem(GetRandomLoots());
+        yield return new WaitUntil(() => ForegoundGUISystem.current == null);
+        GameManager.Instance.CompleteCurrentIncident();
+    }
+
+    public List<string> GetRandomLoots()
+    {
+        List<string> allCards = GameManager.Instance.CardLibrary.GetAllCards();
+        MyMath.Shuffle(allCards);
+        return allCards.GetRange(0, 3);
     }
 
 

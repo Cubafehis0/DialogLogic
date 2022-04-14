@@ -83,5 +83,8 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
         }
     }
 
-
+    public List<string> GetAllCards()
+    {
+        return ((ICardLibrary)library).GetAllCards();
+    }
 }

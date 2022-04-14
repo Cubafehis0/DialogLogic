@@ -19,7 +19,7 @@
                 <personality>
                     <moral>3</moral>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -106,7 +106,7 @@
                 <personality>
                     <moral>2</moral>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>

@@ -89,7 +89,7 @@
                 <personality>
                     <logic>4</logic>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -293,7 +293,7 @@
                 <personality>
                     <logic>5</logic>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -312,7 +312,7 @@
                 <personality>
                     <logic>3</logic>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -369,7 +369,7 @@
                 <personality>
                     <logic>3</logic>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -387,7 +387,7 @@
                 <personality>
                     <outside>-1</outside>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <!-- 揭示性格补正未完成-->
         </on_play_card>
@@ -406,7 +406,7 @@
                 <personality>
                     <outside>-1</outside>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
             <GUI_select_choice>
                 <action>

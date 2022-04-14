@@ -45,6 +45,13 @@ public class CardLibrary : ICardLibrary
         return newCard;
     }
 
-
-
+    public List<string> GetAllCards()
+    {
+        List<string> res = new List<string>();
+        foreach (string name in cardDic.Keys)
+        {
+            res.Add(name);
+        }
+        return res;
+    }
 }

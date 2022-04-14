@@ -46,7 +46,7 @@
                     <immoral>5</immoral>
                     <aggressive>5</aggressive>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
@@ -81,7 +81,7 @@
                 <personality>
                     <immoral>5</immoral>
                 </personality>
-                <duration>-1</duration>
+                <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>
     </define_card>
