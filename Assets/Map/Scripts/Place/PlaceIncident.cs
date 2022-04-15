@@ -16,8 +16,8 @@ public class PlaceIncident
 
     public string GetIncident()
     {
-        //throw new System.NotImplementedException();
-        return "ControllerSampleScene";
+        Debug.Log(IncidentTool.CalculateIncidents(incidents));
+        return IncidentTool.CalculateIncidents(incidents).incidentName;
     }
 
     public void AddIncident(string incidentName)
@@ -32,7 +32,7 @@ public class PlaceIncident
             Debug.Log(name + " add incident:" + incidentName);
         }
     }
-    public void DeleteIncident(string incidentName)
+    public void RemoveIncident(string incidentName)
     {
         if (incidents.Contains(incidentName))
         {

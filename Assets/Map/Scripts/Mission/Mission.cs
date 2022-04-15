@@ -32,9 +32,42 @@ public class Mission : MonoBehaviour
         int triggerDate, string triggerIncident, string conditionIncident, string conditionKey, string conditionFavor, string conditionReputation,
         int deadline, string deadIncident, string missionKey, string missionIncident)
     {
+        this.missionName = missionName;
+        this.missionType = missionType;
+        this.description = description;
+        this.promulgator = promulgator;
 
+        this.relevantIncident = new List<string>(relevantIncident.Split(';'));
+        this.triggerDate = triggerDate;
+        this.triggerIncident = new List<string>(triggerIncident.Split(';'));
+        this.conditionIncident = new List<string>(conditionIncident.Split(';'));
+        this.conditionKey = new List<string>(conditionKey.Split(';'));
+        this.conditionFavor = new List<string>(conditionFavor.Split(';'));
+        this.conditionReputation = new List<string>(conditionReputation.Split(';'));
+        this.deadline = deadline;
+        this.deadIncident = new List<string>(deadIncident.Split(';'));
+        this.missionKey = new List<string>(missionKey.Split(';'));
+        this.missionIncident = new List<string>(missionIncident.Split(';'));
     }
+    public Mission(MissionEntity m)
+    {
+        this.missionName = m.mission;
+        this.missionType = TryGetMissionType(m.type);
+        this.description = m.description;
+        this.promulgator = m.promulgator;
 
+        this.relevantIncident = new List<string>(m.relevant_incident.Split(';'));
+        this.triggerDate = IncidentTool.StringToInt(m.trigger_date);
+        this.triggerIncident = new List<string>(m.trigger_incident.Split(';'));
+        this.conditionIncident = new List<string>(m.condition_incident.Split(';'));
+        this.conditionKey = new List<string>(m.condition_key.Split(';'));
+        this.conditionFavor = new List<string>(m.condition_favor.Split(';'));
+        this.conditionReputation = new List<string>(m.condition_reputation.Split(';'));
+        this.deadline = IncidentTool.StringToInt(m.deadline);
+        this.deadIncident = new List<string>(m.dead_incident.Split(';'));
+        this.missionKey = new List<string>(m.mission_key.Split(';'));
+        this.missionIncident = new List<string>(m.mission_incident.Split(';'));
+    }
     public MissionState CheckMissionState()
     {
         MissionState state = this.missionState;
@@ -76,9 +109,8 @@ public class Mission : MonoBehaviour
 
         if (this.missionState != state)
         {
-
+            return CheckMissionState();
         }
-
         return this.missionState;
     }
     
@@ -96,5 +128,14 @@ public class Mission : MonoBehaviour
         if (IncidentSystem.Instance.IsFinishedAllIncidents(deadIncident))
             return true;
         return false;
+    }
+    private MissionType TryGetMissionType(string s)
+    {
+        if (s.Equals("main")) return MissionType.Main;
+        if (s.Equals("branch")) return MissionType.Branch;
+        if (s.Equals("lambda")) return MissionType.Lambda;
+        if (s.Equals("daily")) return MissionType.Daily;
+        Debug.LogError("worong missiontype:" + s);
+        return MissionType.Daily;
     }
 }

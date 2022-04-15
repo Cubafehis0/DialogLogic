@@ -60,8 +60,11 @@ public class NotificationBar : MonoBehaviour
     public void AddMissionToExpandButton(Mission mission)
     {
         if (!missions.Contains(mission))
+        {
             missions.Add(mission);
-        
+            Debug.Log(mission.missionName);
+        }
+
     }
 
     private void ShowMissions()
@@ -69,7 +72,10 @@ public class NotificationBar : MonoBehaviour
         foreach (Mission mission in missions)
         {
             GameObject gb = Instantiate(missionPrefab, expandPanelContent.transform);
-            gb.GetComponent<Button>().onClick.AddListener(delegate { OnClickMissionButton(mission); });
+            gb.GetComponentInChildren<Text>().text = mission.missionName;
+            gb.GetComponentInChildren<Button>().onClick.AddListener(delegate { OnClickMissionButton(mission); });
+            //Debug.Log(mission.missionName);
+            //Debug.Log(gb.GetComponentInChildren<Text>().gameObject.name);
         }
     }
 
@@ -82,6 +88,7 @@ public class NotificationBar : MonoBehaviour
 
     private void OnClickMissionButton(Mission mission)
     {
+        Debug.Log("before missiontype:" + mission.missionState);
         if (mission.missionState == MissionState.Opened)
         {
             mission.missionState = MissionState.UnderWay;
@@ -93,5 +100,7 @@ public class NotificationBar : MonoBehaviour
             missions.Remove(mission);
             mission.CheckMissionState();
         }
+        Debug.Log("after missiontype:" + mission.missionState);
+
     }
 }

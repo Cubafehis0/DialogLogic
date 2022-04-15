@@ -4,21 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class MapHoldingsState : MapStateScript
 {
-    public override void OnMouseDown()
+    public void OnMouseDown()
     {
         //Debug.Log("click holdings");
     }
 
-    public override void OnMouseEnter()
+    public void OnMouseEnter()
     {
-        if (mapScript)
+        if (mapScript && !IsOnUI())
             mapScript.MapState = (int)mapScript.MapState < 4 ? MapState.MapDayHoldings : MapState.MapNightHoldings;
         //Debug.Log("enter holdings");
     }
 
-    public override void OnMouseExit()
+    public void OnMouseExit()
     {
-        if (mapScript)
+        if (mapScript /*&& !IsOnUI()*/)
             mapScript.MapState = (int)mapScript.MapState < 4 ? MapState.MapDay : MapState.MapNight;
         //Debug.Log("exit holdings");
     }

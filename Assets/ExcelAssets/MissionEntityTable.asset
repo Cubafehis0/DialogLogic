@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3cfd19263e58424a930728b427cf036, type: 3}
+  m_Name: MissionEntityTable
+  m_EditorClassIdentifier: 
+  Sheet1:
+  - mission: "\u6536\u79DF1"
+    type: main
+    description: 
+    promulgator: "\u9A6C\u4ED4"
+    relevant_incident: "(\u5E73\u6C11\u533A1\uFF0C\u5E73\u6C11\u533A2\uFF0C\u5E73\u6C11\u533A3)"
+    trigger_date: 1
+    trigger_incident: 
+    condition_incident: 
+    condition_key: 
+    condition_favor: 
+    condition_reputation: 
+    deadline: 10
+    dead_incident: 
+    mission_key: 
+    mission_incident: "\u5E73\u6C11\u533A3"
+    level_A: E_one
+    level_B: E_one
+    level_C: E_one
+    award_card: "(\u683C\u74E6\u65AF)"
+    award_fragment: 0
+    award_reputation: 0
+    award_favor: 0
+    award_information: 0

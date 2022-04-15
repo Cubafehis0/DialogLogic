@@ -12,6 +12,7 @@ public interface IPlaceSystem
 
     public void AddIncidentToPlace(List<Incident> incident, List<string> placeName);
     public void AddPlace(PlaceIncident placeIncident);
+    public void RemoveIncidentToPlace(string incident, string placeName);
 }
 public class PlaceSystem : MonoBehaviour, IPlaceSystem
 {
@@ -48,13 +49,25 @@ public class PlaceSystem : MonoBehaviour, IPlaceSystem
             {
                 placeIncident.AddIncident(incident);
             }
-           
         }
     }
 
 
     public void AddIncidentToPlace(List<Incident> incident, List<string> placeName)
     {
-        
+        for(int i = 0; i < incident.Count; i++)
+        {
+            AddIncidentToPlace(incident[i].incidentName, placeName[i]);
+        }
+    }
+    public void RemoveIncidentToPlace(string incident,string placeName)
+    {
+        if (placesDic != null)
+        {
+            if (placesDic.TryGetValue(placeName, out PlaceIncident placeIncident))
+            {
+                placeIncident.RemoveIncident(incident);
+            }
+        }
     }
 }

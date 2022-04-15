@@ -15,14 +15,14 @@ public class MapScript : MonoBehaviour
     private MapState mapState = MapState.MapDay;
 
     //djc:如果不public的话，UnityEvent是不必要的，内部直接调用就可以了
-    private UnityEvent OnChooseState = new UnityEvent();
+    public UnityEvent timePassEvent = new UnityEvent();
     public MapState MapState
     {
         get => mapState;
         set
         {
             mapState = value;
-            OnChooseState.Invoke();
+            timePassEvent.Invoke();
         }
     }
     //djc：考虑用animation的状态机
@@ -34,13 +34,13 @@ public class MapScript : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        OnChooseState.AddListener(UpdateMapState);
         if (mapSpriteDictionnary.Count != 8)
         {
             mapSpriteDictionnary.Clear();
             for (int i = 0; i < 8; i++)
                 mapSpriteDictionnary.Add((MapState)i, mapSprites[i]);
         }
+        timePassEvent.AddListener(UpdateMapState);
     }
     private void UpdateMapState()
     {

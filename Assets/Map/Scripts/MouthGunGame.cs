@@ -8,16 +8,29 @@ using UnityEngine;
 /// </summary>
 public class MouthGunGame : MonoBehaviour
 {
+    [SerializeField]
+    private IncidentEntityTable incidentEntityTable;
+    [SerializeField]
+    private MissionEntityTable missionEntityTable;
     private static MouthGunGame instance = null;
     public MouthGunGame Instance
     {
         get => instance;
     }
+    public IIncidentSystem incidentSystem;
+    public IPlaceSystem placeSystem;
+    public IMissionSystem missionSystem;
+    private void Start()
+    {
+        incidentSystem = IncidentSystem.Instance;
+        placeSystem = PlaceSystem.Instance;
+        missionSystem = MissionSystem.Instance;
+        incidentSystem.InitIncidentSystem(incidentEntityTable.Sheet1);
+        missionSystem.InitMissionSystem(missionEntityTable.Sheet1);
+    }
+    private void Update()
+    {
+        missionSystem.UpdateMissionSystem();
 
-    //djc:
-    //要么改为属性get，要么写成SerializeField Mono然后拖进来
-    //下面这么写全都是null
-    public IIncidentSystem incidentSystem = IncidentSystem.Instance;
-    public IPlaceSystem placeSystem = PlaceSystem.Instance;
-    public IMissionSystem missionSystem = MissionSystem.Instance;
+    }
 }
