@@ -32,6 +32,8 @@ public class HandLayout : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
 
+
+    private bool lockTransform = false;
     private bool lockFocus = false;
     private float maxLength;
     private float[] cardsArcOffset;
@@ -50,7 +52,9 @@ public class HandLayout : MonoBehaviour
                 {
                     focusedCard.transform.localScale = Vector3.one;
                     CardObject cardObject = focusedCard.GetComponent<CardObject>();
-                    if (cardObject) cardObject.OrderInLayer = cardObject.transform.GetSiblingIndex();
+                    if (cardObject) cardObject.OrderInLayer = 0;
+                    //lockTransform = false;
+                    //focusedCard.transform.SetParent(transform, true);
                 }
                 if (value && value.transform.IsChildOf(transform))
                 {
@@ -105,13 +109,15 @@ public class HandLayout : MonoBehaviour
 
     private void OnTransformChildrenChanged()
     {
+        if (lockTransform) return;
+        UpdateVisuals();
+    }
+
+    public void UpdateVisuals()
+    {
         RecalculatePosition();
         lockFocus = false;
         FocusedCard = null;
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            transform.GetChild(i).GetComponent<CardObject>().OrderInLayer = i;
-        }
     }
     private void OnEnable()
     {
@@ -120,7 +126,7 @@ public class HandLayout : MonoBehaviour
 
     private void Update()
     {
-        //RecalculatePosition();
+        RecalculatePosition();
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
@@ -138,7 +144,7 @@ public class HandLayout : MonoBehaviour
 
     public void Focus(BaseEventData eventData)
     {
-        FocusedCard = ((PointerEventData)eventData).pointerEnter.transform;
+        FocusedCard = ((PointerEventData)eventData).pointerEnter.GetComponentInParent<CardObject>().transform;
     }
 
     public void ResetFocus(BaseEventData eventData)

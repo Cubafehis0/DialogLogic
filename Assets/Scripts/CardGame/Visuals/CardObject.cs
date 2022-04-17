@@ -19,12 +19,26 @@ public class CardObject : MonoBehaviour
     private Text eftDescText;
     [SerializeField]
     private Text memeText;
-    //private Canvas cardUICanvas = null;
+    private Canvas cardUICanvas = null;
     private int orderInLayer = 0;
+    [SerializeField]
+    private bool draggable = false;
+    public bool Draggable
+    {
+        get => draggable;
+        set
+        {
+            draggable = value;
+            var c = GetComponent<Draggable>();
+            if(c==null) c=gameObject.AddComponent<Draggable>();
+            c.enabled = value;
+        }
+    }
+
 
     private void Awake()
     {
-        //cardUICanvas = GetComponent<Canvas>();
+        cardUICanvas = GetComponent<Canvas>();
     }
 
     public int OrderInLayer
@@ -32,8 +46,8 @@ public class CardObject : MonoBehaviour
         get => orderInLayer;
         set
         {
-            //if (cardUICanvas == null) cardUICanvas = GetComponent<Canvas>();
-            //cardUICanvas.sortingOrder = value + 10;
+            cardUICanvas.overrideSorting = value > 0;
+            cardUICanvas.sortingOrder = value;
             orderInLayer = value;
         }
     }

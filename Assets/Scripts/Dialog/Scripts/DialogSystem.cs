@@ -20,11 +20,15 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
 
     public bool ChoiceTrigger { get; set; } = false;
 
+    public bool EndTrigger { get; set; } = false;
+
     public void Open(TextAsset textAsset)
     {
         if (textAsset != null)
         {
             inkStory = new InkStory(textAsset);
+            ChoiceTrigger = false;
+            EndTrigger = false;
             MoveNext();
         }
         else
@@ -64,6 +68,10 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
         else if(inkStory.NextState == InkState.Choice)
         {
             ChoiceTrigger = true;
+        }
+        else if (inkStory.NextState == InkState.Finish)
+        {
+            EndTrigger = true;
         }
     }
 }

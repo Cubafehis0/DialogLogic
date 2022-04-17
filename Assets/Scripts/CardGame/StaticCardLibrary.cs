@@ -21,6 +21,20 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
     [SerializeField]
     private CardObject sampleCard;
 
+    private static StaticCardLibrary instance;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void Construct()
     {
         ((ICardLibrary)library).Construct();

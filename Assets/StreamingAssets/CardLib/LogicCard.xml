@@ -312,6 +312,7 @@
                 <personality>
                     <logic>3</logic>
                 </personality>
+                <duration>3</duration>
                 <dmg_type>Magic</dmg_type>
             </modify_personality>
         </on_play_card>

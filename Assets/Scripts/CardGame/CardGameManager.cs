@@ -32,6 +32,12 @@ public class CardGameManager : MonoBehaviour
         get => instance;
     }
 
+    void Awake()
+    {
+        instance = this;
+        ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
+    }
+
     private void Start()
     {
         if (GameManager.Instance.CurrentStory == null)
@@ -47,8 +53,7 @@ public class CardGameManager : MonoBehaviour
 
     private IEnumerator TurnCoroutine()
     {
-        enemyController.StartTurn();
-        int i;
+        int i = 0;
         for (i = 0; i < 100; i++)
         {
             if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
@@ -61,15 +66,18 @@ public class CardGameManager : MonoBehaviour
             Context.Target = null;
             Context.PopPlayerContext();
 
+            do
+            {
+                if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
+                isPlayerTurn = true;
+                Context.PushPlayerContext(playerState);
+                Context.Target = enemy;
+                playerController.StartTurn();
+                yield return new WaitUntil(() => playerController.EndTurnTrigger);
+                Context.Target = null;
+                Context.PopPlayerContext();
+            } while (((TurnControllerPlayerDialog)playerController).additionalTurn);
 
-            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
-            isPlayerTurn = true;
-            Context.PushPlayerContext(playerState);
-            Context.Target = enemy;
-            playerController.StartTurn();
-            yield return new WaitUntil(() => playerController.EndTurnTrigger);
-            Context.Target = null;
-            Context.PopPlayerContext();
         }
         if (i == 100) Debug.LogWarning("回合数达到上限100");
         GUISystemManager.Instance.OpenSelectLootGUISystem(GetRandomLoots());
@@ -111,9 +119,5 @@ public class CardGameManager : MonoBehaviour
 
     public int Turn { get => turn; }
 
-    void Awake()
-    {
-        instance = this;
-        ExpressionAnalyser.ExpressionParser.VariableTable = new Context();
-    }
+
 }

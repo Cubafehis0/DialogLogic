@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
         LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));
+        localPlayer.PlayerInfo.Health = localPlayer.PlayerInfo.MaxHealth;
     }
 
     private void Update()

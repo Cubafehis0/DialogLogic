@@ -6,53 +6,26 @@
             <name>地点1</name>
             <incidents>
                 <incident>
-                    <name>EG1-2</name>
+                    <name>DL1-1</name>
                     <type>main</type>
                     <times>1</times>
                     <priority>1</priority>
                 </incident>
                 <incident>
-                    <name>EG1-1</name>
+                    <name>DL1-2</name>
                     <type>main</type>
                     <times>1</times>
                     <prerequisite>
-                        <string>EG1-2</string>
+                        <string>DL1-1</string>
                     </prerequisite>
                     <priority>1</priority>
                 </incident>
                 <incident>
-                    <name>EG1-3</name>
+                    <name>DL1-3</name>
                     <type>main</type>
                     <times>1</times>
                     <prerequisite>
-                        <string>EG1-2</string>
-                    </prerequisite>
-                    <priority>1</priority>
-                </incident>
-                <incident>
-                    <name>EG1-4</name>
-                    <type>main</type>
-                    <times>1</times>
-                    <prerequisite>
-                        <string>EG1-3</string>
-                    </prerequisite>
-                    <priority>1</priority>
-                </incident>
-                <incident>
-                    <name>EG1-5</name>
-                    <type>main</type>
-                    <times>1</times>
-                    <prerequisite>
-                        <string>EG1-4</string>
-                    </prerequisite>
-                    <priority>1</priority>
-                </incident>
-                <incident>
-                    <name>EG1-6</name>
-                    <type>main</type>
-                    <times>1</times>
-                    <prerequisite>
-                        <string>EG1-5</string>
+                        <string>DL1-2</string>
                     </prerequisite>
                     <priority>1</priority>
                 </incident>

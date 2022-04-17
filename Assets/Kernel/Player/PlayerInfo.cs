@@ -57,7 +57,4 @@ public class PlayerInfo
     [XmlIgnore]
     public int Pressure { get => pressure; set => pressure = value; }
 
-    [XmlIgnore]
-    public int san;
-
 }

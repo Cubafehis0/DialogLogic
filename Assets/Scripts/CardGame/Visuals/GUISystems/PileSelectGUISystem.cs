@@ -35,8 +35,22 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
     public override void Open(object msg)
     {
-        base.Open(msg);
         if (!(msg is PileSelectGUIContext context)) return;
+        if(context.num>=context.cards.Count)
+        {
+            foreach (Card card in context.cards)
+            {
+                Context.PushCardContext(card);
+                action?.Execute();
+                Context.PopCardContext();
+            }
+            return;
+        }
+        if (context.num == 0)
+        {
+            return;
+        }
+        base.Open(msg);
         cardObjects.Clear();
         cardSelected.Clear();
         minOccurs = context.num;
@@ -72,19 +86,23 @@ public class PileSelectGUISystem : ForegoundGUISystem
     }
     public void ClickCard(BaseEventData eventData)
     {
-        if (cardSelected.Count >= maxOccurs) return;
+
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponentInParent<CardObject>();
         if (c == null) return;
         Card card = c.Card;
         if (cardSelected.Contains(card))
         {
+
             cardSelected.Remove(card);
             UpdateVisuals();
         }
         else
         {
-            cardSelected.Add(card);
-            UpdateVisuals();
+            if (cardSelected.Count < maxOccurs)
+            {
+                cardSelected.Add(card);
+                UpdateVisuals();
+            }
         }
     }
 

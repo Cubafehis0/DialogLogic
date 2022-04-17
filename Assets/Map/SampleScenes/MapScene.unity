@@ -855,97 +855,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406497263}
   m_CullTransparentMesh: 1
---- !u!1 &508107586
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 508107589}
-  - component: {fileID: 508107588}
-  - component: {fileID: 508107587}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &508107587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508107586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 108b174100637344ab29c72ce8203c12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerInfo:
-    personality:
-      inner: 0
-      logic: 0
-      moral: 0
-      roundabout: 0
-    baseMaxCardNum: 10
-    drawNum: 10
-    pressure: 0
-    maxPressure: 0
-    maxHealth: 0
-    energy: 0
-    everyTurnEnergy: 0
-    cardSet: []
---- !u!114 &508107588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508107586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca79ac3cc415ea3498aefabfc90ccb7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  choiceSprites:
-    m_keys: 00000000020000000100000003000000
-    m_values:
-    - {fileID: -6313706109885147119, guid: de7f82318ba7fc24eaf874a2a2801c9a, type: 3}
-    - {fileID: 4224345114235052697, guid: a9eaaab6b140c594fa944659c433c380, type: 3}
-    - {fileID: -632368264678931899, guid: fe6a13dbef623974d9277752826213a3, type: 3}
-    - {fileID: -5806670205437458361, guid: 50cb24e509418544a9bb4e520c3ef09a, type: 3}
-  conditonCover: {fileID: -7219779117521994057, guid: 7bf4d43d7f3eab04bacc0a1e9f03a459,
-    type: 3}
-  conditionIcons:
-    m_keys: 0000000001000000020000000300000004000000050000000600000007000000
-    m_values:
-    - {fileID: 4739333493300346029, guid: a7e4348ab92c549499838bd79792ee06, type: 3}
-    - {fileID: -2449705991513488218, guid: 5e544abea3c63574b9c5dd53b4437ffa, type: 3}
-    - {fileID: 1825992730559784410, guid: 8d88aef9ab592b04a87623097977d8ac, type: 3}
-    - {fileID: 4962203558659301934, guid: 9c58e67b3fc681145a507e90f6f11438, type: 3}
-    - {fileID: -3176266672014257093, guid: 40ea4578df3e1bc4f8a8cabab491f453, type: 3}
-    - {fileID: -6244521744457365529, guid: 964db68e83263c246bed0f49299e7fe9, type: 3}
-    - {fileID: -3501970536496395052, guid: d7843b60fc177cd40ac4f71152f69eda, type: 3}
-    - {fileID: -5439979525158351322, guid: 2657df68c4458b04c9a6a356038da822, type: 3}
-  localPlayer: {fileID: 508107587}
---- !u!4 &508107589
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 508107586}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &770670107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,6 +956,122 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &856413265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856413269}
+  - component: {fileID: 856413268}
+  - component: {fileID: 856413267}
+  - component: {fileID: 856413266}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &856413266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856413265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c5a72d67ef0ce41b73d46c6f5aaaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sampleCard: {fileID: 2057728378944601323, guid: 8f3e45fa873567346afeb36426b5aec6,
+    type: 3}
+--- !u!114 &856413267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856413265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108b174100637344ab29c72ce8203c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerInfo:
+    personality:
+      inner: 0
+      logic: 0
+      moral: 0
+      roundabout: 0
+    baseMaxCardNum: 10
+    drawNum: 10
+    pressure: 0
+    maxPressure: 0
+    maxHealth: 0
+    health: 0
+    energy: 0
+    everyTurnEnergy: 0
+    cardSet: []
+    san: 0
+--- !u!114 &856413268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856413265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca79ac3cc415ea3498aefabfc90ccb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choiceSprites:
+    m_keys: 00000000020000000100000003000000
+    m_values:
+    - {fileID: -6313706109885147119, guid: de7f82318ba7fc24eaf874a2a2801c9a, type: 3}
+    - {fileID: 4224345114235052697, guid: a9eaaab6b140c594fa944659c433c380, type: 3}
+    - {fileID: -632368264678931899, guid: fe6a13dbef623974d9277752826213a3, type: 3}
+    - {fileID: -5806670205437458361, guid: 50cb24e509418544a9bb4e520c3ef09a, type: 3}
+  conditonCover: {fileID: -7219779117521994057, guid: 7bf4d43d7f3eab04bacc0a1e9f03a459,
+    type: 3}
+  conditionIcons:
+    m_keys: 0000000001000000020000000300000004000000050000000600000007000000
+    m_values:
+    - {fileID: 4739333493300346029, guid: a7e4348ab92c549499838bd79792ee06, type: 3}
+    - {fileID: -2449705991513488218, guid: 5e544abea3c63574b9c5dd53b4437ffa, type: 3}
+    - {fileID: 1825992730559784410, guid: 8d88aef9ab592b04a87623097977d8ac, type: 3}
+    - {fileID: 4962203558659301934, guid: 9c58e67b3fc681145a507e90f6f11438, type: 3}
+    - {fileID: -3176266672014257093, guid: 40ea4578df3e1bc4f8a8cabab491f453, type: 3}
+    - {fileID: -6244521744457365529, guid: 964db68e83263c246bed0f49299e7fe9, type: 3}
+    - {fileID: -3501970536496395052, guid: d7843b60fc177cd40ac4f71152f69eda, type: 3}
+    - {fileID: -5439979525158351322, guid: 2657df68c4458b04c9a6a356038da822, type: 3}
+  localPlayer: {fileID: 856413267}
+  currentIncident:
+    incidentName: 
+    incidentType: 0
+    repeatTimes: 0
+    prerequisites: []
+    priorityInitial: 0
+    remainingTimes: 0
+  cardLibrary: {fileID: 856413266}
+--- !u!4 &856413269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856413265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1028549230
 GameObject:
   m_ObjectHideFlags: 0

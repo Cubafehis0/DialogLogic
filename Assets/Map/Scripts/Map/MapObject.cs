@@ -18,7 +18,7 @@ public class MapObject : MonoBehaviour
             mapObjects[i].gameObject.SetActive(i < map.placesDic.Count);
             if (i < map.placesDic.Count)
             {
-                mapObjects[i].place = new Place(map.placesDic[i]);
+                mapObjects[i].place = map.placesDic[i];
             }
         }
     }

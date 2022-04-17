@@ -15,6 +15,7 @@ public class Draggable : MonoBehaviour, IDragHandler,IEndDragHandler
         rectTransform = GetComponent<RectTransform>();
         canvasGroup.blocksRaycasts = true;
     }
+
     public void OnDrag(PointerEventData eventData)
     {
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;

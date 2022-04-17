@@ -10,7 +10,7 @@ public class TurnControllerEnemyDialog : TurnController
     {
         get
         {
-            return dialogSystem.ChoiceTrigger;
+            return dialogSystem.ChoiceTrigger || dialogSystem.EndTrigger;
         }
     }
 

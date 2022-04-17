@@ -19,7 +19,7 @@ public class EnergyLabelView : MonoBehaviour
         player.OnEnergyChange.RemoveListener(UpdateLabel);
     }
 
-    private void Start()
+    private void Update()
     {
         UpdateLabel();
     }

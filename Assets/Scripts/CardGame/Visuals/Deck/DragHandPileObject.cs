@@ -45,11 +45,9 @@ public class DragHandPileObject : MonoBehaviour
     {
         cardObject.SetActive(true);
         cardObject.transform.SetParent(transform, true);
-        cardObject.transform.localPosition = Vector3.zero;
         cardObject.transform.rotation = Quaternion.identity;
         cardObject.transform.localScale = Vector3.one;
-        Draggable draggable = cardObject.GetComponent<Draggable>();
-        if (draggable == null) cardObject.AddComponent<Draggable>();
+        cardObject.GetComponent<CardObject>().Draggable = true ;
         yield return null;
     }
 
@@ -58,8 +56,7 @@ public class DragHandPileObject : MonoBehaviour
         foreach(var card in player.Hand)
         {
             CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
-            Draggable c=o.GetComponent<Draggable>();
-            if (c != null) c.enabled = value;
+            o.Draggable = value;
         }
     }
 
@@ -68,7 +65,7 @@ public class DragHandPileObject : MonoBehaviour
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
         {
-            Destroy(cardObject.GetComponent<Draggable>());
+            cardObject.Draggable = false;
         }
 
     }

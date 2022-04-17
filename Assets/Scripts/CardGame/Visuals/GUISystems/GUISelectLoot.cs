@@ -31,15 +31,14 @@ public class GUISelectLoot : ForegoundGUISystem
         }
     }
 
-    public void Add2CardSet()
+    public void SelectCard(BaseEventData eventData)
     {
-        GameObject o = EventSystem.current.currentSelectedGameObject;
-        if (o == null) return;
-        CardObject c = o.GetComponentInParent<CardObject>();
+        CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
             GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
+            Close();
         }
     }
 }

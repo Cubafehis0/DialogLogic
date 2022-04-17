@@ -70,6 +70,7 @@ public class MenuAnimator : MonoBehaviour
     public void SwitchDayNight()
     {
         isDay = !isDay;
+        UpdateMapState();
     }
 
     private void Awake()

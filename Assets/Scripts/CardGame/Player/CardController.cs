@@ -145,7 +145,8 @@ public class CardController : MonoBehaviour, ICardController
     /// <returns>是否成功出牌</returns>
     public void PlayCard(Card card)
     {
-        if (!ForegoundGUISystem.current)
+        //有问题
+        if (!ForegoundGUISystem.current && CardGameManager.Instance.isPlayerTurn)
         {
             AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card));
         }
