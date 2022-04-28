@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class NotificationBar : MonoBehaviour
 {
@@ -10,11 +11,9 @@ public class NotificationBar : MonoBehaviour
     [SerializeField]
     private Text incidentText;
     [SerializeField]
-    private Button expandButton;
-    [SerializeField]
     private GameObject expandPanel;
     [SerializeField]
-    private GameObject expandPanelContent;
+    private Transform expandPanelContent;
     [SerializeField]
     private GameObject missionPrefab;
 
@@ -22,6 +21,7 @@ public class NotificationBar : MonoBehaviour
     [SerializeField]
     private List<Mission> missions = new List<Mission>();
 
+    private List<GameObject> missionObjects = new List<GameObject>();
     private static NotificationBar instance = null;
     public static NotificationBar Instance
     {
@@ -39,10 +39,9 @@ public class NotificationBar : MonoBehaviour
     private void Start()
     {
         expandPanel.SetActive(false);
-        expandButton.onClick.AddListener(OnClickExpandButton);
     }
 
-    private void OnClickExpandButton()
+    public void ExpandMissionPanel()
     {
         if (expandPanel.activeSelf)
         {
@@ -51,7 +50,7 @@ public class NotificationBar : MonoBehaviour
         }
         else
         {
-            expandPanel.SetActive(true);          
+            expandPanel.SetActive(true);
             ShowMissions();
         }
 
@@ -61,15 +60,20 @@ public class NotificationBar : MonoBehaviour
     {
         if (!missions.Contains(mission))
             missions.Add(mission);
-        
+
     }
 
     private void ShowMissions()
     {
-        foreach (Mission mission in missions)
+        for(int i = missionObjects.Count; i < missions.Count; i++)
         {
-            GameObject gb = Instantiate(missionPrefab, expandPanelContent.transform);
-            gb.GetComponent<Button>().onClick.AddListener(delegate { OnClickMissionButton(mission); });
+            GameObject gb = Instantiate(missionPrefab, expandPanelContent);
+            gb.GetComponent<Button>().onClick.AddListener(OnClickMissionButton);
+            missionObjects.Add(gb);
+        }
+        for(int i = 0; i < missionObjects.Count; i++)
+        {
+            missionObjects[i].SetActive(i < missions.Count);
         }
     }
 
@@ -80,6 +84,18 @@ public class NotificationBar : MonoBehaviour
             Destroy(expandPanelContent.transform.GetChild(i).gameObject);
     }
 
+    private void OnClickMissionButton()
+    {
+        GameObject go = EventSystem.current.currentSelectedGameObject;
+        if(go != null && missionObjects.Contains(go))
+            OnClickMissionButton(missionObjects.IndexOf(go));
+    }
+
+    private void OnClickMissionButton(int index)
+    {
+        OnClickMissionButton(missions[index]);
+    }
+
     private void OnClickMissionButton(Mission mission)
     {
         if (mission.missionState == MissionState.Opened)
@@ -87,7 +103,7 @@ public class NotificationBar : MonoBehaviour
             mission.missionState = MissionState.UnderWay;
             mission.CheckMissionState();
         }
-        if(mission.missionState == MissionState.CanDeliver)
+        if (mission.missionState == MissionState.CanDeliver)
         {
             mission.missionState = MissionState.Finished;
             missions.Remove(mission);

@@ -17,9 +17,9 @@ namespace SemanticTree
     public class EffectList : IEffect
     {
         [XmlElement(typeof(AddPressure), ElementName = "add_pressure")]
-        [XmlElement(typeof(AddStrength), ElementName = "add_strength")]
         [XmlElement(typeof(AddStaticCard2Hand), ElementName = "add_card_to_hand")]
         [XmlElement(typeof(AddStatus), ElementName = "add_status")]
+        [XmlElement(typeof(AddStrength), ElementName = "add_strength")]
         [XmlElement(typeof(AnonymousModifyCost), ElementName = "add_cost_modifier")]
         [XmlElement(typeof(AnonymousModifyFocus), ElementName = "modify_focus")]
         [XmlElement(typeof(AnonymousModifyPersonality), ElementName = "modify_personality")]
@@ -27,10 +27,10 @@ namespace SemanticTree
         [XmlElement(typeof(DiscardAllHand), ElementName = "discard_all_hand")]
         [XmlElement(typeof(DiscardSomeHand), ElementName = "discard_some_hand")]
         [XmlElement(typeof(Draw), ElementName = "draw")]
-        [XmlElement(typeof(GUISelectTendencyAdd), ElementName = "GUI_tendency_add")]
         [XmlElement(typeof(ModifyHealth), ElementName = "modify_health")]
         [XmlElement(typeof(SetDrawBan), ElementName = "set_draw_ban")]
 
+        [XmlElement(typeof(GUISelectTendencyAdd), ElementName = "GUI_tendency_add")]
         [XmlElement(typeof(GUISelectHand), ElementName = "GUI_select_hand")]
         [XmlElement(typeof(GUISelectDynamicCard), ElementName = "GUI_select_dynamic_card")]
         [XmlElement(typeof(GUISelectStaticCard), ElementName = "GUI_select_static_card")]

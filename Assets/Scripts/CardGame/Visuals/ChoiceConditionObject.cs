@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
-[ExecuteAlways]
 public class ChoiceConditionObject : MonoBehaviour
 {
     [SerializeField]

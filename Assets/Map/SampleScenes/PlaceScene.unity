@@ -880,7 +880,6 @@ MonoBehaviour:
     energy: 0
     everyTurnEnergy: 0
     cardSet: []
-    san: 0
 --- !u!114 &1059980286
 MonoBehaviour:
   m_ObjectHideFlags: 0
