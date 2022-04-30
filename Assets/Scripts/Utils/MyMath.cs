@@ -97,7 +97,26 @@ public static class MyMath
         {
             int k = Random.Range(0, i + 1);
             (list[k], list[i]) = (list[i], list[k]);
-
         }
+    }
+
+    /// <summary>
+    /// 输入分段概率分布函数返回随机值
+    /// </summary>
+    /// <param name="jp">分段概率分布函数</param>
+    /// <returns>随机值</returns>
+    public static int GetRandomJudge(float[] jp)
+    {
+        if (jp == null) return -1;
+        float sum = 0;
+        foreach (float f in jp) sum += f;
+        float a = Random.value;
+        float ub = 0;
+        for (int i = 0; i < jp.Length; i++)
+        {
+            ub += jp[i] / sum;
+            if (a < ub) return i;
+        }
+        return jp.Length - 1;
     }
 }

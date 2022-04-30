@@ -1,40 +1,104 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using System;
+using SemanticTree;
 
-public class StaticCardLibrary : CardLibrary
+
+public interface ICardObjectLibrary
 {
-    private static CardLibrary instance = null;
-    public static CardLibrary Instance
-    {
-        get => instance;
-    }
+    CardObject GetCardObject(Card card);
+    void DestroyCard(Card card);
+}
 
-    //static readonly string testHoldEffect = "lgcPlus";
-    //static readonly string testHoldEffectScale = "1";
-    //static readonly string testCondition = "NIL";
-    //static readonly string testConditionScale = "0";
-    //static readonly string testEffect = "lgcPlus";
-    //static readonly string testEffectScale = "3";
-    //static readonly string testPostEffect = "NIL";
-    //static readonly string testPostEffectScale = "0";
+public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
+{
+    [SerializeField]
+    private CardLibrary library = new CardLibrary();
+    [SerializeField]
+    private Dictionary<Card, CardObject> cardDictionary = new Dictionary<Card, CardObject>();
+    [SerializeField]
+    private CardObject sampleCard;
 
+    private static StaticCardLibrary instance;
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(this);
-        //cards.Clear();
-        //Card testCard1 = new Card(1001, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "1", testPostEffect, testPostEffectScale);
-        //Card testCard2 = new Card(1002, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "2", testPostEffect, testPostEffectScale);
-        //Card testCard3 = new Card(1003, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "3", testPostEffect, testPostEffectScale);
-        //Card testCard4 = new Card(1004, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "4", testPostEffect, testPostEffectScale);
-        //Card testCard5 = new Card(1005, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "5", testPostEffect, testPostEffectScale);
-        //Card testCard6 = new Card(1006, testHoldEffect, testHoldEffectScale, testCondition, testConditionScale, testEffect, "6", testPostEffect, testPostEffectScale);
-        //cards.Add(testCard1);
-        //cards.Add(testCard2);
-        //cards.Add(testCard3);
-        //cards.Add(testCard4);
-        //cards.Add(testCard5);
-        //cards.Add(testCard6);
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Construct()
+    {
+        ((ICardLibrary)library).Construct();
+    }
+
+    public void DeclareCard(CardInfo cardInfo)
+    {
+        ((ICardLibrary)library).DeclareCard(cardInfo);
+    }
+
+    public void DeclareCard(List<CardInfo> cardInfos)
+    {
+        ((ICardLibrary)library).DeclareCard(cardInfos);
+    }
+
+    public Card GetCopyByName(string name)
+    {
+        Card card = ((ICardLibrary)library).GetCopyByName(name);
+        cardDictionary[card] = null;
+        return card;
+    }
+
+    public Card CopyCard(Card card)
+    {
+        Card newCard = ((ICardLibrary)library).CopyCard(card);
+        cardDictionary[newCard] = null;
+        return newCard;
+    }
+
+    public CardObject GetCardObject(Card card)
+    {
+        if (card == null) return null;
+        if (cardDictionary[card] != null)
+        {
+            return cardDictionary[card];
+        }
+        else return GetNewCardObject(card);
+    }
+
+    public CardObject GetNewCardObject(Card card)
+    {
+        cardDictionary[card] = Instantiate(sampleCard);
+        cardDictionary[card].Card = card;
+        card.player = CardGameManager.Instance.playerState;
+        return cardDictionary[card];
+    }
+
+
+
+    public void DestroyCard(Card card)
+    {
+        if (cardDictionary[card] != null)
+        {
+            Destroy(cardDictionary[card].gameObject);
+            cardDictionary.Remove(card);
+        }
+        else
+        {
+            Debug.LogError("Î´ÖªµÄ¿¨ÅÆ");
+        }
+    }
+
+    public List<string> GetAllCards()
+    {
+        return ((ICardLibrary)library).GetAllCards();
     }
 }
