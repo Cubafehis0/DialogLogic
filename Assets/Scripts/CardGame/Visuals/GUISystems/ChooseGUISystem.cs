@@ -152,6 +152,7 @@ public class ChooseGUISystem : MonoBehaviour, IGUISystem
         ChoiceSlotObject c = o.GetComponentInParent<ChoiceSlotObject>();
         if (c == null) return;
         Debug.Log("Select Choice " + c.ChoiceSlot.Choice.Content);
+        OnChoose.Invoke(c.ChoiceSlot);
         SendMessageUpwards(nameof(IChoiceSlotReciver.ChoiceSlotReciver), c.ChoiceSlot, SendMessageOptions.RequireReceiver);
     }
 }

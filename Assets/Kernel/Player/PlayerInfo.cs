@@ -23,7 +23,7 @@ public class PlayerInfo
     [SerializeField]
     private int energy;
     [SerializeField]
-    private int everyTurnEnergy;
+    private int baseEnergy;
     [SerializeField]
     private List<string> cardSet;
 
@@ -46,7 +46,7 @@ public class PlayerInfo
     public int Health { get => health; set => health = value; }
 
     [XmlElement(ElementName = "everry_turn_energy")]
-    public int BaseEnergy { get => everyTurnEnergy; set => everyTurnEnergy = value; }
+    public int BaseEnergy { get => baseEnergy; set => baseEnergy = value; }
 
     [XmlArray(ElementName = "cards")]
     public List<string> CardSet { get => cardSet; set => cardSet = value; }
@@ -55,6 +55,10 @@ public class PlayerInfo
     public int Energy { get => energy; set => energy = value; }
 
     [XmlIgnore]
-    public int Pressure { get => pressure; set => pressure = value; }
+    public int Pressure 
+    { 
+        get => pressure;
+        set => pressure = Mathf.Clamp(value, 0, MaxPressure); 
+    }
 
 }

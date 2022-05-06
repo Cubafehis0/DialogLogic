@@ -8,18 +8,20 @@
         <draw_num>4</draw_num>
         <max_pressure>10</max_pressure>
         <max_health>10</max_health>
-        <everry_turn_energy>10</everry_turn_energy>
+        <everry_turn_energy>2</everry_turn_energy>
         <cards>
             <string>distribution</string>
             <string>distribution</string>
             <string>distribution</string>
-            <string>extension</string>
-            <string>extension</string>
-            <string>extension</string>
-            <string>junior_logics</string>
-            <string>junior_logics</string>
-            <string>junior_logics</string>
-            <string>thoughtful</string>
+            <string>standpoint</string>
+            <string>standpoint</string>
+            <string>adjested_ideas</string>
+            <string>tipsy</string>
+            <string>tipsy</string>
+            <string>tipsy</string>
+            <string>excited</string>
+            <string>tear</string>
+            <string>tear</string>
             <string>sound_out</string>
         </cards>
     </player>

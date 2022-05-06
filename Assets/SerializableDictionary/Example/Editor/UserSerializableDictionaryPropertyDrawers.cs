@@ -10,6 +10,7 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(PersonalityTypeSpriteDictionary))]
 [CustomPropertyDrawer(typeof(SpeakerGameObjectDictionary))]
 [CustomPropertyDrawer(typeof(MapStateSpriteDictionary))]
+[CustomPropertyDrawer(typeof(StringSpriteDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}
 
 [CustomPropertyDrawer(typeof(ColorArrayStorage))]

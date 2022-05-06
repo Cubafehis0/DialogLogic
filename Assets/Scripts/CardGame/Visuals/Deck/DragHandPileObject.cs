@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
-[RequireComponent(typeof(HandLayout))]
-[RequireComponent(typeof(EventTriggerGroup))]
 public class DragHandPileObject : MonoBehaviour
 {
     public static DragHandPileObject instance;
 
     [SerializeField]
     private CardController player;
+    [SerializeField]
+    private Transform layout;
+    [SerializeField]
+    private bool hide;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class DragHandPileObject : MonoBehaviour
     private IEnumerator Animating(GameObject cardObject)
     {
         cardObject.SetActive(true);
-        cardObject.transform.SetParent(transform, true);
+        cardObject.transform.SetParent(layout, true);
         cardObject.transform.rotation = Quaternion.identity;
         cardObject.transform.localScale = Vector3.one;
         cardObject.GetComponent<CardObject>().Draggable = true ;
@@ -75,8 +76,33 @@ public class DragHandPileObject : MonoBehaviour
         foreach(Card card in player.Hand)
         {
             CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
-            o.transform.SetParent(transform, true);
+            o.transform.SetParent(layout, true);
         }
     }
+
+    public void Hide()
+    {
+        hide = true;
+        UpdateVisuals();
+    }
+
+    public void ExposeHand()
+    {
+        hide = false;
+        UpdateVisuals();
+    }
+
+    public void UpdateVisuals()
+    {
+        RectTransform rect = layout.GetComponent<RectTransform>();
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, hide ? 0f : 1f);
+    }
+
+    public void Switch()
+    {
+        hide= !hide;
+        UpdateVisuals();
+    }
+
 
 }

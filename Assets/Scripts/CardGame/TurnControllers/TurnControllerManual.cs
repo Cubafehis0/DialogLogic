@@ -16,6 +16,7 @@ public class TurnControllerManual : TurnController
 
     public override void EndTurn()
     {
+        base.EndTurn();
         endTurnTrigger = true;
     }
 }

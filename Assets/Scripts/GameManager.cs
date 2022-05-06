@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
     private PersonalityTypeSpriteDictionary conditionIcons;
     [SerializeField]
     private PlayerPacked localPlayer;
-    [SerializeField]
-    private Incident currentIncident = null;
+    
+    public Incident currentIncident = null;
     [SerializeField]
     private StaticCardLibrary cardLibrary;
 
@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public ICardObjectLibrary CardObjectLibrary { get { return cardLibrary; } }
     public PersonalityTypeSpriteDictionary ConditionIcons { get => conditionIcons; set => conditionIcons = value; }
     public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
+
+    public StringSpriteDictionary EnemySpriteDictionary;
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
     public PlayerPacked LocalPlayer { get => localPlayer; set => localPlayer = value; }
     public Map Map { get => map;}
@@ -112,16 +114,18 @@ public class GameManager : MonoBehaviour
         map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
     }
 
-    public void EnterPlace(Place place)
+    public bool EnterPlace(Place place)
     {
         Incident incident = IncidentTool.Pickup(place.incidents);
         if(incident != null)
         {
             EnterIncident(incident);
+            return true;
         }
         else
         {
             Debug.Log("无可用事件");
+            return false;
         }
     }
 

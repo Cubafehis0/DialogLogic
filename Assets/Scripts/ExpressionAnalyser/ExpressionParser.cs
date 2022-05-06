@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ExpressionAnalyser
 {
+    //public static class Debug
+    //{
+    //    public static void Log(string s)
+    //    {
+    //        UnityEngine.Debug.Log(s);
+    //    }
+    //}
 
     /*语法分析
      *  exp  exp binOperator exp
@@ -50,6 +58,19 @@ namespace ExpressionAnalyser
             List<Token> tokens = LexAnalysis.Lex(s);
             tokens.Sort((l, r) => l.begIndex - r.begIndex);
             return Parse(tokens);
+        }
+
+        public static IExpression TryAnalayseExpression(string s)
+        {
+            try
+            {
+                return AnalayseExpression(s);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.ToString());
+            }
+            return null;
         }
 
         private static IExpression Parse(List<Token> tokens)

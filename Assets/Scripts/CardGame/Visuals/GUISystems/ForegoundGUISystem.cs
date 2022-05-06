@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ForegoundGUISystem :MonoBehaviour, IGUISystem
+public class ForegoundGUISystem : MonoBehaviour, IGUISystem
 {
     public static ForegoundGUISystem current = null;
 
+    private static GameObject currentObject = null;
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -15,7 +16,8 @@ public class ForegoundGUISystem :MonoBehaviour, IGUISystem
         if (current == null)
         {
             current = this;
-            gameObject.SetActive(true);
+            currentObject = current.gameObject.scene.rootCount == 0 ? Instantiate(current.gameObject) : gameObject;
+            currentObject.SetActive(true);
         }
         else
         {
@@ -26,8 +28,9 @@ public class ForegoundGUISystem :MonoBehaviour, IGUISystem
 
     public virtual void Close()
     {
-        gameObject.SetActive(false);
-        enabled = false;
+        currentObject.SetActive(false);
+        if (current.gameObject.scene.rootCount == 0) Destroy(currentObject);
+        currentObject = null;
         current = null;
     }
 }

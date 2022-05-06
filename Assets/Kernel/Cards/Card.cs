@@ -68,7 +68,7 @@ public class Card
 
     public Card(CardInfo info) : this()
     {
-        Debug.Log(string.Format("生成Card类,Title={0},当前Card数量:{1}", info.Title, CardCount));
+        //Debug.Log(string.Format("生成Card类,Title={0},当前Card数量:{1}", info.Title, CardCount));
         this.info = new CardInfo(info);
         temporaryActivate = false;
         permanentActivate = false;
@@ -76,7 +76,7 @@ public class Card
 
     public Card(Card origin) : this()
     {
-        Debug.Log(string.Format("生成Card拷贝,Title={0},当前Card数量:{1}",origin.info.Title, CardCount));
+        //Debug.Log(string.Format("生成Card拷贝,Title={0},当前Card数量:{1}",origin.info.Title, CardCount));
         this.info = new CardInfo(origin.info);
         temporaryActivate = origin.temporaryActivate;
         permanentActivate = origin.permanentActivate;

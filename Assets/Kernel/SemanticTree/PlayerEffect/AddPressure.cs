@@ -8,15 +8,15 @@ using System.Xml.Serialization;
 
 namespace SemanticTree.PlayerEffect
 {
-    public class AddPressure:Effect
+    public class AddPressure : Effect
     {
-        [XmlElement(ElementName ="value")]
+        [XmlElement(ElementName = "value")]
         public string NumExpression;
         private IExpression numExpression;
 
         public override void Construct()
         {
-            numExpression = ExpressionParser.AnalayseExpression(NumExpression);
+            numExpression = ExpressionParser.TryAnalayseExpression(NumExpression) ?? new ConstNode(0);
         }
 
         public override void Execute()

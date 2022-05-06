@@ -290,13 +290,30 @@ public class Personality
         return ret;
     }
 
+    public static Personality operator -(Personality a, Personality b)
+    {
+        Personality ret = new Personality
+        {
+            inner = a.inner - b.inner,
+            logic = a.logic - b.logic,
+            moral = a.moral - b.moral,
+            roundabout = a.roundabout - b.roundabout
+        };
+        return ret;
+    }
+
     public static int MaxDistance(Personality a, Personality b)
     {
         int ret = 0;
-        ret = Mathf.Max(Mathf.Abs(a.inner - b.inner), ret);
-        ret = Mathf.Max(Mathf.Abs(a.logic - b.logic), ret);
-        ret = Mathf.Max(Mathf.Abs(a.moral - b.moral), ret);
-        ret = Mathf.Max(Mathf.Abs(a.roundabout - b.roundabout), ret);
+        Personality dif = b - a;
+        if (b.Inner > 0) ret = Mathf.Max(Mathf.Clamp(dif.Inner, 0, int.MaxValue), ret);
+        if (b.Outside > 0) ret = Mathf.Max(Mathf.Clamp(dif.Outside, 0, int.MaxValue), ret);
+        if (b.Logic > 0) ret = Mathf.Max(Mathf.Clamp(dif.Logic, 0, int.MaxValue), ret);
+        if (b.Spiritial > 0) ret = Mathf.Max(Mathf.Clamp(dif.Spiritial, 0, int.MaxValue), ret);
+        if (b.Moral > 0) ret = Mathf.Max(Mathf.Clamp(dif.Moral, 0, int.MaxValue), ret);
+        if (b.Immoral > 0) ret = Mathf.Max(Mathf.Clamp(dif.Immoral, 0, int.MaxValue), ret);
+        if (b.Aggressive > 0) ret = Mathf.Max(Mathf.Clamp(dif.Aggressive, 0, int.MaxValue), ret);
+        if (b.Roundabout > 0) ret = Mathf.Max(Mathf.Clamp(dif.Roundabout, 0, int.MaxValue), ret);
         return ret;
     }
 

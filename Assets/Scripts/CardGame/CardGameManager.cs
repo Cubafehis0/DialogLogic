@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using SemanticTree;
 using System.IO;
 using CardGame.Recorder;
+using UnityEngine.UI;
 
 public class CardGameManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class CardGameManager : MonoBehaviour
     [SerializeField]
     public CardRecorder CardRecorder = new CardRecorder();
     public DragHandPileObject handPileObject;
+    public Image enemyImage;
 
     private static CardGameManager instance = null;
     public static CardGameManager Instance
@@ -49,6 +51,8 @@ public class CardGameManager : MonoBehaviour
         dialogSystem.Open(GetInkStoryAsset(GameManager.Instance.CurrentStory));
         StartCoroutine(TurnCoroutine());
         playerState.Init(GameManager.Instance.LocalPlayer);
+        string name = GameManager.Instance.currentIncident.target;
+        enemyImage.sprite = GameManager.Instance.EnemySpriteDictionary[name];
     }
 
     private IEnumerator TurnCoroutine()
@@ -63,6 +67,7 @@ public class CardGameManager : MonoBehaviour
             Context.Target = playerState;
             enemyController.StartTurn();
             yield return new WaitUntil(() => enemyController.EndTurnTrigger);
+            enemyController.EndTurn();
             Context.Target = null;
             Context.PopPlayerContext();
 
@@ -74,6 +79,7 @@ public class CardGameManager : MonoBehaviour
                 Context.Target = enemy;
                 playerController.StartTurn();
                 yield return new WaitUntil(() => playerController.EndTurnTrigger);
+                playerController.EndTurn();
                 Context.Target = null;
                 Context.PopPlayerContext();
             } while (((TurnControllerPlayerDialog)playerController).additionalTurn);

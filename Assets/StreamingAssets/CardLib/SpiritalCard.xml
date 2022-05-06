@@ -26,6 +26,26 @@
             </draw>
         </on_play_card>
     </define_card>
+
+    <define_card>
+        <name>tear</name>
+        <title>撕裂感</title>
+        <condition_desc>无</condition_desc>
+        <effect_desc>持有时激情增加3,强势加6；打出后弃2张牌</effect_desc>
+        <meme></meme>
+        <category>spirital</category>
+        <in_hand_modifier>
+            <personality_linear>
+                <spritial>3</spritial>
+                <aggressive>6</aggressive>
+            </personality_linear>
+        </in_hand_modifier>
+        <on_play_card>
+            <discard_some_hand>
+                <num>2</num>
+            </discard_some_hand>
+        </on_play_card>
+    </define_card>
     
     <define_card>
         <name>excited</name>

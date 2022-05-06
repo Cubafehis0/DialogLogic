@@ -585,6 +585,7 @@
       <xs:element minOccurs="1" maxOccurs="1" name="times" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="1" name="prerequisite" type="ArrayOfString" />
       <xs:element minOccurs="1" maxOccurs="1" name="priority" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="target" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="bonus_start" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" maxOccurs="1" name="bonus_end" nillable="true" type="xs:int" />
     </xs:sequence>

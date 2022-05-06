@@ -21,7 +21,7 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName = "value")]
         public string ValueExpression = null;
 
-        private IExpression value;
+        private IExpression value=null;
         private Status status = null;
 
         public override void Execute()

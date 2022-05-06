@@ -23,6 +23,9 @@ public class IncidentInfo
     [XmlElement(ElementName = "priority")]
     public int priorityInitial;
 
+    [XmlElement(ElementName = "target")]
+    public string target;
+
     [XmlElement(ElementName = "bonus_start")]
     public int? bonusStartTime;
     [XmlIgnore]
@@ -38,6 +41,7 @@ public class IncidentInfo
     {
         incidentName = origin.incidentName;
         incidentType = origin.incidentType;
+        target = origin.target;
         repeatTimes = origin.repeatTimes;
         prerequisites = origin.prerequisites;
         priorityInitial = origin.priorityInitial;

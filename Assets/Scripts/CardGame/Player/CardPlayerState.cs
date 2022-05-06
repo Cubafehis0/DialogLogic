@@ -7,7 +7,7 @@ using CardGame.Recorder;
 using System.Linq;
 using SemanticTree;
 
-public class CardPlayerState : CardActorState, IPlayerStateChange, ICardController, ITurnController
+public class CardPlayerState : CardActorState, IPlayerStateChange, ICardController
 {
     [SerializeField]
     private ChooseGUISystem chooseGUISystem = null;
@@ -56,15 +56,12 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public IReadonlyPile<Card> Hand => ((ICardController)cardController).Hand;
 
-    public bool IsHandFull => ((ICardController)cardController).IsHandFull;
+    public bool IsHandFull()
+    {
+        return ((ICardController)cardController).IsHandFull();
+    }
 
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
-
-    public bool EndTurnTrigger => ((ITurnController)turnController).EndTurnTrigger;
-
-    public UnityEvent OnTurnStart => ((ITurnController)turnController).OnTurnStart;
-
-    public UnityEvent OnTurnEnd => ((ITurnController)turnController).OnTurnEnd;
 
     public void Init(PlayerPacked player)
     {
@@ -76,7 +73,6 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     private void Awake()
     {
         if(cardController) cardController.OnPlayCard.AddListener(modifiers.OnPlayCard);
-        OnTurnStart.AddListener(modifiers.OnTurnStart);
     }
 
     public bool CanChoose(ChoiceSlot slot)
@@ -110,9 +106,10 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     public void StartTurn()
     {
         Debug.Log("我的回合，抽卡！！！");
-        Energy = 4;
+        Energy = player.PlayerInfo.BaseEnergy;
         cardController.Draw((uint)Player.PlayerInfo.DrawNum);
         Context.PushPlayerContext(this);
+        modifiers.OnTurnStart();
     }
 
     public void EndTurn()
@@ -155,7 +152,6 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         {
             int? pileVar = cardController.GetPileProp(name);
             if (pileVar.HasValue) return pileVar.Value;
-
         }
         return name switch
         {

@@ -38,7 +38,7 @@ namespace Ink2Unity
         }
         public static List<int> ParseArray(string value)
         {
-            string parttern = @"([^\d]+)(\d+)";
+            string parttern = @"([^-\+\d]+)([\+-]?\d+)";
             var matches = Regex.Matches(value,parttern);
             if(matches.Count>0)
             {

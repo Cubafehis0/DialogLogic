@@ -9,5 +9,5 @@ public abstract class TurnController : MonoBehaviour, ITurnController
     public UnityEvent OnTurnStart { get => onTurnStart; }
     public UnityEvent OnTurnEnd { get => onTurnEnd; }
     public virtual void StartTurn() { OnTurnStart.Invoke(); }
-    public abstract void EndTurn();
+    public virtual void EndTurn() { OnTurnEnd.Invoke(); }
 }

@@ -6,19 +6,19 @@ using UnityEngine.EventSystems;
 public class MapObject : MonoBehaviour
 {
     [SerializeField]
-    private List<PlaceObject> mapObjects;
+    private List<PlaceObject> placeObjects;
 
     private Map map = null;
 
     private void Start()
     {
         map = GameManager.Instance.Map;
-        for(int i = 0; i < mapObjects.Count; i++)
+        for(int i = 0; i < placeObjects.Count; i++)
         {
-            mapObjects[i].gameObject.SetActive(i < map.placesDic.Count);
+            placeObjects[i].gameObject.SetActive(i < map.placesDic.Count);
             if (i < map.placesDic.Count)
             {
-                mapObjects[i].place = map.placesDic[i];
+                placeObjects[i].place = map.placesDic[i];
             }
         }
     }

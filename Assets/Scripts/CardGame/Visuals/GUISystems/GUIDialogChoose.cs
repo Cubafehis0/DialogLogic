@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+
 public class GUIDialogChoose : MonoBehaviour, IChoiceSlotReciver
 {
-
+    public UnityEvent OnChoose=new UnityEvent();
     public void ChoiceSlotReciver(object msg)
     {
         ChoiceSlot slot = (ChoiceSlot)msg;
@@ -13,6 +15,7 @@ public class GUIDialogChoose : MonoBehaviour, IChoiceSlotReciver
         }
         else
         {
+            OnChoose.Invoke();
             CardGameManager.Instance.dialogSystem.ForceSelectChoice(slot.Choice, CardGameManager.Instance.playerState.JudgeChooseSuccess(slot));
             GUISystemManager.Instance.chooseSystem.Close();
         }

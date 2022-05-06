@@ -18,7 +18,7 @@ namespace SemanticTree.CardEffects
         public override void Execute()
         {
 
-            for (int i = 0; i < num.Value && !Context.PlayerContext.IsHandFull; i++)
+            for (int i = 0; i < num.Value && !Context.PlayerContext.IsHandFull(); i++)
             {
                 //有问题
                 Card newCard = GameManager.Instance.CardLibrary.CopyCard(Context.CardContext);

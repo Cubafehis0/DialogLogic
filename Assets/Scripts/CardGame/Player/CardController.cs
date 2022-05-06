@@ -11,11 +11,11 @@ public interface ICardController
     IReadonlyPile<Card> DiscardPile { get; }
     IReadonlyPile<Card> DrawPile { get; }
     IReadonlyPile<Card> Hand { get; }
-    bool IsHandFull { get; }
     bool DrawBan { get; set; }
 
     void AddCard(PileType pileType, Card card);
     void AddCardSet2DrawPile(List<string> cardset);
+    bool IsHandFull();
     bool CanDraw();
     void ClearTemporaryActivateFlags();
     void Discard2Draw();
@@ -36,11 +36,32 @@ public class PlayingPile : Pile<Card>
     }
 }
 
+public class HandPile : Pile<Card>
+{
+    public CardPlayerState _playerState;
+
+    public HandPile(CardPlayerState playerState) : base()
+    {
+        _playerState = playerState;
+        OnAdd.AddListener(x =>
+        {
+            if (x.info.handModifier != null)
+                _playerState.Modifiers.Add(x.info.handModifier);
+        });
+        OnRemove.AddListener(x =>
+        {
+            if (x.info.handModifier != null)
+                _playerState.Modifiers.Remove(x.info.handModifier);
+        });
+    }
+
+}
+
 [RequireComponent(typeof(CardPlayerState))]
 public class CardController : MonoBehaviour, ICardController
 {
     private CardPlayerState cardPlayerState;
-    private Pile<Card> hand = new Pile<Card>();
+    private Pile<Card> hand=new Pile<Card>();
     private Pile<Card> drawPile = new Pile<Card>();
     private Pile<Card> discardPile = new Pile<Card>();
     private Pile<Card> exhaustPile = new Pile<Card>();
@@ -55,17 +76,21 @@ public class CardController : MonoBehaviour, ICardController
     public IReadonlyPile<Card> PlayingPile { get => playingPile; }
 
     public bool DrawBan { get => drawBan; set => drawBan = value; }
-    public bool IsHandFull => Hand.Count == cardPlayerState.Player.PlayerInfo.MaxCardNum;
+
+    public bool IsHandFull()
+    {
+        return Hand.Count == cardPlayerState.Player.PlayerInfo.MaxCardNum;
+    }
 
     private void Awake()
     {
         cardPlayerState = GetComponent<CardPlayerState>();
-        Hand.OnAdd.AddListener(x =>
+        hand.OnAdd.AddListener(x =>
         {
             if (x.info.handModifier != null)
                 cardPlayerState.Modifiers.Add(x.info.handModifier);
         });
-        Hand.OnRemove.AddListener(x =>
+        hand.OnRemove.AddListener(x =>
         {
             if (x.info.handModifier != null)
                 cardPlayerState.Modifiers.Remove(x.info.handModifier);
@@ -75,7 +100,7 @@ public class CardController : MonoBehaviour, ICardController
     public bool CanDraw()
     {
         if (drawBan) return false;
-        if (IsHandFull) return false;
+        if (IsHandFull()) return false;
         if (drawPile.Count == 0 && discardPile.Count == 0) return false;
         return true;
     }
@@ -85,7 +110,7 @@ public class CardController : MonoBehaviour, ICardController
         if (drawBan) return;
         for (int i = 0; i < num; i++)
         {
-            if (IsHandFull)
+            if (IsHandFull())
             {
                 //ÊÖÅÆÂúÁË
                 return;

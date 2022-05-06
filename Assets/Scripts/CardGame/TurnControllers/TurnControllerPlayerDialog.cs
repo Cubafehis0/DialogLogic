@@ -7,10 +7,12 @@ public class TurnControllerPlayerDialog : TurnController
 {
     [SerializeField]
     private DialogSystem dialogSystem;
-    public override bool EndTurnTrigger => dialogSystem.NextState != InkState.Choice || tempEndTurnTrigger; 
-
+    //public override bool EndTurnTrigger => dialogSystem.NextState != InkState.Choice || tempEndTurnTrigger;
+    public override bool EndTurnTrigger => endTurnTrigger || tempEndTurnTrigger;
+    private bool endTurnTrigger = false;
     public bool additionalTurn = false;
     private bool tempEndTurnTrigger = false;
+    public void SetEndTurnTrigger() { endTurnTrigger = true; }
     public void GetAddditionalTurnAndEndTurn()
     {
         CardGameManager.Instance.playerState.Player.PlayerInfo.Pressure++;
@@ -18,13 +20,9 @@ public class TurnControllerPlayerDialog : TurnController
         tempEndTurnTrigger = true;
     }
 
-    public override void EndTurn()
-    {
-        
-    }
-
     public override void StartTurn()
     {
+        endTurnTrigger = false;
         additionalTurn = false;
         tempEndTurnTrigger = false;
         GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.CurrentChoices());

@@ -90,10 +90,7 @@ public class HandSelectGUISystem : ForegoundGUISystem
     {
         if (minOccurs <= cardSelected.Count && cardSelected.Count <= maxOccurs)
         {
-
-            gameObject.SetActive(false);
             DragHandPileObject.instance.TakeoverAllCard();
-            Context.PushPlayerContext(CardGameManager.Instance.playerState);
             //ÓÐÈ±ÏÝ
             Context.PushPileContext(cardSelected);
             foreach(Card card in cardSelected)
@@ -103,7 +100,6 @@ public class HandSelectGUISystem : ForegoundGUISystem
                 Context.PopCardContext();
             }
             Context.PopPileContext();
-            Context.PopPlayerContext();
             cardCandidate.Clear();
             cardSelected.Clear();
             Close();
