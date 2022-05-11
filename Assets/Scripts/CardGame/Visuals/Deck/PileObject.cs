@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
+
 
 public class PileObject : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class PileObject : MonoBehaviour
 
     private void OnAdd(Card card)
     {
-       
+
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
         {

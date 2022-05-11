@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(PilePacked))]
 public class DiscardPileObject : MonoBehaviour
 {
     [SerializeField]
-    private CardController player;
+    private PilePacked pile;
     [SerializeField]
     private float speed = 50f;
 
     private void OnEnable()
     {
-        player.DiscardPile.OnAdd.AddListener(OnAdd);
+        pile.OnAdd.AddListener(OnAdd);
     }
     private void OnDisable()
     {
-        player.DiscardPile.OnRemove.AddListener(OnAdd);
+        pile.OnRemove.AddListener(OnAdd);
     }
     IEnumerator Discard(GameObject card)
     {

@@ -24,11 +24,14 @@ public class Personality
     [SerializeField]
     private int inner;
     [SerializeField]
+    private int outer;
+    [SerializeField]
     private int logic;
     [SerializeField]
     private int moral;
     [SerializeField]
     private int roundabout;
+    
 
     public int this[int index]
     {

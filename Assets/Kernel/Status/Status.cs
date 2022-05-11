@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using SemanticTree;
+using System;
 
+[Serializable]
 public class Status
 {
-
     [XmlElement(ElementName = "name", IsNullable = true)]
     public string Name;
 
@@ -40,11 +40,4 @@ public class Status
         OnRemove?.Construct();
         Modifier?.Construct();
     }
-}
-
-[Serializable]
-public class StatusCounter
-{
-    public Status status = null;
-    public int value = 0;
 }

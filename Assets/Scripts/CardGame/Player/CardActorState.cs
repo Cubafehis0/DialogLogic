@@ -14,11 +14,4 @@ public class CardActorState : MonoBehaviour
     public ModifierGroup Modifiers { get => modifiers; }
     public PlayerPacked Player { get => player; private set => player = value; }
 
-    public Personality GetFinalPersonality()
-    {
-        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear;
-        return res;
-    }
-
-
 }

@@ -76,19 +76,19 @@ namespace Ink2Unity
             return null;
         }
         //
-        public static Speaker ParseSpeaker(string speaker)
+        public static SpeakerEnum ParseSpeaker(string speaker)
         {
             switch (speaker)
             {
                 case "Player":
-                    return Speaker.Player;
+                    return SpeakerEnum.Player;
                 case "NPC":
-                    return Speaker.NPC;
+                    return SpeakerEnum.NPC;
                 case "Dialogue":
-                    return Speaker.Dialogue;
+                    return SpeakerEnum.Dialogue;
                 default:
                     Debug.LogError("无法识别的Speaker标签");
-                    return Speaker.Dialogue;
+                    return SpeakerEnum.Dialogue;
             }
         }
         public static SpeechType ParseSpeechArt(string sa)

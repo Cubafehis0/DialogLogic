@@ -23,13 +23,19 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public ChooseGUISystem ChooseGUISystem { get => chooseGUISystem; }
 
+    public Personality GetFinalPersonality()
+    {
+        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear + statusManager.Modifiers.PersonalityLinear+cardController.Modifiers.PersonalityLinear;
+        return res;
+    }
+
     public SpeechArt FinalSpeechArt
     {
-        get => Modifiers.SpeechLinear;
+        get => Modifiers.SpeechLinear + statusManager.Modifiers.SpeechLinear+ cardController.Modifiers.SpeechLinear;
     }
     public SpeechType? FocusSpeechType
     {
-        get => Modifiers.Focus;
+        get => Modifiers.Focus ?? statusManager.Modifiers.Focus??cardController.Modifiers.Focus;
     }
     public int Energy
     {
@@ -72,7 +78,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     private void Awake()
     {
-        if(cardController) cardController.OnPlayCard.AddListener(modifiers.OnPlayCard);
+        if (cardController) cardController.OnPlayCard.AddListener(modifiers.OnPlayCard);
     }
 
     public bool CanChoose(ChoiceSlot slot)
@@ -107,7 +113,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     {
         Debug.Log("我的回合，抽卡！！！");
         Energy = player.PlayerInfo.BaseEnergy;
-        cardController.Draw((uint)Player.PlayerInfo.DrawNum);
+        cardController.Draw(Player.PlayerInfo.DrawNum);
         Context.PushPlayerContext(this);
         modifiers.OnTurnStart();
     }
@@ -115,11 +121,26 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     public void EndTurn()
     {
         Debug.Log("回合结束");
-        cardController.ClearTemporaryActivateFlags();
         Context.PopPlayerContext();
     }
 
-
+    public void AddAnonymousPersonalityModifier(Personality personality, int timer=-1, DMGType type = DMGType.Normal)
+    {
+        if (timer == 0) return;
+        if (type == DMGType.Magic)
+        {
+            personality.Strengthen(Strength);
+            Strength = 0;
+        }
+        if (timer < 0)
+        {
+            modifiers.AddAnonymousPersonality(personality);
+        }
+        else
+        {
+            statusManager.AddAnonymousPersonalityModifier(personality, timer);
+        }
+    }
 
     public void StateChange(Personality delta, int turn)
     {
@@ -198,11 +219,6 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         return ((ICardController)cardController).CanDraw();
     }
 
-    public void ClearTemporaryActivateFlags()
-    {
-        ((ICardController)cardController).ClearTemporaryActivateFlags();
-    }
-
     public void Discard2Draw()
     {
         ((ICardController)cardController).Discard2Draw();
@@ -218,7 +234,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         ((ICardController)cardController).DiscardCard(cid);
     }
 
-    public void Draw(uint num)
+    public void Draw(int num)
     {
         ((ICardController)cardController).Draw(num);
     }

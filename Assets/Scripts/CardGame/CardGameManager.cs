@@ -82,7 +82,7 @@ public class CardGameManager : MonoBehaviour
                 playerController.EndTurn();
                 Context.Target = null;
                 Context.PopPlayerContext();
-            } while (((TurnControllerPlayerDialog)playerController).additionalTurn);
+            } while (playerController.AdditionalTurn);
 
         }
         if (i == 100) Debug.LogWarning("回合数达到上限100");

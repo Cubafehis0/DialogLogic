@@ -4983,6 +4983,7 @@ MonoBehaviour:
   PlayerInfo:
     personality:
       inner: 0
+      outer: 0
       logic: 0
       moral: 0
       roundabout: 0
@@ -5007,8 +5008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac708b4f11264824f8263c83e53c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1383529765}
-  statusList: []
 --- !u!114 &1383529765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6641,6 +6640,7 @@ GameObject:
   - component: {fileID: 1860205049}
   - component: {fileID: 1860205048}
   - component: {fileID: 1860205047}
+  - component: {fileID: 1860205045}
   - component: {fileID: 1860205046}
   m_Layer: 5
   m_Name: "\u5F03\u724C\u5806"
@@ -6649,6 +6649,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1860205045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860205044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91e77423bda1f143a07dc1704f10efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1860205046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6661,7 +6673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e9762398a9f24c9c13aad5cf238ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2034699588}
+  pile: {fileID: 0}
   speed: 8000
 --- !u!114 &1860205047
 MonoBehaviour:
@@ -7163,8 +7175,8 @@ GameObject:
   - component: {fileID: 2032536052}
   - component: {fileID: 2032536055}
   - component: {fileID: 2032536054}
-  - component: {fileID: 2032536053}
   - component: {fileID: 2032536056}
+  - component: {fileID: 2032536053}
   m_Layer: 5
   m_Name: "\u62BD\u724C\u5806"
   m_TagString: Untagged
@@ -7203,7 +7215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928026b98df0db84b901fd2f1d79e858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2034699588}
+  pile: {fileID: 0}
 --- !u!114 &2032536054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7242,17 +7254,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032536051}
   m_CullTransparentMesh: 1
---- !u!210 &2032536056
-SortingGroup:
+--- !u!114 &2032536056
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032536051}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91e77423bda1f143a07dc1704f10efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034699585
 GameObject:
   m_ObjectHideFlags: 0
@@ -7288,8 +7301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac708b4f11264824f8263c83e53c35f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2034699589}
-  statusList: []
 --- !u!114 &2034699587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7319,7 +7330,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2034699586}
         m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
-        m_MethodName: OnStartTurn
+        m_MethodName: OnTurnStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7358,7 +7369,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2034699586}
         m_TargetAssemblyTypeName: StatusManager, Assembly-CSharp
-        m_MethodName: OnEndTurn
+        m_MethodName: OnTurnEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7380,8 +7391,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  dialogSystem: {fileID: 20855275}
-  additionalTurn: 0
+      - m_Target: {fileID: 2034699588}
+        m_TargetAssemblyTypeName: CardController, Assembly-CSharp
+        m_MethodName: OnTurnEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2034699588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7394,6 +7415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f11c5303ca2ded4c9e3f23534d09eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawPilePacked: {fileID: 2032536056}
+  discardPilePacked: {fileID: 1860205045}
   OnPlayCard:
     m_PersistentCalls:
       m_Calls: []
@@ -7984,7 +8007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9788bae1285d474bb27b961290df3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 0}
+  text: {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -8000,7 +8023,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  hasPlayEnd: 0
 --- !u!1001 &1439626115727412870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9946,6 +9968,7 @@ MonoBehaviour:
         speaker: 0
         personalityModifier:
           inner: 0
+          outer: 0
           logic: 0
           moral: 0
           roundabout: 0
@@ -9953,6 +9976,7 @@ MonoBehaviour:
       speechType: 3
       judgeValue:
         inner: 0
+        outer: 0
         logic: 0
         moral: 0
         roundabout: 0

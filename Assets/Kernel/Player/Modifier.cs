@@ -54,7 +54,7 @@ public class Modifier
     }
 }
 
-public interface IReadonlyModifierGroup : IReadOnlyList<Modifier>
+public interface IReadonlyModifierGroup : IReadOnlyList<Modifier>,ITurnStart,ITurnEnd
 {
     Personality PersonalityLinear { get; }
     SpeechType? Focus { get; }

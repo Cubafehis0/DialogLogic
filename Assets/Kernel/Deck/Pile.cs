@@ -10,7 +10,7 @@ public interface IReadonlyPile<T>:IReadOnlyList<T>
     public UnityEvent<T> OnRemove { get;}
 }
 
-public class Pile<T> : List<T>,IReadonlyPile<T>
+public class Pile<T> : List<T>, IReadonlyPile<T>, IPile<T>
 {
     private UnityEvent<T> onAdd = new UnityEvent<T>();
     private UnityEvent<T> onRemove = new UnityEvent<T>();
@@ -56,7 +56,7 @@ public class Pile<T> : List<T>,IReadonlyPile<T>
         }
     }
 
-    public void MigrateTo(T card, Pile<T> newPile)
+    public void MigrateTo(T card, IPile<T> newPile)
     {
         if (card == null || newPile == null)
         {
@@ -76,7 +76,7 @@ public class Pile<T> : List<T>,IReadonlyPile<T>
 
     }
 
-    public void MigrateAllTo(Pile<T> to)
+    public void MigrateAllTo(IPile<T> to)
     {
         if (to == null)
         {

@@ -20,7 +20,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.Draw((uint)num.Value);
+            Context.PlayerContext.Draw(num.Value);
         }
     }
 }

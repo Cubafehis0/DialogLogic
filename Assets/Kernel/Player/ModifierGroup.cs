@@ -2,18 +2,18 @@
 
 public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
 {
-    private Personality anonymousPersonality = new Personality();
+    private Modifier anonymous=new Modifier();
 
     public void AddAnonymousPersonality(Personality personality)
     {
-        anonymousPersonality += personality;
+        anonymous.PersonalityLinear += personality;
     }
 
     public Personality PersonalityLinear
     {
         get
         {
-            Personality res = anonymousPersonality;
+            Personality res = anonymous.PersonalityLinear;
             foreach (Modifier modifier in this)
             {
                 var entry = modifier.PersonalityLinear;
@@ -60,6 +60,11 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
         }
     }
 
+    public void OnTurnEnd()
+    {
+        
+    }
+
     public void OnPlayCard()
     {
         foreach (var modifier in this)
@@ -102,7 +107,5 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             return res;
         }
     }
-
-
 }
 

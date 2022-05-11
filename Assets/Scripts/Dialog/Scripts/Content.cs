@@ -18,7 +18,7 @@ namespace Ink2Unity
         /// <summary>
         /// 
         /// </summary>
-        public Speaker speaker;
+        public SpeakerEnum speaker;
         /// <summary>
         /// 状态改变值，依次为外感、逻辑、道德、迂回。
         /// </summary>

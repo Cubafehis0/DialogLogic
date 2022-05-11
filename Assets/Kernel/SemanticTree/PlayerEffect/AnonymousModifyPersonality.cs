@@ -25,7 +25,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.StatusManager.AddAnonymousPersonalityModifier(Modifier.Value, Duration,DMGType);
+            Context.PlayerContext.AddAnonymousPersonalityModifier(Modifier.Value, Duration,DMGType);
         }
 
         public override void Construct()
