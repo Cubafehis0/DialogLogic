@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <Common>
-
     <define_status>
         <name>free</name>
         <decrease_on_turn_end>99</decrease_on_turn_end>

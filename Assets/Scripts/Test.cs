@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.Playables;
-public class Test : MonoBehaviour,IPlayableAsset
+using UnityEngine.UI;
+
+public class Test : MonoBehaviour
 {
-    public double duration => throw new System.NotImplementedException();
-
-    public IEnumerable<PlayableBinding> outputs => throw new System.NotImplementedException();
-
-    public Playable CreatePlayable(PlayableGraph graph, GameObject owner)
-    {
-        throw new System.NotImplementedException();
-    }
+    public IntProperty a;
+    public Image im;
 
     private void Start()
     {
-        GameObject go = new GameObject();
-        go.AddComponent<StaticCardLibrary>();
-        go.AddComponent<PlayerPacked>();
-        go.AddComponent<GameManager>();
-        //GameManager.Instance.LocalPlayer.PlayerInfo.CardSet = new List<string> { };
+        
+
     }
 }

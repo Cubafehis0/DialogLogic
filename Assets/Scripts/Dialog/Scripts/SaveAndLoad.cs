@@ -5,7 +5,7 @@ using System.IO;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.Events;
-[System.Serializable]
+[Serializable]
 public class SaveInfo
 {
     private Dictionary<Type, object> saveInfos;

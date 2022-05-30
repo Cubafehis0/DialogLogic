@@ -10,7 +10,7 @@ public class TurnControllerEnemyDialog : TurnController
     {
         get
         {
-            return dialogSystem.ChoiceTrigger || dialogSystem.EndTrigger;
+            return dialogSystem.Blocked;
         }
     }
 
@@ -19,13 +19,14 @@ public class TurnControllerEnemyDialog : TurnController
         base.EndTurn();
         for (int i = 0; i < 100; i++)
         {
-            if (dialogSystem.NextState != Ink2Unity.InkState.Content) return;
+            if (dialogSystem.InkStory.NextState != Ink2Unity.InkState.Content) return;
             dialogSystem.MoveNext();
         }
     }
 
     public void StepIn()
     {
+        if (CardGameManager.Instance.isPlayerTurn) return;
         dialogSystem.MoveNext();
     }
 }

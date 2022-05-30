@@ -32,6 +32,26 @@ namespace Ink2Unity
             richText = content;
             pureText = TagHandle.GetPureText(richText);
         }
+
+        public void SetValue(string name,string value)
+        {
+            switch (name)
+            {
+                case "Speaker":
+                    speaker = TagHandle.ParseSpeaker(value);
+                    return;
+                case "StateChange":
+                    List<int> a = TagHandle.ParseArray(value);
+                    personalityModifier = new Personality(a.GetRange(0, 4));
+                    changeTurn = a[4];
+                    return;
+                default:
+                    Debug.LogError("无法识别的标签类型：" + name + ":" + value);
+                    return;
+            }
+        }
+
+
         public override string ToString()
         {
             return richText +"   "+ speaker.ToString();

@@ -12,17 +12,21 @@ public interface ICardController
     IReadonlyPile<Card> DrawPile { get; }
     IReadonlyPile<Card> Hand { get; }
     bool DrawBan { get; set; }
-    void AddCard(PileType pileType, Card card);
-    void AddCardSet2DrawPile(List<string> cardset);
     bool IsHandFull();
     bool CanDraw();
-    void Discard2Draw();
+
+    void AddCard(PileType pileType, string name);
+    void AddCard(PileType pileType, Card card);
+    void AddCard(PileType pileType, IEnumerable<string> names);
+    void AddCard(PileType pileType, IEnumerable<Card> cards);
+
     void DiscardAll();
     void DiscardCard(Card cid);
-    void Draw(int num);
+    void Draw(int num = 1);
     void Draw2Full();
     int? GetPileProp(string name);
     void PlayCard(Card card);
+
 }
 
 public class PlayingPile : Pile<Card>
@@ -79,11 +83,12 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         return true;
     }
 
-    public void Draw(int num)
+    public void Draw(int num = 1)
     {
-        if (drawBan) return;
-        for (int i = 0; i < num; i++)
+
+        while (num-- > 0)
         {
+            if (drawBan) return;
             if (IsHandFull())
             {
                 //手牌满了
@@ -116,7 +121,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         for (int i = 0; i < 20; i++)
         {
             if (!CanDraw()) break;
-            Draw(1);
+            Draw();
         }
     }
 
@@ -130,7 +135,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         hand.MigrateAllTo(discardPile);
     }
 
-    public void Discard2Draw()
+    private void Discard2Draw()
     {
         discardPile.MigrateAllTo(drawPile);
         drawPile.Shuffle();
@@ -138,18 +143,17 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
 
 
     /// <summary>
-    /// 出牌
+    /// 打出卡牌
     /// </summary>
-    /// <param name="cardID">出牌id</param>
-    /// <returns>是否成功出牌</returns>
+    /// <param name="card"></param>
     public void PlayCard(Card card)
     {
-        //有问题
         if (!ForegoundGUISystem.current && CardGameManager.Instance.isPlayerTurn)
         {
             AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card));
         }
     }
+
 
     private IEnumerator PlayCardEnumerator(Card card)
     {
@@ -192,40 +196,13 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         }
     }
 
-    private void ClearTemporaryActivateFlags()
-    {
-        foreach (Card card in Hand)
-        {
-            card.TemporaryActivate = false;
-        }
-        foreach (Card card in DiscardPile)
-        {
-            card.TemporaryActivate = false;
-        }
-        foreach (Card card in DrawPile)
-        {
-            card.TemporaryActivate = false;
-        }
-    }
-
-    public void AddCardSet2DrawPile(List<string> cardset)
-    {
-
-        foreach (string name in cardset)
-        {
-            Card newCard = GameManager.Instance.CardLibrary.GetCopyByName(name);
-            GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
-            drawPile.Add(newCard);
-        }
-        drawPile.Shuffle();
-    }
 
     public void AddCard(PileType pileType, Card card)
     {
         switch (pileType)
         {
             case PileType.Hand:
-                hand.Add(card);
+                if (!IsHandFull()) hand.Add(card);
                 break;
             case PileType.DrawDeck:
                 drawPile.Add(card);
@@ -233,6 +210,31 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
             case PileType.DiscardDeck:
                 discardPile.Add(card);
                 break;
+        }
+    }
+
+    public void AddCard(PileType pileType, IEnumerable<Card> cards)
+    {
+        foreach (Card card in cards)
+        {
+            AddCard(pileType, card);
+        }
+    }
+
+    public void AddCard(PileType pileType, string name)
+    {
+        Card newCard = GameManager.Instance.CardLibrary.GetCopyByName(name);
+        GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
+        AddCard(pileType, newCard);
+    }
+
+    public void AddCard(PileType pileType, IEnumerable<string> names)
+    {
+        foreach (string name in names)
+        {
+            Card newCard = GameManager.Instance.CardLibrary.GetCopyByName(name);
+            GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
+            AddCard(pileType, newCard);
         }
     }
 
@@ -250,5 +252,20 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
     public void OnTurnEnd()
     {
         ClearTemporaryActivateFlags();
+    }
+    private void ClearTemporaryActivateFlags()
+    {
+        foreach (Card card in Hand)
+        {
+            card.TemporaryActivate = false;
+        }
+        foreach (Card card in DiscardPile)
+        {
+            card.TemporaryActivate = false;
+        }
+        foreach (Card card in DrawPile)
+        {
+            card.TemporaryActivate = false;
+        }
     }
 }

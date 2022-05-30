@@ -72,6 +72,7 @@ MonoBehaviour:
         speaker: 0
         personalityModifier:
           inner: 0
+          outer: 0
           logic: 0
           moral: 0
           roundabout: 0
@@ -79,6 +80,7 @@ MonoBehaviour:
       speechType: 3
       judgeValue:
         inner: 0
+        outer: 0
         logic: 0
         moral: 0
         roundabout: 0
@@ -202,10 +204,10 @@ RectTransform:
   m_Father: {fileID: 7614192615905121388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 649, y: 172}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8502037874202210718
 CanvasRenderer:
@@ -235,7 +237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4224345114235052697, guid: a9eaaab6b140c594fa944659c433c380,
+  m_Sprite: {fileID: -5806670205437458361, guid: 50cb24e509418544a9bb4e520c3ef09a,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0

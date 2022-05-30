@@ -28,13 +28,19 @@ namespace Ink2Unity
         string NowState2Json();
     }
 
+    public interface IReadOnlyStory
+    {
+        InkState NextState { get; }
+        List<Choice> CurrentChoices { get; }
+        Content CurrentContent { get; }
+    }
+
     public interface IInkStory
     {
         InkState NextState { get; }
-
+        List<Choice> CurrentChoices { get; }
+        Content CurrentContent { get; }
         void BindPlayerInfo(UnityEvent uevent);
-        List<Choice> CurrentChoices();
-        Content CurrentContent();
         void Load(SaveInfo saveInfo);
         void LoadStory(string state);
         Content NextContent();
@@ -48,10 +54,12 @@ namespace Ink2Unity
     /// <summary>
     /// 传入Ink的TextAsset来创建一个Ink2Unity实例
     /// </summary>
-    public class InkStory : ISavable, ISaveAndLoad, IInkStory
+    public class InkStory : ISavable, ISaveAndLoad, IInkStory, IReadOnlyStory
     {
-        private static InkStory _nowStory;
-        public static InkStory NowStory { get => _nowStory; }
+        private Story story;
+        private Content currentContent;
+        private List<Choice> currentChoices;
+
 
         public InkState NextState
         {
@@ -65,18 +73,24 @@ namespace Ink2Unity
             }
         }
 
-        private Story story;
-        private List<Choice> choicesList;
-
-
         public InkStory(TextAsset inkJSON)
         {
             story = new Story(inkJSON.text);
-            choicesList = null;
-            _nowStory = this;
             BindExternalFunction();
-            SaveAndLoad.Register(this);
+            UpdateCurrentChoices();
+            UpdateCurrentContent();
         }
+
+        /// <summary>
+        /// 获取当前所有的选项
+        /// </summary>
+        /// <returns>选项的集合</returns>
+        public List<Choice> CurrentChoices => currentChoices;
+
+        /// <summary>
+        ///  获取当前内容  
+        /// </summary>
+        public Content CurrentContent => currentContent;
 
         /// <summary>
         /// 只有下面是Content时生效，否则返回null
@@ -90,62 +104,50 @@ namespace Ink2Unity
             while (story.Continue() == "")
                 if (NextState != InkState.Content)
                     return null;
-            return CurrentContent();
-        }
+            UpdateCurrentChoices();
+            UpdateCurrentContent();
 
-        /// <summary>
-        ///   获取当前内容  
-        /// </summary>
-        public Content CurrentContent()
-        {
-            string ct = story.currentText;
-            Content rs = new Content(ct);
-            List<string> tags = story.currentTags;
-            if (tags != null)
-            {
-                foreach (var tag in tags)
-                {
-                    TagHandle.GetPropertyNameAndValue(tag, out string name, out string value);
-                    ParseValue(rs, name, value);
-                }
-            }
+            Content rs = CurrentContent;
             if (rs.personalityModifier != null)
                 CardGameManager.Instance.playerState.StateChange(rs.personalityModifier, rs.changeTurn);
-            return rs;
+            return CurrentContent;
         }
 
-        /// <summary>
-        /// 获取当前所有的选项
-        /// </summary>
-        /// <returns>选项的集合</returns>
-        public List<Choice> CurrentChoices()
+        private void UpdateCurrentContent()
         {
-            List<Choice> rs = new List<Choice>();
-            var choicesContent = story.currentChoices;
-            for (int i = 0; i < choicesContent.Count; i++)
+            currentContent = new Content(story.currentText ?? "Empty");
+            story.currentTags?.ForEach(tag =>
             {
-                string c;
-                List<string> tags = TagHandle.ChoiceCurrentTags(choicesContent[i].text, out c);
-                Choice choice = new Choice(new Content(c), choicesContent[i].index);
+                TagHandle.GetPropertyNameAndValue(tag, out string name, out string value);
+                currentContent.SetValue(name, value);
+            });
+        }
+
+
+        private void UpdateCurrentChoices()
+        {
+            currentChoices = story.currentChoices?.ConvertAll(inkChoice =>
+            {
+                List<string> tags = TagHandle.ChoiceCurrentTags(inkChoice.text, out string c);
+                Choice choice = new Choice(new Content(c), inkChoice.index);
                 if (tags != null)
                 {
                     foreach (var tag in tags)
                     {
-                        string name, value;
-                        TagHandle.GetPropertyNameAndValue(tag, out name, out value);
-                        ParseValue(choice, name, value);
+                        TagHandle.GetPropertyNameAndValue(tag, out string name, out string value);
+                        choice.SetValue(name, value);
                     }
                 }
-                rs.Add(choice);
-            }
-            choicesList = rs;
-            return rs;
+                return choice;
+            });
         }
+
+
 
 
         public Content SelectChoice(int index, bool success)
         {
-            Choice cs = CurrentChoices()[index];
+            Choice cs = CurrentChoices[index];
             story.variablesState["judgeSuccess"] = success;
             CardGameManager.Instance.playerState.Pressure += success ? -cs.Success_desc : cs.Fail_add;
             if (cs.Content.personalityModifier != null)
@@ -169,9 +171,9 @@ namespace Ink2Unity
         {
             return story.state.ToJson();
         }
-        public void LoadStory(string state)
+        public void LoadStory(string json)
         {
-            story.state.LoadJson(state);
+            story.state.LoadJson(json);
         }
 
         private void BindExternalFunction()
@@ -207,54 +209,6 @@ namespace Ink2Unity
             story.variablesState["utc"] = personality.Immoral;
             story.variablesState["rdb"] = personality.Roundabout;
             story.variablesState["ags"] = personality.Aggressive;
-        }
-
-        private void ParseValue(Content content, string name, string value)
-        {
-            switch (name)
-            {
-                case "Speaker":
-                    content.speaker = TagHandle.ParseSpeaker(value);
-                    return;
-                case "StateChange":
-                    List<int> a = TagHandle.ParseArray(value);
-                    content.personalityModifier = new Personality(a.GetRange(0, 4));
-                    content.changeTurn = a[4];
-                    return;
-                default:
-                    Debug.LogError("无法识别的标签类型：" + name + ":" + value);
-                    return;
-            }
-        }
-        private void ParseValue(Choice choice, string name, string value)
-        {
-            switch (name)
-            {
-                case "Speaker":
-                    choice.Content.speaker = TagHandle.ParseSpeaker(value);
-                    return;
-                case "CanUse":
-                    List<int> values = TagHandle.ParseArray(value);
-                    choice.JudgeValue = new Personality(values);
-                    return;
-                case "SpeechArt":
-                    choice.SpeechType = TagHandle.ParseSpeechArt(value);
-                    return;
-                case "Success":
-                    choice.Success_desc = int.Parse(value);
-                    return;
-                case "Fail":
-                    choice.Fail_add = int.Parse(value);
-                    return;
-                case "StateChange":
-                    List<int> a = TagHandle.ParseArray(value);
-                    choice.Content.personalityModifier = new Personality(a.GetRange(0, 4));
-                    choice.Content.changeTurn = a[4];
-                    return;
-                default:
-                    Debug.LogError("无法识别的标签类型：" + name + ":" + value);
-                    return;
-            }
         }
         public void Save(SaveInfo saveInfo)
         {

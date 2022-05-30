@@ -1,6 +1,6 @@
 ﻿public class HandPile : Pile<Card>
 {
-    private ModifierGroup modifiers;
+    private ModifierGroup modifiers=new ModifierGroup();
     public IReadonlyModifierGroup Modifiers { get { return modifiers; } }
 
     public HandPile() : base()

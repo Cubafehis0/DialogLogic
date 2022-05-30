@@ -97,12 +97,12 @@ TextureImporter:
       name: Frame_Normal2_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 80
+        x: 0
+        y: 0
         width: 648
         height: 171
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

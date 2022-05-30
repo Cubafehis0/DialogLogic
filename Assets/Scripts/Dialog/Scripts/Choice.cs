@@ -21,7 +21,7 @@ namespace Ink2Unity
             this.index = index;
         }
 
-        public int Index => index;
+        public int Index { get => index; }
         /// <summary>
         /// 当前选项的内容
         /// </summary>
@@ -43,25 +43,36 @@ namespace Ink2Unity
         /// </summary>
         public int Fail_add { get => fail_add; set => fail_add = value; }
 
-
-        /// <summary>
-        /// 选项框背景色，和选项类型有关
-        /// </summary>
-        public Color BgColor
+        public void SetValue(string name, string value)
         {
-            get
+            switch (name)
             {
-                return SpeechType switch
-                {
-                    SpeechType.Cheat => Color.yellow,
-                    SpeechType.Persuade => Color.green,
-                    SpeechType.Threaten => Color.red,
-                    SpeechType.Normal => Color.white,
-                    _ => Color.white,
-                };
+                case "Speaker":
+                    Content.speaker = TagHandle.ParseSpeaker(value);
+                    return;
+                case "CanUse":
+                    List<int> values = TagHandle.ParseArray(value);
+                    JudgeValue = new Personality(values);
+                    return;
+                case "SpeechArt":
+                    SpeechType = TagHandle.ParseSpeechArt(value);
+                    return;
+                case "Success":
+                    Success_desc = int.Parse(value);
+                    return;
+                case "Fail":
+                    Fail_add = int.Parse(value);
+                    return;
+                case "StateChange":
+                    List<int> a = TagHandle.ParseArray(value);
+                    Content.personalityModifier = new Personality(a.GetRange(0, 4));
+                    Content.changeTurn = a[4];
+                    return;
+                default:
+                    Debug.LogError("无法识别的标签类型：" + name + ":" + value);
+                    return;
             }
         }
-
 
     }
 

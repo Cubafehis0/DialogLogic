@@ -6,7 +6,7 @@ using SemanticTree;
 
 public class StatusManagerRaw : IStatusManager
 {
-    private ModifierGroup modifiers;
+    private ModifierGroup modifiers=new ModifierGroup();
     private List<StatusCounter> statusList = new List<StatusCounter>();
 
     public IReadonlyModifierGroup Modifiers { get => modifiers; }

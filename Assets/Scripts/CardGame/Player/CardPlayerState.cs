@@ -25,17 +25,17 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public Personality GetFinalPersonality()
     {
-        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear + statusManager.Modifiers.PersonalityLinear+cardController.Modifiers.PersonalityLinear;
+        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear + statusManager.Modifiers.PersonalityLinear + cardController.Modifiers.PersonalityLinear;
         return res;
     }
 
     public SpeechArt FinalSpeechArt
     {
-        get => Modifiers.SpeechLinear + statusManager.Modifiers.SpeechLinear+ cardController.Modifiers.SpeechLinear;
+        get => Modifiers.SpeechLinear + statusManager.Modifiers.SpeechLinear + cardController.Modifiers.SpeechLinear;
     }
     public SpeechType? FocusSpeechType
     {
-        get => Modifiers.Focus ?? statusManager.Modifiers.Focus??cardController.Modifiers.Focus;
+        get => Modifiers.Focus ?? statusManager.Modifiers.Focus ?? cardController.Modifiers.Focus;
     }
     public int Energy
     {
@@ -65,6 +65,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     public bool IsHandFull()
     {
         return ((ICardController)cardController).IsHandFull();
+        
     }
 
     public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
@@ -73,7 +74,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     {
         Debug.Log("Íæ¼Ò³õÊ¼»¯");
         this.player = player;
-        cardController.AddCardSet2DrawPile(Player.PlayerInfo.CardSet);
+        cardController.AddCard(PileType.DrawDeck, Player.PlayerInfo.CardSet);
     }
 
     private void Awake()
@@ -124,7 +125,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         Context.PopPlayerContext();
     }
 
-    public void AddAnonymousPersonalityModifier(Personality personality, int timer=-1, DMGType type = DMGType.Normal)
+    public void AddAnonymousPersonalityModifier(Personality personality, int timer = -1, DMGType type = DMGType.Normal)
     {
         if (timer == 0) return;
         if (type == DMGType.Magic)
@@ -209,19 +210,24 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
         ((ICardController)cardController).AddCard(pileType, card);
     }
 
-    public void AddCardSet2DrawPile(List<string> cardset)
+    public void AddCard(PileType pileType, string name)
     {
-        ((ICardController)cardController).AddCardSet2DrawPile(cardset);
+        ((ICardController)cardController).AddCard(pileType, name);
+    }
+
+    public void AddCard(PileType pileType, IEnumerable<Card> cards)
+    {
+        ((ICardController)cardController).AddCard(pileType, cards);
+    }
+
+    public void AddCard(PileType pileType, IEnumerable<string> names)
+    {
+        ((ICardController)cardController).AddCard(pileType, names);
     }
 
     public bool CanDraw()
     {
         return ((ICardController)cardController).CanDraw();
-    }
-
-    public void Discard2Draw()
-    {
-        ((ICardController)cardController).Discard2Draw();
     }
 
     public void DiscardAll()
@@ -253,6 +259,8 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     {
         ((ICardController)cardController).PlayCard(card);
     }
+
+
     #endregion
 
     [Serializable]

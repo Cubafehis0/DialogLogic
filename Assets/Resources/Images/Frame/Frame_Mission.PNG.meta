@@ -97,12 +97,12 @@ TextureImporter:
       name: Frame_Mission_0
       rect:
         serializedVersion: 2
-        x: 62
-        y: 63
-        width: 507
+        x: 0
+        y: 2
+        width: 512
         height: 191
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -60,7 +60,7 @@ public class CardGameManager : MonoBehaviour
         int i = 0;
         for (i = 0; i < 100; i++)
         {
-            if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
+            if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
             turn++;
             isPlayerTurn = false;
             Context.PushPlayerContext(enemy);
@@ -70,10 +70,9 @@ public class CardGameManager : MonoBehaviour
             enemyController.EndTurn();
             Context.Target = null;
             Context.PopPlayerContext();
-
             do
             {
-                if (dialogSystem.NextState == Ink2Unity.InkState.Finish) break;
+                if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
                 isPlayerTurn = true;
                 Context.PushPlayerContext(playerState);
                 Context.Target = enemy;
