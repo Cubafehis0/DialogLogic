@@ -29,6 +29,18 @@ public class GUISystemManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        Preload();
+    }
+
+    private void Preload()
+    {
+        tendencySelectGUISystem = Instantiate(tendencySelectGUISystem, transform);
+        conditionSelectGUISystem = Instantiate(conditionSelectGUISystem, transform);
+        handSelectGUISystem = Instantiate(handSelectGUISystem, transform);
+        pileSelectGUISystem = Instantiate(pileSelectGUISystem, transform);
+        slotGUISystem = Instantiate(slotGUISystem, transform);
+        selectLootGUISystem = Instantiate(selectLootGUISystem, transform);
+        dialogChooseGUISystem = Instantiate(dialogChooseGUISystem, transform);
     }
 
     public void OpenHandChoosePanel(CardPlayerState player, ICondition condition, int num, IEffect action)
@@ -53,7 +65,7 @@ public class GUISystemManager : MonoBehaviour
 
     public void OpenTendencyChoosePanel(HashSet<PersonalityType> types, int value)
     {
-        tendencySelectGUISystem.Open(new TendencyAddGUIContext(types, value,true));
+        tendencySelectGUISystem.Open(new TendencyAddGUIContext(types, value, true));
     }
 
     public void OpenSelectLootGUISystem(List<string> loots)
