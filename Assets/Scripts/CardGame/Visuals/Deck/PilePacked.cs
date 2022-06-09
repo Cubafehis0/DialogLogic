@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine;
 public class PilePacked : MonoBehaviour, IPile<Card>
 {
+    [SerializeField]
     private Pile<Card> card = new Pile<Card>();
 
     public Card this[int index] => ((IReadOnlyList<Card>)card)[index];

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-public class DragHandPileObject : MonoBehaviour
+public class DragHandPileObject : PilePacked
 {
     public static DragHandPileObject instance;
 
-    [SerializeField]
-    private CardController player;
     [SerializeField]
     private Transform layout;
     [SerializeField]
@@ -26,17 +24,17 @@ public class DragHandPileObject : MonoBehaviour
 
     private void OnEnable()
     {
-        player.Hand.OnAdd.AddListener(OnAdd);
-        player.Hand.OnRemove.AddListener(OnRemove);
+        OnAdd.AddListener(OnAddAnim);
+        OnRemove.AddListener(OnRemoveAnim);
     }
 
     private void OnDisable()
     {
-        player.Hand.OnAdd.RemoveListener(OnAdd);
-        player.Hand.OnRemove.RemoveListener(OnRemove);
+        OnAdd.RemoveListener(OnAddAnim);
+        OnRemove.RemoveListener(OnRemoveAnim);
     }
 
-    private void OnAdd(Card card)
+    private void OnAddAnim(Card card)
     {
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         AnimationManager.Instance.AddAnimation(Animating(cardObject.gameObject));
@@ -54,14 +52,14 @@ public class DragHandPileObject : MonoBehaviour
 
     public void SetEnableDragging(bool value)
     {
-        foreach(var card in player.Hand)
+        foreach(var card in this)
         {
             CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
             o.Draggable = value;
         }
     }
 
-    protected virtual void OnRemove(Card card)
+    protected virtual void OnRemoveAnim(Card card)
     {
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (cardObject)
@@ -73,7 +71,7 @@ public class DragHandPileObject : MonoBehaviour
     public void TakeoverAllCard()
     {
         Debug.Log("takeover");
-        foreach(Card card in player.Hand)
+        foreach(Card card in this)
         {
             CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
             o.transform.SetParent(layout, true);

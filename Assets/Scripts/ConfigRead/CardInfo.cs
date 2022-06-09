@@ -74,3 +74,19 @@ public class CardInfo
         Effects?.Construct();
     }
 }
+
+
+//public interface IRelic
+//{
+//    int Rare { get; }
+
+//    Personality Personality { get; }
+
+//}
+
+
+//public class RelicLib
+//{
+//    public void Add(IRelic relic);
+//    public List<IRelic> RandomGet(int cnt, int complete, Personality personality) { }
+//}

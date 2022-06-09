@@ -101,4 +101,9 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
     {
         return ((ICardLibrary)library).GetAllCards();
     }
+
+    public List<string> GetRandom(int cnt)
+    {
+        return ((ICardLibrary)library).GetRandom(cnt);
+    }
 }

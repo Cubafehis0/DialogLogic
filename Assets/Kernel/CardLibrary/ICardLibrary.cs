@@ -9,4 +9,5 @@ public interface ICardLibrary
     Card GetCopyByName(string name);
 
     List<string> GetAllCards();
+    List<string> GetRandom(int cnt);
 }

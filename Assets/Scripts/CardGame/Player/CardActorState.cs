@@ -7,7 +7,7 @@ public class CardActorState : MonoBehaviour
     [SerializeField]
     protected PlayerPacked player;
     [SerializeField]
-    protected StatusManager statusManager = null;
+    protected StatusManagerPacked statusManager = null;
     [SerializeField]
     protected ModifierGroup modifiers = new ModifierGroup();
 

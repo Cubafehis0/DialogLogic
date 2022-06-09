@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
 
-public class StatusManagerRaw : IStatusManager
+public class StatusManager : IStatusManager
 {
     private ModifierGroup modifiers=new ModifierGroup();
     private List<StatusCounter> statusList = new List<StatusCounter>();
-
     public IReadonlyModifierGroup Modifiers { get => modifiers; }
 
     public void AddAnonymousPersonalityModifier(Personality personality, int timer)

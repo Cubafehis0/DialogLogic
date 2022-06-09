@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using SemanticTree;
-
+using System.Linq;
 public class CardLibrary : ICardLibrary
 {
     [SerializeField]
@@ -53,5 +53,20 @@ public class CardLibrary : ICardLibrary
             res.Add(name);
         }
         return res;
+    }
+
+    public List<string> GetRandom(int cnt)
+    {
+        List<string> allCards = GetAllCards();
+        MyMath.Shuffle(allCards);
+        return allCards.GetRange(0, cnt);
+    }
+
+    public List<string> GetRandom2(int cnt)
+    {
+        var values = cardDic.Values;
+        var res = from e in values select e;
+
+        return null;
     }
 }

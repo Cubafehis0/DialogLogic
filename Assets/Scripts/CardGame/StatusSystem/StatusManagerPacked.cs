@@ -9,9 +9,9 @@ public enum DMGType
 
 
 
-public class StatusManager : MonoBehaviour, IStatusManager
+public class StatusManagerPacked : MonoBehaviour, IStatusManager
 {
-    private StatusManagerRaw _statusManager = new StatusManagerRaw();
+    private StatusManager _statusManager = new StatusManager();
 
     private IStatusManager statusManager { get => _statusManager; }
     public IReadonlyModifierGroup Modifiers => statusManager.Modifiers;

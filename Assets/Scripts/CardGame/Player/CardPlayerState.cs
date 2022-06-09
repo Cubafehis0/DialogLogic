@@ -51,7 +51,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public int Pressure { get => Player.PlayerInfo.Pressure; set => Player.PlayerInfo.Pressure = value; }
 
-    public StatusManager StatusManager => statusManager;
+    public StatusManagerPacked StatusManager => statusManager;
     public int DrawNum { get => Player.PlayerInfo.DrawNum; set => Player.PlayerInfo.DrawNum = value; }
 
     public UnityEvent OnValueChange => onPersonalityChange;

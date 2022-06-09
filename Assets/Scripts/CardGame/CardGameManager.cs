@@ -85,17 +85,13 @@ public class CardGameManager : MonoBehaviour
 
         }
         if (i == 100) Debug.LogWarning("回合数达到上限100");
-        GUISystemManager.Instance.OpenSelectLootGUISystem(GetRandomLoots());
+        var loot = GameManager.Instance.CardLibrary.GetRandom(3);
+        GUISystemManager.Instance.OpenSelectLootGUISystem(loot);
         yield return new WaitUntil(() => ForegoundGUISystem.current == null);
         GameManager.Instance.CompleteCurrentIncident();
     }
 
-    public List<string> GetRandomLoots()
-    {
-        List<string> allCards = GameManager.Instance.CardLibrary.GetAllCards();
-        MyMath.Shuffle(allCards);
-        return allCards.GetRange(0, 3);
-    }
+
 
 
     public void SetGameConfig(GameConfig config)

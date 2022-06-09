@@ -29,7 +29,7 @@ public class ChooseGUISystem : MonoBehaviour, IGUISystem
     public IReadOnlyList<ChoiceSlot> Choices { get => allChoices; }
 
     public UnityEvent<ChoiceSlot> OnChoose { get => onChoose; }
-    private void Awake()
+    private void Start()
     {
         gameObject.SetActive(false);
     }

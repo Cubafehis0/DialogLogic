@@ -14,7 +14,7 @@ public class CardEnemyState : MonoBehaviour
     [SerializeField]
     protected TurnController turnController;
     [SerializeField]
-    protected StatusManager statusManager = null;
+    protected StatusManagerPacked statusManager = null;
     [SerializeField]
     protected ModifierGroup modifiers = new ModifierGroup();
 

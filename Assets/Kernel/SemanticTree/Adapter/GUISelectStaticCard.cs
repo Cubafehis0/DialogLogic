@@ -31,7 +31,8 @@ namespace SemanticTree.Adapter
 
         public override void Execute()
         {
-            GUISystemManager.Instance.OpenPileChoosePanel(cards, num.Value, Actions);
+            var msg = new PileSelectGUIContext(cards, num.Value, Actions);
+            GUISystemManager.Instance.Open("w_select_pile", msg);
         }
     }
 }

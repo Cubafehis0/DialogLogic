@@ -45,13 +45,20 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
     private PilePacked drawPilePacked;
     [SerializeField]
     private PilePacked discardPilePacked;
+    [SerializeField]
+    private PilePacked handPilePacked;
+    [SerializeField]
+    private PilePacked playingPilePacked;
+    [SerializeField]
+    private PilePacked exhaustPilePacked;
+
 
     private CardPlayerState cardPlayerState;
     private HandPile hand = new HandPile();
     private IPile<Card> drawPile => drawPilePacked;
     private IPile<Card> discardPile => discardPilePacked;
-    private IPile<Card> exhaustPile { get; } = new Pile<Card>();
-    private IPile<Card> playingPile = new PlayingPile();
+    private IPile<Card> exhaustPile => exhaustPilePacked;
+    private IPile<Card> playingPile => playingPilePacked;
 
     private bool drawBan = false;
     public UnityEvent OnPlayCard = new UnityEvent();

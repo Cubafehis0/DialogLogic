@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayingPileObject : MonoBehaviour
+public class PlayingPileObject : PilePacked
 {
     [SerializeField]
     private CardController player;
 
     private void OnEnable()
     {
-        player.PlayingPile.OnAdd.AddListener(OnAdd);
+        OnAdd.AddListener(OnAddAnim);
     }
 
-    private void OnAdd(Card newCard)
+    private void OnAddAnim(Card newCard)
     {
         CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         o.transform.SetParent(transform, true);

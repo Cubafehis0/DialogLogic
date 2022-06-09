@@ -1,4 +1,5 @@
 using SemanticTree;
+using SemanticTree.Condition;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,15 @@ using UnityEngine.UI;
 public class HandSelectGUIContext
 {
     public IReadOnlyList<Card> cards;
+    public ICondition condition;
     public int num;
     public IEffect action;
 
-    public HandSelectGUIContext(IReadOnlyList<Card> cards, int num, IEffect action)
+    public HandSelectGUIContext(IReadOnlyList<Card> cards,ICondition condition, int num, IEffect action)
     {
         this.cards = cards;
         this.num = num;
+        this.condition = condition;
         this.action = action;
     }
 }
@@ -25,22 +28,19 @@ public class HandSelectGUISystem : ForegoundGUISystem
     [SerializeField]
     private Text UIText;
     [SerializeField]
-    private PileObject handPile;
+    private PilePacked handPile;
     [SerializeField]
-    private PileObject selectedCardPile;
+    private PilePacked selectedCardPile;
     [SerializeField]
     private int minOccurs = 0;
     [SerializeField]
     private int maxOccurs = 0;
 
-    private Pile<Card> cardCandidate = new Pile<Card>();
-    private Pile<Card> cardSelected = new Pile<Card>();
+ 
     private IEffect action = null;
 
     private void Awake()
     {
-        selectedCardPile.Pile = cardSelected;
-        handPile.Pile = cardCandidate;
         gameObject.SetActive(false);
     }
 
@@ -51,7 +51,7 @@ public class HandSelectGUISystem : ForegoundGUISystem
         gameObject.SetActive(true);
         foreach (Card card in context.cards)
         {
-            cardCandidate.Add(card);
+            handPile.Add(card);
         }
         minOccurs = context.num;
         maxOccurs = context.num;
@@ -71,9 +71,9 @@ public class HandSelectGUISystem : ForegoundGUISystem
     {
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (c == null) return;
-        if (cardSelected.Count == maxOccurs) return;
-        cardCandidate.Remove(c.Card);
-        cardSelected.Add(c.Card);
+        if (selectedCardPile.Count == maxOccurs) return;
+        handPile.Remove(c.Card);
+        selectedCardPile.Add(c.Card);
         UpdateVisuals();
     }
 
@@ -81,34 +81,34 @@ public class HandSelectGUISystem : ForegoundGUISystem
     {
         CardObject cardObject = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (cardObject == null) return;
-        cardSelected.Remove(cardObject.Card);
-        cardCandidate.Add(cardObject.Card);
+        selectedCardPile.Remove(cardObject.Card);
+        handPile.Add(cardObject.Card);
         UpdateVisuals();
     }
 
     public void Confirm()
     {
-        if (minOccurs <= cardSelected.Count && cardSelected.Count <= maxOccurs)
+        if (minOccurs <= selectedCardPile.Count && selectedCardPile.Count <= maxOccurs)
         {
             DragHandPileObject.instance.TakeoverAllCard();
             //有缺陷
-            Context.PushPileContext(cardSelected);
-            foreach(Card card in cardSelected)
+            //Context.PushPileContext(cardSelected);
+            foreach(Card card in selectedCardPile)
             {
                 Context.PushCardContext(card);
                 action?.Execute();
                 Context.PopCardContext();
             }
-            Context.PopPileContext();
-            cardCandidate.Clear();
-            cardSelected.Clear();
+            //Context.PopPileContext();
+            handPile.Clear();
+            selectedCardPile.Clear();
             Close();
         }
     }
 
     public void UpdateVisuals()
     {
-        if (UIText) UIText.text = string.Format("选择{0}张,已选择{1}张", minOccurs,cardSelected.Count);
+        if (UIText) UIText.text = string.Format("选择{0}张,已选择{1}张", minOccurs, selectedCardPile.Count);
     }
 
 }

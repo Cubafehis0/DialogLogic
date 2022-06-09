@@ -2,26 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PilePacked))]
-public class DrawPileObject : MonoBehaviour
+public class DrawPileObject : PilePacked
 {
-    [SerializeField]
-    private PilePacked pile;
-
-    private void Awake()
-    {
-        pile = GetComponent<PilePacked>();
-    }
     private void OnEnable()
     {
-        pile.OnAdd.AddListener(OnAdd);
+        OnAdd.AddListener(OnAddAnim);
     }
     private void OnDisable()
     {
-        pile.OnAdd.AddListener(OnAdd);
+        OnAdd.RemoveListener(OnAddAnim);
     }
 
-    private void OnAdd(Card newCard)
+    private void OnAddAnim(Card newCard)
     {
         CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         if (o == null)

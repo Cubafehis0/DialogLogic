@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PilePacked))]
-public class DiscardPileObject : MonoBehaviour
+public class DiscardPileObject : PilePacked
 {
-    [SerializeField]
-    private PilePacked pile;
     [SerializeField]
     private float speed = 50f;
 
     private void OnEnable()
     {
-        pile.OnAdd.AddListener(OnAdd);
+        OnAdd.AddListener(PlayDiscardAnim);
     }
     private void OnDisable()
     {
-        pile.OnRemove.AddListener(OnAdd);
+        OnAdd.RemoveListener(PlayDiscardAnim);
     }
     IEnumerator Discard(GameObject card)
     {
@@ -36,7 +33,7 @@ public class DiscardPileObject : MonoBehaviour
         card.SetActive(false);
     }
 
-    private void OnAdd(Card card)
+    private void PlayDiscardAnim(Card card)
     {
         CardObject c = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         if (c == null)

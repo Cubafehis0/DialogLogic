@@ -1,28 +1,20 @@
 ﻿using UnityEngine;
 
 
-public class PileObject : MonoBehaviour
+public class PileObject : PilePacked
 {
-    private Pile<Card> pile = null;
-    public Pile<Card> Pile
+
+    private void OnEnable()
     {
-        get => pile;
-        set
-        {
-            if (pile == value) return;
-            if (pile != null)
-            {
-                pile.OnAdd.RemoveListener(OnAdd);
-            }
-            if (value != null)
-            {
-                value.OnAdd.AddListener(OnAdd);
-            }
-            pile = value;
-        }
+        OnAdd.AddListener(OnAddAnim);
     }
 
-    private void OnAdd(Card card)
+    private void OnDisable()
+    {
+        OnAdd.RemoveListener(OnAddAnim);
+    }
+
+    private void OnAddAnim(Card card)
     {
 
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);

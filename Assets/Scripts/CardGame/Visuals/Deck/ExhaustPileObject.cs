@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExhaustPileObject : MonoBehaviour
+public class ExhaustPileObject : PilePacked
 {
     [SerializeField]
     private CardController player;
 
     private void OnEnable()
     {
-        player.ExhaustPile.OnAdd.AddListener(OnAdd);
+        OnAdd.AddListener(PlayExhaustAnim);
     }
 
-    private void OnAdd(Card newCard)
+    private void PlayExhaustAnim(Card newCard)
     {
         CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         o.transform.SetParent(transform, true);

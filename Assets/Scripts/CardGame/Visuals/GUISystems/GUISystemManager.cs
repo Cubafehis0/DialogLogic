@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class StringWindowDictionary : SerializableDictionary<string, ForegoundGUISystem> { }
+
 public class GUISystemManager : MonoBehaviour
 {
     [SerializeField]
@@ -21,7 +24,10 @@ public class GUISystemManager : MonoBehaviour
     [SerializeField]
     private ForegoundGUISystem selectLootGUISystem;
     [SerializeField]
-    private GUIDialogChoose dialogChooseGUISystem;
+    private ForegoundGUISystem dialogChooseGUISystem;
+    [SerializeField]
+    private StringWindowDictionary dictionary = new StringWindowDictionary();
+
 
     private static GUISystemManager instance = null;
     public static GUISystemManager Instance { get => instance; }
@@ -41,16 +47,6 @@ public class GUISystemManager : MonoBehaviour
         slotGUISystem = Instantiate(slotGUISystem, transform);
         selectLootGUISystem = Instantiate(selectLootGUISystem, transform);
         dialogChooseGUISystem = Instantiate(dialogChooseGUISystem, transform);
-    }
-
-    public void OpenHandChoosePanel(CardPlayerState player, ICondition condition, int num, IEffect action)
-    {
-        handSelectGUISystem.Open(new HandSelectGUIContext(player.Hand, num, action));
-    }
-
-    public void OpenPileChoosePanel(List<Card> cards, int num, EffectList action)
-    {
-        pileSelectGUISystem.Open(new PileSelectGUIContext(cards, num, action));
     }
 
     public void OpenSlotSelectPanel(EffectList action)
@@ -73,6 +69,18 @@ public class GUISystemManager : MonoBehaviour
         selectLootGUISystem.Open(loots);
     }
 
+    public void Open(string key,object msg)
+    {
+        if (dictionary.TryGetValue(key,out var window))
+        {
+            window.Open(msg);
+        }
+        else
+        {
+            Debug.Log($"没有名为{key}的弹窗");
+        }
+    }
+    
     public void BorrowSlots(Transform borrower)
     {
         chooseSystem.transform.SetParent(borrower);

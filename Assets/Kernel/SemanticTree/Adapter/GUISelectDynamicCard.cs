@@ -41,7 +41,8 @@ namespace SemanticTree.Adapter
                 if (Condition?.Value ?? true) res.Add(card);
                 Context.PopCardContext();
             }
-            GUISystemManager.Instance.OpenPileChoosePanel(res, num.Value, Actions);
+            var msg = new PileSelectGUIContext(res, num.Value, Actions);
+            GUISystemManager.Instance.Open("w_select_pile", msg);
         }
     }
 }

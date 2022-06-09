@@ -21,7 +21,7 @@ namespace SemanticTree.PlayerEffect
             int num = numExpression.Value;
             if (Context.PlayerContext.Hand.Count <= num)
             {
-                var cp=new List<Card>( Context.PlayerContext.Hand);
+                var cp = new List<Card>(Context.PlayerContext.Hand);
                 foreach (var hand in cp)
                 {
                     Context.PlayerContext.DiscardCard(hand);
@@ -29,7 +29,8 @@ namespace SemanticTree.PlayerEffect
             }
             else
             {
-                GUISystemManager.Instance.OpenHandChoosePanel(Context.PlayerContext, null, numExpression.Value, new DiscardCard());
+                var msg = new HandSelectGUIContext(Context.PlayerContext.Hand, null, numExpression.Value, new DiscardCard());
+                GUISystemManager.Instance.Open("w_select_hand", msg);
             }
         }
 
