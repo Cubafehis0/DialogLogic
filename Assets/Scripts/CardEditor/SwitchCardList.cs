@@ -7,7 +7,7 @@ namespace CardEditor
     public class SwitchCardList : MonoBehaviour
     {
         [SerializeField]
-        CardCategory category;
+        CardType category;
         public void Click()
         {
             Debug.Log("Click2SwitchCardList");

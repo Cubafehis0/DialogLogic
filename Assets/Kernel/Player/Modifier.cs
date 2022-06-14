@@ -30,6 +30,9 @@ public class Modifier
     [XmlElement(ElementName = "on_play_card")]
     public EffectList OnPlayCard { get; set; }
 
+    [XmlElement(ElementName = "on_shuffle")]
+    public EffectList OnShuffle { get; set; }
+
     [XmlElement(ElementName = "on_buff")]
     public EffectList OnBuff { get; set; }
 
@@ -54,7 +57,7 @@ public class Modifier
     }
 }
 
-public interface IReadonlyModifierGroup : IReadOnlyList<Modifier>,ITurnStart,ITurnEnd
+public interface IReadonlyModifierGroup : IReadOnlyList<Modifier>, ITurnStart, ITurnEnd
 {
     Personality PersonalityLinear { get; }
     SpeechType? Focus { get; }

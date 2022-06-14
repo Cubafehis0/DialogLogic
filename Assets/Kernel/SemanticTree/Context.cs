@@ -15,6 +15,8 @@ namespace SemanticTree
         public static readonly Stack<StatusCounter> statusCounterStack = new Stack<StatusCounter>();
         public static readonly Stack<ChoiceSlot> choiceSlotStack = new Stack<ChoiceSlot>();
         public static readonly Dictionary<string, int> variableTable = new Dictionary<string, int>();
+
+        public static IGameConsole Console;
         public static List<Card> PileContext
         {
             get

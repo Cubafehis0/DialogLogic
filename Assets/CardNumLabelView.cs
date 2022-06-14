@@ -17,6 +17,6 @@ public class CardNumLabelView : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        text.text = string.Format(format, CardGameManager.Instance.playerState.Hand.Count, CardGameManager.Instance.playerState.Player.PlayerInfo.MaxCardNum);
+        text.text = string.Format(format, CardGameManager.Instance.playerState.CardController.Hand.Count, CardGameManager.Instance.playerState.Player.PlayerInfo.MaxCardNum);
     }
 }

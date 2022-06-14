@@ -16,12 +16,12 @@ namespace SemanticTree.PlayerEffect
 
         public override void Construct()
         {
-            numExpression = ExpressionParser.TryAnalayseExpression(NumExpression) ?? new ConstNode(0);
+            numExpression = ExpressionParser.TryAnalayseExpression(NumExpression, out var res) ? res : new ConstNode(0);
         }
 
         public override void Execute()
         {
-            Context.PlayerContext.Pressure += numExpression.Value;
+            Context.Console.AddPressure("", numExpression.Value);
         }
     }
 }

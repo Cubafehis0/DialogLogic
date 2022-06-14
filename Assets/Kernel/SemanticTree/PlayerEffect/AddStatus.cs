@@ -21,25 +21,23 @@ namespace SemanticTree.PlayerEffect
         [XmlElement(ElementName = "value")]
         public string ValueExpression = null;
 
-        private IExpression value=null;
-        private Status status = null;
+        private IExpression value = null;
 
         public override void Execute()
         {
             switch (TargetType)
             {
                 case TargetTypeEnum.FROM:
-                    Context.PlayerContext.StatusManager.AddStatusCounter(status, value.Value);
+                    Context.Console.AddStatus("FROM", StatusName, value.Value);
                     break;
                 case TargetTypeEnum.TARGET:
-                    Context.Target.StatusManager.AddStatusCounter(status, value.Value);
+                    Context.Console.AddStatus("TARGET", StatusName, value.Value);
                     break;
             }
         }
 
         public override void Construct()
         {
-            status = StaticStatusLibrary.GetByName(StatusName);
             value = ExpressionParser.AnalayseExpression(ValueExpression);
         }
     }

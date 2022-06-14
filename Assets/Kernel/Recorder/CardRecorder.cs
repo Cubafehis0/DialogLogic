@@ -26,10 +26,10 @@ namespace CardGame.Recorder
                     "preach_total" => QueryPreachTotal(),
                     "preach_thisturn" => QueryPreachThisTurn(),
                     "activate_count" => QueryTotalActive(),
-                    "logic_combo" => QueryCombo(CardCategory.Lgc),
-                    "immoral_combo" => QueryCombo(CardCategory.Imm),
-                    "spirital_combo" => QueryCombo(CardCategory.Spt),
-                    "moral_combo" => QueryCombo(CardCategory.Mrl),
+                    "logic_combo" => QueryCombo(CardType.Lgc),
+                    "immoral_combo" => QueryCombo(CardType.Imm),
+                    "spirital_combo" => QueryCombo(CardType.Spt),
+                    "moral_combo" => QueryCombo(CardType.Mrl),
                     _ => throw new CardPlayerState.PropNotFoundException()
                 };
             }
@@ -44,7 +44,7 @@ namespace CardGame.Recorder
             return qs.Count();
         }
 
-        public int QueryCombo(CardCategory category)
+        public int QueryCombo(CardType category)
         {
             var qs = from x in cardLogs
                      where x.LogType == ActionTypeEnum.PlayCard

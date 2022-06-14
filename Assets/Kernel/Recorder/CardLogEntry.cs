@@ -7,7 +7,7 @@ public class CardLogEntry
 {
     private int m_ID;
     private string name;
-    private CardCategory cardCategory;
+    private CardType cardCategory;
     private bool isActive;
     private int turn;
     private ActionTypeEnum logType;
@@ -16,7 +16,7 @@ public class CardLogEntry
     public int ID { get => m_ID; }
     public int Turn { get => turn; set => turn = value; }
     public ActionTypeEnum LogType { get => logType; set => logType = value; }
-    public CardCategory CardCategory { get => cardCategory; set => cardCategory = value; }
+    public CardType CardCategory { get => cardCategory; set => cardCategory = value; }
     public bool IsActive { get => isActive; set => isActive = value; }
     public string Name { get => name; set => name = value; }
 

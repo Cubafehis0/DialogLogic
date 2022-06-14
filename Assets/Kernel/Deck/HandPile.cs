@@ -1,20 +1,20 @@
 ﻿public class HandPile : Pile<Card>
 {
-    private ModifierGroup modifiers=new ModifierGroup();
+    private ModifierGroup modifiers = new ModifierGroup();
     public IReadonlyModifierGroup Modifiers { get { return modifiers; } }
 
-    public HandPile() : base()
+    public override void Add(Card item)
     {
-        OnAdd.AddListener(x =>
-        {
-            if (x.info.handModifier != null)
-                modifiers.Add(x.info.handModifier);
-        });
-        OnRemove.AddListener(x =>
-        {
-            if (x.info.handModifier != null)
-                modifiers.Remove(x.info.handModifier);
-        });
+        base.Add(item);
+        if (item.info.handModifier != null)
+            modifiers.Add(item.info.handModifier);
+    }
+
+    public override void Remove(Card item)
+    {
+        base.Remove(item);
+        if (item.info.handModifier != null)
+            modifiers.Remove(item.info.handModifier);
     }
 
 }

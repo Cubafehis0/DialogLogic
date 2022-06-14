@@ -4,20 +4,6 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-
-public enum PersonalityType
-{
-    Inside,
-    Outside,
-    Logic,
-    Passion,
-    Moral,
-    Unethic,
-    Detour,
-    Strong
-}
-
 [Serializable]
 public class Personality
 {
@@ -31,7 +17,7 @@ public class Personality
     private int moral;
     [SerializeField]
     private int roundabout;
-    
+
 
     public int this[int index]
     {

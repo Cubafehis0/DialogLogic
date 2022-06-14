@@ -35,13 +35,13 @@ public class Pile<T> : List<T>, IReadonlyPile<T>, IPile<T>
         OnShuffle.Invoke();
     }
 
-    public new void Add(T item)
+    public new virtual void Add(T item)
     {
         base.Add(item);
         OnAdd.Invoke(item);
     }
 
-    public new void Remove(T item)
+    public new virtual void Remove(T item)
     {
         base.Remove(item);
         OnRemove.Invoke(item);

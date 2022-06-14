@@ -21,7 +21,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.Strength += numExpression.Value;
+            Context.Console.AddStrength("FROM", numExpression.Value);
         }
     }
 }

@@ -33,7 +33,7 @@ public class CardInfo
     public bool ExhaustSpecified { get => Exhaust != false; }
 
     [XmlElement(ElementName = "category")]
-    public CardCategory category;
+    public CardType category;
 
     [XmlElement(ElementName = "in_hand_modifier")]
     public Modifier handModifier;

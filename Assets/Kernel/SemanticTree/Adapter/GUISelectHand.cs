@@ -27,7 +27,7 @@ namespace SemanticTree.Adapter
 
         public override void Execute()
         {
-            GUISystemManager.Instance.Open("w_select_hand",new HandSelectGUIContext(Context.PlayerContext.Hand, Condition, num.Value, Actions));
+            GUISystemManager.Instance.Open("w_select_hand",new HandSelectGUIContext(Context.PlayerContext.CardController.Hand, Condition, num.Value, Actions));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace SemanticTree.PlayerEffect
 
         public override void Execute()
         {
-            Context.PlayerContext.DrawBan = Value;
+            Context.Console.SetDrawBan("", Value);
         }
     }
 }

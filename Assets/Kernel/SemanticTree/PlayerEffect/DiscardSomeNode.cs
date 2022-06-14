@@ -19,17 +19,17 @@ namespace SemanticTree.PlayerEffect
         public override void Execute()
         {
             int num = numExpression.Value;
-            if (Context.PlayerContext.Hand.Count <= num)
+            if (Context.PlayerContext.CardController.Hand.Count <= num)
             {
-                var cp = new List<Card>(Context.PlayerContext.Hand);
+                var cp = new List<Card>(Context.PlayerContext.CardController.Hand);
                 foreach (var hand in cp)
                 {
-                    Context.PlayerContext.DiscardCard(hand);
+                    Context.PlayerContext.CardController.DiscardCard(hand);
                 }
             }
             else
             {
-                var msg = new HandSelectGUIContext(Context.PlayerContext.Hand, null, numExpression.Value, new DiscardCard());
+                var msg = new HandSelectGUIContext(Context.PlayerContext.CardController.Hand, null, numExpression.Value, new DiscardCard());
                 GUISystemManager.Instance.Open("w_select_hand", msg);
             }
         }

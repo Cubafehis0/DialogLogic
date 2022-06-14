@@ -31,9 +31,9 @@ namespace SemanticTree.Adapter
         public override void Execute()
         {
             List<Card> candidate = new List<Card>();
-            if ((PileType.Hand & type) > 0) candidate.AddRange(Context.PlayerContext.Hand);
-            if ((PileType.DrawDeck & type) > 0) candidate.AddRange(Context.PlayerContext.DrawPile);
-            if ((PileType.DiscardDeck & type) > 0) candidate.AddRange(Context.PlayerContext.DiscardPile);
+            if ((PileType.Hand & type) > 0) candidate.AddRange(Context.PlayerContext.CardController.Hand);
+            if ((PileType.DrawDeck & type) > 0) candidate.AddRange(Context.PlayerContext.CardController.DrawPile);
+            if ((PileType.DiscardDeck & type) > 0) candidate.AddRange(Context.PlayerContext.CardController.DiscardPile);
             List<Card> res = new List<Card>();
             foreach (Card card in candidate)
             {

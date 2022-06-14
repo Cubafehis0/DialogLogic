@@ -1,24 +1,56 @@
-锘縰sing System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
+using System.Xml.Serialization;
 
-public enum RarityType
-{
-    COMMON,
-    RARE
-}
-
+[Serializable]
 public class Relic
 {
-    public string identification;
-    public string name;
-    public string desc;
-    public string icon;
+    public RelicInfo relicInfo = null;
 
-    public RarityType rarity;
-    public PersonalityType category;
+    public static PersonalityType GetOppositeCategory(PersonalityType type)
+    {
+        return type switch
+        {
+            PersonalityType.Logic => PersonalityType.Passion,
+            PersonalityType.Passion => PersonalityType.Logic,
+            PersonalityType.Moral => PersonalityType.Unethic,
+            PersonalityType.Unethic => PersonalityType.Moral,
+            PersonalityType.Detour => PersonalityType.Strong,
+            PersonalityType.Strong => PersonalityType.Detour,
+            _ => PersonalityType.Inside,
+        };
+    }
 
-    public Modifier bindingModifier;
+    public Relic() { }
+
+    public Relic(RelicInfo relicInfo) : this()
+    {
+        this.relicInfo = relicInfo;
+    }
+
+    public static string GetRarityString(int rarity)
+    {
+        return rarity switch
+        {
+            0 => "普通",
+            1 => "稀有",
+            _ => "其他",
+        };
+    }
+
+    public static string GetCategoryString(PersonalityType personalityType)
+    {
+        return personalityType switch
+        {
+            PersonalityType.Logic => "逻辑",
+            PersonalityType.Passion => "激情",
+            PersonalityType.Moral => "道德",
+            PersonalityType.Unethic => "无忌",
+            PersonalityType.Detour => "迂回",
+            PersonalityType.Strong => "强势",
+            _ => "其他",
+        };
+    }
 }

@@ -24,15 +24,14 @@ namespace SemanticTree.PlayerEffect
         {
             int b = num.Value;
             //feature 如果手牌满了则不会加入
-            for (int i = 0; i < b && !Context.PlayerContext.IsHandFull(); i++)
+            for (int i = 0; i < b && !Context.PlayerContext.CardController.IsHandFull(); i++)
             {
-                Card newCard = GameManager.Instance.CardLibrary.GetCopyByName(CardName);
-                Context.PlayerContext.AddCard(PileType.Hand, newCard);
+                Context.Console.AddCard("", CardName, PileType.Hand);
             }
         }
         public override void Construct()
         {
-            num = ExpressionParser.TryAnalayseExpression(NumExpression) ?? new ConstNode(1);
+            num = ExpressionParser.TryAnalayseExpression(NumExpression, out var res) ? res : new ConstNode(1);
         }
     }
 }

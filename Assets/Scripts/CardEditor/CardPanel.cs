@@ -43,8 +43,8 @@ namespace CardEditor
             }
         }
         [SerializeField]
-        private CardCategory category;
-        public CardCategory Category
+        private CardType category;
+        public CardType Category
         {
             get => category;
             set

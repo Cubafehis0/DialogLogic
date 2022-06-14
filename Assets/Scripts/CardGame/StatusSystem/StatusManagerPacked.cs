@@ -1,19 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-
-public enum DMGType
-{
-    Normal,
-    Magic
-}
-
+using Kernel.StatusSystem;
 
 
 public class StatusManagerPacked : MonoBehaviour, IStatusManager
 {
-    private StatusManager _statusManager = new StatusManager();
-
-    private IStatusManager statusManager { get => _statusManager; }
+    private IStatusManager statusManager = new StatusManager();
     public IReadonlyModifierGroup Modifiers => statusManager.Modifiers;
 
     public void AddAnonymousCostModifer(CostModifier costModifier, int timer)
@@ -39,6 +31,11 @@ public class StatusManagerPacked : MonoBehaviour, IStatusManager
     public void AddStatusCounter(Status status, int value)
     {
         statusManager.AddStatusCounter(status, value);
+    }
+
+    public void AddStatusCounter(string name, int value)
+    {
+        statusManager.AddStatusCounter(name, value);
     }
 
     public int GetStatusValue(Status status)

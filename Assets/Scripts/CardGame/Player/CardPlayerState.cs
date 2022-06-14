@@ -7,8 +7,14 @@ using CardGame.Recorder;
 using System.Linq;
 using SemanticTree;
 
-public class CardPlayerState : CardActorState, IPlayerStateChange, ICardController
+public class CardPlayerState : MonoBehaviour, IPlayerStateChange
 {
+    [SerializeField]
+    protected PlayerPacked player;
+    [SerializeField]
+    protected StatusManagerPacked statusManager = null;
+    [SerializeField]
+    protected ModifierGroup modifiers = new ModifierGroup();
     [SerializeField]
     private ChooseGUISystem chooseGUISystem = null;
     [SerializeField]
@@ -21,6 +27,9 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     //不同判定补正的概率
     private static readonly float[] jp = { 0.05f, 0.2f, 0.5f, 0.2f, 0.05f };
 
+
+    public ModifierGroup Modifiers { get => modifiers; }
+    public PlayerPacked Player { get => player; private set => player = value; }
     public ChooseGUISystem ChooseGUISystem { get => chooseGUISystem; }
 
     public Personality GetFinalPersonality()
@@ -56,19 +65,7 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
 
     public UnityEvent OnValueChange => onPersonalityChange;
 
-    public IReadonlyPile<Card> DiscardPile => ((ICardController)cardController).DiscardPile;
-
-    public IReadonlyPile<Card> DrawPile => ((ICardController)cardController).DrawPile;
-
-    public IReadonlyPile<Card> Hand => ((ICardController)cardController).Hand;
-
-    public bool IsHandFull()
-    {
-        return ((ICardController)cardController).IsHandFull();
-        
-    }
-
-    public bool DrawBan { get => ((ICardController)cardController).DrawBan; set => ((ICardController)cardController).DrawBan = value; }
+    public CardController CardController { get => cardController; set => cardController = value; }
 
     public void Init(PlayerPacked player)
     {
@@ -203,65 +200,6 @@ public class CardPlayerState : CardActorState, IPlayerStateChange, ICardControll
     {
         return StatusManager.GetStatusValue(name);
     }
-
-    #region ICardManager接口
-    public void AddCard(PileType pileType, Card card)
-    {
-        ((ICardController)cardController).AddCard(pileType, card);
-    }
-
-    public void AddCard(PileType pileType, string name)
-    {
-        ((ICardController)cardController).AddCard(pileType, name);
-    }
-
-    public void AddCard(PileType pileType, IEnumerable<Card> cards)
-    {
-        ((ICardController)cardController).AddCard(pileType, cards);
-    }
-
-    public void AddCard(PileType pileType, IEnumerable<string> names)
-    {
-        ((ICardController)cardController).AddCard(pileType, names);
-    }
-
-    public bool CanDraw()
-    {
-        return ((ICardController)cardController).CanDraw();
-    }
-
-    public void DiscardAll()
-    {
-        ((ICardController)cardController).DiscardAll();
-    }
-
-    public void DiscardCard(Card cid)
-    {
-        ((ICardController)cardController).DiscardCard(cid);
-    }
-
-    public void Draw(int num)
-    {
-        ((ICardController)cardController).Draw(num);
-    }
-
-    public void Draw2Full()
-    {
-        ((ICardController)cardController).Draw2Full();
-    }
-
-    public int? GetPileProp(string name)
-    {
-        return ((ICardController)cardController).GetPileProp(name);
-    }
-
-    public void PlayCard(Card card)
-    {
-        ((ICardController)cardController).PlayCard(card);
-    }
-
-
-    #endregion
 
     [Serializable]
     public class PropNotFoundException : Exception
