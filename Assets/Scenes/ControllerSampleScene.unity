@@ -313,19 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chooseSystem: {fileID: 1991228639}
-  tendencySelectGUISystem: {fileID: 3090674624107491009, guid: e78e4d5d84728944383478e9c53c584b,
-    type: 3}
-  conditionSelectGUISystem: {fileID: 8176309033177653773, guid: e77ddd45049ab054ba9c460eee30d667,
-    type: 3}
-  handSelectGUISystem: {fileID: 1921025092189694979, guid: 4dce2b454f1cf3f4db2e2da01dada0d5,
-    type: 3}
-  pileSelectGUISystem: {fileID: 1576416521931622833, guid: 5dadb02fbacd56f49b036f1f9db352ec,
-    type: 3}
-  slotGUISystem: {fileID: 2210499442369226362, guid: 7cd664eae9910cb4ab86bb8710b56c42,
-    type: 3}
-  selectLootGUISystem: {fileID: 1439626116210591169, guid: 17c1de31bafa19649b766ce8628ca988,
-    type: 3}
-  dialogChooseGUISystem: {fileID: 0}
+  dialogChooseGUISystem: {fileID: 916587444}
   dictionary:
     m_keys:
     - w_select_tendency

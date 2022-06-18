@@ -1,4 +1,4 @@
-﻿public class PrefabGUISystem:ForegoundGUISystem
+﻿public class PrefabGUISystem : ForegoundGUISystem
 {
     public override void Open(object msg)
     {

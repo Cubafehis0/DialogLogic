@@ -2,7 +2,7 @@
 
 public enum PileType
 {
-    [XmlEnum(Name ="hand")]
+    [XmlEnum(Name = "hand")]
     Hand = 1,
     [XmlEnum(Name = "draw_pile")]
     DrawDeck = 2,

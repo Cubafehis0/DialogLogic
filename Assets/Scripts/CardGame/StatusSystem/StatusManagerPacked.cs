@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-using Kernel.StatusSystem;
+﻿using Kernel.StatusSystem;
+using ModdingAPI;
+using UnityEngine;
 
 
 public class StatusManagerPacked : MonoBehaviour, IStatusManager
 {
     private IStatusManager statusManager = new StatusManager();
-    public IReadonlyModifierGroup Modifiers => statusManager.Modifiers;
+    public ModifierGroup Modifiers => statusManager.Modifiers;
 
     public void AddAnonymousCostModifer(CostModifier costModifier, int timer)
     {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +10,7 @@ public class HealthSliderView : MonoBehaviour
 
     private void Update()
     {
-        healthSlider.value= GameManager.Instance.LocalPlayer.PlayerInfo.Pressure;
+        healthSlider.value = GameManager.Instance.LocalPlayer.PlayerInfo.Pressure;
         sanSlider.value = GameManager.Instance.LocalPlayer.PlayerInfo.Health;
     }
 

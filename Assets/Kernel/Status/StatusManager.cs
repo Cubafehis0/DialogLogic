@@ -1,15 +1,15 @@
 ﻿
+using ModdingAPI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using SemanticTree;
 namespace Kernel.StatusSystem
 {
     public class StatusManager : IStatusManager
     {
         private ModifierGroup modifiers = new ModifierGroup();
         private List<StatusCounter> statusList = new List<StatusCounter>();
-        public IReadonlyModifierGroup Modifiers { get => modifiers; }
+        public ModifierGroup Modifiers { get => modifiers; }
 
         public void AddAnonymousPersonalityModifier(Personality personality, int timer)
         {
@@ -18,7 +18,7 @@ namespace Kernel.StatusSystem
             {
                 Modifier = new Modifier()
                 {
-                    PersonalityLinear = new Personality(personality),
+                    PersonalityLinear = () => new Personality(personality),
                 },
                 DecreaseOnTurnEnd = 1,
             };
@@ -32,7 +32,7 @@ namespace Kernel.StatusSystem
             {
                 Modifier = new Modifier()
                 {
-                    SpeechLinear = new SpeechArt(speechArt),
+                    SpeechLinear = ()=>new SpeechArt(speechArt),
                 },
                 DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
             };
@@ -46,7 +46,7 @@ namespace Kernel.StatusSystem
             {
                 Modifier = new Modifier()
                 {
-                    CostModifier = new CostModifier(costModifier),
+                    CostModifier = new CostModifier(costModifier.Condition,costModifier.num),
                 },
                 DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
             };
@@ -60,7 +60,7 @@ namespace Kernel.StatusSystem
             {
                 Modifier = new Modifier()
                 {
-                    Focus = speechType,
+                    Focus = ()=>speechType,
                 },
                 DecreaseOnTurnEnd = timer < 0 ? 0 : 1,
             };
@@ -69,7 +69,7 @@ namespace Kernel.StatusSystem
         }
 
 
-        public void AddStatusCounter(string name,int value)
+        public void AddStatusCounter(string name, int value)
         {
             AddStatusCounter(StaticStatusLibrary.GetByName(name), value);
         }
@@ -93,7 +93,7 @@ namespace Kernel.StatusSystem
                 s.Value += value;
                 if (s.Value <= 0 && !s.Status.AllowNegative)
                 {
-                    s.Status.OnRemove?.Execute();
+                    s.Status.OnRemove?.Invoke();
                     if (status.Modifier != null) modifiers.Remove(s.Status.Modifier);
                     statusList.Remove(s);
                 }
@@ -104,7 +104,7 @@ namespace Kernel.StatusSystem
                 {
                     statusList.Add(st);
                     if (status.Modifier != null) modifiers.Add(status.Modifier);
-                    status.OnAdd?.Execute();
+                    status.OnAdd?.Invoke();
                 }
 
             }
@@ -114,7 +114,7 @@ namespace Kernel.StatusSystem
 
         public int GetStatusValue(string name)
         {
-            Status status = StaticStatusLibrary.GetByName(name) ?? throw new SemanticException();
+            Status status = StaticStatusLibrary.GetByName(name);
             return GetStatusValue(status);
         }
 
@@ -139,7 +139,7 @@ namespace Kernel.StatusSystem
                 counter.Value -= counter.Status.DecreaseOnTurnStart;
                 if (!counter.Status.AllowNegative && counter.Value <= 0)
                 {
-                    counter.Status.OnRemove?.Execute();
+                    counter.Status.OnRemove?.Invoke();
                     modifiers.Remove(counter.Status.Modifier);
                     statusList.Remove(counter);
                 }
@@ -154,7 +154,7 @@ namespace Kernel.StatusSystem
                 counter.Value -= counter.Status.DecreaseOnTurnEnd;
                 if (!counter.Status.AllowNegative && counter.Value <= 0)
                 {
-                    counter.Status.OnRemove?.Execute();
+                    counter.Status.OnRemove?.Invoke();
                     modifiers.Remove(counter.Status.Modifier);
                     statusList.Remove(counter);
                 }

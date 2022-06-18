@@ -1,4 +1,5 @@
 ﻿using Ink2Unity;
+using ModdingAPI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,8 @@ public class ChoiceSlot
     private HashSet<PersonalityType> revealMask = new HashSet<PersonalityType>();
 
     public bool Locked { get => locked; set => locked = value; }
-    public Choice Choice { 
+    public Choice Choice
+    {
         get => choice;
         set
         {
@@ -24,7 +26,7 @@ public class ChoiceSlot
         }
     }
 
-    public HashSet<PersonalityType> RevealMask { get => revealMask;}
+    public HashSet<PersonalityType> RevealMask { get => revealMask; }
 
     public PersonalityType? PickupARandomUnmasked()
     {
@@ -37,7 +39,7 @@ public class ChoiceSlot
         HashSet<PersonalityType> candidate = new HashSet<PersonalityType>();
         foreach (PersonalityType x in Enum.GetValues(typeof(PersonalityType)))
         {
-            if(choice.JudgeValue[x]>0) candidate.Add(x);
+            if (choice.JudgeValue[x] > 0) candidate.Add(x);
         }
         candidate.ExceptWith(RevealMask);
         if (candidate.Count == 0) return null;

@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 [Serializable]
 public class SpeakerGameObjectDictionary : SerializableDictionary<SpeakerEnum, GameObject> { }
 
@@ -24,7 +21,7 @@ public class SpeakSystem : MonoBehaviour
 
     public void Speak(string richText, string speaker)
     {
-        if(Enum.TryParse(speaker, out SpeakerEnum e))
+        if (Enum.TryParse(speaker, out SpeakerEnum e))
         {
             Speak(richText, e);
         }

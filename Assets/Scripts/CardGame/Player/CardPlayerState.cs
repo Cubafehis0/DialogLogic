@@ -1,11 +1,9 @@
 using Ink2Unity;
-using System.Collections.Generic;
+using ModdingAPI;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
-using CardGame.Recorder;
-using System.Linq;
-using SemanticTree;
 
 public class CardPlayerState : MonoBehaviour, IPlayerStateChange
 {
@@ -112,14 +110,12 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
         Debug.Log("我的回合，抽卡！！！");
         Energy = player.PlayerInfo.BaseEnergy;
         cardController.Draw(Player.PlayerInfo.DrawNum);
-        Context.PushPlayerContext(this);
         modifiers.OnTurnStart();
     }
 
     public void EndTurn()
     {
         Debug.Log("回合结束");
-        Context.PopPlayerContext();
     }
 
     public void AddAnonymousPersonalityModifier(Personality personality, int timer = -1, DMGType type = DMGType.Normal)

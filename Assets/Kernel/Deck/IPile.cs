@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-public interface IPile<T>:IReadonlyPile<T>
+public interface IPile<T> : IReadonlyPile<T>
 {
     UnityEvent OnShuffle { get; }
     void Add(T item);

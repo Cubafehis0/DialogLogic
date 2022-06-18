@@ -1,7 +1,7 @@
-using System.Collections;
+using ModdingAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 namespace Ink2Unity
 {
     [Serializable]
@@ -33,7 +33,7 @@ namespace Ink2Unity
             pureText = TagHandle.GetPureText(richText);
         }
 
-        public void SetValue(string name,string value)
+        public void SetValue(string name, string value)
         {
             switch (name)
             {
@@ -54,7 +54,7 @@ namespace Ink2Unity
 
         public override string ToString()
         {
-            return richText +"   "+ speaker.ToString();
+            return richText + "   " + speaker.ToString();
         }
     }
 }

@@ -1,8 +1,7 @@
 
 using CardGame.Recorder;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ModdingAPI;
+
 public class CardLogEntry
 {
     private int m_ID;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using ModdingAPI;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
@@ -17,10 +17,10 @@ public class ChoiceConditionObject : MonoBehaviour
     public int Value { get => value; set => this.value = value; }
     public bool Reveal { get => reveal; set => reveal = value; }
 
-    
+
     private void Awake()
     {
-        image=GetComponent<Image>();
+        image = GetComponent<Image>();
     }
 
     private void Update()

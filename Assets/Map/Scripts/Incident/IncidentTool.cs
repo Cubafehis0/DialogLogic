@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 public static class IncidentTool
 {
     public static Incident Pickup(List<Incident> incidents)

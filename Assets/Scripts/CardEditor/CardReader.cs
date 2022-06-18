@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class CardReader
     {
         get
         {
-            if(instance == null)    
+            if (instance == null)
                 instance = new CardReader();
             return instance;
         }
@@ -21,16 +19,6 @@ public class CardReader
     private CardReader()
     {
 
-    }
-    public List<CardInfo> GetCardInfos(TextAsset[] xmlFiles)
-    {
-        List<CardInfo> list = new List<CardInfo>();
-        foreach (var file in xmlFiles)
-        {
-            Common common = Deserialize<Common>(file.text);
-            list.AddRange(common.CardInfos);
-        }
-        return list;
     }
     private static Stream StreamString2Stream(string s)
     {

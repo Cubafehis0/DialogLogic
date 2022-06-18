@@ -1,7 +1,7 @@
 ﻿public class HandPile : Pile<Card>
 {
     private ModifierGroup modifiers = new ModifierGroup();
-    public IReadonlyModifierGroup Modifiers { get { return modifiers; } }
+    public ModifierGroup Modifiers { get { return modifiers; } }
 
     public override void Add(Card item)
     {

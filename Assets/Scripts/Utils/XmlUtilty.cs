@@ -1,35 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Xml.Serialization;
-
-public static class XmlUtilty
+using UnityEngine;
+namespace XmlUtilties
 {
-    public static T Deserialize<T>(string s)
+
+
+    public static class XmlUtilty
     {
+        public static T Deserialize<T>(string s)
+        {
 
-        XmlSerializer ser = new XmlSerializer(typeof(T));
-        using var stream = StreamString2Stream(s);
-        return (T)ser.Deserialize(stream);
-    }
+            XmlSerializer ser = new XmlSerializer(typeof(T));
+            using var stream = StreamString2Stream(s);
+            return (T)ser.Deserialize(stream);
+        }
 
-    public static T Deserialize<T>(FileStream fs)
-    {
+        public static T Deserialize<T>(FileStream fs)
+        {
+            Debug.Log("Ser");
+            XmlSerializer ser = new XmlSerializer(typeof(T));
+            return (T)ser.Deserialize(fs);
+        }
 
-        XmlSerializer ser = new XmlSerializer(typeof(T));
-        return (T)ser.Deserialize(fs);
-    }
-
-    private static Stream StreamString2Stream(string s)
-    {
-        MemoryStream stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        writer.Write(s);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
+        private static Stream StreamString2Stream(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
     }
 }
+

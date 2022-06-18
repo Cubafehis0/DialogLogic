@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HandLayout : MonoBehaviour
@@ -134,7 +132,7 @@ public class HandLayout : MonoBehaviour
             {
                 Vector3 currentPos = child.position;
                 Vector3 targetPos = cardsOffset[i];
-                child.position = Vector3.MoveTowards(currentPos, targetPos, Time.deltaTime*moveSpeed);
+                child.position = Vector3.MoveTowards(currentPos, targetPos, Time.deltaTime * moveSpeed);
                 child.localEulerAngles = -Mathf.Rad2Deg * (cardsArcOffset[i] / curvature) * Vector3.forward;
             }
         }

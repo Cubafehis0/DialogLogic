@@ -8,7 +8,7 @@ public class AnimationManager : MonoBehaviour
     private Queue<IEnumerator> animationQueue = new Queue<IEnumerator>();
 
     private static AnimationManager instance;
-    public static AnimationManager Instance {get {return instance;}}
+    public static AnimationManager Instance { get { return instance; } }
 
     private void Awake()
     {

@@ -1,6 +1,5 @@
-using SemanticTree;
-using SemanticTree.Condition;
-using System.Collections;
+using JasperMod.SemanticTree;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,11 +8,11 @@ using UnityEngine.UI;
 public class HandSelectGUIContext
 {
     public IReadOnlyList<Card> cards;
-    public ICondition condition;
+    public Func<bool> condition;
     public int num;
-    public IEffect action;
+    public Action action;
 
-    public HandSelectGUIContext(IReadOnlyList<Card> cards,ICondition condition, int num, IEffect action)
+    public HandSelectGUIContext(IReadOnlyList<Card> cards, Func<bool> condition, int num, Action action)
     {
         this.cards = cards;
         this.num = num;
@@ -36,8 +35,8 @@ public class HandSelectGUISystem : ForegoundGUISystem
     [SerializeField]
     private int maxOccurs = 0;
 
- 
-    private IEffect action = null;
+
+    private Action action = null;
 
     private void Awake()
     {
@@ -93,11 +92,11 @@ public class HandSelectGUISystem : ForegoundGUISystem
             DragHandPileObject.instance.TakeoverAllCard();
             //ÓÐÈ±ÏÝ
             //Context.PushPileContext(cardSelected);
-            foreach(Card card in selectedCardPile)
+            foreach (Card card in selectedCardPile)
             {
-                Context.PushCardContext(card);
-                action?.Execute();
-                Context.PopCardContext();
+                Context.SetCardAlias("Item", card.id);
+                action.Invoke();
+                Context.SetCardAlias("Item", card.id);
             }
             //Context.PopPileContext();
             handPile.Clear();

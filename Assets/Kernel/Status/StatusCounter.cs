@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModdingAPI;
+using System;
 
 [Serializable]
 public class StatusCounter

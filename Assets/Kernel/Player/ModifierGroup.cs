@@ -1,8 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using ModdingAPI;
+using System.Collections.Generic;
 
-public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
+
+public class AnonymousModifier
 {
-    private Modifier anonymous=new Modifier();
+    public Personality PersonalityLinear;
+}
+
+
+
+public class ModifierGroup : List<Modifier>
+{
+    private AnonymousModifier anonymous = new AnonymousModifier();
 
     public void AddAnonymousPersonality(Personality personality)
     {
@@ -18,7 +27,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             {
                 var entry = modifier.PersonalityLinear;
                 if (entry != null)
-                    res += entry;
+                    res += entry.Invoke();
             }
             return res;
         }
@@ -32,7 +41,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             {
                 var entry = modifier.Focus;
                 if (entry != null)
-                    res = entry;
+                    res = entry.Invoke();
             }
             return res;
         }
@@ -46,7 +55,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             {
                 var entry = modifier.SpeechLinear;
                 if (entry != null)
-                    res += entry;
+                    res += entry.Invoke();
             }
             return res;
         }
@@ -56,20 +65,20 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
     {
         foreach (var modifier in this)
         {
-            modifier.OnTurnStart?.Execute();
+            modifier.OnTurnStart?.Invoke();
         }
     }
 
     public void OnTurnEnd()
     {
-        
+
     }
 
     public void OnPlayCard()
     {
         foreach (var modifier in this)
         {
-            modifier.OnPlayCard?.Execute();
+            modifier.OnPlayCard?.Invoke();
         }
     }
 
@@ -77,7 +86,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
     {
         foreach (var modifier in this)
         {
-            modifier.OnPlayCard?.Execute();
+            modifier.OnPlayCard?.Invoke();
         }
     }
 
@@ -89,7 +98,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             foreach (Modifier modifier in this)
             {
                 var entry = modifier.AdditionalEnergy;
-                res += entry;
+                res += entry.Invoke();
             }
             return res;
         }
@@ -102,7 +111,7 @@ public class ModifierGroup : List<Modifier>, IReadonlyModifierGroup
             foreach (Modifier modifier in this)
             {
                 var entry = modifier.AdditionalDraw;
-                res += entry;
+                res += entry.Invoke();
             }
             return res;
         }

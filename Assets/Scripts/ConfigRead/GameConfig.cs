@@ -1,13 +1,14 @@
-﻿using System.Xml;
+﻿using ModdingAPI;
 using System;
+using System.Xml;
 using System.Xml.Serialization;
 
 [Serializable]
 public class GameConfig
 {
-    [XmlElement(ElementName ="InkStory")]
+    [XmlElement(ElementName = "InkStory")]
     public string StoryName;
-    [XmlElement(ElementName ="player")]
+    [XmlElement(ElementName = "player")]
     public PlayerInfo PlayerInfo;
     [XmlElement(ElementName = "enemy")]
     public Personality enemyPersonality;

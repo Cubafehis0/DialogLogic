@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ModdingAPI;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 [Serializable]
 public class SpeechTypeSpriteDictionary : SerializableDictionary<SpeechType, Sprite> { }
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private PersonalityTypeSpriteDictionary conditionIcons;
     [SerializeField]
     private PlayerPacked localPlayer;
-    
+
     public Incident currentIncident = null;
     [SerializeField]
     private StaticCardLibrary cardLibrary;
@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour
     public StringSpriteDictionary EnemySpriteDictionary;
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
     public PlayerPacked LocalPlayer { get => localPlayer; set => localPlayer = value; }
-    public Map Map { get => map;}
-    public string CurrentStory { get => currentIncident.incidentName;}
+    public Map Map { get => map; }
+    public string CurrentStory { get => currentIncident.incidentName; }
 
     private void Awake()
     {
@@ -74,50 +74,25 @@ public class GameManager : MonoBehaviour
 
     private void LoadAllCommon(string path)
     {
-        string[] files = Directory.GetFiles(path);
-        List<Common> commons = new List<Common>();
-        foreach (string file in files)
-        {
-            if (file.EndsWith(".xml"))
-            {
-                using FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-                commons.Add(XmlUtilty.Deserialize<Common>(fs));
-            }
-        }
-        foreach (Common common in commons)
-        {
-            CardLibrary.DeclareCard(common.CardInfos);
-            foreach (Status status in common.Statuss)
-            {
-                StaticStatusLibrary.DeclareStatus(status.Name, status);
-            }
-        }
-        CardLibrary.Construct();
-        foreach (Common common in commons)
-        {
-            foreach (Status status in common.Statuss)
-            {
-                status.Construct();
-            }
-        }
+        JasperMod.Loader.LoadAllCommon(path);
     }
     private void LoadGameConfig(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        GameConfig config = XmlUtilty.Deserialize<GameConfig>(fs);
+        GameConfig config = XmlUtilties.XmlUtilty.Deserialize<GameConfig>(fs);
         LocalPlayer.PlayerInfo = config.PlayerInfo;
     }
 
     private void Loadmaps(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        map = new Map(XmlUtilty.Deserialize<MapInfo>(fs));
+        map = new Map(XmlUtilties.XmlUtilty.Deserialize<MapInfo>(fs));
     }
 
     public bool EnterPlace(Place place)
     {
         Incident incident = IncidentTool.Pickup(place.incidents);
-        if(incident != null)
+        if (incident != null)
         {
             EnterIncident(incident);
             return true;

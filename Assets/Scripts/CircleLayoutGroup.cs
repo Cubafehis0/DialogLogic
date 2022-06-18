@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class CircleLayoutGroup : MonoBehaviour
     [SerializeField]
     private float cricleRadius;
     [SerializeField]
-    
+
     private void Awake()
     {
         UpdateLayout();

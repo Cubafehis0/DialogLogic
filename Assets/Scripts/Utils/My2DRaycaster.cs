@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,13 +15,13 @@ public class My2DRaycaster : MonoBehaviour
     {
         Vector2 start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = Vector2.zero;
-        
-        RaycastHit2D[] hit = Physics2D.RaycastAll(start, dir,10f,bitMask);
 
-        if (hit.Length>0 && hit[0].collider != null)
+        RaycastHit2D[] hit = Physics2D.RaycastAll(start, dir, 10f, bitMask);
+
+        if (hit.Length > 0 && hit[0].collider != null)
         {
             return hit[0].collider.gameObject;
-            
+
         }
 
         return null;
@@ -38,7 +36,7 @@ public class My2DRaycaster : MonoBehaviour
     {
         Vector2 start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = Vector2.zero;
-        
+
 
         RaycastHit2D hit = Physics2D.Raycast(start, dir);
 

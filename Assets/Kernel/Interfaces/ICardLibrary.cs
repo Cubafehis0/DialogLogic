@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ModdingAPI;
+using System.Collections.Generic;
 
 public interface ICardLibrary
 {
-    void Construct();
     Card CopyCard(Card card);
     void DeclareCard(CardInfo cardInfo);
     void DeclareCard(List<CardInfo> cardInfos);

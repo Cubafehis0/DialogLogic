@@ -1,8 +1,3 @@
-using Ink2Unity;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class TurnControllerPlayerDialog : TurnController
 {
     public override bool EndTurnTrigger => endTurnTrigger || tempEndTurnTrigger;

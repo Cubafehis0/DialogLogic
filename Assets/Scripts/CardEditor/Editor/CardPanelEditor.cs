@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 namespace CardEditor
 {
     [CustomEditor(typeof(CardPanel))]
@@ -14,11 +12,11 @@ namespace CardEditor
             CardPanel myScript = (CardPanel)target;
             if (GUILayout.Button("刷新界面"))
             {
-                myScript.RefreshPage();
+                //myScript.RefreshPage();
             }
             if (GUILayout.Button("清除界面"))
             {
-                myScript.DestroyAllChildren();
+                //myScript.DestroyAllChildren();
             }
         }
     }

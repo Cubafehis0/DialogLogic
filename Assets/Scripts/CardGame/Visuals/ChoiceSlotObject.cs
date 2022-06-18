@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using ModdingAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +21,7 @@ public class ChoiceSlotObject : MonoBehaviour
 
     private void Awake()
     {
-        if(button==null) button = GetComponentInChildren<Button>();
+        if (button == null) button = GetComponentInChildren<Button>();
         if (text == null) text = GetComponentInChildren<Text>();
         if (image == null) image = GetComponentInChildren<Image>();
     }

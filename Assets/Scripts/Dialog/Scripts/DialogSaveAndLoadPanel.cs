@@ -1,13 +1,12 @@
-using System.Collections;
+using Ink2Unity;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
-using Ink2Unity;
 public class DialogSaveAndLoadPanel : MonoBehaviour
 {
     private static DialogSaveAndLoadPanel instance = null;
-    public static DialogSaveAndLoadPanel Instance{ get => instance; }
+    public static DialogSaveAndLoadPanel Instance { get => instance; }
     struct DialogTextSave_Content
     {
         public string speaker;
@@ -19,7 +18,7 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
     private GameObject showHistoricalDialog;
     [SerializeField]
     private Transform content;
-    [SerializeField] 
+    [SerializeField]
     private Text text;
 
     private string path;
@@ -52,7 +51,7 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
         //controllButton = GameObject.Find("Buttons").transform.Find("ButtonToControllShowDialogSaveAndLoadPanel").gameObject;
         //showHistoricalDialog = this.transform.Find("ShowHistoricalDialog").gameObject;
         //content = showHistoricalDialog.transform.Find("Viewport").Find("Content");
-        if(controllButton) controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
+        if (controllButton) controllButton.GetComponent<Button>().onClick.AddListener(OnClickControllButton);
         //HideChildren(this.gameObject);
         ClearTextFile(path);
         gameObject.SetActive(false);
@@ -75,7 +74,7 @@ public class DialogSaveAndLoadPanel : MonoBehaviour
         }
         else if (speaker == "Choose")
         {
-            return Color.grey;       
+            return Color.grey;
         }
         return Color.blue;
     }

@@ -1,10 +1,4 @@
-using SemanticTree;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CardObject : MonoBehaviour
@@ -30,7 +24,7 @@ public class CardObject : MonoBehaviour
         {
             draggable = value;
             var c = GetComponent<Draggable>();
-            if(c==null) c=gameObject.AddComponent<Draggable>();
+            if (c == null) c = gameObject.AddComponent<Draggable>();
             c.enabled = value;
         }
     }
@@ -52,8 +46,8 @@ public class CardObject : MonoBehaviour
         }
     }
 
-    public Card Card 
-    { 
+    public Card Card
+    {
         get => card;
         set
         {

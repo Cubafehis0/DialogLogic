@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
+using System.Collections;
 using UnityEngine.TestTools;
 
 public class Testt
@@ -18,7 +16,7 @@ public class Testt
     [UnityTest]
     public IEnumerator TesttWithEnumeratorPasses()
     {
-        
+
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
         yield return null;

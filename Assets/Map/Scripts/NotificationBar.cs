@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -65,13 +64,13 @@ public class NotificationBar : MonoBehaviour
 
     private void ShowMissions()
     {
-        for(int i = missionObjects.Count; i < missions.Count; i++)
+        for (int i = missionObjects.Count; i < missions.Count; i++)
         {
             GameObject gb = Instantiate(missionPrefab, expandPanelContent);
             gb.GetComponent<Button>().onClick.AddListener(OnClickMissionButton);
             missionObjects.Add(gb);
         }
-        for(int i = 0; i < missionObjects.Count; i++)
+        for (int i = 0; i < missionObjects.Count; i++)
         {
             missionObjects[i].SetActive(i < missions.Count);
         }
@@ -87,7 +86,7 @@ public class NotificationBar : MonoBehaviour
     private void OnClickMissionButton()
     {
         GameObject go = EventSystem.current.currentSelectedGameObject;
-        if(go != null && missionObjects.Contains(go))
+        if (go != null && missionObjects.Contains(go))
             OnClickMissionButton(missionObjects.IndexOf(go));
     }
 

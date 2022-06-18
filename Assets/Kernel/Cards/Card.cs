@@ -1,12 +1,13 @@
-﻿using System;
+﻿using CardGame.Recorder;
+
+using System;
 using UnityEngine;
-using CardGame.Recorder;
+using ModdingAPI;
 
 public class Card
 {
-
+    public string id;
     public CardPlayerState player;
-    //卡牌基本信息
     public CardInfo info;
 
     [SerializeField]
@@ -14,22 +15,19 @@ public class Card
     [SerializeField]
     private bool permanentActivate = false;
 
-    public int FinalCost
+    public int GetFinalCost()
     {
-        get
+        if (Activated) return 0;
+        int ret = info.BaseCost;
+        foreach (var modifer in player.Modifiers)//有缺陷
         {
-            if (Activated) return 0;
-            int ret = info.BaseCost;
-            foreach (var modifer in player.Modifiers)//有缺陷
+            CostModifier m = modifer.CostModifier;
+            if (m != null && (m.Condition?.Invoke() ?? true))
             {
-                CostModifier m = modifer.CostModifier;
-                if (m != null && (m.Condition?.Value ?? true))
-                {
-                    ret = m.exp.Value;
-                }
+                ret = m.num.Invoke();
             }
-            return ret;
         }
+        return ret;
     }
     public bool Activated { get => TemporaryActivate || PermanentActivate; }
     public bool TemporaryActivate
@@ -57,7 +55,6 @@ public class Card
     public Card()
     {
         CardCount++;
-
     }
 
     public Card(CardInfo info) : this()
@@ -75,12 +72,6 @@ public class Card
         temporaryActivate = origin.temporaryActivate;
         permanentActivate = origin.permanentActivate;
     }
-
-    public void Construct()
-    {
-        info.Construct();
-    }
-
     public int GetProp(string name)
     {
         throw new NotImplementedException();

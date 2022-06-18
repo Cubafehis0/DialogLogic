@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -118,7 +117,7 @@ public static class MyMath
         if (jp == null) return -1;
         float sum = 0;
         foreach (float f in jp) sum += f;
-        float a = Random.Range(0,sum);
+        float a = Random.Range(0, sum);
         float ub = 0;
         for (int i = 0; i < jp.Length; i++)
         {

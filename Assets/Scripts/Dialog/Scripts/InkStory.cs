@@ -1,7 +1,7 @@
-using System.Collections;
+using Ink.Runtime;
+using ModdingAPI;
 using System.Collections.Generic;
 using UnityEngine;
-using Ink.Runtime;
 using UnityEngine.Events;
 
 /// <summary>

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -7,19 +5,19 @@ using UnityEngine.EventSystems;
 public class HoverTimer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
-    private float timer=2;
+    private float timer = 2;
     [SerializeField]
     private float t = 0f;
 
     public UnityEvent OnTimeUp = new UnityEvent();
     public UnityEvent OnLeave = new UnityEvent();
 
-    
+
     private void Update()
     {
         if (Mathf.Abs(t) > 0.05f)
         {
-            
+
             t -= Time.deltaTime;
             if (Mathf.Abs(t) < 0.05f)
             {

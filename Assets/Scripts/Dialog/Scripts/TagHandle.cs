@@ -1,7 +1,7 @@
-using System.Collections;
+using ModdingAPI;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Ink2Unity
 {
@@ -39,8 +39,8 @@ namespace Ink2Unity
         public static List<int> ParseArray(string value)
         {
             string parttern = @"([^-\+\d]+)([\+-]?\d+)";
-            var matches = Regex.Matches(value,parttern);
-            if(matches.Count>0)
+            var matches = Regex.Matches(value, parttern);
+            if (matches.Count > 0)
             {
                 List<int> res = new List<int>();
                 foreach (Match m in matches)
@@ -96,7 +96,7 @@ namespace Ink2Unity
             switch (sa)
             {
                 case "Persuade":
-                   return SpeechType.Persuade;
+                    return SpeechType.Persuade;
                 case "Cheat":
                     return SpeechType.Cheat;
                 case "Threaten":
@@ -104,15 +104,15 @@ namespace Ink2Unity
                 default:
                     return SpeechType.Normal;
             }
-            
+
         }
         public static bool ParseBool(string s)
         {
-            if(s=="true")
+            if (s == "true")
                 return true;
             if (s == "false")
                 return false;
-            Debug.LogError(s+"无法识别的布尔型");
+            Debug.LogError(s + "无法识别的布尔型");
             return true;
         }
         //翻译Condition生成一个Lambda表达式

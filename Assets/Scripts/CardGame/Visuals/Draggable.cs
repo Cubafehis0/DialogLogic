@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class Draggable : MonoBehaviour, IDragHandler,IEndDragHandler
+public class Draggable : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private Canvas canvas;
     private CanvasGroup canvasGroup;

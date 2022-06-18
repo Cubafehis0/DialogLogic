@@ -1,5 +1,5 @@
 using CardGame.Recorder;
-using SemanticTree;
+using JasperMod.SemanticTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,8 +33,8 @@ public class PlayingPile : Pile<Card>
 {
     public PlayingPile() : base()
     {
-        OnAdd.AddListener(x => Context.PushCardContext(x));
-        OnRemove.AddListener(x => Context.PopCardContext());
+        OnAdd.AddListener(x => Context.SetCardAlias("From", x.id));
+        OnRemove.AddListener(x => Context.SetCardAlias("From", ""));
     }
 }
 
@@ -80,7 +80,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         cardPlayerState = GetComponent<CardPlayerState>();
     }
 
-    public IReadonlyModifierGroup Modifiers => hand.Modifiers;
+    public ModifierGroup Modifiers => hand.Modifiers;
 
     public bool CanDraw()
     {
@@ -114,12 +114,14 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
             }
 
             Card card = drawPile[0];
-            Context.PushPlayerContext(cardPlayerState);
-            Context.PushCardContext(card);
-            drawPile.MigrateTo(card, hand);
-            card.info.DrawEffects?.Execute();
-            Context.PopCardContext();
-            Context.PopPlayerContext();
+
+            throw new NotImplementedException();
+            //Context.PushPlayerContext("FROM");
+            //Context.PushCardContext(card.id);
+            //drawPile.MigrateTo(card, hand);
+            //card.info.DrawEffects?.Execute();
+            //Context.PopCardContext();
+            //Context.PopPlayerContext();
         }
     }
 
@@ -166,18 +168,17 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
     {
         if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
         if (card.info == null) throw new ArgumentNullException("CardPlayerState.PlayCard card未构建");
-        if (cardPlayerState.Energy < card.FinalCost)
+        if (cardPlayerState.Energy < card.GetFinalCost())
         {
             //能量不足
             Debug.Log("能量不足");
         }
         else
         {
-            Context.PushPlayerContext(cardPlayerState);
-            if (card.Activated || (card.info.Requirements?.Value ?? true))
+            if (card.Activated || (card.info.Requirements?.Invoke() ?? true))
             {
                 //目标有效且可以使用
-                cardPlayerState.Energy -= card.FinalCost;
+                cardPlayerState.Energy -= card.GetFinalCost();
                 Debug.Log("使用卡牌： " + card.info.Title);
                 CardLogEntry log = new CardLogEntry
                 {
@@ -191,7 +192,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
                 hand.MigrateTo(card, playingPile);
                 OnPlayCard.Invoke();
                 if (card.info.Effects == null) Debug.Log("空效果");
-                else card.info.Effects.Execute();
+                else card.info.Effects.Invoke();
                 yield return new WaitUntil(() => ForegoundGUISystem.current == false);
                 playingPile.MigrateTo(card, card.info.Exhaust ? exhaustPile : discardPile);
             }
@@ -199,7 +200,6 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
             {
                 Debug.Log("无法使用卡牌：" + card.info.Title);
             }
-            Context.PopPlayerContext();
         }
     }
 

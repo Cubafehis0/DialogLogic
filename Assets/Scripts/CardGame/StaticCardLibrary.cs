@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
-using System;
-using SemanticTree;
-
+using ModdingAPI;
 
 public interface ICardObjectLibrary
 {
@@ -24,7 +20,7 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
     private static StaticCardLibrary instance;
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -37,7 +33,7 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
 
     public void Construct()
     {
-        ((ICardLibrary)library).Construct();
+        //((ICardLibrary)library).Construct();
     }
 
     public void DeclareCard(CardInfo cardInfo)

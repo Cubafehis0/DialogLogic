@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ModdingAPI;
 using System;
 using System.Xml.Serialization;
+using UnityEngine;
 
 [Serializable]
-public class LevelConfig:ScriptableObject
+public class LevelConfig : ScriptableObject
 {
-    [XmlElement(ElementName ="player_character")]
+    [XmlElement(ElementName = "player_character")]
     public Personality playerCharacter;
 
     [XmlElement(ElementName = "max_hand_num")]

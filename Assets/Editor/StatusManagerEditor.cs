@@ -10,7 +10,7 @@ public class StatusManagerEditor : Editor
     {
         //test = new SerializedObject(target);
 
-        
+
         base.OnInspectorGUI();
         if (GUILayout.Button("test"))
         {

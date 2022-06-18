@@ -1,10 +1,10 @@
-using System.Collections;
+using Ink2Unity;
+using ModdingAPI;
 using System.Collections.Generic;
 using UnityEngine;
-using Ink2Unity;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public interface IChoiceSlotReciver
 {
@@ -65,7 +65,7 @@ public class ChooseGUISystem : MonoBehaviour, IGUISystem
         foreach (ChoiceSlot choice in allChoices)
         {
             var unmasked = choice.PickupAllUnmasked();
-            if(unmasked != null)
+            if (unmasked != null)
             {
                 foreach (PersonalityType type in unmasked)
                 {

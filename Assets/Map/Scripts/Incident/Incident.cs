@@ -1,6 +1,5 @@
-using System.Collections;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [Serializable]
 public class Incident : IncidentInfo
@@ -14,7 +13,7 @@ public class Incident : IncidentInfo
     }
 
     public Incident() { }
-    public Incident(IncidentInfo info) : base(info) 
+    public Incident(IncidentInfo info) : base(info)
     {
         remainingTimes = repeatTimes;
     }

@@ -1,8 +1,8 @@
+using ModdingAPI;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectRelicUI : MonoBehaviour
 {

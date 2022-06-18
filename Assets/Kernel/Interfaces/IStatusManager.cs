@@ -1,6 +1,8 @@
-﻿public interface IStatusManager:ITurnStart,ITurnEnd
+﻿using ModdingAPI;
+
+public interface IStatusManager : ITurnStart, ITurnEnd
 {
-    IReadonlyModifierGroup Modifiers { get; }
+    ModifierGroup Modifiers { get; }
 
     void AddAnonymousCostModifer(CostModifier costModifier, int timer);
     void AddAnonymousFocusModifer(SpeechType speechType, int timer);

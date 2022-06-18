@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ModdingAPI;
+using System.Collections.Generic;
 using UnityEngine;
-using SemanticTree;
-using System.Linq;
 public class CardLibrary : ICardLibrary
 {
     [SerializeField]
@@ -17,16 +16,11 @@ public class CardLibrary : ICardLibrary
 
     public void DeclareCard(CardInfo cardInfo)
     {
-        if (cardDic.ContainsKey(cardInfo.Name)) throw new SemanticException("不能重复定义卡牌" + cardInfo.Name);
-        cardDic[cardInfo.Name] = new Card(cardInfo);
-    }
-
-    public void Construct()
-    {
-        foreach (Card card in cardDic.Values)
+        if (!cardDic.ContainsKey(cardInfo.Name))
         {
-            card.Construct();
+            cardDic[cardInfo.Name] = new Card(cardInfo);
         }
+
     }
 
     public Card GetCopyByName(string name)
@@ -41,7 +35,6 @@ public class CardLibrary : ICardLibrary
     public Card CopyCard(Card card)
     {
         Card newCard = new Card(card);
-        //cardDictionary[newCard] = null;
         return newCard;
     }
 
@@ -55,7 +48,7 @@ public class CardLibrary : ICardLibrary
         return res;
     }
 
-    public List<string> GetRandom(int cnt=1)
+    public List<string> GetRandom(int cnt = 1)
     {
         List<string> allCards = GetAllCards();
         MyMath.Shuffle(allCards);

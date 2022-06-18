@@ -1,19 +1,18 @@
-﻿using SemanticTree;
-using System.Collections;
+﻿using JasperMod.SemanticTree;
+using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SlotGUIContext
 {
-    public EffectList actions;
-    public SlotGUIContext(EffectList actions)
+    public Action actions;
+    public SlotGUIContext(Action actions)
     {
         this.actions = actions;
     }
 }
 
-public class SlotGUISystem : ForegoundGUISystem,IChoiceSlotReciver
+public class SlotGUISystem : ForegoundGUISystem, IChoiceSlotReciver
 {
     private SlotGUIContext context;
 
@@ -46,8 +45,8 @@ public class SlotGUISystem : ForegoundGUISystem,IChoiceSlotReciver
     public void ChoiceSlotReciver(object msg)
     {
         ChoiceSlot choiceSlot = (ChoiceSlot)msg;
-        Context.choiceSlotStack.Push(choiceSlot);
-        context.actions?.Execute();
+        Context.choiceSlotStack.Push("choiceSlot");
+        context.actions?.Invoke();
         Context.choiceSlotStack.Pop();
         Close();
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,12 +21,12 @@ public class GUIDiscoverCard : ForegoundGUISystem
         if (!(msg is GUIDiscoverInfo context)) return;
         if (context.cards == null) return;
         title.text = "选择一张加入牌库";
-        for(int i = 0; i < cardObjects.Count; i++)
+        for (int i = 0; i < cardObjects.Count; i++)
         {
             cardObjects[i].gameObject.SetActive(i < context.cards.Count);
-            if(i < context.cards.Count)
+            if (i < context.cards.Count)
             {
-                cardObjects[i].Card=GameManager.Instance.CardLibrary.GetCopyByName(context.cards[i]);
+                cardObjects[i].Card = GameManager.Instance.CardLibrary.GetCopyByName(context.cards[i]);
             }
         }
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,7 +12,7 @@ public class MapObject : MonoBehaviour
     private void Start()
     {
         map = GameManager.Instance.Map;
-        for(int i = 0; i < placeObjects.Count; i++)
+        for (int i = 0; i < placeObjects.Count; i++)
         {
             placeObjects[i].gameObject.SetActive(i < map.placesDic.Count);
             if (i < map.placesDic.Count)

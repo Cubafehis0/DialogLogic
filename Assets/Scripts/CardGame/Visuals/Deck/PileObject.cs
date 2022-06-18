@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-
-
-public class PileObject : PilePacked
+﻿public class PileObject : PilePacked
 {
 
     private void OnEnable()

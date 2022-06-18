@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModdingAPI;
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -55,10 +56,10 @@ public class PlayerInfo
     public int Energy { get => energy; set => energy = value; }
 
     [XmlIgnore]
-    public int Pressure 
-    { 
+    public int Pressure
+    {
         get => pressure;
-        set => pressure = Mathf.Clamp(value, 0, MaxPressure); 
+        set => pressure = Mathf.Clamp(value, 0, MaxPressure);
     }
 
 }

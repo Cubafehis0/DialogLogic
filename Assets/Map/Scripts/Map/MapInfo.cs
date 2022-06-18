@@ -4,6 +4,6 @@ using System.Xml.Serialization;
 public class MapInfo
 {
     [XmlArray(ElementName = "places")]
-    [XmlArrayItem(ElementName ="place")]
+    [XmlArrayItem(ElementName = "place")]
     public List<PlaceInfo> places = new List<PlaceInfo>();
 }

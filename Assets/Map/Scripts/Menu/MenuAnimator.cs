@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class MapStateSpriteDictionary : SerializableDictionary<MenuState, Sprite> { }
@@ -57,7 +54,7 @@ public class MenuAnimator : MonoBehaviour
         }
     }
 
-    public bool IsDay 
+    public bool IsDay
     {
         get => isDay;
         set

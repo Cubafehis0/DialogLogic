@@ -1,7 +1,6 @@
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
 
 public class RelicGameManager : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class RelicGameManager : MonoBehaviour
     public static RelicGameManager Instance { get { return instance; } }
 
     private RelicStaticLib staticLib;
-    public RelicStaticLib StaticLib { get => staticLib;}
+    public RelicStaticLib StaticLib { get => staticLib; }
 
 
     private RelicLib relicLib;
@@ -27,7 +26,7 @@ public class RelicGameManager : MonoBehaviour
             sanityText.text = string.Format("San÷µ£∫{0:d}", sanity);
         }
         get
-        { 
+        {
             return sanity;
         }
     }
@@ -55,7 +54,7 @@ public class RelicGameManager : MonoBehaviour
     private void LoadRelicLib(string path)
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        staticLib = new RelicStaticLib(XmlUtilty.Deserialize<RelicLibInfo>(fs));
+        staticLib = new RelicStaticLib(XmlUtilties.XmlUtilty.Deserialize<RelicLibInfo>(fs));
         relicLib = new RelicLib();
     }
 

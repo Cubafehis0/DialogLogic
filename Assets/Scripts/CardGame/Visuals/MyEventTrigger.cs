@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class MyEventTrigger : EventTrigger
 {
-    private EventTriggerGroup group=null;
+    private EventTriggerGroup group = null;
     private Dictionary<EventTriggerType, Entry> scriptEvent = new Dictionary<EventTriggerType, Entry>();
     public void AddEventTrigger(EventTriggerType type, UnityAction<BaseEventData> action)
     {
@@ -34,7 +32,7 @@ public class MyEventTrigger : EventTrigger
     }
     private void Start()
     {
-        if(transform.parent) group = transform.parent.GetComponentInParent<EventTriggerGroup>();
+        if (transform.parent) group = transform.parent.GetComponentInParent<EventTriggerGroup>();
     }
 
     private void OnTransformParentChanged()

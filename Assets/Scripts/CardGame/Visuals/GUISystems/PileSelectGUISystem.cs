@@ -1,5 +1,5 @@
-﻿using SemanticTree;
-using System.Collections;
+﻿using JasperMod.SemanticTree;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,9 +9,9 @@ public class PileSelectGUIContext
 {
     public List<Card> cards;
     public int num;
-    public IEffect action;
+    public Action action;
 
-    public PileSelectGUIContext(List<Card> cards, int num, IEffect action)
+    public PileSelectGUIContext(List<Card> cards, int num, Action action)
     {
         this.cards = cards;
         this.num = num;
@@ -28,7 +28,7 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
     private int minOccurs = 0;
     private int maxOccurs = 0;
-    private IEffect action = null;
+    private Action action = null;
     private List<CardObject> cardObjects = new List<CardObject>();
     private List<Card> cardSelected = new List<Card>();
 
@@ -36,13 +36,13 @@ public class PileSelectGUISystem : ForegoundGUISystem
     public override void Open(object msg)
     {
         if (!(msg is PileSelectGUIContext context)) return;
-        if(context.num>=context.cards.Count)
+        if (context.num >= context.cards.Count)
         {
             foreach (Card card in context.cards)
             {
-                Context.PushCardContext(card);
-                action?.Execute();
-                Context.PopCardContext();
+                Context.SetCardAlias("Item", card.id);
+                action?.Invoke();
+                Context.SetCardAlias("Item", "");
             }
             return;
         }
@@ -69,7 +69,7 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
     public override void Close()
     {
-        
+
         foreach (CardObject cardObject in cardObjects)
         {
             GameManager.Instance.CardObjectLibrary.DestroyCard(cardObject.Card);
@@ -108,13 +108,13 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
     public void Confirm()
     {
-        if(minOccurs<= cardSelected.Count && cardSelected.Count <= maxOccurs)
+        if (minOccurs <= cardSelected.Count && cardSelected.Count <= maxOccurs)
         {
             foreach (Card card in cardSelected)
             {
-                Context.PushCardContext(card);
-                action?.Execute();
-                Context.PopCardContext();
+                Context.SetCardAlias("Item", card.id);
+                action?.Invoke();
+                Context.SetCardAlias("Item", "");
             }
             Close();
         }

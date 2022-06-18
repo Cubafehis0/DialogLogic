@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using SemanticTree;
-using System.IO;
 using CardGame.Recorder;
+using JasperMod.SemanticTree;
+using System.Collections;
+using System.IO;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class CardGameManager : MonoBehaviour
@@ -63,30 +61,22 @@ public class CardGameManager : MonoBehaviour
             if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
             turn++;
             isPlayerTurn = false;
-            Context.PushPlayerContext(enemy);
-            Context.Target = playerState;
             enemyController.StartTurn();
             yield return new WaitUntil(() => enemyController.EndTurnTrigger);
             enemyController.EndTurn();
-            Context.Target = null;
-            Context.PopPlayerContext();
             do
             {
                 if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
                 isPlayerTurn = true;
-                Context.PushPlayerContext(playerState);
-                Context.Target = enemy;
                 playerController.StartTurn();
                 yield return new WaitUntil(() => playerController.EndTurnTrigger);
                 playerController.EndTurn();
-                Context.Target = null;
-                Context.PopPlayerContext();
             } while (playerController.AdditionalTurn);
 
         }
         if (i == 100) Debug.LogWarning("回合数达到上限100");
         var loot = GameManager.Instance.CardLibrary.GetRandom(3);
-        GUISystemManager.Instance.OpenSelectLootGUISystem(loot);
+        GUISystemManager.Instance.Open("w_select_loot", loot);
         yield return new WaitUntil(() => ForegoundGUISystem.current == null);
         GameManager.Instance.CompleteCurrentIncident();
     }

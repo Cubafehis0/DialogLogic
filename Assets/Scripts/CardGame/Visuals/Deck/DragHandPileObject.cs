@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 public class DragHandPileObject : PilePacked
 {
     public static DragHandPileObject instance;
@@ -46,15 +43,15 @@ public class DragHandPileObject : PilePacked
         cardObject.transform.SetParent(layout, true);
         cardObject.transform.rotation = Quaternion.identity;
         cardObject.transform.localScale = Vector3.one;
-        cardObject.GetComponent<CardObject>().Draggable = true ;
+        cardObject.GetComponent<CardObject>().Draggable = true;
         yield return null;
     }
 
     public void SetEnableDragging(bool value)
     {
-        foreach(var card in this)
+        foreach (var card in this)
         {
-            CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
+            CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
             o.Draggable = value;
         }
     }
@@ -71,9 +68,9 @@ public class DragHandPileObject : PilePacked
     public void TakeoverAllCard()
     {
         Debug.Log("takeover");
-        foreach(Card card in this)
+        foreach (Card card in this)
         {
-            CardObject o= GameManager.Instance.CardObjectLibrary.GetCardObject(card);
+            CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
             o.transform.SetParent(layout, true);
         }
     }
@@ -98,7 +95,7 @@ public class DragHandPileObject : PilePacked
 
     public void Switch()
     {
-        hide= !hide;
+        hide = !hide;
         UpdateVisuals();
     }
 
