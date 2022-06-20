@@ -16,6 +16,7 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     private SpeakSystem speakSystem;
     [SerializeField]
     private InkStory inkStory;
+    [SerializeField]
     private bool blocked = false;
     public IReadOnlyStory InkStory => inkStory;
     public bool Blocked => blocked;

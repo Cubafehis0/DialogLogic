@@ -1,45 +1,13 @@
 using CardGame.Recorder;
-using JasperMod.SemanticTree;
+using ModdingAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface ICardController
-{
-    IReadonlyPile<Card> DiscardPile { get; }
-    IReadonlyPile<Card> DrawPile { get; }
-    IReadonlyPile<Card> Hand { get; }
-    bool DrawBan { get; set; }
-    bool IsHandFull();
-    bool CanDraw();
-
-    void AddCard(PileType pileType, string name);
-    void AddCard(PileType pileType, Card card);
-    void AddCard(PileType pileType, IEnumerable<string> names);
-    void AddCard(PileType pileType, IEnumerable<Card> cards);
-
-    void DiscardAll();
-    void DiscardCard(Card cid);
-    void Draw(int num = 1);
-    void Draw2Full();
-    int? GetPileProp(string name);
-    void PlayCard(Card card);
-
-}
-
-public class PlayingPile : Pile<Card>
-{
-    public PlayingPile() : base()
-    {
-        OnAdd.AddListener(x => Context.SetCardAlias("From", x.id));
-        OnRemove.AddListener(x => Context.SetCardAlias("From", ""));
-    }
-}
-
 [RequireComponent(typeof(CardPlayerState))]
-public class CardController : MonoBehaviour, ICardController, ITurnEnd
+public class CardController : MonoBehaviour, ICardController, ITurnEnd, ITurnStart
 {
     [SerializeField]
     private PilePacked drawPilePacked;
@@ -51,16 +19,23 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
     private PilePacked playingPilePacked;
     [SerializeField]
     private PilePacked exhaustPilePacked;
-
+    [SerializeField]
+    private int baseEnergy;
+    [SerializeField]
+    private int energy;
+    [SerializeField]
+    private int baseDraw;
 
     private CardPlayerState cardPlayerState;
-    private HandPile hand = new HandPile();
+    private IPile<Card> hand => handPilePacked;//handPilePacked;
     private IPile<Card> drawPile => drawPilePacked;
     private IPile<Card> discardPile => discardPilePacked;
     private IPile<Card> exhaustPile => exhaustPilePacked;
     private IPile<Card> playingPile => playingPilePacked;
 
     private bool drawBan = false;
+
+    public UnityEvent OnEnergyChange = new UnityEvent();
     public UnityEvent OnPlayCard = new UnityEvent();
     public IReadonlyPile<Card> Hand { get => hand; }
     public IReadonlyPile<Card> DrawPile { get => drawPile; }
@@ -70,6 +45,15 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
 
     public bool DrawBan { get => drawBan; set => drawBan = value; }
 
+    public int Energy
+    {
+        get => energy;
+        set
+        {
+            energy = value;
+            OnEnergyChange.Invoke();
+        }
+    }
     public bool IsHandFull()
     {
         return Hand.Count == cardPlayerState.Player.PlayerInfo.MaxCardNum;
@@ -80,7 +64,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
         cardPlayerState = GetComponent<CardPlayerState>();
     }
 
-    public ModifierGroup Modifiers => hand.Modifiers;
+    public ModifierGroup Modifiers => handPilePacked.cardPile.Modifiers;
 
     public bool CanDraw()
     {
@@ -112,16 +96,13 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
                 //洗牌
                 Discard2Draw();
             }
-
             Card card = drawPile[0];
-
-            throw new NotImplementedException();
-            //Context.PushPlayerContext("FROM");
-            //Context.PushCardContext(card.id);
-            //drawPile.MigrateTo(card, hand);
-            //card.info.DrawEffects?.Execute();
-            //Context.PopCardContext();
-            //Context.PopPlayerContext();
+            Context.SetCardAlias("FROM", card.id);
+            Context.SetPlayerAlias("FROM", card.id);
+            drawPile.MigrateTo(card, hand);
+            card.info.DrawEffects?.Invoke();
+            Context.SetCardAlias("FROM", null);
+            Context.SetPlayerAlias("FROM", null);
         }
     }
 
@@ -157,7 +138,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
     /// <param name="card"></param>
     public void PlayCard(Card card)
     {
-        if (!ForegoundGUISystem.current && CardGameManager.Instance.isPlayerTurn)
+        if (!ForegoundGUISystem.current && CardGameManager.Instance.TurnManager.IsPlayerTurn)
         {
             AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card));
         }
@@ -185,7 +166,7 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
                     Name = card.info.Name,
                     IsActive = card.Activated,
                     LogType = ActionTypeEnum.PlayCard,
-                    Turn = CardGameManager.Instance.Turn,
+                    Turn = CardGameManager.Instance.TurnManager.Turn,
                     CardCategory = card.info.category,
                 };
                 CardGameManager.Instance.CardRecorder.AddRecordEntry(log);
@@ -254,6 +235,13 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd
             "discard_count" => DiscardPile.Count,
             _ => null
         };
+    }
+
+    public void OnTurnStart()
+    {
+        Debug.Log("我的回合，抽卡！！！");
+        Energy = baseEnergy;
+        Draw(baseDraw);
     }
 
     public void OnTurnEnd()

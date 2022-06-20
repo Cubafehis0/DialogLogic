@@ -17,7 +17,6 @@ namespace XmlUtilties
 
         public static T Deserialize<T>(FileStream fs)
         {
-            Debug.Log("Ser");
             XmlSerializer ser = new XmlSerializer(typeof(T));
             return (T)ser.Deserialize(fs);
         }

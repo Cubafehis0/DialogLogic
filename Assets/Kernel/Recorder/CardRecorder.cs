@@ -49,7 +49,7 @@ namespace CardGame.Recorder
             var qs = from x in cardLogs
                      where x.LogType == ActionTypeEnum.PlayCard
                      && x.CardCategory == category
-                     && x.Turn == CardGameManager.Instance.Turn
+                     && x.Turn == CardGameManager.Instance.TurnManager.Turn
                      orderby x.ID descending
                      select x;
             int res = 0;
@@ -82,7 +82,7 @@ namespace CardGame.Recorder
             return (from x in cardLogs
                     where x.Name == "preach"
                 && x.LogType == ActionTypeEnum.PlayCard
-                && x.Turn == CardGameManager.Instance.Turn
+                && x.Turn == CardGameManager.Instance.TurnManager.Turn
                     select x).Count();
         }
 

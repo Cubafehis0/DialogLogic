@@ -13,6 +13,7 @@ public class DrawPileObject : PilePacked
 
     private void OnAddAnim(Card newCard)
     {
+
         CardObject o = GameManager.Instance.CardObjectLibrary.GetCardObject(newCard);
         if (o == null)
         {

@@ -58,17 +58,17 @@
             </personality_linear>
         </in_hand_modifier>
         <on_play_card>
-            <GUI_tendency_add>
-                <include>Inside</include>
-                <include>Outside</include>
-                <include>Logic</include>
-                <include>Passion</include>
-                <include>Moral</include>
-                <include>Unethic</include>
-                <include>Detour</include>
-                <include>Strong</include>
+            <!--<GUI_tendency_add>
+                <include>inside</include>
+                <include>outside</include>
+                <include>logic</include>
+                <include>spirital</include>
+                <include>moral</include>
+                <include>immoral</include>
+                <include>roundabout</include>
+                <include>strong</include>
                 <value>2</value>
-            </GUI_tendency_add>
+            </GUI_tendency_add>-->
         </on_play_card>
     </define_card>
 
@@ -173,17 +173,17 @@
         <cost>1</cost>
         <category>logic</category>
         <on_play_card>
-            <GUI_tendency_add>
-                <include>Inside</include>
-                <include>Outside</include>
-                <include>Logic</include>
-                <include>Passion</include>
-                <include>Moral</include>
-                <include>Unethic</include>
-                <include>Detour</include>
-                <include>Strong</include>
+            <!--<GUI_tendency_add>
+                <include>inside</include>
+                <include>outside</include>
+                <include>logic</include>
+                <include>spirital</include>
+                <include>moral</include>
+                <include>immoral</include>
+                <include>roundabout</include>
+                <include>strong</include>
                 <value>4</value>
-            </GUI_tendency_add>
+            </GUI_tendency_add>-->
         </on_play_card>
     </define_card>
 
@@ -334,12 +334,12 @@
         <exhaust>true</exhaust>
         <category>logic</category>
         <on_play_card>
-            <GUI_tendency_add>
+            <!--<GUI_tendency_add>
                 <include>Logic</include>
                 <include>Moral</include>
                 <include>Detour</include>
                 <value>6</value>
-            </GUI_tendency_add>
+            </GUI_tendency_add>-->
         </on_play_card>
     </define_card>
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AnonymousModifier
 {
-    public Personality PersonalityLinear;
+    public Personality PersonalityLinear = new Personality();
 }
 
 

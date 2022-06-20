@@ -33,6 +33,7 @@ public class DragHandPileObject : PilePacked
 
     private void OnAddAnim(Card card)
     {
+        Debug.Log("456");
         CardObject cardObject = GameManager.Instance.CardObjectLibrary.GetCardObject(card);
         AnimationManager.Instance.AddAnimation(Animating(cardObject.gameObject));
     }

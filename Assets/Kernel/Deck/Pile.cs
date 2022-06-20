@@ -18,6 +18,8 @@ public class Pile<T> : List<T>, IReadonlyPile<T>, IPile<T>
     public UnityEvent<T> OnRemove { get => onRemove; }
     public UnityEvent OnShuffle { get => onShuffle; }
 
+
+
     public Pile() : base()
     {
 

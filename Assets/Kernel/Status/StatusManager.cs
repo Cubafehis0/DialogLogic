@@ -13,17 +13,24 @@ namespace Kernel.StatusSystem
 
         public void AddAnonymousPersonalityModifier(Personality personality, int timer)
         {
-            if (timer <= 0) throw new ArgumentOutOfRangeException(nameof(timer));
-            Status anonymous = new Status()
+            if (timer <= 0)
             {
-                Modifier = new Modifier()
+                modifiers.AddAnonymousPersonality(personality);
+            }
+            else
+            {
+                Status anonymous = new Status()
                 {
-                    PersonalityLinear = () => new Personality(personality),
-                },
-                DecreaseOnTurnEnd = 1,
-            };
-            AddStatusCounter(anonymous, timer);
-            //Status需要GC
+                    Modifier = new Modifier()
+                    {
+                        PersonalityLinear = () => new Personality(personality),
+                    },
+                    DecreaseOnTurnEnd = 1,
+                };
+                AddStatusCounter(anonymous, timer);
+                //Status需要GC
+            }
+
         }
         public void AddAnonymousSpeechModifer(SpeechArt speechArt, int timer)
         {

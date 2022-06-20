@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Context.Console=new Kernel.GameConsole();
+        Context.Query = new Kernel.GameQuery();
+        Context.Rule = new Kernel.GameRule();
         LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
         LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));

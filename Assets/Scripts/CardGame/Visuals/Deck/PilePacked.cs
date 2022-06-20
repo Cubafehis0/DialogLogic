@@ -5,55 +5,55 @@ using UnityEngine.Events;
 public class PilePacked : MonoBehaviour, IPile<Card>
 {
     [SerializeField]
-    private Pile<Card> card = new Pile<Card>();
+    public HandPile cardPile = new HandPile();
 
-    public Card this[int index] => ((IReadOnlyList<Card>)card)[index];
+    public Card this[int index] => ((IReadOnlyList<Card>)cardPile)[index];
 
-    public UnityEvent OnShuffle => card.OnShuffle;
+    public UnityEvent OnShuffle => cardPile.OnShuffle;
 
-    public UnityEvent<Card> OnAdd => card.OnAdd;
+    public UnityEvent<Card> OnAdd => cardPile.OnAdd;
 
-    public UnityEvent<Card> OnRemove => card.OnRemove;
+    public UnityEvent<Card> OnRemove => cardPile.OnRemove;
 
-    public int Count => card.Count;
+    public int Count => cardPile.Count;
 
     public void Add(Card item)
     {
-        card.Add(item);
+        cardPile.Add(item);
     }
 
     public void Clear()
     {
-        card.Clear();
+        cardPile.Clear();
     }
 
     public IEnumerator<Card> GetEnumerator()
     {
-        return card.GetEnumerator();
+        return cardPile.GetEnumerator();
     }
 
     public void MigrateAllTo(IPile<Card> to)
     {
-        card.MigrateAllTo(to);
+        cardPile.MigrateAllTo(to);
     }
 
     public void MigrateTo(Card card, IPile<Card> newPile)
     {
-        this.card.MigrateTo(card, newPile);
+        this.cardPile.MigrateTo(card, newPile);
     }
 
     public void Remove(Card item)
     {
-        card.Remove(item);
+        cardPile.Remove(item);
     }
 
     public void Shuffle()
     {
-        card.Shuffle();
+        cardPile.Shuffle();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return ((IEnumerable)card).GetEnumerator();
+        return ((IEnumerable)cardPile).GetEnumerator();
     }
 }

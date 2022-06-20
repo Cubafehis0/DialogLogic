@@ -11,11 +11,46 @@ public interface ICardObjectLibrary
 public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
 {
     [SerializeField]
-    private CardLibrary library = new CardLibrary();
-    [SerializeField]
     private Dictionary<Card, CardObject> cardDictionary = new Dictionary<Card, CardObject>();
     [SerializeField]
     private CardObject sampleCard;
+
+    [SerializeField]
+    private Dictionary<string, Card> cardDic = new Dictionary<string, Card>();
+
+    public void DeclareCard(List<CardInfo> cardInfos)
+    {
+        foreach (CardInfo cardInfo in cardInfos)
+        {
+            DeclareCard(cardInfo);
+        }
+    }
+    public void DeclareCard(CardInfo cardInfo)
+    {
+        //Debug.Log($"×¢²á¿¨ÅÆ{cardInfo.Name}");
+        if (!cardDic.ContainsKey(cardInfo.Name))
+        {
+            cardDic[cardInfo.Name] = new Card(cardInfo);
+        }
+
+    }
+
+    public List<string> GetAllCards()
+    {
+        List<string> res = new List<string>();
+        foreach (string name in cardDic.Keys)
+        {
+            res.Add(name);
+        }
+        return res;
+    }
+
+    public List<string> GetRandom(int cnt = 1)
+    {
+        List<string> allCards = GetAllCards();
+        MyMath.Shuffle(allCards);
+        return allCards.GetRange(0, cnt);
+    }
 
     private static StaticCardLibrary instance;
     private void Awake()
@@ -31,31 +66,16 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
         }
     }
 
-    public void Construct()
-    {
-        //((ICardLibrary)library).Construct();
-    }
-
-    public void DeclareCard(CardInfo cardInfo)
-    {
-        ((ICardLibrary)library).DeclareCard(cardInfo);
-    }
-
-    public void DeclareCard(List<CardInfo> cardInfos)
-    {
-        ((ICardLibrary)library).DeclareCard(cardInfos);
-    }
-
     public Card GetCopyByName(string name)
     {
-        Card card = ((ICardLibrary)library).GetCopyByName(name);
+        Card card = CopyCard(cardDic[name]);
         cardDictionary[card] = null;
         return card;
     }
 
     public Card CopyCard(Card card)
     {
-        Card newCard = ((ICardLibrary)library).CopyCard(card);
+        Card newCard =  new Card(card); ;
         cardDictionary[newCard] = null;
         return newCard;
     }
@@ -91,15 +111,5 @@ public class StaticCardLibrary : MonoBehaviour, ICardObjectLibrary, ICardLibrary
         {
             Debug.LogError("Î´ÖªµÄ¿¨ÅÆ");
         }
-    }
-
-    public List<string> GetAllCards()
-    {
-        return ((ICardLibrary)library).GetAllCards();
-    }
-
-    public List<string> GetRandom(int cnt)
-    {
-        return ((ICardLibrary)library).GetRandom(cnt);
     }
 }
