@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IDialogSystem
 {
-    IReadOnlyStory InkStory { get; }
+    IReadOnlyStory GetInkStory();
     void Open(TextAsset textAsset);
     void ForceSelectChoice(Choice choice, bool success);
     void MoveNext();
@@ -18,8 +18,17 @@ public class DialogSystem : MonoBehaviour, IDialogSystem
     private InkStory inkStory;
     [SerializeField]
     private bool blocked = false;
-    public IReadOnlyStory InkStory => inkStory;
-    public bool Blocked => blocked;
+
+    public IReadOnlyStory GetInkStory()
+    {
+        return inkStory;
+    }
+
+    public bool IsBlocked()
+    {
+        return blocked;
+    }
+
     public void Open(TextAsset textAsset)
     {
         if (textAsset != null)

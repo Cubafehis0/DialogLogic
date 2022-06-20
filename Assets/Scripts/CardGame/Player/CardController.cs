@@ -10,15 +10,15 @@ using UnityEngine.Events;
 public class CardController : MonoBehaviour, ICardController, ITurnEnd, ITurnStart
 {
     [SerializeField]
-    private PilePacked drawPilePacked;
+    private PilePacked drawPile;
     [SerializeField]
-    private PilePacked discardPilePacked;
+    private PilePacked discardPile;
     [SerializeField]
-    private PilePacked handPilePacked;
+    private PilePacked hand;
     [SerializeField]
-    private PilePacked playingPilePacked;
+    private PilePacked playingPile;
     [SerializeField]
-    private PilePacked exhaustPilePacked;
+    private PilePacked exhaustPile;
     [SerializeField]
     private int baseEnergy;
     [SerializeField]
@@ -27,11 +27,6 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd, ITurnSta
     private int baseDraw;
 
     private CardPlayerState cardPlayerState;
-    private IPile<Card> hand => handPilePacked;//handPilePacked;
-    private IPile<Card> drawPile => drawPilePacked;
-    private IPile<Card> discardPile => discardPilePacked;
-    private IPile<Card> exhaustPile => exhaustPilePacked;
-    private IPile<Card> playingPile => playingPilePacked;
 
     private bool drawBan = false;
 
@@ -63,8 +58,6 @@ public class CardController : MonoBehaviour, ICardController, ITurnEnd, ITurnSta
     {
         cardPlayerState = GetComponent<CardPlayerState>();
     }
-
-    public ModifierGroup Modifiers => handPilePacked.cardPile.Modifiers;
 
     public bool CanDraw()
     {

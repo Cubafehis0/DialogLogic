@@ -34,7 +34,6 @@ public abstract class TurnController : MonoBehaviour
     {
         gameObject.SetActive(true);
         foreach (var s in startListeners) s.OnTurnStart();
-     
         OnTurnStart.Invoke();
     }
     public virtual void EndTurn() 

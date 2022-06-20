@@ -277,7 +277,6 @@ GameObject:
   m_Component:
   - component: {fileID: 20855277}
   - component: {fileID: 20855276}
-  - component: {fileID: 20855275}
   - component: {fileID: 20855274}
   - component: {fileID: 20855273}
   - component: {fileID: 20855272}
@@ -347,20 +346,6 @@ MonoBehaviour:
     - {fileID: 2041896107767182639}
     - {fileID: 1620039696}
     - {fileID: 1088868068}
---- !u!114 &20855275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20855271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10422fc011843ec478f3700e0cfb2607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakSystem: {fileID: 20855274}
-  blocked: 0
 --- !u!114 &20855276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +361,7 @@ MonoBehaviour:
   playerState: {fileID: 56133405}
   enemy: {fileID: 1383529765}
   turnManager: {fileID: 1685197253}
-  dialogSystem: {fileID: 20855275}
+  dialogSystem: {fileID: 1359358495}
   handPileObject: {fileID: 1536924402}
   enemyImage: {fileID: 898900002}
 --- !u!4 &20855277
@@ -732,11 +717,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f11c5303ca2ded4c9e3f23534d09eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawPilePacked: {fileID: 2032536053}
-  discardPilePacked: {fileID: 1860205046}
-  handPilePacked: {fileID: 1536924402}
-  playingPilePacked: {fileID: 1623742449}
-  exhaustPilePacked: {fileID: 775699564}
+  drawPile: {fileID: 2032536053}
+  discardPile: {fileID: 1860205046}
+  hand: {fileID: 1536924402}
+  playingPile: {fileID: 1623742449}
+  exhaustPile: {fileID: 775699564}
   baseEnergy: 3
   energy: 0
   baseDraw: 10
@@ -2099,7 +2084,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 20855275}
+      objectReference: {fileID: 0}
     - target: {fileID: 1283991167802519038, guid: f4bbc120dd395fb448c27e6d6f73ed36,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -2977,6 +2962,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e118c0236af69fb4e8cf8412430b2482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 56133405}
+  type: 0
+  onShuffle:
+    m_PersistentCalls:
+      m_Calls: []
+  onAdd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []
   player: {fileID: 56133403}
 --- !u!1 &797157277
 GameObject:
@@ -4922,6 +4918,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356093057}
   m_CullTransparentMesh: 1
+--- !u!1 &1359358494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1359358496}
+  - component: {fileID: 1359358495}
+  m_Layer: 0
+  m_Name: "\u5BF9\u8BDD\u6D41\u7A0B"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1359358495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359358494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10422fc011843ec478f3700e0cfb2607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakSystem: {fileID: 20855274}
+  blocked: 0
+--- !u!4 &1359358496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359358494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1370692600
 GameObject:
   m_ObjectHideFlags: 0
@@ -5163,7 +5204,7 @@ MonoBehaviour:
   player: {fileID: 1383529763}
   statusManager: {fileID: 1383529764}
   chooseGUISystem: {fileID: 0}
-  cardController: {fileID: 0}
+  cardController: {fileID: 56133403}
   OnEnergyChange:
     m_PersistentCalls:
       m_Calls: []
@@ -5321,6 +5362,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e3de0a146ffae4b9503b651ecf1d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 56133405}
+  type: 1
+  onShuffle:
+    m_PersistentCalls:
+      m_Calls: []
+  onAdd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []
   layout: {fileID: 200259787}
   hide: 0
 --- !u!1 &1542892229
@@ -5537,38 +5589,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc27daf83f2c2c45ae98176544f34cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listeners: []
+  listeners:
+  - {fileID: 1383529756}
   onTurnStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1383529764}
-        m_TargetAssemblyTypeName: StatusManagerPacked, Assembly-CSharp
-        m_MethodName: OnTurnStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onTurnEnd:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1383529764}
-        m_TargetAssemblyTypeName: StatusManagerPacked, Assembly-CSharp
-        m_MethodName: OnTurnEnd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  dialogSystem: {fileID: 20855275}
+      m_Calls: []
+  dialogSystem: {fileID: 1359358495}
 --- !u!1 &1588190675
 GameObject:
   m_ObjectHideFlags: 0
@@ -6043,6 +6072,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3629605402056f346b9a443bf257895f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 56133405}
+  type: 0
+  onShuffle:
+    m_PersistentCalls:
+      m_Calls: []
+  onAdd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []
   player: {fileID: 56133403}
 --- !u!224 &1673516776 stripped
 RectTransform:
@@ -6204,7 +6244,7 @@ MonoBehaviour:
   playerController: {fileID: 2042144078}
   enemyController: {fileID: 1576496987}
   isPlayerTurn: 0
-  dialogSystem: {fileID: 20855275}
+  dialogSystem: {fileID: 0}
 --- !u!4 &1685197254
 Transform:
   m_ObjectHideFlags: 0
@@ -6247,7 +6287,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 20855275}
+      objectReference: {fileID: 0}
     - target: {fileID: 1283991167802519038, guid: f4bbc120dd395fb448c27e6d6f73ed36,
         type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -6900,6 +6940,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2e9762398a9f24c9c13aad5cf238ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 56133405}
+  type: 4
+  onShuffle:
+    m_PersistentCalls:
+      m_Calls: []
+  onAdd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []
   speed: 8000
 --- !u!114 &1860205047
 MonoBehaviour:
@@ -7352,6 +7403,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 928026b98df0db84b901fd2f1d79e858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 56133405}
+  type: 2
+  onShuffle:
+    m_PersistentCalls:
+      m_Calls: []
+  onAdd:
+    m_PersistentCalls:
+      m_Calls: []
+  onRemove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2032536054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7929,7 +7991,7 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 20855275}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogSystem, Assembly-CSharp
         m_MethodName: MoveNext
         m_Mode: 1

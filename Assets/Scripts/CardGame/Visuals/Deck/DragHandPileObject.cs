@@ -25,6 +25,24 @@ public class DragHandPileObject : PilePacked
         OnRemove.AddListener(OnRemoveAnim);
     }
 
+    public override void Add(Card item)
+    {
+        base.Add(item);
+        if (item.info.handModifier != null)
+        {
+            playerState.Modifiers.Add(item.info.handModifier);
+        }
+    }
+
+    public override void Remove(Card item)
+    {
+        base.Remove(item);
+        if (item.info.handModifier != null)
+        {
+            playerState.Modifiers.Remove(item.info.handModifier);
+        }
+    }
+
     private void OnDisable()
     {
         OnAdd.RemoveListener(OnAddAnim);

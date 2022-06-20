@@ -32,17 +32,17 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
 
     public Personality GetFinalPersonality()
     {
-        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear + statusManager.Modifiers.PersonalityLinear + cardController.Modifiers.PersonalityLinear;
+        var res = Player.PlayerInfo.Personality + Modifiers.PersonalityLinear + statusManager.Modifiers.PersonalityLinear;
         return res;
     }
 
     public SpeechArt FinalSpeechArt
     {
-        get => Modifiers.SpeechLinear + statusManager.Modifiers.SpeechLinear + cardController.Modifiers.SpeechLinear;
+        get => Modifiers.SpeechLinear + statusManager.Modifiers.SpeechLinear;
     }
     public SpeechType? FocusSpeechType
     {
-        get => Modifiers.Focus ?? statusManager.Modifiers.Focus ?? cardController.Modifiers.Focus;
+        get => Modifiers.Focus ?? statusManager.Modifiers.Focus;
     }
     public int Energy
     {

@@ -29,7 +29,7 @@ public class TurnManager : MonoBehaviour
         int i = 0;
         for (i = 0; i < 100; i++)
         {
-            if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
+            if (dialogSystem.GetInkStory().NextState == Ink2Unity.InkState.Finish) break;
             turn++;
             isPlayerTurn = false;
             enemyController.StartTurn();
@@ -38,7 +38,7 @@ public class TurnManager : MonoBehaviour
             enemyController.EndTurn();
             do
             {
-                if (dialogSystem.InkStory.NextState == Ink2Unity.InkState.Finish) break;
+                if (dialogSystem.GetInkStory().NextState == Ink2Unity.InkState.Finish) break;
                 isPlayerTurn = true;
                 playerController.StartTurn();
                 yield return new WaitUntil(() => playerController.EndTurnTrigger);

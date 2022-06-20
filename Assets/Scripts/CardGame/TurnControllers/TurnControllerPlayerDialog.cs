@@ -16,7 +16,7 @@ public class TurnControllerPlayerDialog : TurnController
     {
         endTurnTrigger = false;
         tempEndTurnTrigger = false;
-        GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.InkStory.CurrentChoices);
+        GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.GetInkStory().CurrentChoices);
         base.StartTurn();
     }
 }

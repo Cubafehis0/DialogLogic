@@ -9,7 +9,7 @@ public class TurnControllerEnemyDialog : TurnController
     {
         get
         {
-            return dialogSystem.Blocked;
+            return dialogSystem.IsBlocked();
         }
     }
 
@@ -18,7 +18,7 @@ public class TurnControllerEnemyDialog : TurnController
         base.EndTurn();
         for (int i = 0; i < 100; i++)
         {
-            if (dialogSystem.InkStory.NextState != Ink2Unity.InkState.Content) return;
+            if (dialogSystem.GetInkStory().NextState != Ink2Unity.InkState.Content) return;
             dialogSystem.MoveNext();
         }
     }
