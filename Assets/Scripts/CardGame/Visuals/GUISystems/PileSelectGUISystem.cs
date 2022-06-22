@@ -59,8 +59,8 @@ public class PileSelectGUISystem : ForegoundGUISystem
         action = context.action;
         context.cards.ForEach(t =>
         {
-            Card tmpCard = GameManager.Instance.CardLibrary.CopyCard(t);
-            CardObject item = GameManager.Instance.CardObjectLibrary.GetCardObject(tmpCard);
+            Card tmpCard = GameManager.Instance.CardLibrary.GetCopyByName<Card>("@#&*");
+            CardObject item = (CardObject)GameManager.Instance.CardObjectLibrary.GetCardObject(tmpCard);
             item.gameObject.SetActive(true);
             item.transform.SetParent(content, true);
             cardObjects.Add(item);
@@ -73,7 +73,7 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
         foreach (CardObject cardObject in cardObjects)
         {
-            GameManager.Instance.CardObjectLibrary.DestroyCard(cardObject.Card);
+            GameManager.Instance.CardObjectLibrary.DestroyCard(cardObject.GetCard<Card>());
         }
         cardObjects.Clear();
         cardSelected.Clear();
@@ -90,7 +90,7 @@ public class PileSelectGUISystem : ForegoundGUISystem
 
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponentInParent<CardObject>();
         if (c == null) return;
-        Card card = c.Card;
+        Card card = c.GetCard<Card>();
         if (cardSelected.Contains(card))
         {
 

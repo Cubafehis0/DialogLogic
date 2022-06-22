@@ -26,7 +26,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
             cardObjects[i].gameObject.SetActive(i < context.cards.Count);
             if (i < context.cards.Count)
             {
-                cardObjects[i].Card = GameManager.Instance.CardLibrary.GetCopyByName(context.cards[i]);
+                cardObjects[i].SetCard(GameManager.Instance.CardLibrary.GetCopyByName<Card>(context.cards[i]));
             }
         }
     }
@@ -39,7 +39,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
-            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
+            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.GetCard<Card>().info.Name);
         }
     }
 }

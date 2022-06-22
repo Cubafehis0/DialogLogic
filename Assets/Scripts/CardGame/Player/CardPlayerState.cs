@@ -69,7 +69,7 @@ public class CardPlayerState : MonoBehaviour, IPlayerStateChange
     {
         Debug.Log("Íæ¼Ò³õÊ¼»¯");
         this.player = player;
-        cardController.AddCard(PileType.DrawDeck, Player.PlayerInfo.CardSet);
+        cardController.AddCard<Card>(PileType.DrawDeck, Player.PlayerInfo.CardSet);
     }
 
     private void Awake()

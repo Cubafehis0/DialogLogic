@@ -13,6 +13,8 @@ public class PersonalityTypeSpriteDictionary : SerializableDictionary<Personalit
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
+    private IGameRule gameRule;
+    [SerializeField]
     private SpeechTypeSpriteDictionary choiceSprites;
     [SerializeField]
     private Sprite conditonCover;
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     public Incident currentIncident = null;
     [SerializeField]
-    private StaticCardLibrary cardLibrary;
+    private StaticLibraryBase cardLibrary;
 
     private Map map = null;
 
@@ -32,8 +34,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
-    public ICardLibrary CardLibrary { get { return cardLibrary; } }
-    public ICardObjectLibrary CardObjectLibrary { get { return cardLibrary; } }
+    public StaticLibraryBase CardLibrary { get { return cardLibrary; } }
+    public DynamicLibrary CardObjectLibrary { get; set; }
     public PersonalityTypeSpriteDictionary ConditionIcons { get => conditionIcons; set => conditionIcons = value; }
     public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
 
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         Context.Console=new Kernel.GameConsole();
         Context.Query = new Kernel.GameQuery();
-        Context.Rule = new Kernel.GameRule();
+        Context.Rule = gameRule;
         LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
         LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));

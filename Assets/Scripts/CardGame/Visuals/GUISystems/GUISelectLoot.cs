@@ -25,7 +25,7 @@ public class GUISelectLoot : ForegoundGUISystem
             cardObjects[i].gameObject.SetActive(i < context.Count);
             if (i < context.Count)
             {
-                cardObjects[i].Card = GameManager.Instance.CardLibrary.GetCopyByName(context[i]);
+                cardObjects[i].SetCard(GameManager.Instance.CardLibrary.GetCopyByName<Card>(context[i]));
             }
         }
     }
@@ -36,7 +36,7 @@ public class GUISelectLoot : ForegoundGUISystem
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
-            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.Card.info.Name);
+            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.GetCard<Card>().info.Name);
             Close();
         }
     }
