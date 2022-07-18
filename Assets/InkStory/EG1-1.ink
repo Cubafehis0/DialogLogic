@@ -44,7 +44,7 @@ INCLUDE JudgeHeader.ink
 
 + 没有什么事，我这就离开	   @SpeechArt:Normal  @Speaker:Player    
 	#Speaker:Player 
--> END
+	-> END
 
 
 
@@ -68,66 +68,67 @@ INCLUDE JudgeHeader.ink
 我不太清楚你指的什么	#Speaker:Player 
 -> b_two
 
-+  我劝你少管闲事 	   @SpeechArt:Threaten  @CanUse:(0,0,0,-6)    @Success:5  @Fail:5  @Speaker:Player    
++  我劝你少管闲事 	   @SpeechArt:Threaten  @CanUse:(0,0,0,-3)    @Success:5  @Fail:5  @Speaker:Player    
 我劝你少管闲事 	#Speaker:Player 
 {judgeSuccess==true:
-    ->b_frist_one
+    ->b_first_one
     - else:
     ->E_two    
-}
+  }
 
-+ 我和他们不是一伙人，我会妥善处理这件事	   @SpeechArt:Cheat  @CanUse:(0,3,-3,3)    @Success:5  @Fail:5  @Speaker:Player    
-我和他们不是一伙人，我会妥善处理这件事	#Speaker:Player 
-{judgeSuccess==true:
++ 我们不是一伙的，我会妥善处理这件事	   @SpeechArt:Cheat  @CanUse:(0,7,0,0)    @Success:5  @Fail:5  @Speaker:Player    
+  他可不止欠了一家的钱，我知道你说的谁但我们不是一伙的，我向你保证我会妥善处理这件事		#Speaker:Player 
+  {judgeSuccess==true:
     ->b_two
     - else:
-    ->b_frist_one    
-}
+      ->b_first_one    
+      }
 
 
 
 
 
-=== b_frist_one === 
+=== b_first_one === 
 她往后退了一步，但仍然抬头直视你。	#Speaker:Dialogue 
 
 
 你到底想干什么？	#Speaker:NPC 
 
 
-+  [我讨厌被人质问] 	   @SpeechArt:Threaten  @CanUse:(0,0,-4,-4)    @Success:5  @Fail:10  @Speaker:Player    
++  [少跟老子来这套] 	   @SpeechArt:Threaten  @CanUse:(0,3,0,-3)    @Success:5  @Fail:10  @Speaker:Player    
 	#Speaker:Player 
-你握紧拳头	#Speaker:Dialogue 
+	你握紧拳头	#Speaker:Dialogue 
 
-我讨厌被人质问，我更习惯用暴力回答问题。	#Speaker:Player 
+少跟老子来这套，干当然是用拳头干。	#Speaker:Player 
 
 {judgeSuccess==true:
     ->E_two
+
     - else:
-    ->E_two    
-}
+        ->E_two    
+        }
 
 你握紧拳头	#Speaker:Dialogue 
 
 
-我讨厌被人质问，我更习惯用暴力回答问题。	#Speaker:Player 
+少跟老子来这套，干当然是用拳头干。	#Speaker:Player 
 
 
-+ 我只是做该做的而已。	   @SpeechArt:Pursuade  @CanUse:(-2,0,0,2)    @Success:5  @Fail:5  @Speaker:Player    
++ 我只是做该做的而已。	   @SpeechArt:Persuade  @CanUse:(0,0,0,-2)    @Success:5  @Fail:5  @Speaker:Player    
 我只是做该做的而已。	#Speaker:Player 
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->b_one_two    
-}
+      ->b_one_two    
+      }
 
-+ 我们只是在保护他们免受伤害。	   @SpeechArt:Cheat  @CanUse:(0,0,3,3)    @Success:5  @Fail:5  @Speaker:Player    
-我们只是在保护他们免受伤害。	#Speaker:Player 
-{judgeSuccess==true:
++ 我们只是在保护他们免受伤害，我们才是正义的一方。	   @SpeechArt:Cheat  @CanUse:(0,3,2,-3)    @Success:5  @Fail:5  @Speaker:Player    
+  我们只是在保护他们免受伤害，我们才是正义的一方。	#Speaker:Player 
+  {judgeSuccess==true:
     ->E_one
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
 
 
@@ -142,24 +143,24 @@ INCLUDE JudgeHeader.ink
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
-+ 他们接受我们的保护，没有我们他们早就因为黑户被管理局抓走了。	   @SpeechArt:Pursuade  @CanUse:(0,2,3,0)    @Success:5  @Fail:10  @Speaker:Player    
++ 他们接受我们的保护，没有我们他们早就因为黑户被管理局抓走了。	   @SpeechArt:persuade  @CanUse:(0,2,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 他们接受我们的保护，没有我们他们早就因为黑户被管理局抓走了。	#Speaker:Player 
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
-+ 我们会提供帮助保障他们的生活的。	   @SpeechArt:Cheat  @CanUse:(0,2,2,2)    @Success:5  @Fail:10  @Speaker:Player    
-我们会提供帮助保障他们的生活的。	#Speaker:Player 
-{judgeSuccess==true:
++ 连他的生计都是我们提供的，他活该今天被我们讨债，你少在这里碍事。	   @SpeechArt:Cheat  @CanUse:(0,3,0,-2)    @Success:5  @Fail:10  @Speaker:Player    
+  连他的生计都是我们提供的，他活该今天被我们讨债，你少在这里碍事。	#Speaker:Player 
+  {judgeSuccess==true:
     ->E_one
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
 
 
@@ -169,21 +170,21 @@ INCLUDE JudgeHeader.ink
 我是他们的邻居，我来帮助他们。	#Speaker:NPC 
 
 
-+ 你并不知道发生了什么，这件事与你无关	   @SpeechArt:Pursuade  @CanUse:(0,2,0,-2)    @Success:5  @Fail:10  @Speaker:Player    
++ 你并不知道发生了什么，这件事与你无关	   @SpeechArt:Persuade  @CanUse:(0,2,0,-2)    @Success:5  @Fail:10  @Speaker:Player    
 你并不知道发生了什么，这件事与你无关	#Speaker:Player 
 {judgeSuccess==true:
-    ->b_frist_one
+    ->b_first_one
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
-+ 我劝你少管闲事，你挡着我的路了	   @SpeechArt:Threaten  @CanUse:(0,0,-2,-6)    @Success:5  @Fail:15  @Speaker:Player    
++ 我劝你少管闲事，你挡着我的路了	   @SpeechArt:Threaten  @CanUse:(0,0,0,-6)    @Success:5  @Fail:15  @Speaker:Player    
 我劝你少管闲事，你挡着我的路了	#Speaker:Player 
 {judgeSuccess==true:
     ->b_one_two
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
 + 我是来做我应该做的事情	   @SpeechArt:Normal  @Speaker:Player    
 我是来做我应该做的事情	#Speaker:Player 
@@ -200,21 +201,21 @@ INCLUDE JudgeHeader.ink
 你说的是真的吗？你能保证吗？	#Speaker:NPC 
 
 
-+ 我不确定，但我会尽力达成。	   @SpeechArt:Pursuade  @CanUse:(0,-3,7,0)    @Success:5  @Fail:5  @Speaker:Player    
++ 我不确定，但我会尽力达成。	   @SpeechArt:Persuade  @CanUse:(0,-3,0,0)    @Success:5  @Fail:5  @Speaker:Player    
 我不确定，但我会尽力达成。	#Speaker:Player 
 {judgeSuccess==true:
     ->END
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
-+ 我目前只知道这笔钱是我们应得的，其他的不归我管，但我可以帮你去找其他人问问。	   @SpeechArt:Cheat  @CanUse:(0,0,0,5)    @Success:5  @Fail:5  @Speaker:Player    
-我目前只知道这笔钱是我们应得的，其他的不归我管，但我可以帮你去找其他人问问。	#Speaker:Player 
-{judgeSuccess==true:
++ 我目前只知道这笔钱是我们应得的，其他的不归我管，但我可以帮你去找其他人问问。	   @SpeechArt:Cheat  @CanUse:(0,3,0,0)    @Success:5  @Fail:5  @Speaker:Player    
+  我目前只知道这笔钱是我们应得的，其他的不归我管，但我可以帮你去找其他人问问。	#Speaker:Player 
+  {judgeSuccess==true:
     ->END
     - else:
-    ->E_two    
-}
+      ->E_two    
+      }
 
 
 

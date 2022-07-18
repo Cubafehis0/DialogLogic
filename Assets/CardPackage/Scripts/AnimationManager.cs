@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class AnimationManager : MonoBehaviour
+public class AnimationManager : Singleton<AnimationManager>
 {
     private Queue<IEnumerator> animationQueue = new Queue<IEnumerator>();
 
-    private static AnimationManager instance;
-    public static AnimationManager Instance { get { return instance; } }
-
-    private void Awake()
-    {
-        instance = this;
-    }
     public void AddAnimation(IEnumerator enumerator)
     {
         animationQueue.Enqueue(enumerator);

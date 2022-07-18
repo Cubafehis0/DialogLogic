@@ -9,6 +9,7 @@
 [CustomPropertyDrawer(typeof(MapStateSpriteDictionary))]
 [CustomPropertyDrawer(typeof(StringSpriteDictionary))]
 [CustomPropertyDrawer(typeof(StringWindowDictionary))]
+[CustomPropertyDrawer(typeof(StringPawnDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer { }
 
 [CustomPropertyDrawer(typeof(ColorArrayStorage))]

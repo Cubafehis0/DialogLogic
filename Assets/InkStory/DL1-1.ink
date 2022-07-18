@@ -12,11 +12,11 @@ INCLUDE JudgeHeader.ink
 
 + 开门，这种下雨天还来拜访的委托人，事件必然紧急。	   @SpeechArt:Pursuade  @Speaker:Player    
 	#Speaker:Player 
--> task_start_one
+	-> task_start_one
 
 + 拒绝开门，我需要休息，身体情况不允许我再出门办案	   @SpeechArt:Threaten  @Speaker:Player    
 	#Speaker:Player 
--> END
+	-> END
 
 
 
@@ -30,11 +30,11 @@ INCLUDE JudgeHeader.ink
 
 + 请问你来找我有事吗？	   @SpeechArt:Pursuade  @Speaker:Player    @StateChange:(0,1,0,0,-1)  
 	#Speaker:Player 
--> task_start_two
+	-> task_start_two
 
 + 不好意思，我时间有限，能麻烦你快点吗？	   @SpeechArt:Threaten  @Speaker:Player    @StateChange:(0,0,1,0,-1)  
 	#Speaker:Player 
--> task_start_two
+	-> task_start_two
 
 
 
@@ -67,66 +67,66 @@ INCLUDE JudgeHeader.ink
 + 能麻烦你更具体的再描述一下事情吗？	   @SpeechArt:Pursuade  @CanUse:(0,5,0,0)    @Success:5  @Fail:5  @Speaker:Player    
 能麻烦你更具体的再描述一下事情吗？	#Speaker:Player 
 {judgeSuccess==true:
-    ->b_frist_one
+    ->b_first_one
     - else:
-    ->b_first    
-}
+      ->b_first    
+    }
 
-+ 请问你想委托我做什么呢？	   @SpeechArt:Pursuade  @CanUse:(0,3,3,0)    @Success:5  @Fail:5  @Speaker:Player    
++ 请问你想委托我做什么呢？	   @SpeechArt:Pursuade  @CanUse:(0,3,0,0)    @Success:5  @Fail:5  @Speaker:Player    
 请问你想委托我做什么呢？	#Speaker:Player 
 {judgeSuccess==true:
-    ->b_frist_one
+    ->b_first_one
     - else:
-    ->b_first    
-}
+      ->b_first    
+    }
 
 + 我对这件事很感兴趣，请务必让我接手	   @SpeechArt:Threaten  @CanUse:(0,-5,0,0)    @Success:5  @Fail:5  @Speaker:Player    
 我对这件事很感兴趣，请务必让我接手	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two
     - else:
-    ->b_first    
-}
+      ->b_first    
+    }
 
-+ 这个委托比较麻烦，我不希望你来插手	   @SpeechArt:Threaten  @CanUse:(0,3,0,3)    @Success:5  @Fail:5  @Speaker:Player    
++ 这个委托比较麻烦，我不希望你来插手	   @SpeechArt:Threaten  @CanUse:(0,3,0,0)    @Success:5  @Fail:5  @Speaker:Player    
 这个委托比较麻烦，我不希望你来插手	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two
     - else:
-    ->b_first    
-}
+      ->b_first    
+    }
 
 
 
 
 
-=== b_frist_one === 
+=== b_first_one === 
 您能完成我的委托吗？	#Speaker:NPC 
 
 
-+ 我是专业的，你要相信我的实力	   @SpeechArt:Pursuade  @CanUse:(0,6,0,0)    @Success:5  @Fail:10  @Speaker:Player    
++ 我是专业的，你要相信我的实力	   @SpeechArt:Pursuade  @CanUse:(0,3,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 我是专业的，你要相信我的实力	#Speaker:Player 
 {judgeSuccess==true:
     ->b_first_two
     - else:
-    ->b_frist_one    
-}
+      ->b_first_one    
+    }
 
-+ 请你尊重我的水平	   @SpeechArt:Pursuade  @CanUse:(0,4,4,0)    @Success:5  @Fail:10  @Speaker:Player    
++ 请你尊重我的水平	   @SpeechArt:Pursuade  @CanUse:(0,4,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 请你尊重我的水平	#Speaker:Player 
 {judgeSuccess==true:
     ->b_first_two
     - else:
-    ->b_frist_one    
-}
+      ->b_first_one    
+    }
 
-+ 这得看具体情况	   @SpeechArt:Pursuade  @CanUse:(0,0,0,6)    @Success:5  @Fail:10  @Speaker:Player    
++ 这得看具体情况	   @SpeechArt:Pursuade  @CanUse:(0,3,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 这得看具体情况	#Speaker:Player 
 {judgeSuccess==true:
     ->b_first_two
     - else:
-    ->b_frist_one    
-}
+      ->b_first_one    
+    }
 
 
 
@@ -136,21 +136,21 @@ INCLUDE JudgeHeader.ink
 你觉得这个委托人怎么样？	#Speaker:NPC 
 
 
-+ 看起来很有正义感，我决定尽力帮助她	   @SpeechArt:Pursuade  @CanUse:(0,5,4,0)    @Success:5  @Fail:10  @Speaker:Player    
++ 看起来很有正义感，我决定尽力帮助她	   @SpeechArt:Pursuade  @CanUse:(0,5,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 看起来很有正义感，我决定尽力帮助她	#Speaker:Player 
 {judgeSuccess==true:
     ->b_first_three
     - else:
-    ->b_first_two    
-}
+      ->b_first_two    
+    }
 
-+ 看起来挺好糊弄的，可以随便做点调查就交差	   @SpeechArt:Pursuade  @CanUse:(0,0,4,5)    @Success:5  @Fail:10  @Speaker:Player    
++ 看起来挺好糊弄的，可以随便做点调查就交差	   @SpeechArt:Pursuade  @CanUse:(0,3,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 看起来挺好糊弄的，可以随便做点调查就交差	#Speaker:Player 
 {judgeSuccess==true:
     ->b_first_three
     - else:
-    ->b_first_two    
-}
+      ->b_first_two    
+    }
 
 
 
@@ -160,29 +160,29 @@ INCLUDE JudgeHeader.ink
 那你准备如何处理这个委托？	#Speaker:NPC 
 
 
-+ 我准备走访知情人调查线索	   @SpeechArt:Pursuade  @CanUse:(0,5,5,0)    @Success:5  @Fail:15  @Speaker:Player    
++ 我准备走访知情人调查线索	   @SpeechArt:Pursuade  @CanUse:(0,5,0,0)    @Success:5  @Fail:15  @Speaker:Player    
 我准备走访知情人调查线索	#Speaker:Player 
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->b_first_three    
-}
+      ->b_first_three    
+    }
 
-+ 我准备去警局询问情况	   @SpeechArt:Pursuade  @CanUse:(0,5,0,5)    @Success:5  @Fail:15  @Speaker:Player    
++ 我准备去警局询问情况	   @SpeechArt:Pursuade  @CanUse:(0,5,0,0)    @Success:5  @Fail:15  @Speaker:Player    
 我准备去警局询问情况	#Speaker:Player 
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->b_first_three    
-}
+      ->b_first_three    
+    }
 
-+ 我大概猜到他是谁了	   @SpeechArt:Cheat  @CanUse:(0,0,0,6)    @Success:5  @Fail:15  @Speaker:Player    
++ 我大概猜到他是谁了	   @SpeechArt:Cheat  @CanUse:(0,3,0,0)    @Success:5  @Fail:15  @Speaker:Player    
 我大概猜到他是谁了	#Speaker:Player 
 {judgeSuccess==true:
     ->E_one
     - else:
-    ->E_three    
-}
+      ->E_three    
+    }
 
 
 
@@ -197,24 +197,24 @@ INCLUDE JudgeHeader.ink
 {judgeSuccess==true:
     ->b_two_one
     - else:
-    ->b_two    
-}
+      ->b_two    
+    }
 
-+ 我会不惜一切手段把他逮出来。	   @SpeechArt:Threaten  @CanUse:(0,0,-5,0)    @Success:5  @Fail:10  @Speaker:Player    
++ 我会不惜一切手段把他逮出来。	   @SpeechArt:Threaten  @CanUse:(0,-5,0,0)    @Success:5  @Fail:10  @Speaker:Player    
 我会不惜一切手段把他逮出来。	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two_one
     - else:
-    ->b_two    
-}
+      ->b_two    
+    }
 
 + 没有人是我找不出来的。	   @SpeechArt:Threaten  @CanUse:(0,0,0,-5)    @Success:5  @Fail:10  @Speaker:Player    
 没有人是我找不出来的。	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two_one
     - else:
-    ->b_two    
-}
+      ->b_two    
+    }
 
 
 
@@ -224,21 +224,21 @@ INCLUDE JudgeHeader.ink
 但我担心他能逃脱惩罚	#Speaker:NPC 
 
 
-+ 我会用自己的方法来制裁他	   @SpeechArt:Threaten  @CanUse:(0,-5,-3,0)    @Success:5  @Fail:15  @Speaker:Player    
++ 我会用自己的方法来制裁他	   @SpeechArt:Threaten  @CanUse:(0,-5,0,0)    @Success:5  @Fail:15  @Speaker:Player    
 我会用自己的方法来制裁他	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two_two
     - else:
-    ->b_two_one    
-}
+      ->b_two_one    
+    }
 
 + 他逃得过警察的惩罚，逃不过我的制裁	   @SpeechArt:Threaten  @CanUse:(0,-5,0,-5)    @Success:5  @Fail:15  @Speaker:Player    
 他逃得过警察的惩罚，逃不过我的制裁	#Speaker:Player 
 {judgeSuccess==true:
     ->b_two_two
     - else:
-    ->b_two_one    
-}
+      ->b_two_one    
+    }
 
 
 
@@ -248,21 +248,21 @@ INCLUDE JudgeHeader.ink
 你做到能帮我找出他吗？	#Speaker:NPC 
 
 
-+ 应该没问题吧	   @SpeechArt:Threaten  @CanUse:(0,-4,-4,-4)    @Success:5  @Fail:5  @Speaker:Player    
++ 应该没问题吧	   @SpeechArt:Threaten  @CanUse:(0,-4,0,-4)    @Success:5  @Fail:5  @Speaker:Player    
 应该没问题吧	#Speaker:Player 
 {judgeSuccess==true:
     ->E_two
     - else:
-    ->b_two_two    
-}
+      ->b_two_two    
+    }
 
 + 关于他的身份我已经有想法了	   @SpeechArt:Cheat  @CanUse:(0,0,0,-6)    @Success:5  @Speaker:Player    
 关于他的身份我已经有想法了	#Speaker:Player 
 {judgeSuccess==true:
     ->E_two
     - else:
-    ->E_three    
-}
+      ->E_three    
+    }
 
 
 
@@ -287,14 +287,14 @@ INCLUDE JudgeHeader.ink
 
 
 === E_three === 
-她察觉到你在敷衍她，非常气愤，双眼怒视着你，说道：“这可是关系到一家人活路的事情，你居然这么敷衍，你还有没有正义感和良心啊？”	#Speaker:NPC 
+她察觉到你在敷衍她，非常气愤，双眼怒视着你，说道：“人命关天的时候你都这么敷衍，你是不是跟他们一伙的阿？”	#Speaker:NPC 
 
 
 + 即时补救，承认自己刚刚走神了，请求她把信息再说一遍	   @SpeechArt:Normal  @Speaker:Player    
 	#Speaker:Player 
--> b_two_two
+	-> b_two_two
 
 + 无所谓，觉得这个委托太过麻烦，不接手也罢	   @SpeechArt:Normal  @Speaker:Player    
 	#Speaker:Player 
--> END
+	-> END
 

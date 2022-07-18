@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23645cca1f92f3d4bbecf3f4bf062d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardController: {fileID: 1917225099}
+  cardController: {fileID: 0}
 --- !u!1 &5930774168500799355
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5930774168759637662}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DragHandPileObject, Assembly-CSharp
         m_MethodName: Switch
         m_Mode: 1
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5930774168759637661}
-  - component: {fileID: 5930774168759637662}
+  - component: {fileID: 7007792288352383430}
   m_Layer: 5
   m_Name: "\u624B\u724C\u5806"
   m_TagString: Untagged
@@ -339,7 +339,7 @@ RectTransform:
   m_AnchoredPosition: {x: -292, y: -359}
   m_SizeDelta: {x: 737.549, y: 249.1216}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5930774168759637662
+--- !u!114 &7007792288352383430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5930774168759637660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34e3de0a146ffae4b9503b651ecf1d95, type: 3}
+  m_Script: {fileID: 11500000, guid: 9da7b8a395ae99649ad485edccb2c138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
@@ -364,7 +364,6 @@ MonoBehaviour:
   cardLibrary: {fileID: 0}
   layout: {fileID: 5930774169557873831}
   hide: 0
-  playerState: {fileID: 0}
 --- !u!1 &5930774169070400920
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +475,7 @@ GameObject:
   - component: {fileID: 5930774169076298223}
   - component: {fileID: 5930774169076298222}
   - component: {fileID: 5930774169076298221}
-  - component: {fileID: 1917225099}
+  - component: {fileID: 147073803876482873}
   m_Layer: 5
   m_Name: "\u5361\u724C\u753B\u5E03"
   m_TagString: Untagged
@@ -570,7 +569,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1917225099
+--- !u!114 &147073803876482873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -579,24 +578,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5930774169076298003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f11c5303ca2ded4c9e3f23534d09eea, type: 3}
+  m_Script: {fileID: 11500000, guid: fa740fa5b35d2aa48a15b2c5090b50da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawPile: {fileID: 5930774169251120537}
-  discardPile: {fileID: 5930774169070400922}
-  hand: {fileID: 5930774168759637662}
-  playingPile: {fileID: 5930774169106570141}
-  exhaustPile: {fileID: 5930774170141765632}
-  baseEnergy: 10
-  energy: 10
-  baseDraw: 0
-  maxHandCnt: 10
   OnEnergyChange:
     m_PersistentCalls:
       m_Calls: []
   OnPlayCard:
     m_PersistentCalls:
       m_Calls: []
+  drawPile: {fileID: 5930774169251120537}
+  discardPile: {fileID: 5930774169070400922}
+  hand: {fileID: 7007792288352383430}
+  playingPile: {fileID: 5930774169106570141}
+  exhaustPile: {fileID: 5930774170141765632}
+  energy: 10
+  maxHandCnt: 10
 --- !u!1 &5930774169106570115
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +652,7 @@ MonoBehaviour:
   onRemove:
     m_PersistentCalls:
       m_Calls: []
-  player: {fileID: 0}
+  player: {fileID: 147073803876482873}
 --- !u!1 &5930774169251120543
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,4 +952,4 @@ MonoBehaviour:
   onRemove:
     m_PersistentCalls:
       m_Calls: []
-  player: {fileID: 0}
+  player: {fileID: 147073803876482873}

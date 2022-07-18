@@ -45,7 +45,7 @@ public class CardGameManager : MonoBehaviour
         dialogSystem.Open(GetInkStoryAsset(GameManager.Instance.CurrentStory));
         playerState.Init(GameManager.Instance.LocalPlayer);
         string name = GameManager.Instance.currentIncident.target;
-        enemyImage.sprite = GameManager.Instance.EnemySpriteDictionary[name];
+        enemyImage.sprite = AssetsManager.Instance.enemySpriteDictionary[name];
     }
 
 

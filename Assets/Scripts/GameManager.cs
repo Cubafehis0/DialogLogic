@@ -4,28 +4,16 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-[Serializable]
-public class SpeechTypeSpriteDictionary : SerializableDictionary<SpeechType, Sprite> { }
 
-[Serializable]
-public class PersonalityTypeSpriteDictionary : SerializableDictionary<PersonalityType, Sprite> { }
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private IGameRule gameRule;
-    [SerializeField]
-    private SpeechTypeSpriteDictionary choiceSprites;
-    [SerializeField]
     private Sprite conditonCover;
-    [SerializeField]
-    private PersonalityTypeSpriteDictionary conditionIcons;
     [SerializeField]
     private PlayerPacked localPlayer;
 
     public Incident currentIncident = null;
-    [SerializeField]
-    private StaticLibraryBase cardLibrary;
 
     private Map map = null;
 
@@ -33,13 +21,7 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
-
-    public StaticLibraryBase CardLibrary { get { return cardLibrary; } }
     public DynamicLibrary CardObjectLibrary { get; set; }
-    public PersonalityTypeSpriteDictionary ConditionIcons { get => conditionIcons; set => conditionIcons = value; }
-    public SpeechTypeSpriteDictionary ChoiceSprites { get => choiceSprites; set => choiceSprites = value; }
-
-    public StringSpriteDictionary EnemySpriteDictionary;
     public Sprite ConditonCover { get => conditonCover; set => conditonCover = value; }
     public PlayerPacked LocalPlayer { get => localPlayer; set => localPlayer = value; }
     public Map Map { get => map; }
@@ -50,7 +32,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            localPlayer = GetComponent<PlayerPacked>();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -63,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         Context.Console=new Kernel.GameConsole();
         Context.Query = new Kernel.GameQuery();
-        Context.Rule = gameRule;
+        Context.Rule = new Kernel.GameRule();
         LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
         LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));

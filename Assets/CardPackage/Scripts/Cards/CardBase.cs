@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public abstract class CardBase
+public class CardBase
 {
     public string id;
     public int cost;
@@ -18,9 +18,9 @@ public abstract class CardBase
     }
     public virtual void PreCalculateCost() { }
 
-    public virtual void Excute() 
+    public virtual void Excute(GameObject target) 
     {
-        Debug.Log("使用卡牌： ");
+        Debug.Log($"对{target.name}使用卡牌： ");
     }
 
     public virtual void OnDraw()

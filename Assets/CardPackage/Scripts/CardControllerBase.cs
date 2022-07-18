@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CardControllerBase:MonoBehaviour
+public class CardControllerBase : Singleton<CardControllerBase>
 {
 
     public UnityEvent OnEnergyChange = new UnityEvent();
@@ -73,7 +73,7 @@ public class CardControllerBase:MonoBehaviour
 
     public void AddCard<T>(PileType pileType, string name) where T : CardBase, new()
     {
-        T newCard = Singleton<StaticLibraryBase>.Instance.GetCopyByName<T>(name);
+        T newCard = StaticLibraryBase<T>.Instance.GetCopyByName(name);
         Singleton<DynamicLibrary>.Instance.GetCardObject(newCard);
         AddCard(pileType, newCard);
     }
@@ -82,7 +82,7 @@ public class CardControllerBase:MonoBehaviour
     {
         foreach (string name in names)
         {
-            T newCard = Singleton<StaticLibraryBase>.Instance.GetCopyByName<T>(name);
+            T newCard = StaticLibraryBase<T>.Instance.GetCopyByName(name);
             Singleton<DynamicLibrary>.Instance.GetCardObject(newCard);
             AddCard(pileType, newCard);
         }
@@ -167,9 +167,9 @@ public class CardControllerBase:MonoBehaviour
     /// 打出卡牌
     /// </summary>
     /// <param name="card"></param>
-    public void PlayCard(CardBase card)
+    public void PlayCard(CardBase card, GameObject target)
     {
-        AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card));
+        AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card,target));
     }
 
     private void Discard2Draw()
@@ -179,7 +179,7 @@ public class CardControllerBase:MonoBehaviour
     }
 
 
-    private IEnumerator PlayCardEnumerator(CardBase card)
+    private IEnumerator PlayCardEnumerator(CardBase card,GameObject target)
     {
         if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
         card.PreCalculateCost();
@@ -196,7 +196,7 @@ public class CardControllerBase:MonoBehaviour
                 Energy -= card.cost;
                 hand.MigrateTo(card, playingPile);
                 OnPlayCard.Invoke();
-                card.Excute();
+                card.Excute(target);
                 yield return new WaitUntil(AnimationManager.Instance.IsFree);
                 playingPile.MigrateTo(card, card.exhaust ? exhaustPile : discardPile);
             }

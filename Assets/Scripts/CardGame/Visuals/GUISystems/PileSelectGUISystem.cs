@@ -59,7 +59,7 @@ public class PileSelectGUISystem : ForegoundGUISystem
         action = context.action;
         context.cards.ForEach(t =>
         {
-            Card tmpCard = GameManager.Instance.CardLibrary.GetCopyByName<Card>("@#&*");
+            Card tmpCard = StaticCardLibrary.Instance.GetCopyByName("@#&*");
             CardObject item = (CardObject)GameManager.Instance.CardObjectLibrary.GetCardObject(tmpCard);
             item.gameObject.SetActive(true);
             item.transform.SetParent(content, true);

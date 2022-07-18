@@ -13,9 +13,9 @@ public class TurnControllerEnemyDialog : TurnController
         }
     }
 
-    public override void EndTurn()
+    public override void OnEndTurn()
     {
-        base.EndTurn();
+        base.OnEndTurn();
         for (int i = 0; i < 100; i++)
         {
             if (dialogSystem.GetInkStory().NextState != Ink2Unity.InkState.Content) return;

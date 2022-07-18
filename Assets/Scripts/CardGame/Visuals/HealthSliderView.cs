@@ -10,8 +10,8 @@ public class HealthSliderView : MonoBehaviour
 
     private void Update()
     {
-        healthSlider.value = GameManager.Instance.LocalPlayer.PlayerInfo.Pressure;
-        sanSlider.value = GameManager.Instance.LocalPlayer.PlayerInfo.Health;
+        healthSlider.value = CardGameManager.Instance.playerState.Player.PlayerInfo.Pressure;
+        sanSlider.value = CardGameManager.Instance.playerState.Player.PlayerInfo.Health;
     }
 
 }

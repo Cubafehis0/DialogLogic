@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 namespace Kernel
 {
-    public class GameRule : MonoBehaviour, IGameRule
+    public class GameRule : IGameRule
     {
         public void RegisterCard(CardInfo info)
         {
-            Singleton<StaticLibraryBase>.Instance.DeclareCard<Card>(info.Name,info);
+            StaticCardLibrary.Instance.DeclareCard(info.Name,info);
         }
 
         public void RegisterStatus(Status info)

@@ -30,7 +30,7 @@ public class ChoiceConditionObject : MonoBehaviour
 
     public void UpdateVisuals()
     {
-        if (reveal) image.sprite = GameManager.Instance.ConditionIcons[type];
+        if (reveal) image.sprite = AssetsManager.Instance.conditionIcons[type];
         else image.sprite = GameManager.Instance.ConditonCover;
     }
 

@@ -5,8 +5,6 @@ public class HandObjectBase : PilePacked
 {
     public static HandObjectBase instance;
     [SerializeField]
-    private DynamicLibrary cardLibrary;
-    [SerializeField]
     private Transform layout;
     [SerializeField]
     private bool hide;
@@ -85,7 +83,7 @@ public class HandObjectBase : PilePacked
 
     private void OnAddAnim(CardBase card)
     {
-        CardObjectBase cardObject = cardLibrary.GetCardObject(card);
+        CardObjectBase cardObject = DynamicLibrary.Instance.GetCardObject(card);
         AnimationManager.Instance.AddAnimation(Animating(cardObject.gameObject));
     }
 

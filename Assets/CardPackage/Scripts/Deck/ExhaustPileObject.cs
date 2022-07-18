@@ -3,7 +3,7 @@ using UnityEngine;
 public class ExhaustPileObject : PilePacked
 {
     [SerializeField]
-    private CardController player;
+    private CardControllerBase player;
 
     private void OnEnable()
     {

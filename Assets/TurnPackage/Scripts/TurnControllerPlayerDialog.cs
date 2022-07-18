@@ -12,11 +12,11 @@ public class TurnControllerPlayerDialog : TurnController
         tempEndTurnTrigger = true;
     }
 
-    public override void StartTurn()
+    public override void OnStartTurn()
     {
         endTurnTrigger = false;
         tempEndTurnTrigger = false;
         GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.GetInkStory().CurrentChoices);
-        base.StartTurn();
+        base.OnStartTurn();
     }
 }

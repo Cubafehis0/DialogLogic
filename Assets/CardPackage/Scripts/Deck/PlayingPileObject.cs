@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayingPileObject : PilePacked
 {
     [SerializeField]
-    private CardController player;
+    private CardControllerBase player;
 
     private void OnEnable()
     {

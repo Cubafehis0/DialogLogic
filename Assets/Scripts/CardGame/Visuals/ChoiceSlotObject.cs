@@ -29,7 +29,7 @@ public class ChoiceSlotObject : MonoBehaviour
     {
         if (choiceSlot == null) return;
         if (text) text.text = choiceSlot.Choice.Content.richText;
-        if (image) image.sprite = GameManager.Instance.ChoiceSprites[choiceSlot.Choice.SpeechType];
+        if (image) image.sprite = AssetsManager.Instance.choiceSprites[choiceSlot.Choice.SpeechType];
         button.interactable = !choiceSlot.Locked;
         UpdateJudge();
     }

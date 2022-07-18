@@ -45,9 +45,9 @@ public class Card : CardBase
         }
     }
 
-    public override void Excute()
+    public override void Excute(GameObject target)
     {
-        base.Excute();
+        base.Excute(target);
         if (info.Effects == null) Debug.Log("空效果");
         else
         {

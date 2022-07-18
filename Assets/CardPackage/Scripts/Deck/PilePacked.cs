@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using ModdingAPI;
 public class PilePacked : MonoBehaviour, IPile<CardBase>
 {
-    private List<CardBase> cards=new List<CardBase>();
+    public List<CardBase> cards=new List<CardBase>();
     [SerializeField]
     private PileType type;
     [SerializeField]
@@ -24,7 +24,6 @@ public class PilePacked : MonoBehaviour, IPile<CardBase>
     public virtual void Add(CardBase item)
     {
         cards.Add(item);
-
         OnAdd.Invoke(item);
     }
 

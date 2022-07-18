@@ -25,7 +25,7 @@ public class GUISelectLoot : ForegoundGUISystem
             cardObjects[i].gameObject.SetActive(i < context.Count);
             if (i < context.Count)
             {
-                cardObjects[i].SetCard(GameManager.Instance.CardLibrary.GetCopyByName<Card>(context[i]));
+                cardObjects[i].SetCard(StaticCardLibrary.Instance.GetCopyByName(context[i]));
             }
         }
     }

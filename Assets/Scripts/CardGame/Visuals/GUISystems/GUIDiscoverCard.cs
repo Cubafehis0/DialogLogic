@@ -26,7 +26,7 @@ public class GUIDiscoverCard : ForegoundGUISystem
             cardObjects[i].gameObject.SetActive(i < context.cards.Count);
             if (i < context.cards.Count)
             {
-                cardObjects[i].SetCard(GameManager.Instance.CardLibrary.GetCopyByName<Card>(context.cards[i]));
+                cardObjects[i].SetCard(StaticCardLibrary.Instance.GetCopyByName(context.cards[i]));
             }
         }
     }

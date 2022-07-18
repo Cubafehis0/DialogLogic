@@ -1,8 +1,9 @@
 using ModdingAPI;
 using System;
+using YetAInventory;
 
 [Serializable]
-public class Relic
+public class Relic:UniqueItem
 {
     public RelicInfo relicInfo = null;
 
