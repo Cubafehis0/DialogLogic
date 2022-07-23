@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="grammar.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<Common>
+    <define_card>
+        <name>logic1</name>
+        <title></title>
+        <condition_desc></condition_desc>
+        <effect_desc></effect_desc>
+        <meme></meme>
+        <cost>1</cost>
+        <category>logic</category>
+        <on_play_card>
+            <discard_some_hand>
+                <num>3</num>
+            </discard_some_hand>
+        </on_play_card>
+    </define_card>
+</Common>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MissionsInfo>
+  <missions>
+    <mission>
+      <name>收租</name>
+      <description>description1</description>
+      <ConditionsStart>
+        <conditionStart>EG1-1:EndA</conditionStart>
+      </ConditionsStart>
+      <ConditionsEnd>
+        <conditionEnd>EG1-2:EndA</conditionEnd>
+      </ConditionsEnd>
+    </mission>
+    <mission>
+      <name>回报</name>
+      <description>description2</description>
+      <ConditionsStart>
+        <conditionStart>EG1-2:EndA</conditionStart>
+      </ConditionsStart>
+      <ConditionsEnd>
+        <conditionEnd>EG1-3:EndA</conditionEnd>
+      </ConditionsEnd>
+    </mission>
+  </missions>
+</MissionsInfo>

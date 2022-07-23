@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Missions>
+  <mission>
+    <baseInfo>
+      <name>name1</name>
+      <description>description1</description>
+      <ConditionStart>ConditionStart1</ConditionStart>
+      <ConditionEnd>ConditionEnd1</ConditionEnd>
+    </baseInfo>
+  </mission>
+  <mission>
+    <baseInfo>
+      <name>name2</name>
+      <description>description2</description>
+      <ConditionStart>ConditionStart2</ConditionStart>
+      <ConditionEnd>ConditionEnd2</ConditionEnd>
+    </baseInfo>
+  </mission>
+  <mission>
+    <baseInfo>
+      <name>name3</name>
+      <description>description3</description>
+      <ConditionStart>ConditionStart3</ConditionStart>
+      <ConditionEnd>ConditionEnd3</ConditionEnd>
+    </baseInfo>
+  </mission>
+</Missions>

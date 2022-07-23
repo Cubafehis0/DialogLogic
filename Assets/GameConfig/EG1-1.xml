@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pass xmlns="JaspersGameConfigGrammar"
+xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+xs:schemaLocation="JaspersGameConfigGrammar GameTestConfig.xsd">
+<InkStory>EG1-1</InkStory>
+    <player>
+        <personality>
+            <logic>0</logic>
+            <moral>0</moral>
+            <roundabout>0</roundabout>
+            <inner>0</inner>
+            <outside>0</outside>
+        </personality>
+        <maxCardNum>10</maxCardNum>
+        <drawCardNum>3</drawCardNum>
+        <basePressure>0</basePressure>
+        <maxPressure>100</maxPressure>
+        <health>80</health>
+        <energy>4</energy>
+    </player>
+    <enemy>
+        <personality>
+            <logic>0</logic>
+            <moral>0</moral>
+            <roundabout>0</roundabout>
+            <inner>0</inner>
+            <outside>0</outside>
+        </personality>
+    </enemy>
+    <cardDeck>
+        <card>
+            <name>xsa</name> 
+        </card>
+    </cardDeck>
+</pass>
