@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="schema0.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<Common>
+    <define_card>
+        <name>test_0</name>
+        <title>测试卡牌0</title>
+        <condition_desc>无条件</condition_desc>
+        <effect_desc>说服判定-2</effect_desc>
+        <meme></meme>
+        <cost>1</cost>
+        <category>immoral</category>
+        <on_play_card>
+            <modify_speech>
+                <Modifer>
+                    <persuade>2</persuade>
+                </Modifer>
+                <duration>-1</duration>
+            </modify_speech>
+        </on_play_card>
+    </define_card>
+</Common>

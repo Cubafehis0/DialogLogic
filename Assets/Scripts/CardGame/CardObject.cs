@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardObject : CardObjectBase
+public class CardObject : CardObjectBase<Card>
 {
     [SerializeField]
     private Text titleText;
@@ -15,11 +15,10 @@ public class CardObject : CardObjectBase
     public override void UpdateVisuals()
     {
         if (card == null) return;
-        
-        //if (titleText) titleText.text = card.info.Title;
-        //if (cdtDescText) cdtDescText.text = card.info.ConditionDesc;
-        //if (eftDescText) eftDescText.text = card.info.EffectDesc;
-        //if (memeText) memeText.text = card.info.Meme;
+        if (titleText) titleText.text = card.Title;
+        if (cdtDescText) cdtDescText.text = card.ConditionDesc;
+        if (eftDescText) eftDescText.text = card.EffectDesc;
+        if (memeText) memeText.text = card.Meme;
     }
 
     private void OnEnable()

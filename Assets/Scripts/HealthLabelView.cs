@@ -8,9 +8,11 @@ public class HealthLabelView : MonoBehaviour
     [SerializeField]
     private Text sanText;
 
+
+
     private void Update()
     {
-        PlayerInfo playerInfo = GameManager.Instance.LocalPlayer.PlayerInfo;
+        var playerInfo = GameManager.Instance.LocalPlayer;
         pressureText.text = string.Format("{0}/{1}", playerInfo.Pressure, playerInfo.MaxPressure);
         sanText.text = string.Format("{0}/{1}", playerInfo.Health, playerInfo.MaxHealth);
     }

@@ -1,21 +1,33 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RelicObj : MonoBehaviour
+public abstract class VisualObject<T> : MonoBehaviour
+{
+    public T target;
+
+    public abstract void UpdateVisuals();
+}
+
+public class RelicObj : VisualObject<Relic>
 {
     public Text nameText;
     public Text descText;
     public Text rarityText;
     public Text categoryText;
 
-    public Relic relic = null;
-
-    public void SetRelic(Relic relic)
+    private void Update()
     {
-        this.relic = relic;
-        nameText.text = relic.relicInfo.Name;
-        descText.text = relic.relicInfo.Description;
-        rarityText.text = Relic.GetRarityString(relic.relicInfo.Rarity);
-        categoryText.text = Relic.GetCategoryString(relic.relicInfo.Category);
+        UpdateVisuals();
+    }
+
+    public override void UpdateVisuals()
+    {
+        if (target != null)
+        {
+            nameText.text = target.Name;
+            descText.text = target.Description;
+            rarityText.text = Localizer.GetRarityString(target.Rarity);
+            categoryText.text = Localizer.GetCategoryString(target.Category);
+        }
     }
 }

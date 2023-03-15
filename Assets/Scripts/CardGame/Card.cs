@@ -4,39 +4,41 @@ using System;
 using UnityEngine;
 using ModdingAPI;
 
+[Serializable]
 public class Card : CardBase
 {
-    public CardPlayerState player;
-    public CardInfo info;
+    public string Name;
+    public string Title;
+    public string ConditionDesc;
+    public string EffectDesc;
+    public string Meme;
+    public int BaseCost;
+    public bool Exhaust;
+    public CardType category;
+    public Modifier handModifier;
+    public Func<bool> Requirements;
+    public Action DrawEffects;
+    public Action Effects;
+
     [SerializeField]
     private bool temporaryActivate = false;
     [SerializeField]
     private bool permanentActivate = false;
 
-    public override void PreCalculateCost()
-    {
-        cost = info.BaseCost;
-        if (Activated)
-        {
-            cost = 0;
-            return;
-        }
-        foreach (var modifer in player.Modifiers)//有缺陷
-        {
-            CostModifier m = modifer.CostModifier;
-            if (m != null && (m.Condition?.Invoke() ?? true))
-            {
-                cost = m.num.Invoke();
-            }
-        }
-    }
 
-    public override bool CheckCanPlay(out string failmsg)
+    public override bool CheckCanPlay(GameObject player, out string failmsg)
     {
-        if (!Activated && info.Requirements != null)
+        var cardController = player.GetComponent<CardController>();
+        if (cardController.Energy < cardController.GetFinalCost(this))
+        {
+            failmsg = "能量不足";
+            return false;
+        }
+
+        if (!Activated && Requirements != null)
         {
             failmsg = "未达到要求";
-            return info.Requirements.Invoke();
+            return Requirements.Invoke();
         }
         else
         {
@@ -48,17 +50,17 @@ public class Card : CardBase
     public override void Excute(GameObject target)
     {
         base.Excute(target);
-        if (info.Effects == null) Debug.Log("空效果");
+        if (Effects == null) Debug.Log("空效果");
         else
         {
-            info.Effects.Invoke();
+            Effects.Invoke();
             CardLogEntry log = new CardLogEntry
             {
-                Name = info.Name,
+                Name = Name,
                 IsActive = Activated,
                 LogType = ActionTypeEnum.PlayCard,
                 Turn = CardGameManager.Instance.TurnManager.Turn,
-                CardCategory = info.category,
+                CardCategory = category,
             };
             CardGameManager.Instance.CardRecorder.AddRecordEntry(log);
         }
@@ -67,11 +69,12 @@ public class Card : CardBase
     public override void OnDraw()
     {
         base.OnDraw();
-        if (info.DrawEffects != null)
+        if (DrawEffects != null)
         {
-            info.DrawEffects.Invoke();
+            DrawEffects.Invoke();
         }
     }
+
 
     public bool Activated { get => TemporaryActivate || PermanentActivate; }
     public bool TemporaryActivate
@@ -100,22 +103,6 @@ public class Card : CardBase
     {
         CardCount++;
     }
-
-    public Card(CardInfo info) : this()
-    {
-        //Debug.Log(string.Format("生成Card类,Title={0},当前Card数量:{1}", info.Title, CardCount));
-        this.info = new CardInfo(info);
-        temporaryActivate = false;
-        permanentActivate = false;
-    }
-
-    public Card(Card origin) : this()
-    {
-        //Debug.Log(string.Format("生成Card拷贝,Title={0},当前Card数量:{1}",origin.info.Title, CardCount));
-        this.info = new CardInfo(origin.info);
-        temporaryActivate = origin.temporaryActivate;
-        permanentActivate = origin.permanentActivate;
-    }
     public int GetProp(string name)
     {
         throw new NotImplementedException();
@@ -123,15 +110,39 @@ public class Card : CardBase
 
     public override void Construct<T>(T arg)
     {
-        if(arg is CardInfo info)
+        if (arg is CardInfo info)
         {
-            this.info = new CardInfo(info);
+            Name = info.Name;
+            Title = info.Title;
+            ConditionDesc = info.ConditionDesc;
+            EffectDesc = info.EffectDesc;
+            Meme = info.Meme;
+            BaseCost = info.BaseCost;
+            Exhaust = info.Exhaust;
+            category = info.category;
+            handModifier = info.handModifier;
+            Requirements = info.Requirements;
+            DrawEffects = info.DrawEffects;
+            Effects = info.Effects;
             temporaryActivate = false;
             permanentActivate = false;
         }
-        else  if(arg is Card origin)
+        else if (arg is Card origin)
         {
-            this.info = new CardInfo(origin.info);
+            Name = origin.Name;
+            Title = origin.Title;
+            ConditionDesc = origin.ConditionDesc;
+            EffectDesc = origin.EffectDesc;
+            Meme = origin.Meme;
+            BaseCost = origin.BaseCost;
+            Exhaust = origin.Exhaust;
+            category = origin.category;
+            handModifier = origin.handModifier;
+            Requirements = origin.Requirements;
+            DrawEffects = origin.DrawEffects;
+            Effects = origin.Effects;
+            temporaryActivate = origin.temporaryActivate;
+            permanentActivate = origin.permanentActivate;
             temporaryActivate = origin.temporaryActivate;
             permanentActivate = origin.permanentActivate;
         }

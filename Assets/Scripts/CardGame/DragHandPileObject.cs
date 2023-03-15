@@ -9,9 +9,9 @@ public class DragHandPileObject : HandObjectBase
         base.Add(item);
         if(item is Card card)
         {
-            if (card.info.handModifier != null)
+            if (card.handModifier != null)
             {
-                playerState.Modifiers.Add(card.info.handModifier);
+                playerState.Modifiers.Add(card.handModifier);
             }
         }
     }
@@ -22,9 +22,9 @@ public class DragHandPileObject : HandObjectBase
 
         if (item is Card card)
         {
-            if (card.info.handModifier != null)
+            if (card.handModifier != null)
             {
-                playerState.Modifiers.Remove(card.info.handModifier);
+                playerState.Modifiers.Remove(card.handModifier);
             }
         }
     }

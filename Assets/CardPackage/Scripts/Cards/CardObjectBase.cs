@@ -1,30 +1,12 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Draggable))]
-public class CardObjectBase:MonoBehaviour
+public class CardObjectBase<T>:MonoBehaviour where T : CardBase
 {
     [SerializeField]
-    protected CardBase card = null;
-    [SerializeField]
-    private Canvas cardUICanvas = null;
-    [SerializeField]
-    private int orderInLayer = 0;
+    protected T card = null;
 
-    public int OrderInLayer
-    {
-        get => orderInLayer;
-        set
-        {
-            if (cardUICanvas)
-            {
-                cardUICanvas.overrideSorting = value > 0;
-                cardUICanvas.sortingOrder = value;
-            }
-            orderInLayer = value;
-        }
-    }
-
-    public T GetCard<T>() where T : CardBase
+    public T GetCard() 
     {
         if (card is T res)
         {
@@ -36,7 +18,7 @@ public class CardObjectBase:MonoBehaviour
         }
     }
 
-    public void SetCard(CardBase value)
+    public void SetCard(T value)
     {
         card = value;
         UpdateVisuals();
@@ -50,8 +32,4 @@ public class CardObjectBase:MonoBehaviour
     }
     public virtual void UpdateVisuals() { }
 
-    public void Awake()
-    {
-        cardUICanvas = GetComponent<Canvas>();
-    }
 }

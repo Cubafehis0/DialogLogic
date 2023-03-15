@@ -8,7 +8,7 @@ public class TurnControllerPlayerDialog : TurnController
     public override bool AdditionalTurn => tempEndTurnTrigger;
     public void GetAddditionalTurnAndEndTurn()
     {
-        CardGameManager.Instance.playerState.Player.PlayerInfo.Pressure++;
+        GameManager.Instance.LocalPlayer.Pressure++;
         tempEndTurnTrigger = true;
     }
 
@@ -16,7 +16,9 @@ public class TurnControllerPlayerDialog : TurnController
     {
         endTurnTrigger = false;
         tempEndTurnTrigger = false;
-        GUISystemManager.Instance.chooseSystem.Open(CardGameManager.Instance.dialogSystem.GetInkStory().CurrentChoices);
+        var chooseController = CardGameManager.Instance.playerState.GetComponent<ChooseController>();
+        chooseController.SetChoices(CardGameManager.Instance.dialogSystem.GetInkStory().CurrentChoices);
+        GUISystemManager.Instance.chooseSystem.gameObject.SetActive(true);
         base.OnStartTurn();
     }
 }

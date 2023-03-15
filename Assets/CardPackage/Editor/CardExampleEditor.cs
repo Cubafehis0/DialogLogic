@@ -13,7 +13,7 @@ public class CardExampleEditor : Editor
         var t = (CardExample)target;
         if (GUILayout.Button("Draw"))
         {
-            t.cardController.Draw(1);
+            //t.cardController.Draw(1);
         }
     }
 

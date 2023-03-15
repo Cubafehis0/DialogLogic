@@ -7,9 +7,6 @@ public class RelicGameManager : MonoBehaviour
     private static RelicGameManager instance;
     public static RelicGameManager Instance { get { return instance; } }
 
-    private RelicStaticLib staticLib;
-    public RelicStaticLib StaticLib { get => staticLib; }
-
 
     private RelicLib relicLib;
     public RelicLib RelicLib { get => relicLib; }
@@ -53,19 +50,19 @@ public class RelicGameManager : MonoBehaviour
 
     private void LoadRelicLib(string path)
     {
-        using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-        staticLib = new RelicStaticLib(XmlUtilties.XmlUtilty.Deserialize<RelicLibInfo>(fs));
-        relicLib = new RelicLib();
+        //using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+        //staticLib = new RelicStaticLib(XmlUtilties.XmlUtilty.Deserialize<RelicLibInfo>(fs));
+        //relicLib = new RelicLib();
     }
 
     private void ShowRelicLib()
     {
-        foreach (Relic relic in staticLib)
+        foreach (Relic relic in StaticRelicLibrary.Instance)
         {
-            Debug.Log(relic.relicInfo.Name);
-            Debug.Log(relic.relicInfo.Description);
-            Debug.Log(relic.relicInfo.Rarity);
-            Debug.Log(relic.relicInfo.Category);
+            Debug.Log(relic.Name);
+            Debug.Log(relic.Description);
+            Debug.Log(relic.Rarity);
+            Debug.Log(relic.Category);
         }
     }
 }

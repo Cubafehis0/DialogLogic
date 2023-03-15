@@ -6,6 +6,8 @@ public class TurnManager : Singleton<TurnManager>
 {
     [SerializeField]
     private int turn = 0;
+    [SerializeField]
+    private int startIndex = 0;
 
     private bool isLooping = false;
     [SerializeField]
@@ -36,7 +38,10 @@ public class TurnManager : Singleton<TurnManager>
             }
         }
     }
-
+    private void Start()
+    {
+        StartLoop();
+    }
     public void StartLoop()
     {
         if (isLooping) return;
@@ -63,7 +68,7 @@ public class TurnManager : Singleton<TurnManager>
         {
             for (index = 0; index < turnControllers.Length; index++)
             {
-                isPlayerTurn = index == 0;
+                isPlayerTurn = index == startIndex;
                 var c = turnControllers[index];
                 if (c == null) continue;
                 c.OnStartTurn();

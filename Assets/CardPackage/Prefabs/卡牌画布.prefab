@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -88,7 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23645cca1f92f3d4bbecf3f4bf062d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardController: {fileID: 0}
 --- !u!1 &5930774168500799355
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +360,6 @@ MonoBehaviour:
   onRemove:
     m_PersistentCalls:
       m_Calls: []
-  cardLibrary: {fileID: 0}
   layout: {fileID: 5930774169557873831}
   hide: 0
 --- !u!1 &5930774169070400920
@@ -463,6 +461,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   speed: 8000
+  count: {fileID: 0}
 --- !u!1 &5930774169076298003
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +474,6 @@ GameObject:
   - component: {fileID: 5930774169076298223}
   - component: {fileID: 5930774169076298222}
   - component: {fileID: 5930774169076298221}
-  - component: {fileID: 147073803876482873}
   m_Layer: 5
   m_Name: "\u5361\u724C\u753B\u5E03"
   m_TagString: Untagged
@@ -569,31 +567,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &147073803876482873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5930774169076298003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa740fa5b35d2aa48a15b2c5090b50da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnergyChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPlayCard:
-    m_PersistentCalls:
-      m_Calls: []
-  drawPile: {fileID: 5930774169251120537}
-  discardPile: {fileID: 5930774169070400922}
-  hand: {fileID: 7007792288352383430}
-  playingPile: {fileID: 5930774169106570141}
-  exhaustPile: {fileID: 5930774170141765632}
-  energy: 10
-  maxHandCnt: 10
 --- !u!1 &5930774169106570115
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +625,7 @@ MonoBehaviour:
   onRemove:
     m_PersistentCalls:
       m_Calls: []
-  player: {fileID: 147073803876482873}
+  player: {fileID: 0}
 --- !u!1 &5930774169251120543
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,4 +925,4 @@ MonoBehaviour:
   onRemove:
     m_PersistentCalls:
       m_Calls: []
-  player: {fileID: 147073803876482873}
+  player: {fileID: 0}

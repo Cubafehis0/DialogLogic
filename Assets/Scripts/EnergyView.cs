@@ -4,21 +4,11 @@ using UnityEngine.UI;
 public class EnergyView : MonoBehaviour
 {
     [SerializeField]
-    private CardPlayerState player;
+    private PlayerPacked player;
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
     private Image image;
-
-    private void OnEnable()
-    {
-        player.OnEnergyChange.AddListener(UpdateLabel);
-    }
-
-    private void OnDisable()
-    {
-        player.OnEnergyChange.RemoveListener(UpdateLabel);
-    }
 
     private void Update()
     {

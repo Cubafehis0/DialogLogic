@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayingPileObject : PilePacked
 {
-    [SerializeField]
-    private CardControllerBase player;
 
     private void OnEnable()
     {
@@ -12,7 +10,7 @@ public class PlayingPileObject : PilePacked
 
     private void OnAddAnim(CardBase newCard)
     {
-        CardObjectBase o =  Singleton<DynamicLibrary>.Instance.GetCardObject(newCard);
+        GameObject o =  DynamicLibrary.Instance.GetCardObject(newCard);
         o.transform.SetParent(transform, true);
     }
 }

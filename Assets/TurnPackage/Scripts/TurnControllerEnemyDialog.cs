@@ -25,6 +25,7 @@ public class TurnControllerEnemyDialog : TurnController
 
     public void StepIn()
     {
+        Debug.Log("StepIn");
         if (CardGameManager.Instance.TurnManager.IsPlayerTurn) return;
         dialogSystem.MoveNext();
     }

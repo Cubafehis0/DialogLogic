@@ -1,4 +1,5 @@
-﻿public class PileObject : PilePacked
+﻿using UnityEngine;
+public class PileObject : PilePacked
 {
 
     private void OnEnable()
@@ -14,7 +15,7 @@
     private void OnAddAnim(CardBase card)
     {
 
-        CardObjectBase cardObject = Singleton<DynamicLibrary>.Instance.GetCardObject(card);
+        GameObject cardObject = DynamicLibrary.Instance.GetCardObject((Card)card).gameObject;
         if (cardObject)
         {
             cardObject.transform.SetParent(transform, true);

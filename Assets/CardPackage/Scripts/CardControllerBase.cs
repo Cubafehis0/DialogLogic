@@ -5,49 +5,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CardControllerBase : Singleton<CardControllerBase>
+public interface ICardControllerEventListener<T> where T : CardBase
 {
-
-    public UnityEvent OnEnergyChange = new UnityEvent();
-    public UnityEvent OnPlayCard = new UnityEvent();
-
-
+    void OnPlayCard(Card card);
+    void OnDraw(Card card);
+    void OnDiscard(Card card);
+    void OnDiscard2Draw();
+    void OnEnergyChange();
+}
+public class CardControllerBase<T> : Singleton<CardControllerBase<T>>, IProperties where T : CardBase
+{
     [SerializeField]
-    private PilePacked drawPile;
+    protected PilePacked drawPile;
     [SerializeField]
-    private PilePacked discardPile;
+    protected PilePacked discardPile;
     [SerializeField]
-    private PilePacked hand;
+    public PilePacked hand;
     [SerializeField]
-    private PilePacked playingPile;
-    [SerializeField]
-    private PilePacked exhaustPile;
-    [SerializeField]
-    private int energy;
+    protected PilePacked playingPile;
+    [SerializeField] 
+    protected PilePacked exhaustPile;
     [SerializeField]
     private int maxHandCnt;
 
+    protected List<ICardControllerEventListener<T>> eventListeners;
     private bool drawBan = false;
-    public IReadonlyPile<CardBase> Hand { get => hand; }
-    public IReadonlyPile<CardBase> DrawPile { get => drawPile; }
-    public IReadonlyPile<CardBase> DiscardPile { get => discardPile; }
-    public IReadonlyPile<CardBase> ExhaustPile { get => exhaustPile; }
-    public IReadonlyPile<CardBase> PlayingPile { get => playingPile; }
 
     public bool DrawBan { get => drawBan; set => drawBan = value; }
 
-    public int Energy
+
+    public override void Awake()
     {
-        get => energy;
-        set
-        {
-            energy = value;
-            OnEnergyChange.Invoke();
-        }
+        base.Awake();
+        eventListeners = new List<ICardControllerEventListener<T>>(GetComponents<ICardControllerEventListener<T>>());
     }
 
-
-    public void AddCard(PileType pileType, CardBase card)
+    public void AddCard(PileType pileType, CardBase card, PilePositionType pilePosition)
     {
         switch (pileType)
         {
@@ -63,31 +56,17 @@ public class CardControllerBase : Singleton<CardControllerBase>
         }
     }
 
-    public void AddCard(PileType pileType, IEnumerable<CardBase> cards)
+    public void AddNewCard(PileType pileType, string name, PilePositionType pilePosition)
     {
-        foreach (CardBase card in cards)
-        {
-            AddCard(pileType, card);
-        }
+        Card newCard = DynamicCardLibrary.Instance.AddNewCard(name);
+
+        AddCard(pileType, newCard, pilePosition);
     }
 
-    public void AddCard<T>(PileType pileType, string name) where T : CardBase, new()
+    public void ShuffleDraw()
     {
-        T newCard = StaticLibraryBase<T>.Instance.GetCopyByName(name);
-        Singleton<DynamicLibrary>.Instance.GetCardObject(newCard);
-        AddCard(pileType, newCard);
+        drawPile.Shuffle();
     }
-
-    public void AddCard<T>(PileType pileType, IEnumerable<string> names) where T : CardBase, new()
-    {
-        foreach (string name in names)
-        {
-            T newCard = StaticLibraryBase<T>.Instance.GetCopyByName(name);
-            Singleton<DynamicLibrary>.Instance.GetCardObject(newCard);
-            AddCard(pileType, newCard);
-        }
-    }
-
     public bool CanDraw()
     {
         if (drawBan) return false;
@@ -127,12 +106,20 @@ public class CardControllerBase : Singleton<CardControllerBase>
                 }
                 //洗牌
                 Discard2Draw();
+                foreach (var listener in eventListeners)
+                {
+                    listener.OnDiscard2Draw();
+                }
             }
             CardBase card = drawPile[0];
             Context.SetCardAlias("FROM", card.id);
             Context.SetPlayerAlias("FROM", card.id);
             drawPile.MigrateTo(card, hand);
             card.OnDraw();
+            foreach (var listener in eventListeners)
+            {
+                listener.OnDraw((Card)card);
+            }
             Context.SetCardAlias("FROM", null);
             Context.SetPlayerAlias("FROM", null);
         }
@@ -147,19 +134,9 @@ public class CardControllerBase : Singleton<CardControllerBase>
         }
     }
 
-    public int? GetPileProp(string name)
-    {
-        return name switch
-        {
-            "hand_count" => Hand.Count,
-            "draw_count" => DrawPile.Count,
-            "discard_count" => DiscardPile.Count,
-            _ => null
-        };
-    }
     public bool IsHandFull()
     {
-        return Hand.Count == maxHandCnt;
+        return hand.Count == maxHandCnt;
     }
 
 
@@ -167,9 +144,9 @@ public class CardControllerBase : Singleton<CardControllerBase>
     /// 打出卡牌
     /// </summary>
     /// <param name="card"></param>
-    public void PlayCard(CardBase card, GameObject target)
+    public virtual void PlayCard(CardBase card, GameObject target)
     {
-        AnimationManager.Instance.AddAnimation(PlayCardEnumerator(card,target));
+
     }
 
     private void Discard2Draw()
@@ -178,28 +155,22 @@ public class CardControllerBase : Singleton<CardControllerBase>
         drawPile.Shuffle();
     }
 
-
-    private IEnumerator PlayCardEnumerator(CardBase card,GameObject target)
+    public bool TryGetInt(string key, out int value)
     {
-        if (card == null) throw new ArgumentNullException("CardPlayerState.PlayCard card为空");
-        card.PreCalculateCost();
-        if (Energy < card.cost)
+        switch (key)
         {
-            //能量不足
-            Debug.Log("能量不足");
-        }
-        else
-        {
-            if (card.CheckCanPlay(out _))
-            {
-                //目标有效且可以使用
-                Energy -= card.cost;
-                hand.MigrateTo(card, playingPile);
-                OnPlayCard.Invoke();
-                card.Excute(target);
-                yield return new WaitUntil(AnimationManager.Instance.IsFree);
-                playingPile.MigrateTo(card, card.exhaust ? exhaustPile : discardPile);
-            }
-        }
+            case "hand_count":
+                value = hand.Count;
+                return true;
+            case "draw_count":
+                value = drawPile.Count;
+                return true;
+            case "discard_count":
+                value = discardPile.Count;
+                return true;
+            default:
+                value = 0;
+                return false;
+        };
     }
 }

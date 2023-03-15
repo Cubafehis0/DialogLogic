@@ -23,20 +23,12 @@ public class CharacterBarView : MonoBehaviour
     [SerializeField]
     private Slider detourSlider = null;
 
-    private void OnEnable()
-    {
-        if (character != null) character.OnValueChange.AddListener(UpdateAll);
-    }
 
     private void Update()
     {
         UpdateAll();
     }
 
-    private void OnDisable()
-    {
-        if (character != null) character.OnValueChange.RemoveListener(UpdateAll);
-    }
     public void UpdateAll()
     {
         if (character == null) return;

@@ -11,7 +11,6 @@ public class ChoiceSlot
     private bool locked = false;
     [SerializeField]
     private Choice choice;
-
     [SerializeField]
     private HashSet<PersonalityType> revealMask = new HashSet<PersonalityType>();
 

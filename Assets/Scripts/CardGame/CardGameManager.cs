@@ -41,9 +41,8 @@ public class CardGameManager : MonoBehaviour
             Debug.LogError("没有设定当前故事");
             return;
         }
-   
+
         dialogSystem.Open(GetInkStoryAsset(GameManager.Instance.CurrentStory));
-        playerState.Init(GameManager.Instance.LocalPlayer);
         string name = GameManager.Instance.currentIncident.target;
         enemyImage.sprite = AssetsManager.Instance.enemySpriteDictionary[name];
     }
@@ -53,7 +52,7 @@ public class CardGameManager : MonoBehaviour
 
     public void SetGameConfig(GameConfig config)
     {
-        playerState.Player.PlayerInfo = config.PlayerInfo;
+        playerState.Player.Load(config.PlayerInfo);
         //enemy.Player.PlayerInfo.Personality = config.enemyPersonality;
     }
 
@@ -74,5 +73,5 @@ public class CardGameManager : MonoBehaviour
         return new TextAsset(File.ReadAllText(filePath[0]));
     }
 
-    public TurnManager TurnManager { get => turnManager;}
+    public TurnManager TurnManager { get => turnManager; }
 }

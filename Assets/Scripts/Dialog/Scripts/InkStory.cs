@@ -17,11 +17,6 @@ namespace Ink2Unity
         Finish
     }
 
-    public interface IPlayerStateChange
-    {
-        void StateChange(Personality delta, int duration);
-    }
-
     public interface ISavable
     {
         void LoadStory(string state);
@@ -109,7 +104,7 @@ namespace Ink2Unity
 
             Content rs = CurrentContent;
             if (rs.personalityModifier != null)
-                CardGameManager.Instance.playerState.StateChange(rs.personalityModifier, rs.changeTurn);
+                GameConsole.Instance.ModifyPersonality("", rs.personalityModifier, rs.changeTurn, DMGType.Normal);
             return CurrentContent;
         }
 
@@ -149,9 +144,9 @@ namespace Ink2Unity
         {
             Choice cs = CurrentChoices[index];
             story.variablesState["judgeSuccess"] = success;
-            CardGameManager.Instance.playerState.Pressure += success ? -cs.Success_desc : cs.Fail_add;
+            GameConsole.Instance.AddPressure("", success ? -cs.Success_desc : cs.Fail_add);
             if (cs.Content.personalityModifier != null)
-                CardGameManager.Instance.playerState.StateChange(cs.Content.personalityModifier, cs.Content.changeTurn);
+                GameConsole.Instance.ModifyPersonality("", cs.Content.personalityModifier, cs.Content.changeTurn, DMGType.Normal);
             story.ChooseChoiceIndex(index);
             // 进行判定的过程
             // 忽略原本内容

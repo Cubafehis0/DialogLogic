@@ -4,14 +4,16 @@ using UnityEngine.UI;
 public class HealthSliderView : MonoBehaviour
 {
     [SerializeField]
+    private PlayerPacked target;
+    [SerializeField]
     private Slider healthSlider;
     [SerializeField]
     private Slider sanSlider;
 
     private void Update()
     {
-        healthSlider.value = CardGameManager.Instance.playerState.Player.PlayerInfo.Pressure;
-        sanSlider.value = CardGameManager.Instance.playerState.Player.PlayerInfo.Health;
+        healthSlider.value = target.Pressure;
+        sanSlider.value = target.Health;
     }
 
 }

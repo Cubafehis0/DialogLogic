@@ -36,7 +36,7 @@ public class GUISelectLoot : ForegoundGUISystem
         if (c == null) return;
         if (cardObjects.Contains(c))
         {
-            GameManager.Instance.LocalPlayer.PlayerInfo.CardSet.Add(c.GetCard<Card>().info.Name);
+            GameManager.Instance.LocalPlayer.CardSet.Add(c.GetCard().Name);
             Close();
         }
     }

@@ -72,7 +72,6 @@ MonoBehaviour:
   cdtDescText: {fileID: 497905060138803925}
   eftDescText: {fileID: 8637981448201224406}
   memeText: {fileID: 7074561758052921547}
-  draggable: 0
 --- !u!223 &3162594966646412484
 Canvas:
   m_ObjectHideFlags: 0
@@ -87,12 +86,12 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 0
+  m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &2305668730890144682
 MonoBehaviour:

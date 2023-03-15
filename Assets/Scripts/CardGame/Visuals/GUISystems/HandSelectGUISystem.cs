@@ -72,8 +72,8 @@ public class HandSelectGUISystem : ForegoundGUISystem
         CardObject c = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (c == null) return;
         if (selectedCardPile.Count == maxOccurs) return;
-        handPile.Remove(c.GetCard<CardBase>());
-        selectedCardPile.Add((Card)c.GetCard<CardBase>());
+        handPile.Remove(c.GetCard());
+        selectedCardPile.Add(c.GetCard());
         UpdateVisuals();
     }
 
@@ -81,8 +81,8 @@ public class HandSelectGUISystem : ForegoundGUISystem
     {
         CardObject cardObject = ((PointerEventData)eventData).pointerClick.GetComponent<CardObject>();
         if (cardObject == null) return;
-        selectedCardPile.Remove(cardObject.GetCard<CardBase>());
-        handPile.Add(cardObject.GetCard<CardBase>());
+        selectedCardPile.Remove(cardObject.GetCard());
+        handPile.Add(cardObject.GetCard());
         UpdateVisuals();
     }
 

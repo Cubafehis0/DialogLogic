@@ -3,19 +3,9 @@ using UnityEngine.UI;
 public class EnergyLabelView : MonoBehaviour
 {
     [SerializeField]
-    private CardPlayerState player;
+    private PlayerPacked player;
     [SerializeField]
     private Text text;
-
-    private void OnEnable()
-    {
-        player.OnEnergyChange.AddListener(UpdateLabel);
-    }
-
-    private void OnDisable()
-    {
-        player.OnEnergyChange.RemoveListener(UpdateLabel);
-    }
 
     private void Update()
     {

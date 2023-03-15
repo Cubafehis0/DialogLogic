@@ -8,7 +8,7 @@ namespace CardGame.Recorder
     /// <summary>
     /// 管理卡牌日志，以供查阅使用
     /// </summary>
-    public class CardRecorder
+    public class CardRecorder:IProperties
     {
         public List<CardLogEntry> cardLogs = new List<CardLogEntry>();
 
@@ -16,25 +16,6 @@ namespace CardGame.Recorder
         {
             cardLogs.Add(entry);
         }
-
-        public int this[string name]
-        {
-            get
-            {
-                return name switch
-                {
-                    "preach_total" => QueryPreachTotal(),
-                    "preach_thisturn" => QueryPreachThisTurn(),
-                    "activate_count" => QueryTotalActive(),
-                    "logic_combo" => QueryCombo(CardType.Lgc),
-                    "immoral_combo" => QueryCombo(CardType.Imm),
-                    "spirital_combo" => QueryCombo(CardType.Spt),
-                    "moral_combo" => QueryCombo(CardType.Mrl),
-                    _ => throw new System.ArgumentException()
-                };
-            }
-        }
-
         public int QueryTotalActive()
         {
             var qs = from x in cardLogs
@@ -86,5 +67,35 @@ namespace CardGame.Recorder
                     select x).Count();
         }
 
+        public bool TryGetInt(string key, out int value)
+        {
+            switch (key)
+            {
+                case "preach_total":
+                    value = QueryPreachTotal();
+                    return true;
+                  case "preach_thisturn":
+                    value = QueryPreachThisTurn();
+                    return true;
+                 case "activate_count":
+                    value = QueryTotalActive();
+                    return true;
+                 case "logic_combo":
+                    value = QueryCombo(CardType.Lgc);
+                    return true;
+                 case "immoral_combo":
+                    value = QueryCombo(CardType.Imm);
+                    return true;
+                 case "spirital_combo":
+                    value = QueryCombo(CardType.Spt);
+                    return true;
+                 case "moral_combo":
+                    value = QueryCombo(CardType.Mrl);
+                    return true;
+                default:
+                    value = default;
+                    return false;
+            }
+        }
     }
 }

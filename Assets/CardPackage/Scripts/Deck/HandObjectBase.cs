@@ -25,8 +25,8 @@ public class HandObjectBase : PilePacked
     {
         foreach (var card in this)
         {
-            CardObjectBase o = Singleton<DynamicLibrary>.Instance.GetCardObject(card);
-            o.SetDraggable(value);
+            GameObject o = DynamicLibrary.Instance.GetCardObject(card);
+            o.GetComponent<Draggable>().enabled = value;
         }
     }
 
@@ -40,7 +40,7 @@ public class HandObjectBase : PilePacked
         Debug.Log("takeover");
         foreach (CardBase card in this)
         {
-            CardObjectBase o = Singleton<DynamicLibrary>.Instance.GetCardObject(card);
+            GameObject o = DynamicLibrary.Instance.GetCardObject(card);
             o.transform.SetParent(layout, true);
         }
     }
@@ -53,10 +53,10 @@ public class HandObjectBase : PilePacked
 
     protected virtual void OnRemoveAnim(CardBase card)
     {
-        CardObjectBase cardObject = Singleton<DynamicLibrary>.Instance.GetCardObject(card);
+        GameObject cardObject = DynamicLibrary.Instance.GetCardObject(card);
         if (cardObject)
         {
-            cardObject.SetDraggable(false);
+            cardObject.GetComponent<Draggable>().enabled = false;
         }
 
     }
@@ -67,7 +67,7 @@ public class HandObjectBase : PilePacked
         cardObject.transform.SetParent(layout, true);
         cardObject.transform.rotation = Quaternion.identity;
         cardObject.transform.localScale = Vector3.one;
-        cardObject.GetComponent<CardObjectBase>().SetDraggable(true);
+        cardObject.GetComponent<Draggable>().enabled = true;
         yield return null;
     }
 
@@ -83,8 +83,8 @@ public class HandObjectBase : PilePacked
 
     private void OnAddAnim(CardBase card)
     {
-        CardObjectBase cardObject = DynamicLibrary.Instance.GetCardObject(card);
-        AnimationManager.Instance.AddAnimation(Animating(cardObject.gameObject));
+        GameObject cardObject = DynamicLibrary.Instance.GetCardObject(card);
+        AnimationManager.Instance.AddAnimation(Animating(cardObject));
     }
 
     private void OnDisable()

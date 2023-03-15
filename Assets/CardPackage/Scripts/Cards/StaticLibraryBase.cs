@@ -10,7 +10,7 @@ public class StaticLibraryBase<T> : Singleton<StaticLibraryBase<T>> where T:Card
 
     public void DeclareCard(string name, CardInfo cardInfo)
     {
-        Debug.Log($"注册卡牌{cardInfo.Name}");
+        //Debug.Log($"注册卡牌{cardInfo.Name}");
         if (!cardDic.ContainsKey(name))
         {
             T tmp = new T();

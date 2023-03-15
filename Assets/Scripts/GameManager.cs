@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     private PlayerPacked localPlayer;
 
     public Incident currentIncident = null;
-
     private Map map = null;
 
 
@@ -42,13 +41,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Context.Console=new Kernel.GameConsole();
-        Context.Query = new Kernel.GameQuery();
+        Context.Console = GetComponent<GameConsole>();
+        Context.Query = GetComponent<GameQuery>();
         Context.Rule = new Kernel.GameRule();
-        LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "CardLib"));
-        LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "GameConfig.xml"));
+        LoadAllCommon(Path.Combine(Application.streamingAssetsPath, "TestCardLib"));
+        LoadGameConfig(Path.Combine(Application.streamingAssetsPath, "TestGameConfig.xml"));
         Loadmaps(Path.Combine(Application.streamingAssetsPath, "Map.xml"));
-        localPlayer.PlayerInfo.Health = localPlayer.PlayerInfo.MaxHealth;
+        localPlayer.Health = localPlayer.MaxHealth;
     }
 
     private void Update()
@@ -66,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
         GameConfig config = XmlUtilties.XmlUtilty.Deserialize<GameConfig>(fs);
-        LocalPlayer.PlayerInfo = config.PlayerInfo;
+        LocalPlayer.Load(config.PlayerInfo);
     }
 
     private void Loadmaps(string path)

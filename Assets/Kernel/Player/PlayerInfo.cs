@@ -5,14 +5,14 @@ using System.Xml.Serialization;
 using UnityEngine;
 
 [Serializable]
-public class PlayerInfo
+public struct PlayerInfo
 {
     [SerializeField]
-    private Personality personality = null;
+    private Personality personality;
     [SerializeField]
-    private int baseMaxCardNum = 10;
+    private int baseMaxCardNum;
     [SerializeField]
-    private int drawNum = 4;
+    private int drawNum;
     [SerializeField]
     private int pressure;
     [SerializeField]

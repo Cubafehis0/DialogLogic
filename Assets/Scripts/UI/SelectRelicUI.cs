@@ -49,7 +49,7 @@ public class SelectRelicUI : MonoBehaviour
         Debug.Log("Detour = " + personality[PersonalityType.Detour]);
         Debug.Log("Strong = " + personality[PersonalityType.Strong]);
 
-        List<Relic> relics = RelicGameManager.Instance.StaticLib.RandomChooseRelics(grade, personality, RelicGameManager.Instance.RelicLib.ownedRelics);
+        List<Relic> relics = StaticRelicLibrary.Instance.RandomChooseRelics(grade, personality, RelicGameManager.Instance.RelicLib.ownedRelics);
         Debug.Log("relics's count = " + relics.Count);
 
         OpenSelectList(relics);
@@ -70,7 +70,8 @@ public class SelectRelicUI : MonoBehaviour
             if (i < relics.Count)
             {
                 slot.gameObject.SetActive(true);
-                slot.SetRelic(relics[i]);
+                slot.target = relics[i];
+                slot.UpdateVisuals();
             }
             else
             {
@@ -90,10 +91,10 @@ public class SelectRelicUI : MonoBehaviour
 
     public void OnChooseRelic()
     {
-        Relic relic = EventSystem.current.currentSelectedGameObject.GetComponent<RelicObj>().relic;
+        Relic relic = EventSystem.current.currentSelectedGameObject.GetComponent<RelicObj>().target;
         RelicGameManager.Instance.RelicLib.AddRelic(relic);
         GameObject newOwnedRelic = Instantiate(ownedRelicGO, ownedContent);
-        newOwnedRelic.GetComponent<OwnedRelicObj>().SetRelic(relic);
+        newOwnedRelic.GetComponent<RelicObj>().target=relic;
         CloseSelectList();
     }
 

@@ -12,9 +12,9 @@ public class AnimationManager : Singleton<AnimationManager>
         animationQueue.Enqueue(enumerator);
     }
 
-    public bool IsFree()
+    public bool IsGUI()
     {
-        return true;
+        return false;
         //return ForegoundGUISystem.current == false;
     }
 

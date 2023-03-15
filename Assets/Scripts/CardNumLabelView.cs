@@ -5,8 +5,8 @@ public class CardNumLabelView : MonoBehaviour
 {
     [SerializeField]
     private Text text;
-    [SerializeField]
-    private string format = "{0}/{1}";
+    //[SerializeField]
+    //private string format = "{0}/{1}";
 
     private void Update()
     {

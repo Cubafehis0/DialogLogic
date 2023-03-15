@@ -49,8 +49,8 @@ public class HandLayout : MonoBehaviour
                 if (focusedCard)
                 {
                     focusedCard.transform.localScale = Vector3.one;
-                    CardObjectBase cardObject = focusedCard.GetComponent<CardObjectBase>();
-                    if (cardObject) cardObject.OrderInLayer = 0;
+                    Canvas canvas = focusedCard.GetComponent<Canvas>();
+                    if (canvas) canvas.sortingOrder = 3 + canvas.transform.GetSiblingIndex();
                     //lockTransform = false;
                     //focusedCard.transform.SetParent(transform, true);
                 }
@@ -60,8 +60,9 @@ public class HandLayout : MonoBehaviour
                     value.transform.localEulerAngles = Vector3.zero;
                     value.transform.position = cardsOffset[value.transform.GetSiblingIndex()];
                     value.transform.Translate(0.5f * Vector2.up);
-                    CardObjectBase cardObject = value.GetComponent<CardObjectBase>();
-                    if (cardObject) cardObject.OrderInLayer = 99;
+                    Canvas canvas = value.GetComponent<Canvas>();
+                    if (canvas) canvas.sortingOrder = 99;
+
                 }
                 focusedCard = value;
                 RecalculatePosition();
@@ -109,6 +110,12 @@ public class HandLayout : MonoBehaviour
     {
         if (lockTransform) return;
         UpdateVisuals();
+        Canvas canvas;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            canvas = transform.GetChild(i).GetComponent<Canvas>();
+            if (canvas) canvas.sortingOrder = 3 + i;
+        }
     }
 
     public void UpdateVisuals()
@@ -142,7 +149,7 @@ public class HandLayout : MonoBehaviour
 
     public void Focus(BaseEventData eventData)
     {
-        FocusedCard = ((PointerEventData)eventData).pointerEnter.GetComponentInParent<CardObjectBase>().transform;
+        FocusedCard = ((PointerEventData)eventData).pointerEnter.GetComponentInParent<CardObject>().transform;
     }
 
     public void ResetFocus(BaseEventData eventData)

@@ -15,6 +15,7 @@ public static class StaticStatusLibrary
         if (!statusDictionary.ContainsKey(name))
         {
             Debug.LogError(string.Format("未找到{0}状态", name));
+            return null;
         }
 
         return statusDictionary[name];

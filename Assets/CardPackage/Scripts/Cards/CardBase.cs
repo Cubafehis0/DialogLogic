@@ -1,26 +1,23 @@
 ﻿using ModdingAPI;
 using UnityEngine;
 using System.Collections.Generic;
-
-
+using System;
+[Serializable]
 public class CardBase
 {
     public string id;
-    public int cost;
-    public bool exhaust;
-    public CardBase() { }
-    public CardBase(object o) { }
 
-    public virtual bool CheckCanPlay(out string failmsg)
+
+    public virtual bool CheckCanPlay(GameObject player, out string failmsg)
     {
         failmsg = null;
         return true;
     }
-    public virtual void PreCalculateCost() { }
 
     public virtual void Excute(GameObject target) 
     {
-        Debug.Log($"对{target.name}使用卡牌： ");
+
+        Debug.Log($"对{target.name}使用卡牌：{id}");
     }
 
     public virtual void OnDraw()

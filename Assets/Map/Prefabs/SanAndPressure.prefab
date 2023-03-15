@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 781748305938302099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.82555, y: 0.82555, z: 0.82555}
   m_Children:
   - {fileID: 781748306250749982}
   - {fileID: 7040276116748869556}
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c820cd500fa2643b33b2d79d765d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   healthSlider: {fileID: 7040276116748869559}
   sanSlider: {fileID: 781748306250749981}
 --- !u!114 &5764064138442659070

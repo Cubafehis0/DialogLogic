@@ -24,22 +24,22 @@ public class DiscardPileObject : PilePacked
     }
     IEnumerator Discard(CardBase card)
     {
-        CardObjectBase c = DynamicLibrary.Instance.GetCardObject(card);
-        c.transform.SetParent(transform, true);
+        GameObject o = DynamicLibrary.Instance.GetCardObject(card);
+        o.transform.SetParent(transform, true);
         float jumpHeight = Random.Range(1f, 2f);
         float ax = 0f;
         while (ax < jumpHeight)
         {
             ax += Time.deltaTime * speed;
-            c.transform.Translate(Time.deltaTime * speed * Vector2.up);
+            o.transform.Translate(Time.deltaTime * speed * Vector2.up);
             yield return null;
         }
-        while (Vector2.Distance(c.transform.position, transform.position) > 0.01f)
+        while (Vector2.Distance(o.transform.position, transform.position) > 0.01f)
         {
-            c.transform.position = Vector3.MoveTowards(c.transform.position, transform.position, Time.deltaTime * speed);
+            o.transform.position = Vector3.MoveTowards(o.transform.position, transform.position, Time.deltaTime * speed);
             yield return null;
         }
-        c.gameObject.SetActive(false);
+        o.gameObject.SetActive(false);
     }
 
     private void OnAddAnim(CardBase card)

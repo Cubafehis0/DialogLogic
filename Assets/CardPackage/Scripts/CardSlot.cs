@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class CardSlot : MonoBehaviour, IDropHandler
+
+public class CardSlot : CardSlotBase<Card> { }
+public class CardSlotBase<T> : MonoBehaviour, IDropHandler where T : CardBase
 {
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
         {
-            CardObjectBase c = eventData.pointerDrag.GetComponent<CardObjectBase>();
+            CardObjectBase<T> c = eventData.pointerDrag.GetComponent<CardObjectBase<T>>();
             if (c)
             {
-                CardControllerBase.Instance.PlayCard(c.GetCard<CardBase>(),gameObject);
+                CardController.Instance.PlayCard(c.GetCard(), gameObject);
             }
         }
     }

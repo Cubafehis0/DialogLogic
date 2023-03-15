@@ -2,19 +2,29 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DynamicLibrary : Singleton<DynamicLibrary>
+
+public class DynamicLibrary : DynamicLibraryBase<CardBase> 
+{
+    public override GameObject GetNewCardObject(CardBase card)
+    {
+        var res= base.GetNewCardObject(card);
+        res.GetComponent<CardObject>().SetCard((Card)card);
+        return res;
+    }
+}
+public class DynamicLibraryBase<T> : Singleton<DynamicLibraryBase<T>>
 {
     [SerializeField]
-    protected Dictionary<CardBase, CardObjectBase> cardDictionary = new Dictionary<CardBase, CardObjectBase>();
+    protected Dictionary<T, GameObject> cardDictionary = new Dictionary<T, GameObject>();
     [SerializeField]
-    protected CardObjectBase sampleCard;
+    protected GameObject sampleCard;
 
 
-    public void DestroyCard(CardBase card)
+    public void DestroyCard(T card)
     {
         if (cardDictionary[card] != null)
         {
-            Destroy(cardDictionary[card].gameObject);
+            Destroy(cardDictionary[card]);
             cardDictionary.Remove(card);
         }
         else
@@ -24,8 +34,14 @@ public class DynamicLibrary : Singleton<DynamicLibrary>
     }
 
 
-
-    public CardObjectBase GetCardObject(CardBase card)
+    public virtual GameObject GetNewCardObject(T card)
+    {
+        cardDictionary[card] = Instantiate(sampleCard);
+        
+        //card.player = CardGameManager.Instance.playerState;
+        return cardDictionary[card];
+    }
+    public GameObject GetCardObject(T card)
     {
         if (card == null) return null;
         if (cardDictionary.TryGetValue(card,out var go))
@@ -35,11 +51,5 @@ public class DynamicLibrary : Singleton<DynamicLibrary>
         else return GetNewCardObject(card);
     }
 
-    public CardObjectBase GetNewCardObject(CardBase card)
-    {
-        cardDictionary[card] = Instantiate(sampleCard);
-        cardDictionary[card].SetCard(card);
-        //card.player = CardGameManager.Instance.playerState;
-        return cardDictionary[card];
-    }
+
 }
